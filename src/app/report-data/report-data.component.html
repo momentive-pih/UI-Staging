@@ -1,0 +1,53 @@
+<div class="row">
+        <div class="col-md-12">
+            <div class="card-body">
+            <h6 class="text-default font-weight-semibold"><span class="">Relesed Documents <i class="fa fa-info-circle" role="button" title="This data is from SAP"></i></span>
+            </h6>
+        </div></div>
+    </div>
+    <div class="modal-body">
+        <div class="card-body">
+
+                <p-table #dt [columns]="reportDataHead" [value]="reportDataproducts" (sortFunction)="customSort($event)" [paginator]="ReportDatapaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedReportDataProducts" [reorderableColumns]="true" >
+                        <ng-template pTemplate="caption">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div style="text-align: left">
+                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ui-helper-clearfix" style="text-align: right">
+                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <br>
+                  
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width:2.5em"></th>
+                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                    {{col.header}}
+                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>  
+
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                            <tr [pReorderableRow]="index">
+                                <td>
+                                    <i class="fa fa-bars" pReorderableRowHandle></i>
+                                </td>
+                                <td [style]="{'width':'300px'}" *ngFor="let col of columns">
+                                    {{rowData[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+          
+        </div>
+    </div>

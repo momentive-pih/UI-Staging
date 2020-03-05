@@ -1,0 +1,99 @@
+
+        <!-- <div id="content" *ngIf="documentCategorySection">
+            <div class="row">
+                <div class="col-md-12">
+                       <h5 class="msg-data">No Synonyms for the Selected Product</h5>
+                </div></div>
+        </div> -->
+
+
+
+        
+        
+        <div id="content">
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <button class="btn momentive-btn mr-r" (click)="WholeSynonyms()">Ontology Management Master</button> &nbsp; 
+                </div>
+            </div> -->
+                <div class="tabs">
+                    
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="master-btn" (click)="WholeSynonyms()">Ontology Management Master</div> 
+                                <br>
+                                <ul class="nav active" [ngClass]="{'active': selectedId == i}" *ngFor="let data of keySynonysms;let i = index">
+                                    <li class="" (click)="OntologySideKey(i)"><a href="#tab_a" data-toggle="pill"> {{data.name}}</a></li>
+                                    <!-- <li><a href="#tab_b" data-toggle="pill"> LSR 2650</a></li>
+                                    <li><a href="#tab_c" data-toggle="pill"> LSR 2040</a></li> -->
+                                </ul>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="tab-content">
+                                        <div class="widget-header synonym-content" *ngIf="globalSynonyms">
+                                            <h5><b>Add New Synonyms of {{SelectedKey}}</b></h5>
+                                                <form [formGroup]="synonymsFieldsForm">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                            <input class="form-control" type="text" placeholder="Add new synonyms" (focus)="focusFunction()" formControlName="synonymsFieldName" name="synonymsFieldName">
+                                                        </div>
+                                                        <div class="col-md-6" *ngIf="synonymsAddbtn">
+                                                            <button class="btn momentive-btn" (click)="addSynonyms()">Add Synonyms</button> &nbsp;
+                                                            <!-- <button class="btn momentive-btn" (click)="closeSynonyms()">close</button> -->
+                                                        </div>
+                                                    </div>
+                                                    </form>
+                                        </div> 
+                                    <div class="tab-pane active synonym-content" id="tab_a" *ngIf="documentCategorySection">
+                                            <div class="row">
+                                                    <div class="col-md-12">
+                
+                                                            <div class="widget stacked widget-table action-table">
+                                                                    <div class="">
+                                                                        
+                                                                        <table class="table table-striped table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                        <th>#ELA</th>
+                                                                                        <th>Created Date</th>
+                                                                                        <th>Created By</th>
+                                                                                        
+                                                                                    <th class="td-actions">Actions</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr *ngFor="let data of Ontologysynonyms">
+                                                                                        <td>{{data.synonyms}}</td>
+                                                                                        <td>{{data.createdDate}}</td>
+                                                                                        <td>{{data.CreatedBy}}</td>
+                                                                                    <td class="td-actions" width="20%">
+                                                                                      
+                                                                                          <a class="docs-btn"><i class="fa fa-pencil-square-o"></i></a>   
+                                                                                          <a class="docs-btn"><i class="fa fa-trash"></i></a>   
+                                                                                        								
+                                                                                       
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        
+                                                                    </div> <!-- /widget-content -->
+                                                                
+                                                                </div> <!-- /widget -->
+                  
+                                                          
+                                                            
+                                                    </div>
+                                                </div> 
+                                    </div>
+                                  
+                                   
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+
+    
+    

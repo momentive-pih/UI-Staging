@@ -1,0 +1,500 @@
+{
+    "ontology_documents" : [ 
+        {
+            "US FDA" : [
+                {"fileName":"LSR2020, 2030, 2040, 2050, 2060, 2070, and 2080  - FDA Compliance Letter to STARLIM Spritzguss GmbH",
+                    "category":"US FDA",
+                    "productName":"LSR2050",
+                    "id":"LSR2050_7",
+                    "createdDate":"11/03/2018",
+                    "url":"assets/images/momentivePdf/LSR2050/LSR2020, 2030, 2040, 2050, 2060, 2070, and 2080  - FDA Compliance Letter to STARLIM Spritzguss GmbH.pdf",
+                    "Extract_Field": {
+                        "ontology_Key": "LSR2050, LSR2020, LSR2030, LSR2040, LSR2050, LSR2060, LSR2070, LSR2080",
+                        "FDA Compliance": "With regard to your query on the compliance of LSR2020, 2030, 2040,2050,2060,2070 and 2080 with U.S. Food and Drug Administration (FDA) regulations, we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600 - substances employed in the preparation of rubber articles intended for repeated use."
+                    }
+                   },
+                   {"fileName":"LSR2050 - FDA Compliance Letter to Divine Vertriebs GmbH",
+                    "category":"US FDA",
+                    "productName":"LSR2050",
+                    "id":"LSR2050_8",
+                    "createdDate":"09/01/2018",
+                    "url":"assets/images/momentivePdf/LSR2050/LSR2050 - FDA Compliance Letter to Divine Vertriebs GmbH.pdf",
+                    "Extract_Field": {
+                        "ontology_Key": "LSR2050",
+                        "FDA Compliance": "With regard to your query on the compliance of LSR2050 with U.S. Food and Drug Administration (FDA) regulations, we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600 - substances employed in the preparation of rubber articles intended for repeated use."
+                    }
+                   },
+                   {"fileName":"LSR2050 - FDA Compliance Letter to Institute for International Product Safety GmbH",
+                    "category":"US FDA",
+                    "productName":"LSR2050",
+                    "id":"LSR2050_9",
+                    "createdDate":"12/05/2018",
+                    "url":"assets/images/momentivePdf/LSR2050/LSR2050 - FDA Compliance Letter to Institute for International Product Safety GmbH.pdf",
+                    "Extract_Field": {
+                        "ontology_Key": "LSR2050",
+                        "FDA Compliance": "With regard to your query on the compliance of LSR2050 with U.S. Food and Drug Administration (FDA) regulations, we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600 - substances employed in the preparation of rubber articles intended for repeated use."
+                    }
+                   },
+                   {"fileName":"LSR2050 - FDA Compliance Letter to Nordmann, Rassmann GmbH",
+                    "category":"US FDA",
+                    "productName":"LSR2050",
+                    "id":"LSR2050_10",
+                    "createdDate":"09/01/2019",
+                    "url":"assets/images/momentivePdf/LSR2050/LSR2050 - FDA Compliance Letter to Nordmann, Rassmann GmbH.pdf",
+                    "Extract_Field": {
+                        "ontology_Key": "LSR2050",
+                        "FDA Compliance": "With regard to your query on the compliance of LSR2050 with U.S. Food and Drug Administration (FDA) regulations, we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600 - substances employed in the preparation of rubber articles intended for repeated use."
+                    }
+                   }
+            ],
+            "category":"US FDA",
+            "id":"USFDA",
+            "productName":"LSR2050",
+            "categoryName":"US FDA"
+
+        },
+
+        {
+             "EU Food Contact" : [
+
+                { "fileName":"2018-9-7 CHT Germany GmbH EU food contact statement LSR2050_FS",
+                    "productName":"LSR2050",
+                    "id":"LSR2050_1",
+                    "createdDate":"07/09/2018",
+                    "url":"assets/images/momentivePdf/LSR2050/2018-9-7 CHT Germany GmbH EU food contact statement LSR2050_FS.pdf",
+                    "Extract_Field": {
+                        "ontology_Key": "LSR2050",
+                        "EU Regulation 1935/2004": "Currently such specific measures exist for ceramics, regenerated cellulose and plastics; for other groups of food contact materials, no EU regulations have been developed so far.  Specific measures for silicone rubbers are not foreseen to be developed yet at the Community level as this represents a very low priority for the European Commission. For this purpose, and in addition to their usual procedures for quality assurance, Silicone manufacturers also ensure all components are compliant to any binding texts from the EU Member States, which deals with silicone resins/elastomers intended to be used in contact with food",
+                        "French Arrêté of 25 Novembre 1992" : "Relating to materials and objects of silicone elastomers put, or destined to be put in contact with foodstuffs, food products and drinks",
+                        "German BfR Recommendation XV":"Silicones",
+                        "Spanish Real Decreto 847/2011":"Compliance to one of these texts automatically implies compliance to the EU framework Regulation 1935/2004, as laid down by its Article 6.",
+                        "Council of Europe resolution ResAP (2004)5":"The ingredients of the above mentioned Momentive Performance Materials' products are in compliance with the Council of Europe Resolution AP (2004) 5 on silicones to be used for food contact applications.",
+                        "Switzerland (RS 817.023.21)":"The ingredients of the above mentioned Momentive Performance Materials’ products are in compliance with the “Ordinance of the FDA on articles and materials (RS 817.023.21) of 16 December 2016 (Status on May 1st 2017) paragraph 11 commodities of silicone. "
+                    }
+                   
+                },
+                   {"fileName":"2019-9-12 BIWI SA LSR2050 EU food contact_FS",
+                   "productName":"LSR2050",
+                   "id":"LSR2050_2",
+                   "createdDate":"12/09/2019",
+                   "url":"assets/images/momentivePdf/LSR2050/2019-9-12 BIWI SA LSR2050 EU food contact_FS.pdf",
+                   "Extract_Field": {
+                    "ontology_Key": "LSR2050",
+                    "EU Regulation 1935/2004": "Currently such specific measures exist for ceramics, regenerated cellulose and plastics; for other groups of food contact materials, no EU regulations have been developed so far.  Specific measures for silicone rubbers are not foreseen to be developed yet at the Community level as this represents a very low priority for the European Commission. For this purpose, and in addition to their usual procedures for quality assurance, Silicone manufacturers also ensure all components are compliant to any binding texts from the EU Member States, which deals with silicone resins/elastomers intended to be used in contact with food",
+                    "French Arrêté of 25 Novembre 1992" : "Relating to materials and objects of silicone elastomers put, or destined to be put in contact with foodstuffs, food products and drinks",
+                    "German BfR Recommendation XV":"Silicones",
+                    "italian Decreto Ministeriale del 21/03/1973 Chapter 2":"Rubbers",
+                    "Council of Europe resolution ResAP (2004)5":"The ingredients of the Momentive Performance Materials' products mentioned above are in compliance with the Council of Europe Resolution AP (2004) 5 on silicones to be used for food contact applications",
+                    "Switzerland (RS 817.023.21)":"The ingredients of the above-mentioned Momentive Performance Materials’ products are in compliance with the “Ordinance of the FDA on articles and materials (RS 817.023.21) of 16 December 2016 (Status on May 1st 2017) paragraph 11 commodities of silicone. "
+                }
+            }
+            ],
+            "category" :"EU Food Contact",
+             "id":"EUFoodContact",
+             "productName":"LSR2050",
+             "categoryName" : "EU Food Contact"
+           
+        },
+        {
+            "Study Title and Date" : [
+                {"fileName":"LSR2050_-_Biocompatibility_Certificate_and_Studies",
+                    "category":"Study Title and Date",
+                    "productName":"LSR2050",
+                    "id":"LSR2050_3",
+                    "createdDate":"02/06/2010",
+                    "url":"assets/images/momentivePdf/LSR2050/LSR2050_-_Biocompatibility_Certificate_and_Studies.pdf",
+                    "Extract_Field": {
+                        "ontology_Key": "LSR2050",
+                        "ELA": "NA",
+                        "Test Article Description" : "Lot #: PT. ZM6101 Press Cured 10 minutes / 170 C, Post Cure 4 hours / 200 C",
+                        "Study Title":"Class V1 Test – USP System Toxicity, Intracutaneous Reactivity, 2 Week Muscle Implant – ISO",
+                        "Final Report Date":"7-2-2010"
+                    }
+                   },
+                   {"fileName":"LSR2050_-_WTFD_-_USP_Class_VI_-_ISO_10993",
+                    "category":"Study Title and Date",
+                    "productName":"LSR2050",
+                    "id":"LSR2050_4",
+                    "createdDate":"22/01/2010",
+                    "url":"assets/images/momentivePdf/LSR2050/LSR2050_-_WTFD_-_USP_Class_VI_-_ISO_10993.pdf",
+                    "Extract_Field": {
+                        "ontology_Key": "LSR2050",
+                        "ELA": "NA",
+                        "Test Article Description" : "Lot #:09B094 (WTFD)",
+                        "Study Title":"Class V1 Test – USP System Toxicity, Intracutaneous Reactivity, 2 Week Muscle Implant – ISO",
+                        "Final Report Date":"Jan 22, 2010"
+                    }
+                   
+                   },
+                   {"fileName":"LSR2050_-rubber_articles_for_repeated_use",
+                    "category":"Study Title and Date",
+                    "productName":"LSR2050",
+                    "id":"LSR2050_5",
+                    "createdDate":"07/01/2010",
+                    "url":"assets/images/momentivePdf/LSR2050/LSR2050_-rubber_articles_for_repeated_use.pdf",
+                    "Extract_Field": {
+                        "ontology_Key": "LSR2050",
+                        "ELA": "NA",
+                        "Test Article Description" : "Lot #:09B094 (WTFD)",
+                        "Study Title":"Rubber Articles for repeated use",
+                        "Final Report Date":"Jan 7, 2010"
+                    }
+                   }
+            ],
+             "category" :"Study Title and Date",
+             "id":"StudyTitle",
+             "productName":"LSR2050",
+             "categoryName" : "Toxicology Study Reports"
+
+        },
+        {
+            "TDS" : [ 
+                {"fileName":"silopren-lsr-2050",
+                    "category":"TDS",
+                    "productName":"LSR2050",
+                   "id":"LSR2050_6",
+                   "createdDate":"22/08/2019",
+                   "url":"assets/images/momentivePdf/LSR2050/silopren-lsr-2050.pdf",
+                "Extract_Field": {
+                    "ontology_Key": "LSR2050",
+                    "Potential Application": "Sealing elements, O-rings, Diaphragms, Keypads, Pacifiers, Baby teats, Diving masks, Nose pads, Vibration dampers, Air vent flaps, Switch covers, Pressure cooker parts, Cable connectors,and many more."
+                    }
+                   }
+
+            ],
+            "category":"TDS",
+            "id":"TDS",
+            "productName":"LSR2050",
+            "categoryName":"Momentive Website Documents : TDS / Marketing Bulletins"
+        },
+        {
+            "US FDA" : [
+            {"fileName":"LSR2650 - FDA Compliance Letter to Divine Vertriebs GmbH",
+             "category":"US FDA",
+             "productName":"LSR2650",
+             "id":"LSR2650_16",
+             "createdDate":"13/09/2017",
+             "url":"assets/images/momentivePdf/LSR2650/LSR2650 - FDA Compliance Letter to Divine Vertriebs GmbH.pdf",
+             "Extract_Field": {
+                "ontology_Key": "LSR2650",
+                "FDA Compliance": "This product is compositionally compliant with 21 CFR 177.2600 – substances employed in the preparation of rubber articles intended for repeated use. Accordingly, FDA regulations for rubber articles intended for repeated use allow the use of this product in manufacturing rubber articles that are intended for repeated use in producing, manufacturing, packing, processing, preparing, treating, packaging, transporting or holding food provided such articles are manufactured in accordance with other applicable FDA requirements."
+                }
+            },
+            {"fileName":"LSR2650 - FDA Compliance Letter to NRC",
+             "category":"US FDA",
+             "productName":"LSR2650",
+             "id":"LSR2650_17",
+             "createdDate":"22/01/2010",
+             "url":"assets/images/momentivePdf/LSR2650/LSR2650 - FDA Compliance Letter to NRC.pdf",
+             "Extract_Field": {
+                "ontology_Key": "LSR2650",
+                "FDA Compliance": "This product is compositionally compliant with 21 CFR 177.2600 – substances employed in the preparation of rubber articles intended for repeated use. Accordingly, FDA regulations for rubber articles intended for repeated use allow the use of this product in manufacturing rubber articles that are intended for repeated use in producing, manufacturing, packing, processing, preparing, treating, packaging, transporting or holding food provided such articles are manufactured in accordance with other applicable FDA requirements."
+                }
+            },
+            {"fileName":"LSR2650 - FDA Compliance Letter to YS TECH INTERNATIONAL",
+             "category":"US FDA",
+             "productName":"LSR2650",
+             "id":"LSR2650_18",
+             "createdDate":"22/08/2018",
+             "url":"assets/images/momentivePdf/LSR2650/LSR2650 - FDA Compliance Letter to YS TECH INTERNATIONAL.pdf",
+             "Extract_Field": {
+                "ontology_Key": "LSR2650",
+                "FDA Compliance": "This product is compositionally compliant with 21 CFR 177.2600 – substances employed in the preparation of rubber articles intended for repeated use. Accordingly, FDA regulations for rubber articles intended for repeated use allow the use of this product in manufacturing rubber articles that are intended for repeated use in producing, manufacturing, packing, processing, preparing, treating, packaging, transporting or holding food provided such articles are manufactured in accordance with other applicable FDA requirements."
+                }
+            }
+            ],
+            "category":"US FDA",
+            "id":"USFDA",
+            "productName":"LSR2650",
+            "categoryName":"US FDA"
+ 
+        },
+       
+        {
+            "EU Food Contact" : [ 
+           {"fileName":"2018-11-8  EU food contact LSR2650BBN and LSR2050",
+           "category":"EU Food Contact",
+            "productName":"LSR2650",
+            "id":"LSR2650_1",
+            "createdDate":"02/01/2019",
+            "url":"assets/images/momentivePdf/LSR2650/2018-11-8  EU food contact LSR2650BBN and LSR2050.pdf",
+            "Extract_Field": {
+                "ontology_Key": "LSR2650, LSR2050",
+                "EU Regulation 1935/2004": "Currently such specific measures exist for ceramics, regenerated cellulose and plastics; for other groups of food contact materials, no EU regulations have been developed so far.  Specific measures for silicone rubbers are not foreseen to be developed yet at the Community level as this represents a very low priority for the European Commission. For this purpose, and in addition to their usual procedures for quality assurance, Silicone manufacturers also ensure all components are compliant to any binding texts from the EU Member States, which deals with silicone resins/elastomers intended to be used in contact with food",
+                "French Arrêté of 25 Novembre 1992" : "Relating to materials and objects of silicone elastomers put, or destined to be put in contact with foodstuffs, food products and drinks",
+                "German BfR Recommendation XV ": "Silicones",
+                "Spanish Real Decreto 847/2011":"Compliance to one of these texts automatically implies compliance to the EU framework Regulation 1935/2004, as laid down by its Article 6.",
+                "Council of Europe resolution ResAP (2004)5":"The ingredients of the Momentive Performance Materials' products mentioned above are in  compliance with the Council of Europe Resolution AP (2004) 5 on silicones to be used for food contact applications.",
+                "Switzerland (RS 817.023.21)":"The ingredients of the Momentive Performance Materials’ products mentioned above are in compliance with the “Ordinance of the FDA on articles and materials (RS 817.023.21) of 16 December 2016 (Status on May 1st 2017) paragraph 11 commodities of silicone."
+            }
+            },
+           {"fileName":"2019-7-31 Copci sas  LSR 2650 and LSR2070 EU food contact_FS",
+           "category":"EU Food Contact",
+           "productName":"LSR2650",
+           "id":"LSR2650_2",
+           "createdDate":"02/10/2019",
+           "url":"assets/images/momentivePdf/LSR2650/2019-7-31 Copci sas  LSR 2650 and LSR2070 EU food contact_FS.pdf",
+           "Extract_Field": {
+            "ontology_Key": "LSR2650 LSR2070",
+            "EU Regulation 1935/2004": "Currently such specific measures exist for ceramics, regenerated cellulose and plastics; for other groups of food contact materials, no EU regulations have been developed so far.  Specific measures for silicone rubbers are not foreseen to be developed yet at the Community level as this represents a very low priority for the European Commission. For this purpose, and in addition to their usual procedures for quality assurance, Silicone manufacturers also ensure all components are compliant to any binding texts from the EU Member States, which deals with silicone resins/elastomers intended to be used in contact with food",
+            "French Arrêté of 25 Novembre 1992" : "Relating to materials and objects of silicone elastomers put, or destined to be put in contact with foodstuffs, food products and drinks",
+            "German BfR Recommendation XV ": "Silicones",
+            "italian Decreto Ministeriale del 21/03/1973 Chapter 2":"Rubbers",
+            "Spanish Real Decreto 847/2011":"Compliance to one of these texts automatically implies compliance to the EU framework Regulation 1935/2004, as laid down by its Article 6.",
+            "Council of Europe resolution ResAP (2004)5 ":"The ingredients of the Momentive Performance Materials' products mentioned above are in compliance with the Council of Europe Resolution AP (2004) 5 on silicones to be used for food  contact applications.",
+            "Switzerland (RS 817.023.21)":"The ingredients of the above-mentioned Momentive Performance Materials’ products are in compliance with the “Ordinance of the FDA on articles and materials (RS 817.023.21) of 16 December 2016 (Status on May 1st 2017) paragraph 11 commodities of silicone."
+           
+        }
+           },
+           {"fileName":"2019-7-31 Minivalve International B.V LSR 2650RSH EU food contact_FS",
+               "category":"EU Food Contact",
+               "productName":"LSR2650",
+               "id":"LSR2650_3",
+               "createdDate":"27/11/2019",
+               "url":"assets/images/momentivePdf/LSR2650/2019-7-31 Minivalve International B.V LSR 2650RSH EU food contact_FS.pdf",
+               "Extract_Field": {
+                "ontology_Key": "LSR2650",
+                "EU Regulation 1935/2004": "Currently such specific measures exist for ceramics, regenerated cellulose and plastics; for other groups of food contact materials, no EU regulations have been developed so far.  Specific measures for silicone rubbers are not foreseen to be developed yet at the Community level as this represents a very low priority for the European Commission. For this purpose, and in addition to their usual procedures for quality assurance, Silicone manufacturers also ensure all components are compliant to any binding texts from the EU Member States, which deals with silicone resins/elastomers intended to be used in contact with food",
+                "French Arrêté of 25 Novembre 1992" : "Relating to materials and objects of silicone elastomers put, or destined to be put in contact with foodstuffs, food products and drinks",
+                "German BfR Recommendation XV": "Silicones",
+                "italian Decreto Ministeriale del 21/03/1973":"Rubbers",
+                "Spanish Real Decreto 847/2011" : "Compliance to one of these texts automatically implies compliance to the EU framework  Regulation 1935/2004, as laid down by its Article 6",
+                "Council of Europe resolution ResAP (2004)5" :"The ingredients of the Momentive Performance Materials' products mentioned above are in compliance with the Council of Europe Resolution AP (2004) 5 on silicones to be used for food contact applications",
+                "Switzerland (RS 817.023.21)" :"The ingredients of the above-mentioned Momentive Performance Materials’ products are in compliance with the “Ordinance of the FDA on articles and materials (RS 817.023.21) of 16 December 2016 (Status on May 1st 2017) paragraph 11 commodities of silicone."
+            }
+                },
+               {"fileName":"2019-8-22 Copci sas  LSR 2630 and LSR2650 EU food contact_FS",
+               "category":"EU Food Contact",
+               "productName":"LSR2650",
+            "id":"LSR2650_4",
+            "createdDate":"12/09/2018",
+            "url":"assets/images/momentivePdf/LSR2650/2019-8-22 Copci sas  LSR 2630 and LSR2650 EU food contact_FS.pdf",
+            "Extract_Field": {
+                "ontology_Key": "LSR2630, LSR2650",
+                "EU Regulation 1935/2004": "Currently such specific measures exist for ceramics, regenerated cellulose and plastics; for other groups of food contact materials, no EU regulations have been developed so far.  Specific measures for silicone rubbers are not foreseen to be developed yet at the Community level as this represents a very low priority for the European Commission. For this purpose, and in addition to their usual procedures for quality assurance, Silicone manufacturers also ensure all components are compliant to any binding texts from the EU Member States, which deals with silicone resins/elastomers intended to be used in contact with food",
+                "French Arrêté of 25 Novembre 1992" : "Relating to materials and objects of silicone elastomers put, or destined to be put in contact with foodstuffs, food products and drinks",
+                "German BfR Recommendation XV" : "Silicones",
+"italian Decreto Ministeriale del 21/03/1973" : "Rubbers",
+"Spanish Real Decreto 847/2011":"Compliance to one of these texts automatically implies compliance to the EU framework Regulation 1935/2004, as laid down by its Article 6.",
+"Council of Europe resolution ResAP (2004)5" :
+"The ingredients of the Momentive Performance Materials' products mentioned above are in compliance with the Council of Europe Resolution AP (2004) 5 on silicones to be used for food contact applications.",
+"Switzerland (RS 817.023.21)"  : "The ingredients of the above-mentioned Momentive Performance Materials’ products are in compliance with the “Ordinance of the FDA on articles and materials (RS 817.023.21) of 16 December 2016 (Status on May 1st 2017) paragraph 11 commodities of silicone." 
+   
+}
+               }
+           ],
+           "category" :"EU Food Contact",
+            "id":"EUFoodContact",
+            "productName":"LSR2650",
+            "categoryName" : "EU Food Contact"
+       },
+       {
+           "Study Title and Date" : [
+                  {"fileName":"LSR2650_-_Agar_Diffusion_Test",
+            "category":"Study Title and Date",
+            "productName":"LSR2650",
+            "id":"LSR2650_7",
+            "createdDate":"02/10/2019",
+            "url":"assets/images/momentivePdf/LSR2650/LSR2650_-_Agar_Diffusion_Test.pdf",
+            "Extract_Field": {
+                "ontology_Key": "LSR2650",
+                "ELA": "NA",
+                "Test Article Description" : "LSR 2650 Lot #:  ZM6120 Press Cured 10 minutes @ 175 C",
+                "Study Title":"Agar Diffuision Test - ISO",
+                "Final Report Date":"January 14, 2011"
+            }
+        },
+           {"fileName":"LSR2650_-_Biocompatibility_Certificate_and_Studies",
+            "category":"Study Title and Date",
+            "productName":"LSR2650",
+            "id":"LSR2650_8",
+            "createdDate":"10/08/2019",
+            "url":"assets/images/momentivePdf/LSR2650/LSR2650_-_Biocompatibility_Certificate_and_Studies.pdf",
+            "Extract_Field": {
+                "ontology_Key": "LSR2650",
+                "ELA": "NA",
+                "Test Article Description" : "Lot #: Pt.  ZM6120 (B-Stufe) Press Cured 10 minutes / 170 C, Post Cure 4 hours / 200 C ",
+                "Study Title":"Class V1 Test – USP System Toxicity, Intracutaneous Reactivity, 2 Week Muscle Implant – ISO",
+                "Final Report Date":"7-2- 2010"
+            }
+        },
+           {"fileName":"LSR2650_-_Hemolysis_-_Rabbit_Blood_-_SIO",
+            "category":"Study Title and Date",
+            "productName":"LSR2650",
+            "id":"LSR2650_9",
+            "createdDate":"03/09/2019",
+            "url":"assets/images/momentivePdf/LSR2650/LSR2650_-_Hemolysis_-_Rabbit_Blood_-_SIO.pdf",
+            "Extract_Field": {
+                "ontology_Key": "LSR2650",
+                "ELA": "NA",
+                "Test Article Description" : "LSR 2650 Lot #:  ZM6120 Press Cured 10 minutes @ 175 C",
+                "Study Title":"Hemolysis – Rabbit Blood ISO Direct Contact",
+                "Final Report Date":"January 13, 2011"
+            }
+        },
+
+           {"fileName":"LSR2650_-_MEM_Elution_Test",
+               "category":"Study Title and Date",
+               "productName":"LSR2650",
+               "id":"LSR2650_10",
+               "createdDate":"26/01/2017",
+               "url":"assets/images/momentivePdf/LSR2650/LSR2650_-_MEM_Elution_Test.pdf",
+               "Extract_Field": {
+                "ontology_Key": "LSR2050",
+                "ELA": "NA",
+                "Test Article Description" : "LSR 2650 Lot #:  ZM6120 Press Cured 10 minutes @ 175 C",
+                "Study Title":"L929 MEM Elution Test",
+                "Final Report Date":"January 14, 2011"
+            }
+              }
+           ],
+           "category" :"Study Title and Date",
+            "id":"StudyTitle",
+            "productName":"LSR2650",
+            "categoryName" : "Toxicology Study Reports"
+
+       },
+       {
+           "TDS" : [ 
+               {"fileName":"silopren-lsr-2650",
+            "category":"TDS",
+            "productName":"LSR2650",
+            "id":"LSR2650_15",
+            "createdDate":"02/12/2019",
+            "url":"assets/images/momentivePdf/LSR2650/silopren-lsr-2650.pdf",
+            "Extract_Field": {
+                "ontology_Key": "LSR2650",
+                "Potential Application": "Sealing elements, O-rings, Diaphragms, ontology_Keypads, Pacifiers, Baby teats, Diving masks, Nose pads, Vibration dampers, Air vent flaps, Switch covers, Pressure cooker parts, Cable connectors,Spark plug boots ,Breast shields and many more."
+                }
+            }
+
+           ],
+           "category":"TDS",
+           "id":"TDS",
+           "productName":"LSR2650",
+           "categoryName":"Momentive Website Documents : TDS / Marketing Bulletins"
+       }
+      
+    ],
+        
+
+ 
+
+    "synonyms_LSR2050" :[
+     {"synonyms" : "ELA004","createdDate":"12/1/2019","CreatedBy":"User1"},
+     {"synonyms" : "ELA095","createdDate":"14/2/2019","CreatedBy":"User2"},
+     {"synonyms" : "ELA112","createdDate":"16/3/2019","CreatedBy":"User3"},
+     {"synonyms" : "ELA21","createdDate":"17/4/2019","CreatedBy":"User4"},
+     {"synonyms" : "ELA122","createdDate":"22/4/2019","CreatedBy":"User5"},
+     {"synonyms" : "ELA152","createdDate":"19/5/2019","CreatedBy":"User6"},
+     {"synonyms" : "ELA153","createdDate":"27/6/2019","CreatedBy":"User7"},
+     {"synonyms" : "ELA154","createdDate":"11/7/2019","CreatedBy":"User8"},
+     {"synonyms" : "ELA155","createdDate":"22/8/2019","CreatedBy":"User8"},
+     {"synonyms" : "ELA170","createdDate":"16/10/2019","CreatedBy":"User10"},
+     {"synonyms" : "ELA189","createdDate":"07/11/2019","CreatedBy":"User11"}
+     ],
+     "synonyms_LSR2650" :[
+        {"synonyms" : "ELA070","createdDate":"02/7/2019","CreatedBy":"User1"},
+        {"synonyms" : "ELA071","createdDate":"06/8/2019","CreatedBy":"User2"},
+        {"synonyms" : "ELA129","createdDate":"12/9/2019","CreatedBy":"User3"},
+        {"synonyms" : "ELA130","createdDate":"29/11/2019","CreatedBy":"User4"}
+    ],
+   "whole_Synonyms" : [
+        {"key": "LSR2050", "synonyms" : "ELA004","createdDate":"12/1/2019","CreatedBy":"User1"},
+        {"key": "LSR2050", "synonyms" : "ELA095","createdDate":"14/2/2019","CreatedBy":"User2"},
+        {"key": "LSR2050", "synonyms" : "ELA112","createdDate":"16/3/2019","CreatedBy":"User3"},
+        {"key": "LSR2050", "synonyms" : "ELA21","createdDate":"17/4/2019","CreatedBy":"User4"},
+        {"key": "LSR2050", "synonyms" : "ELA122","createdDate":"22/4/2019","CreatedBy":"User5"},
+        {"key": "LSR2050", "synonyms" : "ELA152","createdDate":"19/5/2019","CreatedBy":"User6"},
+        {"key": "LSR2050", "synonyms" : "ELA153","createdDate":"27/6/2019","CreatedBy":"User7"},
+        {"key": "LSR2050", "synonyms" : "ELA154","createdDate":"11/7/2019","CreatedBy":"User8"},
+        {"key": "LSR2050", "synonyms" : "ELA155","createdDate":"22/8/2019","CreatedBy":"User8"},
+        {"key": "LSR2050","synonyms" : "ELA170","createdDate":"16/10/2019","CreatedBy":"User10"},
+        {"key": "LSR2050","synonyms" : "ELA189","createdDate":"07/11/2019","CreatedBy":"User11"},
+        {"key": "LSR2650","synonyms" : "ELA070","createdDate":"02/7/2019","CreatedBy":"User1"},
+        {"key": "LSR2650","synonyms" : "ELA071","createdDate":"06/8/2019","CreatedBy":"User2"},
+        {"key": "LSR2650","synonyms" : "ELA129","createdDate":"12/9/2019","CreatedBy":"User3"},
+        {"key": "LSR2650","synonyms" : "ELA130","createdDate":"29/11/2019","CreatedBy":"User4"}
+   ],
+
+   "Synonyms_CAS_Number" : [
+    { "name": "LSR 2680FC A",  "product": "product Name",
+        "Synonyms_CAS":[
+            {"synonyms" : "ELA0701","createdDate":"02/7/2019","CreatedBy":"User1"},
+            {"synonyms" : "ELA0711","createdDate":"06/8/2019","CreatedBy":"User2"},
+            {"synonyms" : "ELA1291","createdDate":"12/9/2019","CreatedBy":"User3"},
+            {"synonyms" : "ELA1301","createdDate":"29/11/2019","CreatedBy":"User4"}
+    ]
+    },
+    { "name": "Silsoft* ETS", "product":"product Name",
+        "Synonyms_CAS":[
+            {"synonyms" : "ELA0702","createdDate":"02/7/2019","CreatedBy":"User1"},
+            {"synonyms" : "ELA0712","createdDate":"06/8/2019","CreatedBy":"User2"},
+            {"synonyms" : "ELA1292","createdDate":"12/9/2019","CreatedBy":"User3"},
+            {"synonyms" : "ELA1302","createdDate":"29/11/2019","CreatedBy":"User4"}
+            ]},
+    { "name": "17861-60-8",  "product":"product Name",
+        "Synonyms_CAS":[
+            {"synonyms" : "ELA0703","createdDate":"02/7/2019","CreatedBy":"User1"},
+            {"synonyms" : "ELA0713","createdDate":"06/8/2019","CreatedBy":"User2"},
+            {"synonyms" : "ELA1293","createdDate":"12/9/2019","CreatedBy":"User3"},
+            {"synonyms" : "ELA1303","createdDate":"29/11/2019","CreatedBy":"User4"}
+         ]}
+],
+
+"ontology_Unassigneddocuments" : [ 
+
+    {
+        "EU Food Contact" : [
+
+           { "fileName":"2018-4-17 Nordmann, Rassmann GmbH  EU food contact statement Silopren LSR color paste color paste grey _FS",
+               "productName":"Unassigned",
+               "id":"Unassigned_1",
+               "createdDate":"07/09/2018",
+               "url":"assets/images/momentivePdf/Unassigned/2018-4-17 Nordmann, Rassmann GmbH  EU food contact statement Silopren LSR color paste color paste grey _FS.pdf",
+               "Extract_Field": {
+                   "ontology_Key": "NUll",
+                   "EU Regulation": "The ingredients are in compliance with the demands of recommendation XV 'Silicone' of the Bundesamt fur Risikobewertung(BfR) and the recommendation IX 'Colorants for Plastics and Other Polymers Used in Commodities' and can therefore be used to color silicone elastomeric food contact articles/products."
+               }
+              
+           }
+        ],
+        "category" :"EU Food Contact",
+        "id":"EUFoodContact",
+        "productName":"Unassigned",
+        "categoryName" : "EU Food Contact"
+    },
+    {
+        "US FDA" : [
+            {"fileName":"LSR2080 - FDA Compliance Letter to Nordmann, Rassmann d.o.o",
+                "category":"US FDA",
+                "productName":"Unassigned",
+                "id":"Unassigned_1",
+                "createdDate":"11/03/2018",
+                "url":"assets/images/momentivePdf/Unassigned/LSR2080 - FDA Compliance Letter to Nordmann, Rassmann d.o.o.pdf",
+                "Extract_Field": {
+                    "ontology_Key": "NUll",
+                    "FDA Compliance": "With regard to your query on the compliance of LSR2080 with U.S. Food and Drug Administration (FDA) regulations, we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600 - substances employed in the preparation of rubber articles intended for repeated use."
+                }
+               },
+               {"fileName":"SAG470 - FDA Compliance Letter to Henkel",
+                "category":"US FDA",
+                "productName":"Unassigned",
+                "id":"Unassigned_2",
+                "createdDate":"09/01/2018",
+                "url":"assets/images/momentivePdf/Unassigned/SAG470 - FDA Compliance Letter to Henkel.pdf",
+                "Extract_Field": {
+                    "ontology_Key": "NUll",
+                    "FDA Compliance": "This is to certify that SAG470 Silocone Antifoam Emulsion meets the requirements of the following 21 CFR FDA  REgulations"
+                }
+               }
+         ],
+        "category":"US FDA",
+        "id":"USFDA",
+        "productName":"Unassigned",
+        "categoryName":"US FDA"
+
+    }
+]
+
+}

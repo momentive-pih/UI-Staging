@@ -1,0 +1,218 @@
+<div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
+                <div class="board-inner radio-check-mbv">
+                    <div class="slide-nav">
+                        <div class="slide-center">
+                            <div class="list-check">
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button  *ngFor="let item of ProductComplianceCheck;let i = index" [value]="i" [checked]="item.name === productComplianceCheck" (change)="onChangeProductCompliance(item.name)"> {{item.name}}</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                        <div *ngIf="complianceNotification">
+                            <div class="card-body">
+                                    <h6 class="text-default font-weight-semibold">Notification Status: <i class="fa fa-info-circle" role="button" title="This data is from SAP"></i></h6>
+                                    <p-table #dt [columns]="pc_NotificationHeader" [value]="pc_NotificationData" (sortFunction)="customSort($event)" [paginator]="Notificationpaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedNotificationProducts" [reorderableColumns]="true" >
+                                            <ng-template pTemplate="caption">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div style="text-align: left">
+                                                            <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="ui-helper-clearfix" style="text-align: right">
+                                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                            <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <br>
+                                      
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th style="width:2.5em"></th>
+                                                    <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                                        {{col.header}}
+                                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>  
+            
+                                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                <tr [pReorderableRow]="index">
+                                                    <td>
+                                                        <i class="fa fa-bars" pReorderableRowHandle></i>
+                                                    </td>
+                                                    <td [style]="{'width':'300px'}" *ngFor="let col of columns">
+                                                        {{rowData[col.field]}}
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                    </p-table> 
+                        </div>
+                        </div>
+                        <div *ngIf="complianceRegistration">
+                         <div class="card-body"> 
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h6 class="text-default font-weight-semibold mb-2 "><span *ngIf="complaint_EU">EU: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></span>
+                                    <span  *ngIf="complaint_canada">US Canada: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i> </span>
+                                    <span  *ngIf="complaint_latin">Latin America : <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></span></h6>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field>
+                                        <mat-label>Region</mat-label>
+                                        <mat-select #ref (selectionChange)="selectRegionProcess(ref.value)" [(ngModel)]="modeselect">
+                                            <mat-option *ngFor="let composition of regionPart" [value]="composition.value">
+                                                {{composition.type}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            
+                                <div class="row"  *ngIf="complaint_EU"  >
+                                    <!-- EU Composition -->
+                                    <p-table #dt [columns]="complianceRegistrationEUHeader" [value]="complianceRegistrationEUData" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationEUpaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationEUProducts" [reorderableColumns]="true" >
+                                            <ng-template pTemplate="caption">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div style="text-align: left">
+                                                            <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="ui-helper-clearfix" style="text-align: right">
+                                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                            <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <br>
+                                      
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th style="width:2.5em"></th>
+                                                    <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                                        {{col.header}}
+                                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>  
+            
+                                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                <tr [pReorderableRow]="index">
+                                                    <td>
+                                                        <i class="fa fa-bars" pReorderableRowHandle></i>
+                                                    </td>
+                                                    <td [style]="{'width':'300px'}" *ngFor="let col of columns">
+                                                        {{rowData[col.field]}}
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                    </p-table> 
+                                   
+                                </div>
+
+                                <div class="row" *ngIf="complaint_canada">
+                                        <p-table #dt [columns]="complianceRegistrationCanada_Header" [value]="complianceRegistrationCanada_Data" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationCanada_paginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationCanada_Products" [reorderableColumns]="true" >
+                                                <ng-template pTemplate="caption">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div style="text-align: left">
+                                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="ui-helper-clearfix" style="text-align: right">
+                                                                <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                                <br>
+                                          
+                                                <ng-template pTemplate="header" let-columns>
+                                                    <tr>
+                                                        <th style="width:2.5em"></th>
+                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                                            {{col.header}}
+                                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                        </th>
+                                                    </tr>
+                                                </ng-template>  
+                
+                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                    <tr [pReorderableRow]="index">
+                                                        <td>
+                                                            <i class="fa fa-bars" pReorderableRowHandle></i>
+                                                        </td>
+                                                        <td [style]="{'width':'300px'}" *ngFor="let col of columns">
+                                                            {{rowData[col.field]}}
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                        </p-table>    
+                                    
+                                    
+                                    
+                                </div>
+                                <div class="row" *ngIf="complaint_latin">
+                                        <p-table #dt [columns]="complianceRegistrationLatin_Header" [value]="complianceRegistrationLatin_Data" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationLatin_paginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationLatin_Products" [reorderableColumns]="true" >
+                                                <ng-template pTemplate="caption">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div style="text-align: left">
+                                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="ui-helper-clearfix" style="text-align: right">
+                                                                <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                                <br>
+                                          
+                                                <ng-template pTemplate="header" let-columns>
+                                                    <tr>
+                                                        <th style="width:2.5em"></th>
+                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                                            {{col.header}}
+                                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                        </th>
+                                                    </tr>
+                                                </ng-template>  
+                
+                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                    <tr [pReorderableRow]="index">
+                                                        <td>
+                                                            <i class="fa fa-bars" pReorderableRowHandle></i>
+                                                        </td>
+                                                        <td [style]="{'width':'300px'}" *ngFor="let col of columns">
+                                                            {{rowData[col.field]}}
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                        </p-table> 
+                                  
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                </div>
+        </div>
+    </div>

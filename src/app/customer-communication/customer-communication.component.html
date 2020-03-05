@@ -1,0 +1,386 @@
+<div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
+            <div class="board-inner radio-check-mbv">
+                <div class="slide-nav">
+                    <div class="slide-center">
+                        <div class="list-check">
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button  *ngFor="let item of customerCommunicationChecks;let i = index" [value]="i" [checked]="item.name === customerCommunicationTab"   (change)="onChangeCommunication(item.name)" > {{item.name}}</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                    <div *ngIf="usFDA">
+                            <div class="card-body">
+                                    <h6 class="text-default font-weight-semibold">US FDA Letter: <i class="fa fa-info-circle" role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="text-default font-weight-semibold">Document Panel</label>
+                                        <div>
+                                            <embed class="food-document" alt="Thumbnail [200x250]" src="../.././assets/images/momentive/LSR2560 - FDA.pdf" type="application/pdf" style="width:550px; height:600px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="text-default font-weight-semibold">Result Panel</label>
+                                        <div class=" result-box text-center">
+                                            <div class="box">
+                                                <div class="box-title">
+                                                    <h3>LSR 2680FC A with 21 CFR 177.2600-Rubber Articles</h3>
+                                                </div>
+                                                <div class="box-text">With regards to your query on the compliance of LSR 2680FC A with U.S Food and Drug Administartion (FDA) regulations.we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600(c)- substance employed in the preparation of rubber articles intended for repeated use.
+                                                    <span>
+                          </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                       <h5 class="text-default font-weight-semibold">Other Matched Documents</h5>
+                                                <div class="box">
+                                                        <table class="table table-bordered">
+                                                                <thead>
+                                                                  <tr>
+                                                                    <th><b>Date of Issue</b></th>
+                                                                    <th><b>Document Name</b></th>
+                                                              
+                                                                  </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                  <tr>
+                                                                    <td>1st January 2018</td>
+                                                                    <td><a href=""  target="_blank">LSR2680 FCA - FDA compliance letter to DARMSTÄDTER GmbH </a> </td>
+                                                                    
+                                                                  </tr>
+                                                                  <tr>
+                                                                        <td>1st June 2018</td>
+                                                                        <td><a href=""  target="_blank">LSR2680 FCA, 2030,- FDA Compliance Letter to Philips - 2019</a> </td>
+                                                                        
+                                                                      </tr>
+                                                                  
+                                                                  
+                                                                </tbody>
+                                                              </table>
+                                                
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div *ngIf="EuFoodContact">
+                            <div class="card-body">
+                                    <h6 class="text-default font-weight-semibold">Eu Food Contact: <i class="fa fa-info-circle" role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="text-default font-weight-semibold">Document Panel</label>
+                                            <div>
+                                                <embed class="food-document" alt="Thumbnail [200x250]" src="../.././assets/images/momentivePdf/LSR2050/2019-9-12 BIWI SA LSR2050 EU food contact_FS.pdf" type="application/pdf" style="width:550px; height:600px;">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="text-default font-weight-semibold">Result Panel</label>
+                                                    <div class="box">
+                                                            <table class="table table-bordered">
+                                                                    <thead>
+                                                                      <tr>
+                                                                        <th><b>Keys</b></th>
+                                                                        <th><b>Values</b></th>
+                                                                  
+                                                                      </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                      <tr>
+                                                                        <td><b>Key</b></td>
+                                                                        <td>LSR2050</td>
+                                                                        
+                                                                      </tr>
+                                                                      <tr>
+                                                                            <td><b>EU Regulation 1935/2004</b></td>
+                                                                            <td>Currently such specific measures exist for ceramics, regenerated cellulose and plastics; for other groups of food contact materials, no EU regulations have been developed so far.  Specific measures for silicone rubbers are not foreseen to be developed yet at the Community level as this represents a very low priority for the European Commission. For this purpose, and in addition to their usual procedures for quality assurance, Silicone manufacturers also ensure all components are compliant to any binding texts from the EU Member States, which deals with silicone resins/elastomers intended to be used in contact with food</td>
+                                                                            
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><b>French Arrêté of 25 Novembre 1992</b></td>
+                                                                        <td>Relating to materials and objects of silicone elastomers put, or destined to be put in contact with foodstuffs, food products and drinks</td>
+                                                                        
+                                                                      </tr>
+                                                                      <tr>
+                                                                        <td><b>German BfR Recommendation XV</b></td>
+                                                                        <td>Silicones</td>
+                                                                        
+                                                                      </tr>
+                                                                      <tr>
+                                                                        <td><b>italian Decreto Ministeriale del 21/03/1973 Chapter 2</b></td>
+                                                                        <td>Rubbers</td>
+                                                                        
+                                                                      </tr>
+                                                                      <tr>
+                                                                        <td><b>Council of Europe resolution ResAP (2004)5</b></td>
+                                                                        <td>The ingredients of the Momentive Performance Materials' products mentioned above are in compliance with the Council of Europe Resolution AP (2004) 5 on silicones to be used for food contact applications</td>
+                                                                        
+                                                                      </tr>
+                                                                      <tr>
+                                                                        <td><b>Switzerland (RS 817.023.21)</b></td>
+                                                                        <td>The ingredients of the above-mentioned Momentive Performance Materials’ products are in compliance with the “Ordinance of the FDA on articles and materials (RS 817.023.21) of 16 December 2016 (Status on May 1st 2017) paragraph 11 commodities of silicone. </td>
+                                                                        
+                                                                      </tr>
+                                                                    </tbody>
+                                                                  </table>
+                                                    
+                                                </div>
+                                                <br>
+                                                <h5 class="text-default font-weight-semibold">Other Matched Documents</h5>
+                                                         <div class="box">
+                                                                 <table class="table table-bordered">
+                                                                         <thead>
+                                                                           <tr>
+                                                                             <th><b>Date of Issue</b></th>
+                                                                             <th><b>Document Name</b></th>
+                                                                       
+                                                                           </tr>
+                                                                         </thead>
+                                                                         <tbody>
+                                                                           <tr>
+                                                                             <td>07-09-2018</td>
+                                                                             <td><a href=""  target="_blank">2018-9-7 CHT Germany GmbH EU food contact statement LSR2050_FS </a> </td>
+                                                                             
+                                                                           </tr>
+                                                                                                                                     </tbody>
+                                                                       </table>
+                                                         
+                                                     </div>
+                                        </div>
+                                    </div>
+                             </div>
+                    </div>
+                    <div *ngIf="heavyMetals">
+                         
+                            <div class="card-body">
+                                    <h6 class="text-default font-weight-semibold">Heavy Metals: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                     <div class="row">
+                                    <div class="col-md-12">
+                                          <div class="box">
+                                                <table class="table" >
+                                                      <tbody>
+                                                        
+                                                            <tr>
+                                                                    <td><b>Product</b></td>
+                                                                    <td>LSR 2680FC A</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>AKA</b></td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Batch #</b></td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Sample #</b></td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>System</b></td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Date</b></td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Aluminum(Al)</b></td>
+                                                                    <td>0.2 PPM</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Antimony(sb)</b></td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Arsenic(As)</b></td>
+                                                                    <td>
+                                                                        < 0.12 PPM</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Barium(Ba)</b></td>
+                                                                    <td>
+                                                                        < 0.12 PPM</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Beryillum(Be)</b></td>
+                                                                    <td>
+                                                                        < 0.12 PPM</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Boron(B)</b></td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Cadmium(cd)</b></td>
+                                                                    <td>
+                                                                        < 0.12 PPM</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Calcium(ca)</b></td>
+                                                                    <td>1.36 PPM</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Carbon</b></td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                   
+                                                    </tbody>
+                                                </table>
+                                
+                                         
+                        
+                        </div></div> 
+                    </div>
+               
+                
+                </div>
+
+                    </div>
+                    
+                    <div  *ngIf="communicationHistory">
+                     <div class="card-body">
+                            <h6 class="text-default font-weight-semibold">Communication History:<i class="fa fa-info-circle" role="button" title="This data is from SFDC"></i></h6>
+                        <div class="row drop-sec">
+                          
+                            <div class="col-md-2">
+                                <mat-form-field>
+                                    <mat-label>BU</mat-label>
+                                    <mat-select placeholder="BU" #ref [(ngModel)]="selectedBUValue" (selectionChange)="communicationProcess(selectedBUValue)">
+                                        <mat-option *ngFor="let composition of communicationBU" [value]="composition.type">
+                                            {{composition.type}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <mat-form-field>
+                                    <mat-label>Product Name</mat-label>
+                                    <mat-select placeholder="Customer Name" #ref [(ngModel)]="selectedProductValue" (selectionChange)="communicationProcess(selectedProductValue)">
+                                        <mat-option *ngFor="let composition of productCommunication" [value]="composition.type">
+                                            {{composition.type}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                    <mat-form-field>
+                                        <mat-label>Customer Name</mat-label>
+                                        <mat-select placeholder="Customer Name" #ref [(ngModel)]="selectedCustomerValue" (selectionChange)="communicationProcess(selectedCustomerValue)">
+                                            <mat-option *ngFor="let composition of communicationPart" [value]="composition.type">
+                                                {{composition.type}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <form [formGroup]="dateForm" autocomplete="off" novalidate (ngSubmit)="createOwner(dateForm.value)"> 
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="startDate" placeholder="Start Date" name="start_Date" formControlName="start_Date" id="start_Date"
+                                                  (dateChange)="addEvent('change', $event)">
+                                            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                            <mat-datepicker #startDate></mat-datepicker>
+                                            </mat-form-field>
+                                            </form>
+                                </div>
+                                <div class="col-md-2">
+                                    <form [formGroup]="dateForm" autocomplete="off" novalidate (ngSubmit)="createOwner(dateForm.value)"> 
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="endDate" placeholder="End Date"  name="end_Date" formControlName="end_Date" id="end_Date"
+                                                    (dateChange)="addEvent('change', $event)">
+                                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                            <mat-datepicker #endDate></mat-datepicker>
+                                            </mat-form-field></form>
+                                    </div>
+                            
+                            <div class="col-md-2">
+                                    <button class="btn docs-btn btn-sm"  (click)="unselect()">&nbsp; Clear</button> 
+                        
+                            </div>
+
+</div> 
+                                                        
+                  
+                        <p-table #dt [columns]="CommunicationHistoryHead" [value]="CommunicationHistoryData" dataKey="case_number"  (sortFunction)="customSort($event)" [customSort]="true"  [paginator]="true" [rows]="5">
+                              
+                            <ng-template pTemplate="caption">
+                                <div class="row">
+                                <div class="col-md-6" style="text-align: left">
+                                        
+                                                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value,'contains')">
+                                            </div>
+                                            <div class="col-md-6" style="text-align: right">
+                                                    
+                                                            <div class="ui-helper-clearfix" style="text-align: right">
+                                                                    <!-- <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp; -->
+                                                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                                    <!-- <button class="btb pg-button" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o">&nbsp;Export CSV Data</i></button> -->
+                                                                    <button class="btb pg-button"><i class="fa fa-file-excel-o">&nbsp;Export CSV Data</i></button>
+                                                        </div>
+                                            </div></div>
+                                    </ng-template> 
+
+                            
+                            <ng-template pTemplate="header" let-columns>
+                                 
+                                    <tr>
+                                        <th style="width: 3em"></th>
+                                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                                            {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+                                        </th>
+                                    </tr>
+
+                                    
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+                                    <tr>
+                                        <td>
+                                            <a href="#" [pRowToggler]="rowData">
+                                                <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                            </a>
+                                        </td>
+                                        <td *ngFor="let col of columns">
+                                            {{rowData[col.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                                    <tr *ngFor="let each of rowData.email_Content">
+                                        <td [attr.colspan]="columns.length + 1">
+                                            <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+                                             
+                                                <div class="ui-g-12 ui-md-9">
+                                                    <div class="ui-g">
+                                                        <div class="ui-g-12">
+                                                            <b>Contact Email:</b> {{each.contact_email}}
+                                                        </div>
+                                                        <div class="ui-g-12">
+                                                            <b>Case Subject:</b> {{each.case_subject}}
+                                                        </div>
+                                                        <div class="ui-g-12">
+                                                            <b>Text Body:</b> {{each.text_body}}
+                                                        </div>
+                                                        <div class="ui-g-12">
+                                                            <b>Attached Documents:</b><a href=""  target="_blank">{{each.attached_docs}}</a> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            
+                    
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div></div>
+            </div>
+        </div>

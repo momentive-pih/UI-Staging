@@ -1,0 +1,29 @@
+.sub-icon {
+    display: inline-block;
+    font-size: 1rem;
+    vertical-align: middle;
+    line-height: 2.5;
+    position: absolute;
+    top: .75rem;
+    margin-top: .12502rem;
+    right: 0.4rem;
+    cursor: pointer;
+  }
+  .nav-sidebar .nav-link i .sub-icon {
+    margin-right: 1.25rem;
+    margin-top: .12502rem;
+    margin-bottom: .12502rem;
+    top: 5px;
+  }
+  .sidebar-light .nav-sidebar>.nav-item>.nav-back {
+    background-color: transparent;
+  }
+  .img-side{
+    margin-top: -15px;
+  }
+
+  .sidebar-dark {
+    background-color: #1a355e;
+    color: #fff;
+    height: 100%;
+}

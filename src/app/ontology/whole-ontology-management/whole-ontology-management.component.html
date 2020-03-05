@@ -1,0 +1,48 @@
+<div id="content">
+<div class="row">
+    <div class="col-md-6">
+        <h4><b>Ontology management master list </b></h4>
+    </div>
+    <div class="col-md-6">
+            <form action="#">
+                    <div class="form-group-feedback form-group-feedback-right">
+                        <input type="search" class="form-control" name="search"
+                            [(ngModel)]="userFilter.key" autocomplete="off" placeholder="Search">
+                        <div class="form-control-feedback">
+                            <i class="fa fa-search font-size-base text-muted"></i>
+                        </div>
+                    </div>
+                </form>
+    </div>
+</div>
+<br>
+    <div class="row">
+        <div class="col-md-12">
+                <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                    <th>Key</th>
+                                    <th>#ELA</th>
+                                    <th>Created Date</th>
+                                    <th>Created By</th>
+                                    
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of wholeSynonyms | filterBy: userFilter">
+                                    <td>{{data.key}}</td>
+                                    <td>{{data.synonyms}}</td>
+                                    <td>{{data.createdDate}}</td>
+                                    <td>{{data.CreatedBy}}</td>
+                              
+                            </tr>
+        
+                            </tbody>
+                        </table>   
+        </div>
+    </div>                                                                              
+</div>
+        
+
+

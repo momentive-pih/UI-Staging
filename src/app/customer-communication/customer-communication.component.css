@@ -1,0 +1,12 @@
+.modal-body {
+  background-color: #fff;
+  max-height: calc(100vh - 212px);
+  overflow-y: auto;
+ }
+  .docs-btn {
+    color: #1a355e !important;
+    border: 0px;
+    padding: 5px;
+    margin: 3px;
+    cursor: pointer;
+}

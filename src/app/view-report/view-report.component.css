@@ -1,0 +1,217 @@
+.line {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px dashed #ddd;
+  margin: 40px 0;
+}
+
+/* ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #6d7fcc;
+} */
+
+a.download {
+  background: #fff;
+  color: #7386D5;
+}
+
+a.article, a.article:hover {
+  background: #6d7fcc !important;
+  color: #fff !important;
+}
+.pdf-logo{
+    background: #1a355e;
+    float: right;
+    padding: 10px;
+}
+
+.panel-body-view{
+    background: #fff;
+    padding:20px;
+}
+.header-pdf{
+    padding: 10px 12px;
+    text-decoration: underline;
+}
+.btn-pdf{
+ float: right;
+ color:#fff;
+ background: #1a355e;
+ border-radius: 0px;
+}
+#Reportscroll{
+  overflow-y: auto;
+  height:600px;
+}
+
+.nav-sidebar .nav-link i .sub-icon {
+  margin-right: 1.25rem;
+  margin-top: .12502rem;
+  margin-bottom: .12502rem;
+  top: 5px;
+}
+.sidebar-light .nav-sidebar>.nav-item>.nav-back {
+  background-color: transparent;
+}
+.img-side{
+  margin-top: -15px;
+}
+.sub-icon {
+  display: inline-block;
+  font-size: 1rem;
+  vertical-align: middle;
+  line-height: 2.5;
+  position: absolute;
+  top: .75rem;
+  margin-top: .12502rem;
+  right: 0.4rem;
+  cursor: pointer;
+}
+
+.form-group {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-group input {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+
+.form-group label {
+  position: relative;
+  cursor: pointer;
+  padding-left: 25px;
+}
+
+.form-group label:before {
+  content:'';
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 2px solid  #1a355e;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 6px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.form-group input:checked + label:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 31px;
+  width: 5px;
+  height: 11px;
+  border: solid  #1a355e;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.tab_text{
+    Font-size: 16px;
+    padding: 20px;
+    color: #333;
+}
+.sidebar-report {
+  margin-left: -40px;
+  font-size: 12px;
+}
+.sidebar-sub-report {
+  margin-left: -30px;
+  font-size: 12px;
+}
+/* The check */
+.check {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  padding-right: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark-report {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #fff ;
+  border-color: #1a355e;
+  border-style:solid;
+  border-width:2px;
+}
+
+
+
+/* When the checkbox is checked, add a blue background */
+.check input:checked ~ .checkmark-report {
+  background-color: #fff  ;
+}
+
+/* Create the checkmark-report/indicator (hidden when not checked) */
+.checkmark-report:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark-report when checked */
+.check input:checked ~ .checkmark-report:after {
+  display: block;
+}
+
+/* Style the checkmark-report/indicator */
+.check .checkmark-report:after {
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid ;
+  border-color: #1a355e;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.text-font{
+  font-size:14px;
+}
+.mom-btn {
+  background-color:#1a355e;
+  color:#fff;
+  Padding:5px;
+  Margin:10px;
+  float: right;
+  border-radius: 0px;
+}
+.custabs-head {
+  border-bottom: 1px solid #d0d0d0;
+  background-color: #fff;
+}
+
+table.print-friendly tr td, table.print-friendly tr th {
+  page-break-inside: avoid;
+}   

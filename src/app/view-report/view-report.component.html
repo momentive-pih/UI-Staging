@@ -1,0 +1,1596 @@
+<div id="content">
+    <div class="container-fluid">
+
+        <!-- Content area -->
+        <div class="content pt-0">
+
+            <!-- Inner container -->
+            <div class="d-md-flex align-items-md-start">
+
+                <!-- Left sidebar component -->
+                <div class="sidebar sidebar-light sidebar-component sidebar-component-left sidebar-expand-md">
+
+                    <!-- Sidebar content -->
+                    <div class="sidebar-content">
+
+                        <!-- Sidebar search -->
+                        <div class="card">
+                            <div class="card-header bg-transparent header-elements-inline">
+                                <span class="text-uppercase font-size-sm font-weight-semibold">Category search</span>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item" data-toggle="collapse" href="#SearchCategories"
+                                            aria-expanded="true" aria-controls="collapseOne"><i
+                                                class="fa fa-angle-down fa-2x"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body" id="SearchCategories">
+                                <form action="#">
+                                    <div class="form-group-feedback form-group-feedback-right">
+                                        <input type="search" class="form-control" name="search"
+                                            [(ngModel)]="userFilter.Name" autocomplete="off" placeholder="Search">
+                                        <div class="form-control-feedback">
+                                            <i class="fa fa-search font-size-base text-muted"></i>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /sidebar search -->
+
+
+
+
+                        <!-- Sub navigation -->
+                        <div class="card mb-2">
+                            <div class="card-header bg-transparent header-elements-inline">
+                                <!-- <span class="text-uppercase font-size-sm font-weight-semibold">Categories</span>  -->
+                                <label class="check">Categories
+                                    <input type="checkbox" [(ngModel)]="SelectAllcheckValue"
+                                        (change)="SelectAllCategories(SelectAllcheckValue)" name="is_name">
+                                    <span class="checkmark-report"></span>
+                                </label>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item" data-toggle="collapse" href="#allCategories"
+                                            aria-expanded="true" aria-controls="collapseOne"><i
+                                                class="fa fa-angle-down fa-2x"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body p-0" id="allCategories">
+                                <ul class="nav nav-sidebar">
+
+                                    <li class="nav-item"
+                                        *ngFor="let product of sidebarCategoriesData | filterBy: userFilter ; let top = index ">
+                                        <a class="nav-link">
+                                            <div class="form-group"><input type="checkbox"
+                                                    [(ngModel)]="product.checkValue"
+                                                    (change)="topCheckBox(product.checkValue,product)"
+                                                    id="{{product.Name}}"> <label class="top-check"
+                                                    for="{{product.Name}}">{{product.Name}}</label> </div>
+                                            <h6 data-toggle="collapse" [attr.href]="'#'+product.sales_tab"
+                                                aria-expanded="true" aria-controls="collapseOne">
+                                                <i class="fa fa-angle-down sub-icon"></i>
+                                            </h6>
+                                        </a>
+                                        <ul class="nav nav-group-sub" id="{{product.sales_tab}}" class="collapse"
+                                            role="tabpanel" aria-labelledby="headingOne">
+                                            <li class="nav-item sidebar-report"
+                                                *ngFor="let data of product.tab_content; let i = index">
+
+                                                <a class="nav-link">
+                                                    <div class="form-group">
+                                                        <input type="checkbox" [(ngModel)]="data.checkValue"
+                                                            (change)="subCheckBox(data.checkValue,data,i,top)"
+                                                            id="{{data.name}}"> <label for="{{data.name}}">
+                                                            {{data.name}}</label></div>
+                                                    <span *ngIf="data.sub.length > 0" data-toggle="collapse"
+                                                        [attr.href]="'#'+data.id" aria-expanded="true"
+                                                        aria-controls="collapseOne"><i
+                                                            class="fa fa-angle-down sub-icon"></i></span>
+                                                </a>
+                                                <ul class="nav" id="{{data.id}}" class="collapse" role="tabpanel"
+                                                    aria-labelledby="headingOne">
+                                                    <li class="nav-item nav-back sidebar-sub-report"
+                                                        *ngFor="let subdata of data.sub;let index = i">
+                                                        <a class="nav-link">
+                                                            <div class="form-group">
+                                                                <input type="checkbox" [(ngModel)]="subdata.checkValue"
+                                                                    (change)="nextsubCheckBox(subdata.checkValue,data.sub,i)"
+                                                                    id="{{subdata.name}}"> <label
+                                                                    for="{{subdata.name}}"> {{subdata.name}}</label>
+                                                            </div>
+                                                        </a></li>
+                                                </ul>
+                                            </li>
+
+                                            <li class="nav-item-divider"></li>
+
+                                        </ul>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                        <!-- /sub navigation -->
+
+                    </div>
+                    <!-- /sidebar content -->
+
+                </div>
+                <!-- /left sidebar component -->
+
+
+                <!-- Right content -->
+                <div *ngIf="noReportPage">
+                    <div class="panel panel-primary">
+                        <div class="panel-body-view">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="panel-title text-default font-weight-semibold">
+                                        This product is unavailable in self service Report.
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="viewIntialPage">
+                    <div class="panel panel-primary">
+                        <div class="panel-body-view">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="panel-title text-default font-weight-semibold">
+                                        <!-- If any of the category is selected in the side panel, self service report will be generated and displayed, Generate Report Button will be displayed. -->
+                                        Select the category options from the left panel to enable the Self Service
+                                        Report Generation.
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="viewReportPage">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn mom-btn text-right" (click)="downloadAsPDF()"> <i
+                                    class="fa fa-file-pdf-o"></i> Download Report</button>
+                        </div>
+                    </div>
+                    <div id="pdfTable" #pdfTable>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-body-view">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h4 class="panel-title text-default font-weight-semibold">
+                                                    LSR 2680FC A
+                                                </h4>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h4 class="pdf-logo">
+                                                    <img src="../../assets/images/momentive/momentivelogo.png" alt=""
+                                                        class="img-responsive" width="150px">
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="tab-content">
+                                                <div class="header-pdf">
+                                                    <h5>Basic Information</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h6 class="text-default font-weight-semibold mb-2 ">Product
+                                                                Identification:</h6>
+                                                            <span class="product-identifiation text-font">LSR2680FC,
+                                                                LSR2680,NLR160-80,NLR160-80,T6227</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h6 class="text-default font-weight-semibold mb-2">Relabels:
+                                                                <span>N/A</span></h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h6 class="text-default font-weight-semibold mb-2">Chemical
+                                                                Name: <span>N/A</span></h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row card-innerProduct-body">
+                                                        <div class="col-md-12">
+                                                            <h6 class="text-default font-weight-semibold mb-2">Product
+                                                                Application:</h6>
+                                                            <div class="row">
+                                                                <div class="col-md-4"
+                                                                    *ngFor="let data of productApplication">
+                                                                    <div class="text-font">
+                                                                        <span
+                                                                            class="badge badge-mark border-grey-400 mr-1"></span>
+                                                                        {{data.app_text}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row card-inner-body">
+                                                        <div class="col-md-12">
+                                                            <h6 class="text-default font-weight-semibold mb-2">
+                                                                Registered Quantity Per Legal Entity: </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="header-pdf">
+                                                    <h5>Structure and Formulas</h5>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <h6 class="card-subtitle mb-2 mh-2">Chemical Structure</h6>
+                                                            <br>
+                                                            <h6>CAS Number: 68083-19-2 </h6>
+                                                            <img class="img-responsive"
+                                                                src="../../assets/images/momentive/chemicalStructure.png" />
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h6 class="card-subtitle mb-2 mh-2">Molecular Formula</h6>
+                                                            <br>
+                                                            <ol class="structure">
+                                                                <li> M1.99 D10.01 D”0.98 T20.01:
+                                                                    where D”= -(CH3)Si-CH2CH2CH2O(EO)7.3-OH</li>
+                                                            </ol>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <h6 class="card-subtitle mb-2 mh-2">Molecular Weight</h6>
+                                                            <br>
+                                                            <ol class="structure">
+                                                                <li>Monoisotopic Molecular Weight: 548.19/788.20 Da</li>
+
+                                                                <li> Average Molecular Weight: 548.92/789.43 Da </li>
+                                                            </ol>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="header-pdf">
+                                                    <h5>GHS Labelings</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Regulatory Basis</th>
+                                                                    <th>Symbols</th>
+                                                                    <th>Signal Word</th>
+                                                                    <th>Hazard Statements</th>
+                                                                    <th>Prec Statements</th>
+                                                                    <th>Additional Information / Remarks </th>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+
+                                                                        <td>Korea. GHS Classifications of Regulated
+                                                                            Chemicals</td>
+                                                                        <td>pictogram</td>
+                                                                        <td>none</td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td>Not applicable</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Singapore. Standard on Hazard Communication
+                                                                            for Hazardous Chemicals and Dangerous Goods
+                                                                            (SS 586)</td>
+                                                                        <td>pictogram</td>
+                                                                        <td>None</td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td>Not applicable</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Thailand GHS Classification</td>
+                                                                        <td>pictogram</td>
+                                                                        <td>None</td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td>Not applicable</td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="header-pdf">
+                                                    <h5>Compositions</h5>
+                                                </div>
+                                                <div class="header-pdf">
+                                                    <h6>Standard Composition</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Component Type</th>
+                                                                    <th>Component Id</th>
+                                                                    <th>CAS Number</th>
+                                                                    <th>Component Name</th>
+                                                                    <th>Value in %</th>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="header-pdf">
+                                                    <h6>Legal Composition</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Component Type</th>
+                                                                    <th>Component Id</th>
+                                                                    <th>CAS Number</th>
+                                                                    <th>Component Name</th>
+                                                                    <th>Value in %</th>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="header-pdf">
+                                                    <h6>100% Composition</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Component Type</th>
+                                                                    <th>Component Id</th>
+                                                                    <th>CAS Number</th>
+                                                                    <th>Component Name</th>
+                                                                    <th>Value in %</th>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Active ingredient</td>
+                                                                        <td>000000002766</td>
+                                                                        <td>7631-86-9</td>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li>CAS Name : Slica</li>
+                                                                                <li>IUPAC Name:Slica
+                                                                                <li></li>INCI name: 1. slica 2.SoLUM
+                                                                                DIATOMEAE
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>29.85%</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="header-pdf">
+                                                    <h5>Flow Diagrams</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h6 class="card-subtitle mb-2 text-muted">Manufacturing Flow
+                                                                Diagram</h6>
+                                                            <div class="img-content">
+                                                                <img class="img-responsive"
+                                                                    src="../../assets/images/momentive/ManufracturingFlowDiagram.png"
+                                                                    width="80%">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h6 class="card-subtitle mb-2 text-muted">Synthesis Diagram
+                                                            </h6>
+                                                            <div class="img-content">
+                                                                <img class="img-responsive"
+                                                                    src="../../assets/images/momentive/SynthesisDiagram.png">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="header-pdf">
+                                                    <h6>Notification Status
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Regulatory List</th>
+                                                                    <th>Notification</th>
+                                                                    <th>Additional Info / Remarks</th>
+                                                                    <th>Usage</th>
+
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>AICS - Australia AICS</td>
+                                                                        <td>y (Positive listing)</td>
+                                                                        <td> - </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>EINECS - EU EINECS List</td>
+                                                                        <td>y (Positive listing)</td>
+                                                                        <td> - </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    <tr>
+                                                                    <tr>
+                                                                        <td>IECSC - China Inv. Existing Chemical
+                                                                            Substances</td>
+                                                                        <td>y (Positive listing)</td>
+                                                                        <td> - </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    <tr>
+                                                                    <tr>
+                                                                        <td>KECI (KR) - Korea Existing Chemicals Inv.
+                                                                            (KECI)</td>
+                                                                        <td>y (Positive listing)</td>
+                                                                        <td> - </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    <tr>
+                                                                    <tr>
+                                                                        <td>DSL - Canada DSL Inventory List</td>
+                                                                        <td>y (Positive listing)</td>
+                                                                        <td> - </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    <tr>
+                                                                    <tr>
+                                                                        <td>NDSL - Canada NDSL Inventory</td>
+                                                                        <td>n (Negative listing)</td>
+                                                                        <td> - </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    <tr>
+                                                                    <tr>
+                                                                        <td>PICCS (PH) - Philippines PICCS</td>
+                                                                        <td>y (Positive listing)</td>
+                                                                        <td> - </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    <tr>
+                                                                    <tr>
+                                                                        <td>TSCA - US TSCA Inventory</td>
+                                                                        <td>y (Positive listing)</td>
+                                                                        <td> On TSCA Inventory </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    <tr>
+                                                                    <tr>
+                                                                        <td>TCSI - Taiwan Chemical Substance Inventory
+                                                                        </td>
+                                                                        <td>y (Positive listing)</td>
+                                                                        <td> On TSCA Inventory </td>
+                                                                        <td>PUBLIC: REG_WORLD</td>
+                                                                    <tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="header-pdf">
+                                                    <h6>AG Registration Status
+                                                    </h6>
+                                                    <p>EU Region</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Product</th>
+                                                                    <th>Country</th>
+                                                                    <th>Holder</th>
+                                                                    <th>Registration</th>
+                                                                    <th>Expiry</th>
+                                                                    <th>Status</th>
+                                                                    <th>Certificate</th>
+
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Silwet 806</td>
+                                                                        <td>Albania</td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> Active </td>
+                                                                        <td> N/A </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet 806</td>
+                                                                        <td>Armenia</td>
+                                                                        <td> N?A </td>
+                                                                        <td>Not Required </td>
+                                                                        <td> N?A </td>
+                                                                        <td> Active </td>
+                                                                        <td> N/A </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet 806</td>
+                                                                        <td>Australia</td>
+                                                                        <td> - </td>
+                                                                        <td> Not Required but defer to Germany </td>
+                                                                        <td> N?A </td>
+                                                                        <td> Active </td>
+                                                                        <td> N/A </td>
+
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="header-pdf">
+                                                    <h6>US Canada
+                                                    </h6>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Product Name</th>
+                                                                    <th>EPA inert Product Listing</th>
+                                                                    <th>CA DPR</th>
+                                                                    <th>CP DA</th>
+                                                                    <th>WSDA</th>
+                                                                    <th>OMRI</th>
+                                                                    <th>OMRI Reneval Date</th>
+                                                                    <th>Canada OMRI</th>
+                                                                    <th>OMRI Reneval Date</th>
+                                                                    <th>PMRA</th>
+
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>AF9000</td>
+                                                                        <td>40CFR§180.960</td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>AF9000NE</td>
+                                                                        <td>40CFR§180.960</td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>AgroSpred* 100</td>
+                                                                        <td>40CFR§180.960</td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="header-pdf">
+                                                    <h6>Latin America
+                                                    </h6>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Product</th>
+                                                                    <th>Country</th>
+                                                                    <th>Register Name</th>
+                                                                    <th>Date Granted</th>
+                                                                    <th>Date Of Expiry</th>
+                                                                    <th>Registration Holder</th>
+                                                                    <th>Registration Certificate Location</th>
+
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Silwet L-77</td>
+                                                                        <td>Costa Rica</td>
+                                                                        <td>Silwet L 77 100 SL </td>
+                                                                        <td>10/13/2006 </td>
+                                                                        <td> N/A </td>
+                                                                        <td> Momentive </td>
+                                                                        <td> x (P Drive - Costa Rica) </td>
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>Silwet 806</td>
+                                                                        <td>Ecuador</td>
+                                                                        <td>Silwet 806 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> UPL </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet L-77</td>
+                                                                        <td>Colombia</td>
+                                                                        <td>Silwet L-77 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> Segitis </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet L-77</td>
+                                                                        <td>Colombia</td>
+                                                                        <td>Silwet L-77 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> Segitis </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>Silwet 408</td>
+                                                                        <td>Chile</td>
+                                                                        <td>Silwet L-77 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> DIGAR </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet TX (Clone of Silwet 408)</td>
+                                                                        <td>Chile</td>
+                                                                        <td>Silwet L-77 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> DIGAR </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet L-77</td>
+                                                                        <td>Chile</td>
+                                                                        <td>Silwet L-77 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> DIGAR </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet L AG</td>
+                                                                        <td>Chile</td>
+                                                                        <td>Silwet L-77 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> DIGAR </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet 408</td>
+                                                                        <td>Parguay</td>
+                                                                        <td>Silwet L-77 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> Momentive (Roberto Diaz is contact) </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Silwet 408</td>
+                                                                        <td>Bolivia</td>
+                                                                        <td>Silwet L-77 </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> Rizobacter </td>
+                                                                        <td> - </td>
+
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="header-pdf">
+                                                    <h6>Customer Communication
+                                                    </h6>
+                                                    <p>
+                                                        US FDA Letter
+
+                                                    </p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span>
+                                                                <b>LSR 2680FC A with 21 CFR 177.2600-Rubber Articles</b>
+                                                                <p>
+                                                                    With regards to your query on the compliance of LSR
+                                                                    2680FC A with U.S Food and Drug Administartion (FDA)
+                                                                    regulations.we would like to inform you that this
+                                                                    product is compositionally compliant with 21 CFR
+                                                                    177.2600(c)- substance employed in the preparation
+                                                                    of rubber articles intended for repeated use.
+                                                                </p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="header-pdf">
+                                                    <h6>EU Food Contact
+
+                                                    </h6>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span>
+                                                                <b>EU Regulation 1935/2004</b>
+                                                                <h6>
+                                                                    Currently such specific measures exist for ceramics,
+                                                                    regenerated cellulose and plastics; for other groups
+                                                                    of
+                                                                    food contact materials, no EU regulations have been
+                                                                    developed so far.
+                                                                    Specific measures for silicone rubbers are not
+                                                                    foreseen to be developed yet at
+                                                                    the Community level as this represents a very low
+                                                                    priority for the European Commission.
+                                                                    For this purpose, and in addition to their usual
+                                                                    procedures for quality assurance,
+                                                                    Silicone manufacturers also ensure all components
+                                                                    are compliant to any binding texts from
+                                                                    the EU Member States, which deals with silicone
+                                                                    resins/elastomers intended to be used in contact
+                                                                    with food
+                                                                </h6>
+                                                                <br>
+                                                                <b>French Arrêté of 25 Novembre 1992</b>
+                                                                <h6>
+
+                                                                    Relating to materials and objects of silicone
+                                                                    elastomers put, or destined to be put in contact
+                                                                    with foodstuffs, food products and drinks
+                                                                </h6>
+
+
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="header-pdf">
+                                                    <h6>Heavy Metal
+                                                    </h6>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Product</th>
+                                                                    <th>LSR 2680FC A</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>AKA</td>
+                                                                        <td>-</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Batch #</td>
+                                                                        <td>-</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Sample #</td>
+                                                                        <td>-</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>System</td>
+                                                                        <td>-</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Date</td>
+                                                                        <td>-</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Aluminum(Al)</td>
+                                                                        <td>0.2 PPM</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Antimony(sb)</td>
+                                                                        <td>-</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Arsenic(As) </td>
+                                                                        <td>
+                                                                            < 0.12 PPM</td> </tr> <tr>
+                                                                        <td> Barium(Ba) </td>
+                                                                        <td>
+                                                                            < 0.12 PPM</td> </tr> <tr>
+                                                                        <td> Beryillum(Be) </td>
+                                                                        <td>
+                                                                            < 0.12 PPM</td> </tr> <tr>
+                                                                        <td> Boron(B) </td>
+                                                                        <td>-</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Cadmium(cd) </td>
+                                                                        <td>
+                                                                            < 0.12 PPM</td> </tr> <tr>
+                                                                        <td> Calcium(ca) </td>
+                                                                        <td> 1.36 PPM</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Carbon </td>
+                                                                        <td>-</td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="header-pdf">
+                                                    <h6>Customer Communication
+                                                    </h6>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Case Number</th>
+                                                                    <th>1st Level Case Classification</th>
+                                                                    <th>2nd Level Case Classification</th>
+                                                                    <th>Customer Name</th>
+                                                                    <th>Manufracturing Plant </th>
+                                                                    <th>Material Describtion</th>
+                                                                    <th>Material Number</th>
+                                                                    <th>Tier 2 Owner</th>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>68083-19-2</td>
+                                                                        <td>product/Material Information</td>
+                                                                        <td>Customer product Quality Questionnaires</td>
+                                                                        <td>OU EUROBIO LAB </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> -</td>
+                                                                        <td> -</td>
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>140641</td>
+                                                                        <td>product/Material Information</td>
+                                                                        <td>Customer product Quality Questionnaires</td>
+                                                                        <td>ART COSMETICS SRL VIA E. </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> -</td>
+                                                                        <td> -</td>
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>140644</td>
+                                                                        <td>product/Material Information</td>
+                                                                        <td>Customer product Quality Questionnaires</td>
+                                                                        <td>Azelis Australia Pty LTd. </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> -</td>
+                                                                        <td> -</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>140645</td>
+                                                                        <td>product/Material Information</td>
+                                                                        <td>Customer product Quality Questionnaires</td>
+                                                                        <td>AZELIS CANADA INC. </td>
+                                                                        <td> - </td>
+                                                                        <td> - </td>
+                                                                        <td> -</td>
+                                                                        <td> -</td>
+
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="header-pdf">
+                                                    <h6>Toxicology
+                                                    </h6>
+                                                    <p>Study Title and Date</p>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Product Name</th>
+                                                                    <th>ELA#</th>
+                                                                    <th>Test Article Describtion</th>
+                                                                    <th>Study Title</th>
+                                                                    <th>Final Report Data </th>
+
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>LSR 2680FC A</td>
+                                                                        <td>ELA2680</td>
+                                                                        <td>LSR 2680FC A(LSR 2680FC A - Medical Grade
+                                                                            Name),(Pressure 10 min 170c,Post cure 4h
+                                                                            200),(Lot 09G002)</td>
+                                                                        <td>USP class VI and ISO10993(Parts 6,10,11)
+                                                                        </td>
+                                                                        <td>Nov 2010 </td>
+
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>LSR 2680FC A</td>
+                                                                        <td>ELA2680</td>
+                                                                        <td>LSR 2680FC A(LSR 2680FC A - Medical Grade
+                                                                            Name),(Pressure 10 min 170c.Postcure 4h
+                                                                            200c),(Lot 09G002)</td>
+                                                                        <td>FDA Extractives(Per 21 CFR 177.2600)</td>
+                                                                        <td> Nov 2010 </td>
+
+
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="header-pdf">
+                                                    <h6>Monthly Toxicology Study List
+
+                                                    </h6>
+
+                                                    <p>Sealant</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Product Commerical Name</th>
+                                                                    <th>Studies</th>
+                                                                    <th>Status</th>
+                                                                    <th>Comments</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>AMTG</td>
+                                                                        <td>Melting Point</td>
+                                                                        <td>Less than -20c</td>
+                                                                        <td>Final Report</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>AMTG</td>
+                                                                        <td>Boiling Point</td>
+                                                                        <td>251+ 1c(525+ 1k) at 102 kpa</td>
+                                                                        <td>Final Report</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>AMTG</td>
+                                                                        <td>Density</td>
+                                                                        <td>0.981 kg/m3 at 20.0 + 0.5</td>
+                                                                        <td>Final Report</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>AMTG</td>
+                                                                        <td>Surface Tension</td>
+                                                                        <td>54.5 +2.0mN/m(1g/L solution) at 20.0+</td>
+                                                                        <td>Final Report- amendment</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>AMTG</td>
+                                                                        <td>Water Solubility</td>
+                                                                        <td>Fully misciable in all propotions at 20.0
+                                                                        </td>
+                                                                        <td>Final Report - amendment</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>AMTG</td>
+                                                                        <td>Water Solubility</td>
+                                                                        <td>Fully misciable in all propotions at 20.0
+                                                                        </td>
+                                                                        <td>Final Report - amendment</td>
+
+                                                                    </tr>
+
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="header-pdf">
+
+                                                    <p>Silane</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h5>Toxicology Silane Details</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="header-pdf">
+
+                                                    <h6>Toxicology Summary
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Date of Issue</th>
+                                                                    <th>Document Name</th>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1st January 2018</td>
+                                                                        <td>LSR2680 FCA - FDA compliance letter to
+                                                                            DARMSTÄDTER GmbH</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>1st June 2018</td>
+                                                                        <td>LSR2680 FCA, 2030,- FDA Compliance Letter to
+                                                                            Philips - 2019</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="header-pdf">
+
+                                                    <h6>Toxicology Registration Tracker
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h6>Toxicology Registration Tracker</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="header-pdf">
+
+                                                    <h6>Restricted Substance
+                                                    </h6>
+                                                    <p>GADSL</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Substance</th>
+                                                                    <th>CAS RN</th>
+                                                                    <th>Class SI FIC Action</th>
+                                                                    <th>Reason Code</th>
+                                                                    <th>Souce(Legal Requirement Regulations)</th>
+                                                                    <th>Reporting threshold(0.1 % Unless Otherwise State
+                                                                        )</th>
+                                                                    <th>% weight in SAP std Composition</th>
+
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Acetaldehyde</td>
+                                                                        <td>68083-19-2</td>
+                                                                        <td>FI</td>
+                                                                        <td>Final Report</td>
+                                                                        <td>Reg(EC) No 12/21/2008</td>
+                                                                        <td>-</td>
+                                                                        <td>30%</td>
+
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                                <div class="header-pdf">
+
+                                                    <h6>California Prop 65
+                                                    </h6>
+                                                </div>
+                                        
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table id="mytable" class="table print-friendly">
+                                                            <thead class="custabs-head">
+                                                                <th>Chemical</th>
+                                                                <th>Type of Toxicity</th>
+                                                                <th>Listing Mechanism</th>
+                                                                <th>CAS NO</th>
+                                                                <th>Date Listed</th>
+                                                                <th>NSRL or MADL(aeg/day)a
+                                                                </th>
+                                                                <th>% weight in SAP std Composition</th>
+
+
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>A-alpha-c(2-Amino-9H-pyrido[2,3-b]indole)</td>
+                                                                    <td>Cancer</td>
+                                                                    <td>AB</td>
+                                                                    <td>68083-19-2</td>
+                                                                    <td>1-Jan-90</td>
+                                                                    <td>2</td>
+                                                                    <td>10 %</td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Abiratenone acetate</td>
+                                                                    <td>Developmental, Female, Male</td>
+                                                                    <td>FR</td>
+                                                                    <td>68083-19-2</td>
+                                                                    <td>8-Apr-16</td>
+                                                                    <td>-</td>
+                                                                    <td>20 %</td>
+
+                                                                </tr>
+
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="header-pdf">
+
+                                                <h6>Sales Information
+                                                </h6>
+                                                <p>Sales Volume</p>
+                                            </div>
+                                        
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <table id="mytable" class="table print-friendly">
+                                                        <thead class="custabs-head">
+                                                            <th>Material Number</th>
+                                                            <th>Material Description</th>
+                                                            <th>Basic Data Text</th>
+                                                            <th>Sales ORG</th>
+                                                            <th>3 years past sales(BW Filed 1)</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>114686</td>
+                                                                <td>LSR2680FC/DRUM KIT/400KG</td>
+                                                                <td>LSR2680FC</td>
+                                                                <td>N/A</td>
+                                                                <td>1000 Kg</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>121856</td>
+                                                                <td>LSR2680 TH/Drum kit/400Kg</td>
+                                                                <td>LSR2680</td>
+                                                                <td>Hong Kong - HK01 Momentive Hong Kong China - NG01
+                                                                    Nantong Momentive, SH01 Momentive SH Trading
+                                                                    Thailand - TH01 Momentive Thailand</td>
+                                                                <td>2000 Kg</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>131438</td>
+                                                                <td>NLR160-80/PAILKIT/88LB-40KG</td>
+                                                                <td>NLR160-80</td>
+                                                                <td>China - NG01 Nantong Momentive, SH01 Momentive SH
+                                                                    Trading</td>
+                                                                <td>3000 Kg</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>114686</td>
+                                                                <td>LSR2680FC/DRUM KIT/400KG</td>
+                                                                <td>LSR2680FC</td>
+                                                                <td>N/A</td>
+                                                                <td>1000 Kg</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+
+
+                                    <div class="header-pdf">
+
+                                            <h6>Location Details:
+                                            </h6>
+                                           
+                                        </div>
+                                    
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h6>Manufacturing Location and Address </h6>
+                                                
+                                                <h6>Production Sites</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="header-pdf">
+
+                                            <h6>Relesed Documents
+                                            </h6>
+                                           
+                                        </div>
+                                    
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                    <table id="mytable" class="table print-friendly">
+                                                            <thead class="custabs-head">
+                                                                <th>Category</th>
+                                                                <th>Generation Variant</th>
+                                                                <th>Language</th>
+                                                                <th>Version</th>
+                                                                <th>Relesed on</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>ROHS Compliance</td>
+                                                                    <td>ROHS - ROHS Regulatory Document without Data</td>
+                                                                    <td>English</td>
+                                                                    <td>V1.0</td>
+                                                                    <td>10.01.2017</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>Material safety data sheet</td>
+                                                                        <td>RMSDS KR - Gen Variant for MSDS Korea</td>
+                                                                        <td>English</td>
+                                                                        <td>V1.2</td>
+                                                                        <td>10.01.2018</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                            <td>Material safety data sheet</td>
+                                                                            <td>NLR160-80/PAILKIT/88LB-40KG</td>
+                                                                            <td>NLR160-80</td>
+                                                                            <td>China - NG01 Nantong Momentive, SH01 Momentive SH Trading</td>
+                                                                            <td>17.07.2018</td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                                <td>Material safety data sheet</td>
+                                                                                <td>MSDS KR - Gen Variant for MSDS Korea</td>
+                                                                                <td>Korean</td>
+                                                                                <td>V1.2</td>
+                                                                                <td>10.01.2018</td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                    <td>Material safety data sheet</td>
+                                                                                    <td>MSDS SG - Gen Variant for MSDS Singapore</td>
+                                                                                    <td>English</td>
+                                                                                    <td>V1.0</td>
+                                                                                    <td>29.03.2017</td>
+                                                                                </tr>
+                                                            
+                                                            </tbody></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <!-- <div class="header-pdf">
+                                                                     
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row">
+                                                                                </div>
+                                                                            </div> -->
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /right content -->
+
+    </div>
+    <!-- /inner container -->
+
+</div>
+</div>
+<!-- /content area -->
+
+</div>
