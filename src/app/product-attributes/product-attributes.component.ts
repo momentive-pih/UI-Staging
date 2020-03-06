@@ -13,6 +13,7 @@ import { FormControl } from '@angular/forms';
 import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material/select';
 import { Spec_Id, Spec_IdS } from '../service/momentive.service';
+import * as xlsx from 'xlsx';
 
 declare var $: any;
 $.fn.modal.Constructor.prototype._enforceFocus = function() {};
@@ -108,6 +109,10 @@ export class ProductAttributesComponent implements OnInit, AfterViewInit, OnDest
   public filteredSpec_IdsMulti: ReplaySubject<Spec_Id[]> = new ReplaySubject<Spec_Id[]>(1);
 
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
+
+  @ViewChild('SVTtable', { static: false }) SVTtable: ElementRef;
+
+  @ViewChild('StandardCompositiontable', { static: false }) StandardCompositiontable: ElementRef;
 
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
@@ -737,5 +742,18 @@ getAddressData() {
     );
   }
 
-
+  exportToSVTTableExcel() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.SVTtable.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'SVTtable.xlsx');
+   }
+   exportToStandardCompostionExcel() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.StandardCompositiontable.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'StandardCompositiontable.xlsx');
+   }
 }

@@ -355,7 +355,7 @@ export class CustomerCommunicationComponent implements OnInit {
         this.EuFoodContact = true;
         this.heavyMetals = false;
         this.communicationHistory = false;
-      } else if ( this.customerCommunicationTab === 'Heavy Metals Composition') {
+      } else if ( this.customerCommunicationTab === 'Heavy Metals content') {
         this.heavyMetals = true;
         this.communicationHistory = false;
         this.usFDA = false;

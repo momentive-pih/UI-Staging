@@ -104,7 +104,7 @@ export class RestrictedSubstanceComponent implements OnInit {
       if ( this.restrictedSubstanceTab === 'GADSL') {
         this.gadslCheck = true;
         this.californiaCheck = false;
-      } else if (this.restrictedSubstanceTab === 'California Pro 65') {
+      } else if (this.restrictedSubstanceTab === 'California Prop 65') {
         this.californiaCheck = true;
         this.gadslCheck = false;
       }

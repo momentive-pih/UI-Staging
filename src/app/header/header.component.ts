@@ -187,26 +187,9 @@ export class HeaderComponent implements OnInit {
     $('.select').click(function (event) {
       //$('.option-list, .search-box').hide();
       $(this).closest('.dropdown-select').find('.option-list, .search-box').toggle();
-      $('.option-list a').click(function () {
-        var select = $(this).text();
-        $(this).closest('.dropdown-select').children('.select').text(select);
-        $('.option-list, .search-box').hide();
-      });
     });
     //Search
-    $('.seach-control').keyup(function () {
-      var val = $(this).val().toLowerCase();
-      var list = $(this).closest('.dropdown-select').find('li')
-      list.each(function () {
-        var text = $(this).text().toLowerCase();
-        if (text.indexOf(val) == -1) {
-          $(this).hide();
-        }
-        else {
-          $(this).show();
-        }
-      })
-    });
+
     this.placeholder = 'Enter the Details';
     this.keyword = 'name';
     this.historyHeading = 'Recently selected';

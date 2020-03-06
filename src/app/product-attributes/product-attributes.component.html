@@ -435,6 +435,10 @@
                             </mat-form-field>
 
                         </div>
+<div class="col-md-9">
+    <button (click)="exportToStandardCompostionExcel()" class="btn btn-success pull-right">Export To Excel</button> 
+</div>
+                      
 
 
                     </div>
@@ -442,7 +446,7 @@
 
                     <div class="row" *ngIf="compositionSHI">
                         <div class="col-md-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive" #StandardCompositiontable>
                                 <div class="table-responsive" id="sailorTableArea">
                                     <table id="sailorTable" class="table table-striped table-bordered" width="100%">
                                         <thead>
@@ -585,13 +589,24 @@
                                 </ng-template>
                             </p-table>
                         </div>
-                        <br>
 
-
+                    </div>
+<br>
                         <!-- SVT Legal Composition -->
-                        <div class="co-md-12" *ngIf="subCompositionLevel">
-                            <h5>SVT Substance Details</h5>
-                                <div class="table-responsive">
+                        <div class="row">
+                        <div class="col-md-12" *ngIf="subCompositionLevel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5><b>SVT Substance Details</b></h5>
+                                    </div>
+                                <div class="col-md-6">
+                                    <button (click)="exportToSVTTableExcel()" class="btn btn-success pull-right">Export To Excel</button> 
+                                </div>
+                            </div>
+                            <br>
+                           
+                          
+                                <div class="table-responsive" #SVTtable>
                                     <div class="table-responsive" id="sailorTableArea">
                                         <table id="sailorTable" class="table table-striped table-bordered" width="100%">
                                             <thead>

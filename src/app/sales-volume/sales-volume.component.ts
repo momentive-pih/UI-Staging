@@ -22,7 +22,7 @@ export class SalesVolumeComponent implements OnInit {
     product_Name: any = [];
     product_type: any = [];
     salesCheckData: any = [];
-    saleTab = 'Location Details';
+    saleTab = 'Regions where sold';
     volumeCheck = true;
     locationCheck = false;
     salesReport: any;
@@ -94,7 +94,7 @@ export class SalesVolumeComponent implements OnInit {
         this.volumeCheck = true;
         this.locationCheck = false;
       // tslint:disable-next-line: align
-      }if (this.saleTab === 'Location Details') {
+      }if (this.saleTab === 'Regions where sold') {
         this.locationCheck = true;
         this.volumeCheck = false;
       }

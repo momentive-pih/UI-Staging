@@ -30,7 +30,7 @@
 					<div class="reactive-form">
 						<form autocomplete="off" novalidate [formGroup]="reactiveForm">
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-11">
 									<div class="new-search">
 										<ng-select #code class="custom" [items]="items$" placeholder="Enter the details"
 											bindLabel="name" bindValue="name" formControlName="selectedSearchNew"
@@ -69,6 +69,24 @@
 											</ng-template>
 										</ng-select>
 									</div>
+								</div>
+								<div class="col-md-1">
+									<div class="dropdown-select warning">
+										<a class="select"><i class="fa fa-info-circle" aria-hidden="true"></i> </a>
+										 <ul class="option-list">
+										
+										 <li><a class="category-list"><b>Search Key Fields</b></a></li>
+										  <li><a class="category-list"><b>NAM*</b> - Product Name</a></li>   
+										  <li><a class="category-list"><b>BDT*</b> - Basic Data Text</a></li> 
+										  <li><a class="category-list"><b>MAT*</b> - Material Number</a></li>   
+										  <li><a class="category-list"><b>CAS*</b> - CAS Number</a></li> 
+										  <li><a class="category-list"><b>SPEC*</b> - Specification ID</a></li>   
+										  <li><a class="category-list"><b>RSPEC*</b> - Real Specification ID</a></li>   
+										  <li><a class="category-list"><b>PSPEC*</b> - Pure Specification ID</a></li> 
+										  <li><a class="category-list"><b>SYN*</b> - Product Synonyms</a></li> 
+										  <li><a class="category-list"><b>CHEMICAL*</b> - Chemical Name</a></li> 
+										   </ul>
+									   </div>
 								</div>
 
 

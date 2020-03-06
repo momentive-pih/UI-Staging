@@ -1558,12 +1558,12 @@
          ],
         
          "ghsLabelingHeader" : [
-          { "field": "regulatory_Basis", "header": "Regulatory Basis","width": "30%"},
+          { "field": "regulatory_Basis", "header": "Regulatory Basis","width": "20%"},
           { "field": "symbols", "header": "Symbols","width": "10%"},
           { "field": "signal_Word", "header": "Signal Word","width": "10%"},
           { "field": "hazard_Statements", "header": "Hazard Statements","width": "10%" },
           { "field":"prec_Statements", "header":"Prec Statements","width": "10%"}, 
-          {"field":"additional_Information","header":"Additional Information / Remarks","width": "10%","white-space": "pre-wrap"}
+          {"field":"additional_Information","header":"Additional Information / Remarks","width": "20%","white-space": "pre-wrap"}
         ],
         
         "ghsLabelingData" : [
