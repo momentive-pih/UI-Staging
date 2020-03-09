@@ -64,25 +64,34 @@ export class HomeComponent implements OnInit {
               private momentiveService: MomentiveService,
               ) {
           
-                // this.momentiveService.homeEvent.subscribe(data => {
-                //   alert('123456');
-                //   this.ngOnInit();
-                // });
+                this.momentiveService.homeEvent.subscribe(data => {
+                  this.ngOnInit();
+                });
  
   }
 
   ngOnInit() {
-      // intialHOmeDataDetails
-      this.momentiveService.getHomePageData().subscribe(data => {
+
+    // this.route.queryParams.subscribe(params => {
+    //   this.UserSelectedProducts = params["selected_specs"];
+    //   console.log(this.UserSelectedProducts);
+    // });
+    // this.UserSelectedProducts =JSON.parse(localStorage.getItem('SearchBarData'));
+    // console.log(this.UserSelectedProducts);
+
+     // intialHOmeDataDetails
+
+      this.UserSelectedProducts = this.momentiveService.selectedProduct;
+      console.log(this.UserSelectedProducts);
+
+      this.momentiveService.getHomePageData(this.UserSelectedProducts).subscribe(data => {
         this.intialDataDetails = data;
         console.log(this.intialDataDetails);
       }, err => {
         console.error(err);
       });
 
-    this.UserSelectedProducts =JSON.parse(localStorage.getItem('SearchBarData'));
-    console.log(this.UserSelectedProducts);
-
+  
   // intialData_Details
     this.momentiveService.getSearchData().subscribe(data => {
     this.productdata = data;
@@ -270,6 +279,7 @@ MouseModalBox(id: any, data: any) {
   const index = id;
   const Item = null;
   const extractData = data;
+  console.log(data);
   const modalOpenData = extractData.value;
   modalOpenData.forEach(obj => {
     if (obj.tab_modal) {

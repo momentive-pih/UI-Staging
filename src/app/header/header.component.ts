@@ -11,7 +11,7 @@ import { Observable, Subject ,ReplaySubject} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption, NgSelectComponent } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart, NavigationExtras} from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material';
 
@@ -874,6 +874,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         
         this.momentiveService.homeEvent.next();
+        this.momentiveService.setSelectedProductData(this.selectedSearchText);
+        const homePageData = JSON.stringify(this.selectedSearchText);
         this.router.navigate(['/app-home']);
       }, err => {
         console.log(err);
@@ -972,16 +974,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-  homeSpecList(data) {
-    console.log(data.value);
+  selectedTopSpecList(data) {
     console.log(this.bankMultiCtrl.value);
-    const sideSpecList = data;
+    const sideSpecList = this.bankMultiCtrl.value[0];
     console.log(sideSpecList);
-//     this.momentiveService.getSelctedSpecList(sideSpecList).subscribe(data=>{
-//       console.log(data)
-//     },err => {
-//       console.log(err);
-//  })
+    this.momentiveService.setSelectedProductData(sideSpecList);
+    this.momentiveService.homeEvent.next();
   }
 
 

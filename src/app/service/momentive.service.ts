@@ -23,6 +23,9 @@ export class MomentiveService {
   homeEvent: Subject<any> = new Subject();
   itemsNew: any = [];
   searchkey: any = [];
+
+  selectedProduct:any;
+
   notifyObservable$ = this.invokeEvent.asObservable();
 
 
@@ -53,24 +56,21 @@ export class MomentiveService {
   }
 
   //Homepage Data
-  getHomePageData(): Observable<any[]> {
-    return this.http.get<any[]>(Constants.SERVICES_DOMAIN + "product/homePageData");
+  getHomePageData(data): Observable<any[]> {
+    console.log(data);
+    return this.http.post<any[]>(Constants.SERVICES_DOMAIN + "postHomePageData",data);
   }
 
-  //Selected Spec List
-  getSelctedSpecList(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "product/selectedspeclist", data);
-  }
 
   //Categories Details
   getSelectedCategories(data) {
     console.log(data);
-    return this.http.post(Constants.SERVICES_DOMAIN + "all/selectedCategories", data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "selectedCategories", data);
   }
 
   //Basic Properties Details
   getBasicProperties(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "product/PostbasicProperties",data);
+    return this.http.get(Constants.SERVICES_DOMAIN + "PostbasicProperties",data);
   }
 
   //Seven Categories Details
@@ -82,37 +82,47 @@ export class MomentiveService {
 
   //ProductCompliance
   getProductCompliance(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "productAttributes/postProductCompliance",data);
+    return this.http.get(Constants.SERVICES_DOMAIN + "postProductCompliance",data);
   }
 
   //CustomerCommunication
   getCustomerCommunication(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "productAttributes/postCustomerCommunication",data);
+    return this.http.get(Constants.SERVICES_DOMAIN + "postCustomerCommunication",data);
   }
 
   //Toxicology
   getToxicology(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "productAttributes/postToxicology",data);
+    return this.http.get(Constants.SERVICES_DOMAIN + "postToxicology",data);
   }
 
   //Restricted Substance
   getRestrictedSubstance(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "productAttributes/postRestrictedSubstance",data);
+    return this.http.get(Constants.SERVICES_DOMAIN + "postRestrictedSubstance",data);
   }
 
   //Sales Information
   getSalesInformation(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "productAttributes/postSalesInformation",data);
+    return this.http.get(Constants.SERVICES_DOMAIN + "postSalesInformation",data);
   }
 
   //Release Documents
-  getReleaseDocuments(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "productAttributes/postReleaseDocuments",data);
+  getReportDocuments(data) {
+    return this.http.get(Constants.SERVICES_DOMAIN + "postReportDocuments",data);
   }
 
   //self Service Report
   getSelfServiceReport(data) {
-    return this.http.get(Constants.SERVICES_DOMAIN + "productAttributes/postSelfServiceReport",data);
+    return this.http.get(Constants.SERVICES_DOMAIN + "postSelfServiceReport",data);
+  }
+
+
+  setSelectedProductData(value){
+    this.selectedProduct = value;
+    console.log(this.selectedProduct);
+  }
+
+  getSelectedProductData(){
+    return this.selectedProduct;
   }
 
 
