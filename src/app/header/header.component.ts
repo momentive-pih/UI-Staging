@@ -123,6 +123,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   basicProperties: any = []
   searchAlertMessage: any;
   relatedProducts = true;
+  searchLoader = false;
+  searchTextTerms:any;
+  searchTerm:any;
   objectKeys = Object.keys;
   public items$: Observable<product[]>;
   public input$ = new Subject<string | null>();
@@ -166,6 +169,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.reactiveForm = fb.group({
       selectedSearchNew: ['', Validators.required],
     });
+    console.log( this.reactiveForm.value);
 
     this.SpecreactiveForm = fb.group({
       selectedSPECItems: ['', Validators.required],
@@ -771,16 +775,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   private searchProduct(term: string | null, arr, Isfirst) {
     this.suggestionDrop = true;
-    const searchTerm = term ? term : '';
+    this.searchTerm = term ? term : '';
     this.SearchProducts = {
-      'SearchData': searchTerm
+      'SearchData': this.searchTerm
     };
     console.log(this.SearchProducts);
     this.searchDataLength = this.SearchProducts.SearchData.length;
-    if (this.searchDataLength > 1 && Isfirst) {
-      this.nextLibAvailable = false;
+    if (this.searchDataLength > 2 && Isfirst) {
+      this.nextLibAvailable = true;
       this.momentiveService.getAllEvents(this.SearchProducts).subscribe(data => {
         if (data) {
+          this.nextLibAvailable = false;
           console.log('inside', data.concat([]));
           this.product_Name = data;
           this.product_Name.forEach(element => {
@@ -788,43 +793,46 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
               this.ProductDrop.push(element.type);
             }
           });
-          const searchTermNew = searchTerm.split('*');
-          const searchTextTerms = searchTermNew[1]
+          console.log(this.searchTerm);
+
+           if(this.searchTerm.includes("*")) {
+            const searchTermNew = this.searchTerm.split('*');
+            this.searchTextTerms = searchTermNew[1];
+            console.log(this.searchTextTerms);
+           }
+        
           this.items$ = this.product_Name.filter((product_Name) => {
-            return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
-             product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
-             product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
-             product_Name.name.toLowerCase().startsWith(searchTextTerms);
+            return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+             product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
+             product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
+             product_Name.name.toLowerCase().startsWith(this.searchTextTerms.toLowerCase());
           });
-        }
+        } 
       }, err => {
         console.log(err);
       })
     } else if (Isfirst === false) {
-      const searchTermNew = searchTerm.split('*');
-      const searchTextTerms = searchTermNew[1]
       this.items$ = this.product_Name.filter((product_Name) => {
-        return product_Name.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-         product_Name.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product_Name.key.toLowerCase().includes(searchTerm.toLowerCase()) || 
-          product_Name.name.toLowerCase().startsWith(searchTextTerms);
+        return product_Name.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+         product_Name.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          product_Name.key.toLowerCase().includes(this.searchTerm.toLowerCase()) 
       });
     } else if (this.searchDataLength <= 0 && Isfirst) {
       this.product_Name = [];
       this.ProductDrop = [];
       this.clearCheck();
       this.items$ = this.product_Name.filter((product_Name) => {
-        return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
-        product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
-         product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase());
+        return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
+        product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+         product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase());
       });
     }
     else if (this.searchDataLength === 0 && Isfirst) {
       this.product_Name = [];
       this.items$ = this.product_Name.filter((product_Name) => {
-        return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
-        product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
-        product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase());
+        return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
+        product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
+        product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase());
       });
     }
   }
@@ -840,6 +848,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   onChangeData(data) {
     this.selectedProducts = true;
     this.selectedSearchText = data;
+    this.secondaryNavBar = true;
+    this.momentiveService.homeEvent.next();
+    this.momentiveService.setSelectedProductData(this.selectedSearchText);
+    this.router.navigate(['/app-home']);
     localStorage.setItem('SearchBarData', JSON.stringify(data))
     if (data.length <= 0) {
       this.product_Name = [];
@@ -854,7 +866,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedProducts = true;
       this.product_Name = [];
       this.ProductDrop = [];
-      this.secondaryNavBar = true;
       this.momentiveService.getSelectedProducts(data).subscribe((res) => {
         this.Isfirst = false;
         console.log(res);
@@ -865,18 +876,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         });
         if (this.product_Name.length > 0) {
-          this.searchProduct('', this.product_Name, this.Isfirst)
+          this.searchProduct('', this.product_Name, this.Isfirst);
         } else {
           alert('NO More Related Products Available');
           this.relatedProducts = false;
           this.product_Name = [];
           this.searchProduct('', this.product_Name, this.Isfirst)
         }
-        
-        this.momentiveService.homeEvent.next();
-        this.momentiveService.setSelectedProductData(this.selectedSearchText);
-        const homePageData = JSON.stringify(this.selectedSearchText);
-        this.router.navigate(['/app-home']);
       }, err => {
         console.log(err);
       })
@@ -999,7 +1005,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filteredBanksMulti
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {
-        this.multiSelect.compareWith = (a: Bank, b: Bank) => a && b && a.id === b.id;
+        // this.multiSelect.compareWith = (a: Bank, b: Bank) => a && b && a.id === b.id;
       });
   }
 

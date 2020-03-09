@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
   @Input()radioItem: any;
   radiovalue: any;
   sidebarTopIcon = false;
+  Pihloader = true;
   openId: any;
   productdata: any = [];
   UserSelectedProducts:any;
@@ -85,8 +86,15 @@ export class HomeComponent implements OnInit {
       console.log(this.UserSelectedProducts);
 
       this.momentiveService.getHomePageData(this.UserSelectedProducts).subscribe(data => {
-        this.intialDataDetails = data;
-        console.log(this.intialDataDetails);
+        if(Object.keys(data).length > 0) {
+          this.Pihloader = false;
+          this.intialDataDetails = data;
+          console.log(this.intialDataDetails);
+          // const size = Object.keys(this.intialDataDetails).length;
+        } else{
+             this.Pihloader = true;
+        }
+       
       }, err => {
         console.error(err);
       });

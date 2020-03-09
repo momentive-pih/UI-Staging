@@ -296,3 +296,15 @@
   padding: 5px;
   cursor: pointer;
 }
+.loader-class{
+  font-size: 32px;
+  color: #1a355e;
+  text-align: center !important;
+  display: block;
+}
+.loader-text{
+  font-size: 24px;
+  color: #1a355e;
+  text-align: center !important;
+  display: block;
+}

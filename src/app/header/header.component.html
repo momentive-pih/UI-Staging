@@ -39,9 +39,9 @@
 										     [selectableGroupAsModel]="false"
 											[compareWith]="compareAccounts" [selectableGroup]="false" groupBy="group"
 											(change)="onChangeData($event)" [closeOnSelect]="false"
-											(remove)="clearCheck()"
+											(remove)="clearCheck()" [loading]="false" 
 											typeToSearchText="Enter 3 characters to begin your search.."
-											notFoundText="No records found">
+											notFoundText="Fetching data...">
 											<ng-template ng-header-tmp style="color:#ddd" *ngIf="selectedProducts">
 												<div class="selcted-crt">
 													<b class="selected-sug">Criteria Selected -</b> &nbsp;<span
@@ -57,16 +57,14 @@
 														{{data}}{{i== ProductDrop.length-1 ? '': ','}} </span>
 												</div>
 											</ng-template>
-											<ng-template ng-typetosearch-tmp *ngIf="relatedProducts">
-												<div class="ng-option disabled"> Enter 3 characters to begin your
+											<ng-template ng-typetosearch-tmp>
+												<div class="ng-option disabled" *ngIf="relatedProducts"> Enter 3 characters to begin your
 													search.. </div>
 											</ng-template>
 											<ng-template ng-notfound-tmp>
 												<div class="ng-option disabled"> No data found </div>
 											</ng-template>
-											<ng-template ng-loadingtext-tmp>
-												<div class="ng-option disabled"> Fetching data.. </div>
-											</ng-template>
+										
 										</ng-select>
 									</div>
 								</div>
