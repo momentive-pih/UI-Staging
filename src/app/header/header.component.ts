@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy , OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Attribute, IfStmt } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material';
@@ -7,13 +7,21 @@ import * as frLocale from 'date-fns/locale/fr';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HomeService } from '../service/home-service.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject ,ReplaySubject} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption, NgSelectComponent } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { take, takeUntil } from 'rxjs/operators';
+import { MatSelect } from '@angular/material';
+
 declare var $: any;
 interface product {
+  name: string;
+}
+
+interface Bank {
+  id: string;
   name: string;
 }
 
@@ -23,7 +31,9 @@ interface product {
   styleUrls: ['./header.component.css']
 
 })
-export class HeaderComponent implements OnInit {
+
+
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sideSearchData: any;
   name = '';
@@ -119,9 +129,28 @@ export class HeaderComponent implements OnInit {
 
   /**SPECID dropdown List */
 
-  SPECdropdownList = [];
-  selectedSPECItems = [];
+  SPECdropdownList:any = [];
+  selectedSPECItems:any = [];
   dropdownSettings = {};
+  firstSpecData = [];
+  selectedSpecList:any = [];
+  banks:any = [];
+  specDataListDetails:any;
+  
+
+    /** control for the selected bank for multi-selection */
+    public bankMultiCtrl: FormControl = new FormControl();
+  
+    /** control for the MatSelect filter keyword multi-selection */
+    public bankMultiFilterCtrl: FormControl = new FormControl();
+  
+    /** list of banks filtered by search keyword */
+    public filteredBanksMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+  
+    @ViewChild('multiSelect',{static:false}) multiSelect: MatSelect;
+  
+    /** Subject that emits when the component has been destroyed. */
+    protected _onDestroy = new Subject<void>();
 
   @ViewChild('code', {
     static: false
@@ -130,6 +159,10 @@ export class HeaderComponent implements OnInit {
     static: true
   }) myselect: ElementRef;
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private homeService: HomeService, private momentiveService: MomentiveService) {
+   
+    this.momentiveService.homeEvent.subscribe(data =>{
+      this.ngOnInit()
+    })
     this.reactiveForm = fb.group({
       selectedSearchNew: ['', Validators.required],
     });
@@ -144,27 +177,8 @@ export class HeaderComponent implements OnInit {
     this.categoryType = 'NAM Product'
     this.url = window.location.href.includes('home');
     console.log(this.url);
-    // LSR 2680FC
-    this.momentiveService.getSearchData().subscribe(data => {
-      this.productdata = data;
-      this.productLsr_Name = this.productdata.productLsr_Name;
-    }, err => {
-      console.error(err);
-    });
-    // Silsoft
-    this.momentiveService.getSearchData().subscribe(data => {
-      this.productdata = data;
-      this.productSilsoft_Name = this.productdata.productSilsoft_Name;
-    }, err => {
-      console.error(err);
-    });
-    // CAS NUMBER 556-67-2
-    this.momentiveService.getSearchData().subscribe(data => {
-      this.productdata = data;
-      this.productCAS_Number = this.productdata.productCAS_Number;
-    }, err => {
-      console.error(err);
-    });
+
+
     // intialData_Details
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
@@ -193,6 +207,7 @@ export class HeaderComponent implements OnInit {
     this.placeholder = 'Enter the Details';
     this.keyword = 'name';
     this.historyHeading = 'Recently selected';
+
     this.copyproduct_type = [
       {
         product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
@@ -694,25 +709,7 @@ export class HeaderComponent implements OnInit {
           text_body: 'Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.',
         }]
       },];
-    //SPECID Dropdown List
-    this.SPECdropdownList = [
-      { name: 'M00000004251', id: '1' },
-      { name: "M00000004252", id: '2' },
-      { name: "M00000004253", id: '3' },
-      { name: "M00000004254", id: '4' },
-      { name: "M00000004255", id: '5' },
-      { name: "M00000004256", id: '6' },
-      { name: "M00000004257", id: '7' },
-      { name: "M00000004258", id: '8' },
-      { name: "M00000004259", id: '9' },
-      { name: "M00000004260", id: '10' },
-      { name: "M00000004261", id: '11' },
-      { name: "M00000004262", id: '12' }
-    ];
-    this.selectedSPECItems = [
-      { name: 'M00000004251', id: '1' },
-    ];
-    this.SpecreactiveForm.controls['selectedSPECItems'].setValue(this.selectedSPECItems);
+
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -792,9 +789,12 @@ export class HeaderComponent implements OnInit {
             }
           });
           const searchTermNew = searchTerm.split('*');
-          const searchTerms = searchTermNew[1]
+          const searchTextTerms = searchTermNew[1]
           this.items$ = this.product_Name.filter((product_Name) => {
-            return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.name.toLowerCase().startsWith(searchTerms.toLowerCase());
+            return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
+             product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
+             product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
+             product_Name.name.toLowerCase().startsWith(searchTextTerms);
           });
         }
       }, err => {
@@ -802,22 +802,29 @@ export class HeaderComponent implements OnInit {
       })
     } else if (Isfirst === false) {
       const searchTermNew = searchTerm.split('*');
-      const searchTerms = searchTermNew[1]
+      const searchTextTerms = searchTermNew[1]
       this.items$ = this.product_Name.filter((product_Name) => {
-        return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.name.toLowerCase().startsWith(searchTerms.toLowerCase());
+        return product_Name.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         product_Name.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product_Name.key.toLowerCase().includes(searchTerm.toLowerCase()) || 
+          product_Name.name.toLowerCase().startsWith(searchTextTerms);
       });
     } else if (this.searchDataLength <= 0 && Isfirst) {
       this.product_Name = [];
       this.ProductDrop = [];
       this.clearCheck();
       this.items$ = this.product_Name.filter((product_Name) => {
-        return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase());
+        return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
+        product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
+         product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase());
       });
     }
     else if (this.searchDataLength === 0 && Isfirst) {
       this.product_Name = [];
       this.items$ = this.product_Name.filter((product_Name) => {
-        return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) || product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase());
+        return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
+        product_Name.type.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
+        product_Name.key.toLowerCase().startsWith(searchTerm.toLowerCase());
       });
     }
   }
@@ -865,6 +872,8 @@ export class HeaderComponent implements OnInit {
           this.product_Name = [];
           this.searchProduct('', this.product_Name, this.Isfirst)
         }
+        this.getIntialSpecList()
+        this.momentiveService.homeEvent.next();
         this.router.navigate(['/app-home']);
       }, err => {
         console.log(err);
@@ -931,14 +940,85 @@ export class HeaderComponent implements OnInit {
   home() {
     this.router.navigate(['/app-pageindex']);
   }
+
   //SpecID Droopdownlist
-  specOnItemSelect(item: any) {
-    console.log(item);
+  getIntialSpecList() {
+    this.momentiveService.getSpecList().subscribe(data => {
+      console.log(data)
+      this.SPECdropdownList = data; 
+      this.banks = this.SPECdropdownList;
+      if(this.banks.length === 1) {
+        this.specDataListDetails = false;
+      } else {
+        this.specDataListDetails = true;
+      }
+     // set initial selection
+     this.bankMultiCtrl.setValue([this.banks[0]]);
+     // load the initial bank list
+     this.filteredBanksMulti.next(this.banks.slice());
+     // listen for search field value changes
+     this.bankMultiFilterCtrl.valueChanges
+       .pipe(takeUntil(this._onDestroy))
+       .subscribe(() => {
+         this.filterBanksMulti();
+       });
+      console.log(this.SPECdropdownList);
+    }, err => {
+      console.log(err);
+    })
   }
-  specOnSelectAll(items: any) {
-    console.log(items);
+
+
+
+  homeSpecList(data) {
+    console.log(data.value);
+    console.log(this.bankMultiCtrl.value);
+    const sideSpecList = data;
+    console.log(sideSpecList);
+//     this.momentiveService.getSelctedSpecList(sideSpecList).subscribe(data=>{
+//       console.log(data)
+//     },err => {
+//       console.log(err);
+//  })
   }
 
 
+  ngAfterViewInit() {
+    this.setInitialValue();
+  }
 
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
+
+  /**
+   * Sets the initial value after the filteredBanks are loaded initially
+   */
+  protected setInitialValue() {
+    this.filteredBanksMulti
+      .pipe(take(1), takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.multiSelect.compareWith = (a: Bank, b: Bank) => a && b && a.id === b.id;
+      });
+  }
+
+  protected filterBanksMulti() {
+    if (!this.banks) {
+      return;
+    }
+    // get the search keyword
+    let search = this.bankMultiFilterCtrl.value;
+    console.log(search)
+    if (!search) {
+      this.filteredBanksMulti.next(this.banks.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the banks
+    this.filteredBanksMulti.next(
+      this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
+    );
+  }
 }

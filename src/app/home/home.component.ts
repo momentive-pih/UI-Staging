@@ -57,31 +57,44 @@ export class HomeComponent implements OnInit {
   sidebarTopIcon = false;
   openId: any;
   productdata: any = [];
+  UserSelectedProducts:any;
   objectKeys = Object.keys;
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
               private router: Router, private homeService: HomeService,
               private momentiveService: MomentiveService,
               ) {
+          
+                // this.momentiveService.homeEvent.subscribe(data => {
+                //   alert('123456');
+                //   this.ngOnInit();
+                // });
  
   }
 
   ngOnInit() {
+      // intialHOmeDataDetails
+      this.momentiveService.getHomePageData().subscribe(data => {
+        this.intialDataDetails = data;
+        console.log(this.intialDataDetails);
+      }, err => {
+        console.error(err);
+      });
 
+    this.UserSelectedProducts =JSON.parse(localStorage.getItem('SearchBarData'));
+    console.log(this.UserSelectedProducts);
 
   // intialData_Details
     this.momentiveService.getSearchData().subscribe(data => {
     this.productdata = data;
     this.intialData_Details = this.productdata.intialData_Details;
-    console.log(this.productdata);
+    console.log(this.intialData_Details);
   }, err => {
     console.error(err);
   });
-
    // sidebarCategoriesDat
     this.momentiveService.getSearchData().subscribe(data => {
     this.productdata = data;
-    this.sidebarCategoriesData = this.productdata.sidebarCategoriesData;
-
+    this.sidebarCategoriesData = this.productdata.sidebarCategoriesData
     console.log(this.sidebarCategoriesData);
   }, err => {
     console.error(err);
@@ -108,22 +121,14 @@ export class HomeComponent implements OnInit {
       console.error(err);
     });
 
-// intialDataDetails
-    this.momentiveService.getSearchData().subscribe(data => {
-  this.productdata = data;
-  this.intialDataDetails = this.productdata.intialDataDetails;
-  console.log(this.intialDataDetails);
-}, err => {
-  console.error(err);
-});
-// HomeDataDetails
-    this.momentiveService.getSearchData().subscribe(data => {
-  this.productdata = data;
-  this.HomeDataDetails = this.productdata.HomeDataDetails;
-  console.log(this.HomeDataDetails);
-}, err => {
-  console.error(err);
-});
+// // HomeDataDetails
+//     this.momentiveService.getSearchData().subscribe(data => {
+//   this.productdata = data;
+//   this.HomeDataDetails = this.productdata.HomeDataDetails;
+//   console.log(this.HomeDataDetails);
+// }, err => {
+//   console.error(err);
+// });
 
 }
   public selectionItemForFilter(e) {

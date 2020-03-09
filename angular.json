@@ -31,7 +31,6 @@
               "./node_modules/primeng/resources/primeng.min.css",
               "./node_modules/jspdf/dist/jspdf.min.js",
               "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
-         
             ],
             "scripts": [
               "./node_modules/jspdf/dist/jspdf.min.js",
@@ -135,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "momentive"
+  "defaultProject": "momentive",
+  "cli": {
+    "analytics": "375390fd-35ee-4882-85bb-493adb624778"
+  }
 }

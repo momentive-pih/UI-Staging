@@ -234,10 +234,6 @@ SelectAllCategories(checkStatus) {
     this.sidebarCategoriesData.forEach(element => {element.checkValue = true;
 if(element.tab_content.length > 0) {
   element.tab_content.forEach(element => {element.checkValue = true;
-    if (element.sub.length > 0) {
- element.sub.forEach(childelement => {childelement.checkValue = true;
-});
-}
 this.viewReportPage = true; 
 this.noReportPage = false;
 });
@@ -247,10 +243,6 @@ this.noReportPage = false;
     this.sidebarCategoriesData.forEach(element => {element.checkValue = false;
       if(element.tab_content.length > 0) {
         element.tab_content.forEach(element => {element.checkValue = false;
-          if (element.sub.length > 0) {
-       element.sub.forEach(childelement => {childelement.checkValue = false;
-      });
-      }
       });
 
       this.viewReportPage = false; 
@@ -261,6 +253,7 @@ this.noReportPage = false;
 }
 
 topCheckBox(checkStatus, data) {
+  alert('1')
   console.log(checkStatus)
  if (checkStatus === true) {
     data.tab_content.forEach(element => {element.checkValue = true;
@@ -270,6 +263,7 @@ topCheckBox(checkStatus, data) {
   }
     });
   } else {
+    alert('2');
     this.SelectAllcheckValue = false;
     data.tab_content.forEach(element => {element.checkValue = false;
           if (element.sub.length > 0) {
@@ -280,52 +274,19 @@ topCheckBox(checkStatus, data) {
 }
 }
 subCheckBox(checkStatus,data,id,top_id) {
+
   console.log(top_id);
   console.log(id);
   console.log(checkStatus);
   console.log(data);
   console.log(this.sidebarCategoriesData);
-  // this.parentObject = this.sidebarCategoriesData[top_id].tab_content[id];
-  // console.log(this.parentObject);
-  // if(checkStatus === false){
-  //   alert('1');
-  //   this.SelectAllcheckValue = false;
-  //   this.sidebarCategoriesData.forEach(element => { element.checkValue = false;
-  //     this.sidebarCategoriesData[top_id]
-  //     console.log(this.sidebarCategoriesData[top_id]);
-  //   });
-  // }
-  // if (checkStatus) {
-  //     this.pdfIcon = true;
-  //     data.checkValue = true;
-  //     let i = 0;
-  //     this.parentObject.tab_content.forEach(element => {
-  //    if (element.checkValue) {
-  //      element.sub.forEach(childelement => { childelement.checkValue = true;
-  //      });
-  //      i++;
-  //    }
-  //    console.log(i, this.parentObject.tab_content.length);
-  //    if (i === this.parentObject.tab_content.length) {
-  //     this.parentObject.checkValue = true;
-  //   }
-  //  });
-  //  } else {
-  //   data.checkValue = false;
-  //   this.parentObject.checkValue = false;
-  //   data.sub.forEach(element => { element.checkValue = false;
-  //   });
-  //  }
-
-
-
   this.parentObject = this.sidebarCategoriesData[id];
   console.log(this.parentObject);
   if (checkStatus) {
-      this.pdfIcon = true;
       data.checkValue = true;
       let top_id ;
       this.parentObject.tab_content.forEach(element => {
+        alert('i')
      if (element.checkValue) {
        element.sub.forEach(childelement => { childelement.checkValue = true;
        });
@@ -333,12 +294,22 @@ subCheckBox(checkStatus,data,id,top_id) {
      }
      console.log(top_id, this.parentObject.tab_content.length);
      if (top_id === this.parentObject.tab_content.length) {
+      alert('iuuu')
       this.parentObject.checkValue = true;
     }
      console.log(this.parentObject);
    });
    } else {
-    this.SelectAllcheckValue = true;
+
+    this.SelectAllcheckValue = false;
+    alert('777');
+    this.parentObject.tab_content.forEach(element => {
+    if (element.checkValue) {
+      element.sub.forEach(childelement => { childelement.checkValue = false;
+      });
+    }
+  });
+
     data.checkValue = false;
     this.parentObject.checkValue = false;
     data.sub.forEach(element => { element.checkValue = false;

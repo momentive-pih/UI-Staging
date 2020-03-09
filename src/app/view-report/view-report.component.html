@@ -88,12 +88,12 @@
                                                             (change)="subCheckBox(data.checkValue,data,i,top)"
                                                             id="{{data.name}}"> <label for="{{data.name}}">
                                                             {{data.name}}</label></div>
-                                                    <span *ngIf="data.sub.length > 0" data-toggle="collapse"
+                                                    <!-- <span *ngIf="data.sub.length > 0" data-toggle="collapse"
                                                         [attr.href]="'#'+data.id" aria-expanded="true"
                                                         aria-controls="collapseOne"><i
-                                                            class="fa fa-angle-down sub-icon"></i></span>
+                                                            class="fa fa-angle-down sub-icon"></i></span> -->
                                                 </a>
-                                                <ul class="nav" id="{{data.id}}" class="collapse" role="tabpanel"
+                                                <!-- <ul class="nav" id="{{data.id}}" class="collapse" role="tabpanel"
                                                     aria-labelledby="headingOne">
                                                     <li class="nav-item nav-back sidebar-sub-report"
                                                         *ngFor="let subdata of data.sub;let index = i">
@@ -105,7 +105,7 @@
                                                                     for="{{subdata.name}}"> {{subdata.name}}</label>
                                                             </div>
                                                         </a></li>
-                                                </ul>
+                                                </ul> -->
                                             </li>
 
                                             <li class="nav-item-divider"></li>

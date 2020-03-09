@@ -12,7 +12,6 @@ import { AfterViewInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material/select';
-import { Spec_Id, Spec_IdS } from '../service/momentive.service';
 import * as xlsx from 'xlsx';
 
 declare var $: any;
@@ -22,7 +21,7 @@ $.fn.modal.Constructor.prototype._enforceFocus = function() {};
   templateUrl: './product-attributes.component.html',
   styleUrls: ['./product-attributes.component.css']
 })
-export class ProductAttributesComponent implements OnInit, AfterViewInit, OnDestroy{
+export class ProductAttributesComponent implements OnInit, OnDestroy{
 
   @Input()data: string;
   selecteditem: any;
@@ -96,17 +95,7 @@ export class ProductAttributesComponent implements OnInit, AfterViewInit, OnDest
 
   scrollableCols: any[];
 
-  /** list of SPEC */
-  protected Spec_Ids: Spec_Id[] = Spec_IdS;
 
-  /** control for the selected Spec_Id for multi-selection */
-  public Spec_IdMultiCtrl: FormControl = new FormControl();
-
-  /** control for the MatSelect filter keyword multi-selection */
-  public Spec_IdMultiFilterCtrl: FormControl = new FormControl();
-
-  /** list of Spec_Ids filtered by search keyword */
-  public filteredSpec_IdsMulti: ReplaySubject<Spec_Id[]> = new ReplaySubject<Spec_Id[]>(1);
 
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
 
@@ -283,23 +272,7 @@ export class ProductAttributesComponent implements OnInit, AfterViewInit, OnDest
       AN_Amount:'1.000',
     }
   ]
-       // set initial selection
-    this.Spec_IdMultiCtrl.setValue([this.Spec_Ids[2]]);
-    console.log(this.Spec_IdMultiCtrl);
-
-    // load the initial Spec_Id list
-    this.filteredSpec_IdsMulti.next(this.Spec_Ids.slice());
-
-    // listen for search field value changes
-    console.log(this.Spec_IdMultiFilterCtrl.valueChanges);
-    this.Spec_IdMultiFilterCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterSpec_IdsMulti();
-      });
-
-    
-
+       
       this.momentiveService.notifyObservable$.subscribe(value => {
         this.selecteditem = value;
         console.log(this.selecteditem);
@@ -581,9 +554,7 @@ export class ProductAttributesComponent implements OnInit, AfterViewInit, OnDest
 }
 
 
-ngAfterViewInit() {
-  this.setInitialValue();
-}
+
 
 ngOnDestroy() {
   this._onDestroy.next();
@@ -705,42 +676,7 @@ getAddressData() {
   });
 }
 
-  /**
-   * Sets the initial value after the filteredSpec_Ids are loaded initially
-   */
-  protected setInitialValue() {
-    console.log( this.filteredSpec_IdsMulti)
-    this.filteredSpec_IdsMulti
-      .pipe(take(1), takeUntil(this._onDestroy))
-      .subscribe(() => {
-        // setting the compareWith property to a comparison function
-        // triggers initializing the selection according to the initial value of
-        // the form control (i.e. _initializeSelection())
-        // this needs to be done after the filteredSpec_Ids are loaded initially
-        // and after the mat-option elements are available
-        this.multiSelect.compareWith = (a: Spec_Id, b: Spec_Id) => a && b && a.id === b.id;
-      });
-      console.log(this.filteredSpec_IdsMulti)
-  }
 
-  protected filterSpec_IdsMulti() {
-    console.log(this.Spec_Ids);
-    if (!this.Spec_Ids) {
-      return;
-    }
-    // get the search keyword
-    let search = this.Spec_IdMultiFilterCtrl.value;
-    if (!search) {
-      this.filteredSpec_IdsMulti.next(this.Spec_Ids.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-    // filter the Spec_Ids
-    this.filteredSpec_IdsMulti.next(
-      this.Spec_Ids.filter(Spec_Id => Spec_Id.name.toLowerCase().indexOf(search) > -1)
-    );
-  }
 
   exportToSVTTableExcel() {
     const ws: xlsx.WorkSheet =   

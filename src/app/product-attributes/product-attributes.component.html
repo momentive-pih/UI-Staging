@@ -15,29 +15,7 @@
 
         </div>
         <div class="modal-body">
-            <!-- <div class="row">
-                    <div class="col-md-12">
-                 <span class="spec-drop">
-                      
-                    <mat-form-field>
-                        <mat-select [formControl]="Spec_IdMultiCtrl" placeholder="Select SPEC ID" [multiple]="true" #multiSelect>
-                          <ngx-mat-select-search [formControl]="Spec_IdMultiFilterCtrl"
-                       placeholderLabel="Select SPEC ID" 
-                       i18n-placeholderLabel
-                       cdkFocusInitial
-                       noEntriesFoundLabel="'No Matching SPEC ID Found'"
-                       i18n-noEntriesFoundLabel></ngx-mat-select-search>
-                          <mat-option *ngFor="let Spec_Id of filteredSpec_IdsMulti | async" [value]="Spec_Id">
-                            {{Spec_Id.name}}
-                          </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                  
-                </span>
-                </div>
-                </div> -->
-
-
+  
             <div *ngIf="primaryInformtionTypes">
                 <div class="card-body">
                     <div class="row card-btm">
@@ -563,28 +541,28 @@
                                         <td>
                                             <i class="fa fa-bars" pReorderableRowHandle></i>
                                         </td>
+                                      
                                         <td>
-                                            {{legalData.ComponentType}}
-                                        </td>
-                                        <td>
-                                            {{legalData.Component_Id}}
+                                            {{legalData.Specification}}
                                         </td>
                                         <td>
                                             {{legalData.CAS_Number}}
                                         </td>
                                         <td>
-                                            <div *ngFor="let each of legalData.Component_Name">
-                                                <b>CAS NAME:</b>{{each.cas_name}}<br>
-                                                <b>IUPAC NAME:</b>{{each.iupac_name}}<br>
-                                                <b>INCI NAME:</b>
-                                                <span *ngFor="let eachINCI of each.INCI_Name ,let i=index">
-                                                    {{i+1}}.{{eachINCI}}
-                                                </span>
-                                            </div>
+                                            {{legalData.Ingredient_Name}}
                                         </td>
+                                        
                                         <td>
-                                            {{legalData.Value}}
+                                            {{legalData.Component_Type}}
                                         </td>
+                                         
+                                        <td>
+                                                {{legalData.Legal_Composition}}
+                                            </td>
+                                             
+                                        <td>
+                                                {{legalData.Unit}}
+                                            </td>
                                     </tr>
                                 </ng-template>
                             </p-table>

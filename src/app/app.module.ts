@@ -34,9 +34,11 @@ import { RestrictedSubstanceComponent } from './restricted-substance/restricted-
 import { SalesVolumeComponent } from './sales-volume/sales-volume.component';
 import { ReportDataComponent } from './report-data/report-data.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { MatSelectModule } from '@angular/material/select';
 import { MatSelectFilterModule } from 'mat-select-filter';
+import { MatFormFieldModule, MatIconModule, MatSelectModule, MatToolbarModule } from '@angular/material';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
+
 
 
 
@@ -84,8 +86,8 @@ import { MatSelectFilterModule } from 'mat-select-filter';
     SliderModule,
     InputTextModule,
     NgSelectModule,
-    NgxMatSelectSearchModule,
-    MatSelectModule,MatSelectFilterModule,
+    MatFormFieldModule,
+    MatSelectModule,MatSelectFilterModule,MatIconModule,MatToolbarModule,NgxMatSelectSearchModule,
     NgMultiSelectDropDownModule.forRoot()
     ],
   providers: [HomeService, MomentiveService],

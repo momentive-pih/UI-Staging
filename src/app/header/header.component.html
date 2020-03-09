@@ -36,7 +36,7 @@
 											bindLabel="name" bindValue="name" formControlName="selectedSearchNew"
 											[closeOnSelect]="true" [multiple]="true" [hideSelected]="false"
 											[typeahead]="input$" [dropdownPosition]="'bottom'" [searchable]="true"
-											[loading]="loading" [selectableGroupAsModel]="false"
+										     [selectableGroupAsModel]="false"
 											[compareWith]="compareAccounts" [selectableGroup]="false" groupBy="group"
 											(change)="onChangeData($event)" [closeOnSelect]="false"
 											(remove)="clearCheck()"
@@ -51,7 +51,7 @@
 													</span>
 												</div>
 												<div class="new-line" *ngIf="relatedProducts">
-													<b class="selected-sug">Categories - </b>
+													<b class="selected-sug">Remaining Categories - </b>
 													<span class="selected-sug"
 														*ngFor="let data of ProductDrop;let i=index">
 														{{data}}{{i== ProductDrop.length-1 ? '': ','}} </span>
@@ -73,24 +73,21 @@
 								<div class="col-md-1">
 									<div class="dropdown-select warning">
 										<a class="select"><i class="fa fa-info-circle" aria-hidden="true"></i> </a>
-										 <ul class="option-list">
-										
-										 <li><a class="category-list"><b>Search Key Fields</b></a></li>
-										  <li><a class="category-list"><b>NAM*</b> - Product Name</a></li>   
-										  <li><a class="category-list"><b>BDT*</b> - Basic Data Text</a></li> 
-										  <li><a class="category-list"><b>MAT*</b> - Material Number</a></li>   
-										  <li><a class="category-list"><b>CAS*</b> - CAS Number</a></li> 
-										  <li><a class="category-list"><b>SPEC*</b> - Specification ID</a></li>   
-										  <li><a class="category-list"><b>RSPEC*</b> - Real Specification ID</a></li>   
-										  <li><a class="category-list"><b>PSPEC*</b> - Pure Specification ID</a></li> 
-										  <li><a class="category-list"><b>SYN*</b> - Product Synonyms</a></li> 
-										  <li><a class="category-list"><b>CHEMICAL*</b> - Chemical Name</a></li> 
-										   </ul>
-									   </div>
+										<ul class="option-list">
+
+											<li><a class="category-list"><b>Search Key Fields</b></a></li>
+											<li><a class="category-list"><b>NAM*</b> - Product Name</a></li>
+											<li><a class="category-list"><b>BDT*</b> - Basic Data Text</a></li>
+											<li><a class="category-list"><b>MAT*</b> - Material Number</a></li>
+											<li><a class="category-list"><b>CAS*</b> - CAS Number</a></li>
+											<li><a class="category-list"><b>SPEC*</b> - Specification ID</a></li>
+											<li><a class="category-list"><b>RSPEC*</b> - Real Specification ID</a></li>
+											<li><a class="category-list"><b>PSPEC*</b> - Pure Specification ID</a></li>
+											<li><a class="category-list"><b>SYN*</b> - Product Synonyms</a></li>
+											<li><a class="category-list"><b>CHEMICAL*</b> - Chemical Name</a></li>
+										</ul>
+									</div>
 								</div>
-
-
-
 							</div>
 						</form>
 					</div>
@@ -156,41 +153,51 @@
 			<i class="icon-unfold mr-2"></i> Navigation </button>
 	</div>
 	<div class="navbar-collapse collapse" id="navbar-navigation">
-			<ul class="navbar-nav col-md-9">
-				<li class="nav-item font-weight-semibold">
-					<a (click)="changePage('app-home', true)" class="navbar-nav-link">
-						<i class="fa fa-home mr-2"></i> Home </a>
-				</li>
-				<li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
-					<a (click)="fireEvent('productDetails')" class="navbar-nav-link">
-						<i class="fa fa-th-large mr-2"></i> Basic Properties </a>
-				</li>
-				<li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
-					<a (click)="changePage('app-view-report', false)" class="navbar-nav-link">
-						<i class="fa fa-stack-exchange mr-2"></i> Self Service </a>
-				</li>
-				<li class="nav-item dropdown font-weight-semibold">
-					<a (click)="changePage('ontology', false)" class="navbar-nav-link">
-						<i class="fa fa-file-pdf-o mr-2"></i> Ontology Documents </a>
-				</li>
-				<li class="nav-item dropdown font-weight-semibold">
-					<a (click)="changePage('ontology/synonyms', false)" class="navbar-nav-link">
-						<i class="fa fa-random mr-2"></i> Ontology Management </a>
-				</li>
-			</ul>
-		
+		<ul class="navbar-nav col-md-9">
+			<li class="nav-item font-weight-semibold">
+				<a (click)="changePage('app-home', true)" class="navbar-nav-link">
+					<i class="fa fa-home mr-2"></i> Home </a>
+			</li>
+			<li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
+				<a (click)="fireEvent('productDetails')" class="navbar-nav-link">
+					<i class="fa fa-th-large mr-2"></i> Basic Properties </a>
+			</li>
+			<li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
+				<a (click)="changePage('app-view-report', false)" class="navbar-nav-link">
+					<i class="fa fa-stack-exchange mr-2"></i> Self Service </a>
+			</li>
+			<li class="nav-item dropdown font-weight-semibold">
+				<a (click)="changePage('ontology', false)" class="navbar-nav-link">
+					<i class="fa fa-file-pdf-o mr-2"></i> Ontology Documents </a>
+			</li>
+			<li class="nav-item dropdown font-weight-semibold">
+				<a (click)="changePage('ontology/synonyms', false)" class="navbar-nav-link">
+					<i class="fa fa-random mr-2"></i> Ontology Management </a>
+			</li>
+		</ul>
+
+
+
+		<ul class="navbar-nav col-md-2">
+			<mat-form-field>
+				<mat-select [formControl]="bankMultiCtrl" placeholder="Select SPEC ID" disableOptionCentering
+					panelClass="myPanelClass" [multiple]="true" #multiSelect>
+					<ngx-mat-select-search [formControl]="bankMultiFilterCtrl" placeholderLabel="Search SPEC..."
+						i18n-placeholderLabel noEntriesFoundLabel="'no matching SPEC found'" i18n-noEntriesFoundLabel>
+					</ngx-mat-select-search>
+					<mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank"  [disabled]="!specDataListDetails">
+						{{bank.name}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</ul>
+		<ul class="navbar-nav col-md-1">
+				<button class="btn spec-btn"  [disabled]="!specDataListDetails"  (click)="homeSpecList(bankMultiCtrl)" type='submit'>submit</button>
+		</ul>
 	
-			<ul class="navbar-nav col-md-3">
-				<form class="spec-drop-side" autocomplete="off" novalidate [formGroup]="SpecreactiveForm">
-					<ng-multiselect-dropdown-angular7 class="custom-spec" [placeholder]="'Select SPEC-ID'"
-						[data]="SPECdropdownList" name="selectedSPECItems" formControlName="selectedSPECItems"
-						[settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
-						(onSelectAll)="onSelectAll($event)">
-					</ng-multiselect-dropdown-angular7>
-				</form>
-			</ul>
 	</div>
 </div>
+
 <!-- /secondary navbar -->
 <!-- Page header -->
 <div class="page-header">

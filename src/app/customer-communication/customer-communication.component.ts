@@ -9,7 +9,7 @@ import { MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption} from '@ng-select/ng-select';
-import { MomentiveService} from '../service/momentive.service';
+import { MomentiveService} from '../service/momentive.service'
 import { Router, ActivatedRoute } from '@angular/router';
 declare var $: any;
 

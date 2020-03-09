@@ -2168,37 +2168,55 @@
         ],
         
         "legalCompositionHead" : [
-            { "field": "ComponentType", "header": "Component Type","width": "10%" },
-            { "field": "Component_Id", "header": "Component Id","width": "10%"},
-            { "field": "CAS_Number", "header": "CAS Number","width": "10%" },
-            { "field": "Component_Name", "header": "Component Name","width": "30%"},
-            { "field": "value", "header": "Value in % ","width": "10%" }
+          { "field": "Specificnation", "header": "Specificnation" },
+          { "field": "CAS_Number", "header": "CAS Number" },
+          { "field": "Ingredient_Name", "header": "Ingredient Name","width": "20%" },
+          { "field": "Component_Type", "header": "Component Type" },
+          { "field":"Legal Composition", "header":"Legal Composition"},
+          { "field":"Unit", "header":"Unit of Measurement"}
           ],
         
           "legalCompositionData" : [
-              {
-                "ComponentType": "Active ingredient",
-                "Component_Id": "000000002925",
-                "CAS_Number": "68083-19-2",
-                "Component_Name":[
-                  {"cas_name" : "Decamethylcyclopentasiloxane",
-                  "iupac_name":"Cyclopentasiloxane, decamethyl-",
-                  "INCI_Name":["CYCLOPENTASILOXANE"]
-                }],
-                  "Value": "86%"
-              },
-              {
-                "ComponentType": "Active ingredient",
-                "Component_Id": "000000002670",
-                "CAS_Number": "556-67-2",
-                "Component_Name":[
-                  {"cas_name" : "Octamethylcyclotetrasiloxane",
-                  "iupac_name":"Cyclotetrasiloxane, octamethyl-",
-                  "INCI_Name":["CYCLOTETRASILOXANE","CYCLOMETHICONE"]
-                }],
-                  "Value": "14%"
-              }
-              
+            {
+              "Specification": "000000002805",
+              "CAS_Number": "75-21-8",
+              "Ingredient_Name": "Ethylene Oxide",
+              "Component_Type": "Active ingredient",
+              "Legal_Composition":"65.03",
+              "Unit":"%"
+            }, 
+            {
+              "Specification": "000000021594",
+              "CAS_Number": "107-18-6",
+              "Ingredient_Name": "Octamethylcyclotetrasiloxane",
+              "Component_Type": "Active ingredient",
+              "Legal_Composition":"7.17",
+              "Unit":"%"
+            }, 
+            {
+              "Specification": "000000002670",
+              "CAS_Number": "556-67-2",
+              "Ingredient_Name": "Hexamethyldisiloxane",
+              "Component_Type": "Active ingredient",
+              "Legal_Composition":"18.61",
+              "Unit":"%"
+            }, 
+            {
+              "Specification": "000000003387",
+              "CAS_Number": "107-46-0",
+              "Ingredient_Name": "Hexamethyldisiloxane",
+              "Component_Type": "Active ingredient",
+              "Legal_Composition":"3.7",
+              "Unit":"%"
+            }, 
+            {
+              "Specification": "000000002661",
+              "CAS_Number": "75-54-7",
+              "Ingredient_Name": "Methylhydrogendichlorosilane",
+              "Component_Type": "Active ingredient",
+              "Legal_Composition":"10.5",
+              "Unit":"%"
+            }
            ],
         
            "copylegalCompositionData" : [
