@@ -136,7 +136,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSpecList:any = [];
   banks:any = [];
   specDataListDetails:any;
-  
+
 
     /** control for the selected bank for multi-selection */
     public bankMultiCtrl: FormControl = new FormControl();
@@ -872,15 +872,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.product_Name = [];
           this.searchProduct('', this.product_Name, this.Isfirst)
         }
-        this.getIntialSpecList()
+        
         this.momentiveService.homeEvent.next();
         this.router.navigate(['/app-home']);
       }, err => {
         console.log(err);
       })
+      this.getIntialSpecList(this.selectedSearchText);
     }
     //Basic Details API
-    this.momentiveService.getBasicDetails().subscribe(data => {
+    this.momentiveService.getBasicProperties(data).subscribe(data => {
       this.basicProperties = data;
       console.log(this.basicProperties);
       this.productLevel = this.basicProperties[0].productLevel;
@@ -942,8 +943,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   //SpecID Droopdownlist
-  getIntialSpecList() {
-    this.momentiveService.getSpecList().subscribe(data => {
+  getIntialSpecList(data) {
+      const SpecListedData = data;
+    this.momentiveService.getSpecList(SpecListedData).subscribe(data => {
       console.log(data)
       this.SPECdropdownList = data; 
       this.banks = this.SPECdropdownList;
