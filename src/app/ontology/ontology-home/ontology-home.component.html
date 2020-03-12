@@ -1,4 +1,4 @@
-      <div id="content" *ngIf="unassignedDocument">
+      <!-- <div id="content" >
           <div class="row">
             <div class="col-md-9">
               <h5 class="msg-data">{{alertText}}</h5>
@@ -7,12 +7,12 @@
             <div class="col-md-3">
               <button class="docs-btn docs-dir" (click)="unassigned()">Unassigned Documents</button>
             </div>
-         </div> </div>
+         </div> </div> -->
 
     
 
 
-     <div id="content" *ngIf="!unassignedDocument">
+     <div id="content">
     
       <div class="row">
         <div class="col-md-6">
@@ -26,13 +26,13 @@
 
       </div><br>
                     <div class="row">
-                        <div class="col-md-12 col-md-offset-2"  *ngFor="let data of PDfOntology;let i = index">
+                        <div class="col-md-12 col-md-offset-2"  *ngFor="let data of ontologyFileDocumentss;let i = index">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                       <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                           <h6 class="panel-title">
                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne">
-                              {{data.categoryName}}
+                              {{data.category}}
                             </a>
                           </h6>
                         </div>

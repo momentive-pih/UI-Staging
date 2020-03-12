@@ -17,7 +17,7 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import { DropdownModule} from 'primeng/primeng';
 import { MultiSelectModule} from 'primeng/primeng';
 import {CommonModule} from '@angular/common';
-import {EditorModule, SharedModule, ButtonModule} from 'primeng/primeng';
+import {EditorModule, ButtonModule} from 'primeng/primeng';
 import {InputTextModule, SliderModule} from 'primeng/primeng';
 import {HomeService} from './service/home-service.service';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
@@ -38,11 +38,8 @@ import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { MatFormFieldModule, MatIconModule, MatToolbarModule } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import { MatSelectFilterModule } from 'mat-select-filter';
-
-
-
-
-
+import { ToastrModule } from 'ng6-toastr-notifications';
+import { SharedModule } from '../app/shared/shared.module';
 
 
 
@@ -72,6 +69,7 @@ import { MatSelectFilterModule } from 'mat-select-filter';
     ReactiveFormsModule,
     AppMaterialModule,
     BrowserAnimationsModule,
+    BrowserModule,
     HttpClientModule,
     HttpClientJsonpModule,
     NgbDatepickerModule,
@@ -93,9 +91,11 @@ import { MatSelectFilterModule } from 'mat-select-filter';
     MatAutocompleteModule,
     MatInputModule,
     MatSelectModule,MatSelectFilterModule,MatIconModule,MatToolbarModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    ToastrModule.forRoot(),
+    SharedModule.forRoot()
     ],
-  providers: [HomeService, MomentiveService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

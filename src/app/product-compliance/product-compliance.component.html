@@ -11,11 +11,25 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="modal-body">
+
+                    <span *ngIf="!ProductComplianceLoader">
+                        <i class="loader-class fa fa-spinner fa-spin"></i>
+                        <span class="loader-text">Loading data....</span>
+            
+                   </span>
+
                         <div *ngIf="complianceNotification">
-                            <div class="card-body">
+                            <div class="card-body" *ngIf="!ProductComplianceLoader">
                                     <h6 class="text-default font-weight-semibold">Notification Status: <i class="fa fa-info-circle" role="button" title="This data is from SAP"></i></h6>
-                                    <p-table #dt [columns]="pc_NotificationHeader" [value]="pc_NotificationData" (sortFunction)="customSort($event)" [paginator]="Notificationpaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedNotificationProducts" [reorderableColumns]="true" >
+                                 
+                                    <span *ngIf="pihAlertMessage">
+                                        <h5 class="loader-text">No Data Found..</h5>
+                                    </span>
+                                 
+                                    <p-table #dt [columns]="pc_NotificationHeader" [value]="pc_NotificationData" (sortFunction)="customSort($event)"  [customSort]="true">
                                             <ng-template pTemplate="caption">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -36,29 +50,42 @@
                                       
                                             <ng-template pTemplate="header" let-columns>
                                                 <tr>
-                                                    <th style="width:2.5em"></th>
+                                                    <th style="width:3.5em">S.No</th>
                                                     <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
                                                         {{col.header}}
                                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                                     </th>
                                                 </tr>
                                             </ng-template>  
-            
                                             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                <tr [pReorderableRow]="index">
+                                                <tr>
                                                     <td>
-                                                        <i class="fa fa-bars" pReorderableRowHandle></i>
+                                                       {{index+1}}
                                                     </td>
-                                                    <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                        {{rowData[col.field]}}
+                                                    <td>
+                                                        {{rowData.spec_id}}
                                                     </td>
+                                                    <td>
+                                                        {{rowData.regulatory_List}}
+                                                    </td>
+                                                    <td>
+                                                        {{rowData.notification}}
+                                                    </td>
+                                                    <td>
+                                                        {{rowData.additional_Info}}
+                                                    </td>
+                                                    <td>
+                                                        {{rowData.usage}}
+                                                    </td>
+    
                                                 </tr>
                                             </ng-template>
                                     </p-table> 
                         </div>
                         </div>
+              
                         <div *ngIf="complianceRegistration">
-                         <div class="card-body"> 
+                         <div class="card-body" *ngIf="!ProductComplianceLoader"> 
                             <div class="row">
                                 <div class="col-md-9">
                                     <h6 class="text-default font-weight-semibold mb-2 "><span *ngIf="complaint_EU">EU: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></span>
@@ -66,10 +93,15 @@
                                     <span  *ngIf="complaint_latin">Latin America : <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></span></h6>
                                 </div>
                                 <div class="col-md-3">
-                                    <mat-form-field>
-                                        <mat-label>Region</mat-label>
-                                        <mat-select #ref (selectionChange)="selectRegionProcess(ref.value)" [(ngModel)]="modeselect">
-                                            <mat-option *ngFor="let composition of regionPart" [value]="composition.value">
+
+                                    <mat-form-field> 
+                                         <mat-label>Region</mat-label>
+                                        <mat-select name="registraionVaraible"
+                                            [(value)]="selectedAGRegistrationLocation"
+                                            placeholder="Select Region"
+                                            (selectionChange)="selectRegionProcess($event.value)">
+                                            <mat-option *ngFor="let composition of regionPart"
+                                                [value]="composition.type">
                                                 {{composition.type}}
                                             </mat-option>
                                         </mat-select>
@@ -79,7 +111,7 @@
                             
                                 <div class="row"  *ngIf="complaint_EU"  >
                                     <!-- EU Composition -->
-                                    <p-table #dt [columns]="complianceRegistrationEUHeader" [value]="complianceRegistrationEUData" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationEUpaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationEUProducts" [reorderableColumns]="true" >
+                                    <p-table #dt [columns]="complianceRegistrationEUHeader" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)">
                                             <ng-template pTemplate="caption">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -109,13 +141,20 @@
                                             </ng-template>  
             
                                             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                <tr [pReorderableRow]="index">
+                                                <tr>
                                                     <td>
-                                                        <i class="fa fa-bars" pReorderableRowHandle></i>
+                                                       {{index+1}}
                                                     </td>
-                                                    <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                        {{rowData[col.field]}}
-                                                    </td>
+                                                    <td>{{rowData.spec_id}}</td>   
+                                                    <td> {{rowData.product}}</td>  
+                                                    <td> {{rowData.country}}</td>                                    
+                                                    <td> {{rowData.holder}}</td>
+                                                    <td>{{rowData.registration}}</td>
+                                                    <td> {{rowData.expiry}}</td>
+                                                    <td> {{rowData.status}}</td>
+                                                    <td> {{rowData.certificate}}</td>
+
+                                                
                                                 </tr>
                                             </ng-template>
                                     </p-table> 
@@ -123,7 +162,7 @@
                                 </div>
 
                                 <div class="row" *ngIf="complaint_canada">
-                                        <p-table #dt [columns]="complianceRegistrationCanada_Header" [value]="complianceRegistrationCanada_Data" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationCanada_paginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationCanada_Products" [reorderableColumns]="true" >
+                                        <p-table #dt [columns]="complianceRegistrationCanada_Header" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)"  [customSort]="true">
                                                 <ng-template pTemplate="caption">
                                                     <div class="row">
                                                         <div class="col-md-6">
@@ -144,22 +183,32 @@
                                           
                                                 <ng-template pTemplate="header" let-columns>
                                                     <tr>
-                                                        <th style="width:2.5em"></th>
-                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                                        <th style="width:3.5em">S.No</th>
+                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
                                                             {{col.header}}
                                                             <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                                         </th>
                                                     </tr>
                                                 </ng-template>  
-                
+                                 
                                                 <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                    <tr [pReorderableRow]="index">
+                                                    <tr>
                                                         <td>
-                                                            <i class="fa fa-bars" pReorderableRowHandle></i>
+                                                          {{index+1}}
                                                         </td>
-                                                        <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                            {{rowData[col.field]}}
-                                                        </td>
+                                                            <td> {{rowData.spec_id}}</td>
+                                                            <td> {{rowData.product}}</td>
+                                                            <td> {{rowData.EPA_Inert_Product_Listing}}</td>
+                                                            <td> {{rowData.CA_DPR}}</td>
+                                                            <td> {{rowData.CP_DA}}</td>
+                                                            <td> {{rowData.WSDA}}</td>
+                                                            <td> {{rowData.OMRI}}</td>
+                                                            <td> {{rowData.Canada_OMRI}}</td>
+                                                            <td> {{rowData.OMRI_Reneval_Date}}</td>
+                                                            <td> {{rowData.PMRA}}</td>
+                                                            
+                                                              
+                                                
                                                     </tr>
                                                 </ng-template>
                                         </p-table>    
@@ -168,7 +217,7 @@
                                     
                                 </div>
                                 <div class="row" *ngIf="complaint_latin">
-                                        <p-table #dt [columns]="complianceRegistrationLatin_Header" [value]="complianceRegistrationLatin_Data" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationLatin_paginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationLatin_Products" [reorderableColumns]="true" >
+                                        <p-table #dt [columns]="complianceRegistrationLatin_Header" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)"  [customSort]="true">
                                                 <ng-template pTemplate="caption">
                                                     <div class="row">
                                                         <div class="col-md-6">
@@ -189,22 +238,28 @@
                                           
                                                 <ng-template pTemplate="header" let-columns>
                                                     <tr>
-                                                        <th style="width:2.5em"></th>
-                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                                        <th style="width:3.5em">S.No</th>
+                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
                                                             {{col.header}}
                                                             <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                                         </th>
                                                     </tr>
                                                 </ng-template>  
-                
+                                   
+                                            
                                                 <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                    <tr [pReorderableRow]="index">
+                                                    <tr>
                                                         <td>
-                                                            <i class="fa fa-bars" pReorderableRowHandle></i>
+                                                          {{index+1}}
                                                         </td>
-                                                        <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                            {{rowData[col.field]}}
-                                                        </td>
+                                                            <td> {{rowData.spec_id}}</td>
+                                                            <td> {{rowData.product}}</td>
+                                                            <td> {{rowData.country}}</td>
+                                                            <td> {{rowData.registered_Name}}</td>
+                                                            <td> {{rowData.date_Granted}}</td>
+                                                            <td> {{rowData.date_Of_Expiry}}</td>
+                                                            <td> {{rowData.registration_Holder}}</td>
+                                                            <td> {{rowData.registration_Certificate}}</td>
                                                     </tr>
                                                 </ng-template>
                                         </p-table> 

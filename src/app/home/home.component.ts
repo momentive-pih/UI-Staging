@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit {
   intialData_Details: any = [];
   HomeDataDetails: any = [];
   intialDataDetails: any;
+  modalAPICall:any = [];
   @Input()radioItem: any;
   radiovalue: any;
   sidebarTopIcon = false;
@@ -164,7 +165,11 @@ export class HomeComponent implements OnInit {
     console.log(item);
   }
 
-selectItem(index, data, radiodata): void {
+  selectItem(index, data, radiodata): void {
+  this.modalAPICall =[];
+  console.log(data);
+  console.log(index);
+  console.log(radiodata);
   this.selectedId = index;
   console.log(this.selectedId);
   this.value = data;
@@ -179,9 +184,17 @@ selectItem(index, data, radiodata): void {
     this.selectedId = index;
     this.modalValue = value;
     this.radioItem = Item;
+    this.momentiveService.CategoryEvent.next();
     console.log(this.selectedId);
     console.log(this.modalValue);
     console.log(this.radioItem);
+    this.modalAPICall.push({
+      'index': this.selectedId,
+      'Category': this.modalValue,
+      'Subcategory': this.radioItem,
+    });
+    console.log(this.modalAPICall);
+    this.momentiveService.setCategoryData(this.modalAPICall);
     this.firstModal = false;
     this.secondModal = false;
     this.thirdModal = false;
@@ -194,12 +207,11 @@ selectItem(index, data, radiodata): void {
     this.productTitle = 'Product Attributes';
     this.firstModal = true;
     // this.onChangeProductAttribute(this.radioItem);
-    // this.momentiveService.setSelectedTab(this.radioItem);
     this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
     setTimeout(() => {
+      alert('entry')
       this.momentiveService.callMethodOfSecondComponent(this.radioItem);
     }, 0);
-
   } else if ( this.modalValue === 'complianceModal') {
     this.productTitle = 'Product Complaince';
     this.secondModal = true;
@@ -285,6 +297,7 @@ if (event === 'productDetails') {
 
 MouseModalBox(id: any, data: any) {
   const index = id;
+  console.log(id);
   const Item = null;
   const extractData = data;
   console.log(data);
@@ -297,7 +310,35 @@ MouseModalBox(id: any, data: any) {
           console.log(this.openId);
           $(this.openId).modal('show');
        }, 100);
-      this.selectItem(index, ModalBoxId, Item);
+       if (index === 0){
+         alert('1ityir');
+        const Item = 'Basic Information'
+        this.selectItem(index, ModalBoxId, Item);
+       }
+       if (index === 1){
+        const Item = 'Notification Status'
+        this.selectItem(index, ModalBoxId, Item);
+       }
+       if (index === 2){
+        const Item = 'US FDA Letter'
+        this.selectItem(index, ModalBoxId, Item);
+       }
+       if (index === 3){
+        const Item = 'Study Title and Date'
+        this.selectItem(index, ModalBoxId, Item);
+       }
+       if (index === 4){
+        const Item = 'GADSL'
+        this.selectItem(index, ModalBoxId, Item);
+       }
+       if (index === 5){
+        const Item = 'Sales Volume'
+        this.selectItem(index, ModalBoxId, Item);
+       }
+       if (index === 6){
+        const Item = 'Released Documents'
+        this.selectItem(index, ModalBoxId, Item);
+       }
     }});
 }
 

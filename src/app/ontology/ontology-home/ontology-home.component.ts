@@ -16,6 +16,7 @@ declare var $: any;
   templateUrl: './ontology-home.component.html',
   styleUrls: ['./ontology-home.component.css']
 })
+
 export class OntologyHomeComponent implements OnInit {
 
   ontologyFileDocuments: any = [];
@@ -27,6 +28,8 @@ export class OntologyHomeComponent implements OnInit {
   unassignedDocument: any;
   keyDocuments: any =[];
   alertText: any;
+  ontologyServiceDetails:any;
+  selectedSpecList:any = [];
 
 
 
@@ -35,8 +38,26 @@ export class OntologyHomeComponent implements OnInit {
                }
 
   ngOnInit() {
-    // this.documentCategory = localStorage.getItem('ontologyDocumets');
-    // console.log(this.documentCategory);
+
+
+    this.ontologyServiceDetails =[];
+    this.selectedSpecList = this.momentiveService.getCategorySpecList();
+    console.log(this.selectedSpecList);
+    this.ontologyServiceDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details' : { Category: "ontology", Subcategory: "assigned"}
+    });
+      console.log(this.ontologyServiceDetails)
+      this.unassignedDocument= false;
+      this.momentiveService.getOntologyDocumentss(this.ontologyServiceDetails).subscribe(data => {
+        console.log(data);
+      this.ontologyFileDocuments = data;
+      console.log(this.ontologyFileDocuments);
+    }, err => {
+      console.error(err);
+    });
+
+
 
     
     var retrievedData = localStorage.getItem("synonymsOntology");

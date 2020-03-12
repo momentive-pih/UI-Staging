@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption} from '@ng-select/ng-select';
 import { MomentiveService} from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
 declare var $: any;
 
 
@@ -72,6 +73,18 @@ selectedcomplianceRegistrationLatin_Columns: any[];
     // New Data;
     productdata: any = [];
     objectKeys = Object.keys;
+    selectedSpecList:any =[];
+    CategoryDetails:any = [];
+    ProductComlianceDetails:any = [];
+    productComplianceLoader:boolean = true;
+    pc_NotificationDataHeader:any = [];
+    complianceLocationRegistrationData:any =[];
+    locationBasedRegistration:any;
+
+    selectedAGRegistrationLocation: string = "EU";
+  
+    selectedCompositionControl = new FormControl(this.selectedAGRegistrationLocation);
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private momentiveService: MomentiveService,
@@ -79,14 +92,6 @@ selectedcomplianceRegistrationLatin_Columns: any[];
     }
 
     ngOnInit() {
-    // product_type
-      this.momentiveService.getSearchData().subscribe(data => {
-      this.productdata = data;
-      this.product_type = this.productdata.product_type;
-      console.log(this.product_type);
-    }, err => {
-      console.error(err);
-    });
 
   // regionPart
       this.momentiveService.getSearchData().subscribe(data => {
@@ -95,7 +100,7 @@ selectedcomplianceRegistrationLatin_Columns: any[];
     console.log(this.regionPart);
               }, err => {
                 console.error(err);
-              });
+      });
 
      // ProductComplianceCheck
       this.momentiveService.getSearchData().subscribe(data => {
@@ -105,91 +110,126 @@ selectedcomplianceRegistrationLatin_Columns: any[];
     }, err => {
       console.error(err);
     });
-  // cols
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.cols = this.productdata.cols;
-    console.log(this.cols);
-  }, err => {
-    console.error(err);
-  });
+  
 
-  // pc_NotificationHeader
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.pc_NotificationHeader = this.productdata.pc_NotificationHeader;
-    console.log(this.pc_NotificationHeader);
-  }, err => {
-    console.error(err);
-  });
-
-  // pc_Notification
-  this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.pc_NotificationData = this.productdata.pc_NotificationData;
-    console.log(this.pc_NotificationData);
-  }, err => {
-    console.error(err);
-  });
-  // complianceRegistrationEUHeader
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.complianceRegistrationEUHeader = this.productdata.complianceRegistrationEUHeader;
-    console.log(this.complianceRegistrationEUHeader);
-  }, err => {
-    console.error(err);
-  });
-  // complianceRegistrationEUData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.complianceRegistrationEUData = this.productdata.complianceRegistrationEUData;
-    console.log(this.complianceRegistrationEUData);
-  }, err => {
-    console.error(err);
-  });
-  // complianceRegistrationCanada_Header
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.complianceRegistrationCanada_Header = this.productdata.complianceRegistrationCanada_Header;
-    console.log(this.complianceRegistrationCanada_Header);
-  }, err => {
-    console.error(err);
-  });
-  // complianceRegistrationCanada_Data
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.complianceRegistrationCanada_Data = this.productdata.complianceRegistrationCanada_Data;
-    console.log(this.complianceRegistrationCanada_Data);
-  }, err => {
-    console.error(err);
-  });
-  // complianceRegistrationLatin_Header
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.complianceRegistrationLatin_Header = this.productdata.complianceRegistrationLatin_Header;
-    console.log(this.complianceRegistrationLatin_Header);
-  }, err => {
-    console.error(err);
-  });
-  // complianceRegistrationLatin_Data
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.complianceRegistrationLatin_Data = this.productdata.complianceRegistrationLatin_Data;
-    console.log(this.complianceRegistrationLatin_Data);
-  }, err => {
-    console.error(err);
-  });
 
 
   this.momentiveService.notifyObservable$.subscribe(value => {
     this.selecteditem = value;
     console.log(this.selecteditem);
+    this.productComplianceNotification();
     if (this.selecteditem) {
       setTimeout(() => {
         this.onChangeProductCompliance(this.selecteditem);
      }, 0);
    }
   });
+
+  this.pc_NotificationDataHeader = [
+    { "field": "spec_id", "header": "Specification ID","width": "10%" },
+    { "field": "regulatory_List", "header": "Regulatory List","width": "10%" },
+    { "field": "notification", "header": "Notification","width": "10%"},
+    { "field": "additional_Info", "header": "Additional Info/ Remarks","width": "10%"},
+    { "field": "usage", "header": "Usage","width": "10%" }
+  ],
+  this.complianceRegistrationEUHeader = [
+    { "field": "spec_id", "header": "Specification ID","width": "10%" },
+    { "field": "product", "header": "product","width": "10%" },
+    { "field": "country", "header": "Country","width": "10%"},
+    { "field": "holder", "header": "Holder","width": "10%"},
+    { "field": "registration", "header": "Registration","width": "10%" },
+    { "field": "expiry", "header": "Expiry","width": "10%"},
+    { "field": "status", "header": "Status","width": "10%" },
+    { "field": "certificate", "header": "Certificate","width": "10%" }
+  ],
+  this.complianceRegistrationCanada_Header = [
+    { "field": "spec_id", "header": "Specification ID","width": "10%" },
+    { "field": "product Name", "header": "Product Name","width": "10%" },
+    { "field": "EPA Inert Product Listing", "header": "EPA Inert Product Listing","width": "10%"},
+    { "field": "CA DPR", "header": "CA DPR","width": "10%"},
+    { "field": "CP DA", "header": "CP DA","width": "10%" },
+    { "field": "WSDA", "header": "WSDA","width": "10%"},
+    { "field": "OMRI", "header": "OMRI","width": "10%" },
+    { "field": "Canada OMRI", "header": "Canada OMRI","width": "10%" },
+    { "field": "OMRI Reneval Dates", "header": "OMRI Reneval Date","width": "10%" },
+    { "field": "PMRA", "header": "PMRA","width": "10%" }
+  ]
+      
+this.complianceRegistrationLatin_Header = [
+    { "field": "spec_id", "header": "Specification ID","width": "10%" },
+    { "field": "product", "header": "product","width": "10%" },
+    { "field": "country", "header": "Country","width": "10%"},
+    { "field": "Registered Name", "header": "Registered Name","width": "10%"},
+    { "field": "Date Granted", "header": "Date Granted","width": "10%" },
+    { "field": "Date of Expiry", "header": "Date of Expiry","width": "10%"},
+    { "field": "Registration Holder", "header": "Registration Holder","width": "10%" },
+    { "field": "registration_Certificate", "header": "Registration Certificate (Location)","width": "10%" }
+  ]
+
+  }
+
+  
+  productComplianceNotification() {
+    this.ProductComlianceDetails =[];
+    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+    console.log(this.selectedSpecList);
+    this.CategoryDetails = this.momentiveService.ProductCategoryData;
+    console.log(this.CategoryDetails);
+    this.ProductComlianceDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details': this.CategoryDetails[0],
+    });
+    console.log(this.ProductComlianceDetails)
+    this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
+      this.productComplianceLoader = false;
+      console.log(data);
+      this.productdata = data;
+      this.pc_NotificationHeader = this.pc_NotificationDataHeader;
+       this.pc_NotificationData =  this.productdata[0].pc_NotificationData; 
+       console.log(this.pc_NotificationData);
+    }, err => {
+      console.error(err);
+    });
+  }
+
+  productComplianceAgRegistration(locationValue) {
+    let locationBasedRegistration = locationValue;
+    console.log(locationBasedRegistration);
+    this.ProductComlianceDetails =[];
+    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+    console.log(this.selectedSpecList);
+    this.CategoryDetails = {index: 2, Category: "Product Compliance", Subcategory: "AG Registration Status"}
+    console.log(this.CategoryDetails);
+    this.ProductComlianceDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details': this.CategoryDetails,
+    });
+    console.log(this.ProductComlianceDetails)
+    this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
+      console.log(locationBasedRegistration);
+      console.log(data);
+      if(locationBasedRegistration === 'EU') {
+        this.productComplianceLoader = false;
+        this.productdata = data;
+        this.complianceLocationRegistrationData =  this.productdata[0].complianceRegistrationEUData; 
+        console.log(this.complianceLocationRegistrationData);
+      }
+      if(locationBasedRegistration === 'canada') {
+        this.productComplianceLoader = false;
+        this.productdata = data;
+        this.complianceLocationRegistrationData =  this.productdata[0].complianceRegistrationCanada_Data; 
+        console.log(this.complianceLocationRegistrationData);
+      }
+      if(locationBasedRegistration === 'Latin') {
+        this.productComplianceLoader = false;
+        this.productdata = data;
+        this.complianceLocationRegistrationData =  this.productdata[0].complianceRegistrationLatin_Data; 
+        console.log(this.complianceLocationRegistrationData);
+      }
+   
+    }, err => {
+      console.error(err);
+    });
   }
 
     public selectionItemForFilter(e) {
@@ -231,25 +271,33 @@ selectedcomplianceRegistrationLatin_Columns: any[];
        if (this.productComplianceCheck === 'Notification Status') {
         this.complianceNotification = true;
         this.complianceRegistration = false;
+        this.productComplianceNotification();
       } else if (this.productComplianceCheck === 'AG Registration Status') {
         this.complianceNotification = false;
         this.complianceRegistration = true;
+        this.productComplianceAgRegistration('EU')
       }
     }
+    
+    
     selectRegionProcess(value) {
+      console.log(value);
       this.regionValueCheck = value;
-      if ( this.regionValueCheck === 'eu') {
+      if(this.regionValueCheck === 'eu') {
         this.complaint_EU = true;
         this.complaint_canada = false;
         this.complaint_latin = false;
-      } else if (this.regionValueCheck === 'us canada') {
+        this.productComplianceAgRegistration('EU');
+      } else if (this.regionValueCheck === 'US Canada') {
         this.complaint_EU = false;
         this.complaint_canada = true;
         this.complaint_latin = false;
-      } else if (this.regionValueCheck === 'latin america') {
+        this.productComplianceAgRegistration('canada');
+      } else if (this.regionValueCheck === 'Latin America') {
         this.complaint_EU = false;
         this.complaint_canada = false;
         this.complaint_latin = true;
+        this.productComplianceAgRegistration('Latin');
       }
     }
 

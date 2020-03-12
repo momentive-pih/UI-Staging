@@ -1,6 +1,6 @@
 <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-            <div class="board-inner radio-check-mbv">
+            <!-- <div class="board-inner radio-check-mbv">
                 <div class="slide-nav">
                     <div class="slide-center">
                         <div class="list-check">
@@ -10,30 +10,26 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-body">
-                <div class="card-body">
-                    <div *ngIf="locationCheck">
-                         <h6 class="text-default font-weight-semibold">Location Details:<i class="fa fa-info-circle" role="button" title="This data is from SAP BW"></i></h6>
-                       
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
+            </div> -->
 
-                                    <h6 class="text-muted font-size-sm" >Manufacturing Location and Address :</h6>
-                                </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                    <h6 class="text-muted font-size-sm">Production Sites :</h6>
-                                </div>
-                            </div>
-                            </div>
-                        
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-body">
+                    <h6 class="text-default font-weight-semibold"><span class="">Sales Volume:<i class="fa fa-info-circle" role="button" title="This data is from SAP BW"></i></span>
+                    </h6>
+                </div></div>
+         </div>
+
+            <span *ngIf="salesInformationLoader">
+                        <i class="loader-class fa fa-spinner fa-spin"></i>
+                        <span class="loader-text">Loading Sales Information data....</span>
+            </span>
+
+            <div class="modal-body" *ngIf="!salesInformationLoader">
+                <div class="card-body">
+           
                     <div *ngIf="volumeCheck">
-                            <h6 class="mod-head">Sales Volume:<i class="fa fa-info-circle" role="button" title="This data is from SAP BW"></i></h6>
-                            <p-table #dt [columns]="saleDataHead" [value]="saleDataProducts" (sortFunction)="customSort($event)" [paginator]="salesDatapaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedSalesVolumeDataProducts" [reorderableColumns]="true" >
+                            <p-table #dt [columns]="saleDataHead" [value]="salesDataproducts" (sortFunction)="customSort($event)" [customSort]="true">
                                     <ng-template pTemplate="caption">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -54,27 +50,32 @@
                               
                                     <ng-template pTemplate="header" let-columns>
                                         <tr>
-                                            <th style="width:2.5em"></th>
-                                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                            <th style="width:3.5em">S.No</th>
+                                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width}">
                                                 {{col.header}}
                                                 <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                             </th>
                                         </tr>
                                     </ng-template>  
-    
+
                                     <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                        <tr [pReorderableRow]="index">
-                                            <td>
-                                                <i class="fa fa-bars" pReorderableRowHandle></i>
-                                            </td>
-                                            <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                {{rowData[col.field]}}
-                                            </td>
-                                        </tr>
+                                        <tr>
+                                              <td>{{index+1}}</td>
+                                              <td>{{rowData.basic_data}}</td>
+                                              <td>{{rowData.spec_id}}</td>
+                                              <td>{{rowData.material_description}}</td>
+                                              <td>{{rowData.material_number}}</td>
+                                              <td>{{rowData.past_Sales}}</td>
+                                              <td>{{rowData.region_sold}}</td>
+                                              <td>{{rowData.sales_Org}}</td>
+                                          </tr>
                                     </ng-template>
                                 </p-table>
                       
                     </div>
+
+
+           
                     <div class="clearfix"></div>
                 </div>
             </div>

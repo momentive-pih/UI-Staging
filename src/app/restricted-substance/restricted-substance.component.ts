@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Attribute } from '@angular/compiler';
-import { MatTableDataSource} from '@angular/material';
-import { TableModule} from 'primeng/table';
+import { MatTableDataSource } from '@angular/material';
+import { TableModule } from 'primeng/table';
 import * as frLocale from 'date-fns/locale/fr';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NgSelectModule, NgOption} from '@ng-select/ng-select';
-import { MomentiveService} from '../service/momentive.service';
+import { NgSelectModule, NgOption } from '@ng-select/ng-select';
+import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
 declare var $: any;
 
@@ -16,128 +16,184 @@ declare var $: any;
   styleUrls: ['./restricted-substance.component.css']
 })
 export class RestrictedSubstanceComponent implements OnInit {
-    selecteditem: any;
-    product_Name: any = [];
-    product_type: any = [];
-    restrictedSubstanceChecks: any = [];
-    restrictedSubstanceTab = 'GADSL';
-    gadslCheck = true;
-    californiaCheck = false;
-    // Restricted GASDL
-    restrictedGASDLHeader: any[];
-    restrictedGASDLData: any[];
-    selectedrestrictedGASDLProducts: any[];
-    selectedrestrictedGASDLColumns: any[];
-    restrictedGASDLDatapaginator = false;
-    // Restricted Calofornia
-    restrictedCaliforniaHeader: any[];
-    restrictedCaliforniaData: any[];
-    selectedrestrictedCaliforniaProducts: any[];
-    selectedrestrictedCaliforniaColumns: any[];
-    restrictedCaliforniapaginator = false;
-    radiovalue: any;
-    productdata: any = [];
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private momentiveService: MomentiveService,
-                ) {
-    }
-    ngOnInit() {
+  selecteditem: any;
+  product_Name: any = [];
+  product_type: any = [];
+  restrictedSubstanceChecks: any = [];
+  restrictedSubstanceTab = 'GADSL';
+  gadslCheck = true;
+  californiaCheck = false;
+  // Restricted GASDL
+  restrictedGASDLHeader: any[];
+  restrictedGASDLData: any[];
+  selectedrestrictedGASDLProducts: any[];
+  selectedrestrictedGASDLColumns: any[];
+  restrictedGASDLDatapaginator = false;
+  // Restricted Calofornia
+  restrictedCaliforniaHeader: any[];
+  restrictedCaliforniaData: any[];
+  selectedrestrictedCaliforniaProducts: any[];
+  selectedrestrictedCaliforniaColumns: any[];
+  restrictedCaliforniapaginator = false;
+  UserSelectedProducts: any;
+  radiovalue: any;
+  productdata: any = [];
+  selectedSpecList: any = [];
+  CategoryDetails: any = [];
+  RestrictedInformationDetails:any =[];
+  restrictedDataproducts:any =[];
+  restrictedLoader:boolean = true;
+  pihAlertMessage:boolean=false;
+  restrictedCaliforniaTableHeader:any=[];
 
-      this.momentiveService.notifyObservable$.subscribe(value => {
-        this.selecteditem = value;
-        console.log(this.selecteditem);
-        if (this.selecteditem) {
-          setTimeout(() => {
-            this.onChangeRestricted(this.selecteditem);
-         }, 0);
-       }
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private momentiveService: MomentiveService,
+  ) {
+  }
+  ngOnInit() {
+
+    this.momentiveService.notifyObservable$.subscribe(value => {
+      this.selecteditem = value;
+      console.log(this.selecteditem);
+      this.restrictedSubstancePage();
+      if (this.selecteditem) {
+        setTimeout(() => {
+          this.onChangeRestricted(this.selecteditem);
+        }, 0);
+      }
+    });
+
+
+    // restrictedSubstanceChecks
+    this.momentiveService.getSearchData().subscribe(data => {
+      this.productdata = data;
+      this.restrictedSubstanceChecks = this.productdata.restrictedSubstanceChecks;
+      console.log(this.restrictedSubstanceChecks);
+    }, err => {
+      console.error(err);
+    });
+ 
+
+    this.restrictedGASDLHeader = [
+      { "field": "substance", "header": "Substance","width": "10%" },
+      { "field": "spec-id", "header": "Specification ID","width": "10%" },
+      { "field": "cas_NO", "header": "CAS RN","width": "10%"},
+      { "field": "class_action", "header": "Class Sl FIC Action","width": "10%"},
+      { "field": "reason_Code", "header": "Reason Code","width": "10%" },
+      { "field": "source", "header": "Source(Legal Requirement Regulations)","width": "20%" },
+      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)","width": "20%" },
+      { "field": "weight_Composition", "header": "% Weight in SAP std Composition","width": "20%" }
+    ]
+
+
+    this.restrictedCaliforniaHeader = [
+      { "field": "chemical", "header": "Chemical","width": "10%" },
+      { "field": "type_Toxicity", "header": "Type of Toxicity","width": "10%"},
+      { "field": "listing_Mechanism", "header": "Listing Mechanism","width": "10%"},
+      { "field": "cas_NO", "header": "CAS NO","width": "10%" },
+      { "field": "date_Listed", "header": "Date Listed","width": "20%" },
+      { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a","width": "20%" },
+      { "field": "weight_Composition", "header": "% Weight in SAP std Composition","width": "20%" }
+    ]
+    
+
+  }
+
+
+  restrictedSubstancePage() {
+    this.RestrictedInformationDetails =[];
+    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+    console.log(this.selectedSpecList);
+    this.CategoryDetails = this.momentiveService.ProductCategoryData;
+    console.log(this.CategoryDetails);
+    this.RestrictedInformationDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details': this.CategoryDetails[0],
+    });
+    console.log(this.RestrictedInformationDetails)
+    this.momentiveService.getRestrictedSubstance(this.RestrictedInformationDetails).subscribe(data => {
+      this.restrictedLoader = false;
+      console.log(data);
+      this.productdata = data;
+       this.restrictedGASDLData =  this.productdata.restrictedGASDLData; 
+       console.log(this.restrictedGASDLData);
+    }, err => {
+      console.error(err);
+    });
+  }
+
+
+
+  onChangeRestricted(item) {
+    this.restrictedSubstanceTab = item;
+    if (this.restrictedSubstanceTab === 'GADSL') {
+      this.gadslCheck = true;
+      this.californiaCheck = false;
+      this.restrictedSubstancePage();
+    } else if (this.restrictedSubstanceTab === 'California Prop 65') {
+      this.californiaCheck = true;
+      this.gadslCheck = false;
+      this.restrictedLoader = true;
+      this.RestrictedInformationDetails =[];
+      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+      console.log(this.selectedSpecList);
+      this.CategoryDetails = {index: 2, Category: "restrictedSubstanceModal", Subcategory: "CALPROP"}
+      console.log(this.CategoryDetails);
+      this.RestrictedInformationDetails.push({
+        'Spec_id': this.selectedSpecList,
+        'Category_details': this.CategoryDetails,
       });
-
-      // restrictedSubstanceChecks
-      this.momentiveService.getSearchData().subscribe(data => {
+      console.log(this.RestrictedInformationDetails)
+      this.momentiveService.getRestrictedSubstance(this.RestrictedInformationDetails).subscribe(data => {
+        console.log(data);
         this.productdata = data;
-        this.restrictedSubstanceChecks = this.productdata.restrictedSubstanceChecks;
-        console.log(this.restrictedSubstanceChecks);
+        
+        if(this.productdata.restrictedCaliforniaData.length === 0) {
+             this.pihAlertMessage = true;
+             alert('1')
+        } else {
+           this.restrictedLoader = false;
+           this.pihAlertMessage = false;
+           this.restrictedCaliforniaTableHeader = this.restrictedCaliforniaHeader;
+           this.restrictedCaliforniaData =  this.productdata.restrictedCaliforniaData; 
+           console.log(this.restrictedCaliforniaData);
+        }
+       
       }, err => {
         console.error(err);
       });
-  // restrictedGASDLHeader
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.restrictedGASDLHeader = this.productdata.restrictedGASDLHeader;
-    console.log(this.restrictedGASDLHeader);
-  }, err => {
-    console.error(err);
-  });
-  // restrictedGASDLData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.restrictedGASDLData = this.productdata.restrictedGASDLData;
-    console.log(this.restrictedGASDLData);
-  }, err => {
-    console.error(err);
-  });
-  // restrictedCaliforniaHeader
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.restrictedCaliforniaHeader = this.productdata.restrictedCaliforniaHeader;
-    console.log(this.restrictedCaliforniaHeader);
-  }, err => {
-    console.error(err);
-  });
-  // restrictedCaliforniaData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.restrictedCaliforniaData = this.productdata.restrictedCaliforniaData;
-    console.log(this.restrictedCaliforniaData);
-  }, err => {
-    console.error(err);
-  });
-  }
-
- 
-
-
-    onChangeRestricted(item) {
-      this.restrictedSubstanceTab = item;
-      if ( this.restrictedSubstanceTab === 'GADSL') {
-        this.gadslCheck = true;
-        this.californiaCheck = false;
-      } else if (this.restrictedSubstanceTab === 'California Prop 65') {
-        this.californiaCheck = true;
-        this.gadslCheck = false;
-      }
     }
-
-    customSort(event) {
-      event.data.sort((data1, data2) => {
-          const value1 = data1[event.field];
-          const value2 = data2[event.field];
-          const result = null;
-  
-          if (value1 == null && value2 != null) {
-              const result = -1;
-          } else if (value1 != null && value2 == null) {
-            const result = 1;
-          } else if (value1 == null && value2 == null) {
-            const result = 0;
-          } else if (typeof value1 === 'string' && typeof value2 === 'string') {
-            const  result = value1.localeCompare(value2);
-           } else {
-            const result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
-   }
-          return (event.order * result);
-      });
   }
-   
-    onItemSelect(item: any) {
-      console.log(item);
+
+  customSort(event) {
+    event.data.sort((data1, data2) => {
+      const value1 = data1[event.field];
+      const value2 = data2[event.field];
+      const result = null;
+
+      if (value1 == null && value2 != null) {
+        const result = -1;
+      } else if (value1 != null && value2 == null) {
+        const result = 1;
+      } else if (value1 == null && value2 == null) {
+        const result = 0;
+      } else if (typeof value1 === 'string' && typeof value2 === 'string') {
+        const result = value1.localeCompare(value2);
+      } else {
+        const result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+      }
+      return (event.order * result);
+    });
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
   }
   OnItemDeSelect(item: any) {
-      console.log(item);
+    console.log(item);
   }
   onSelectAll(items: any) {
-      console.log(items);
+    console.log(items);
   }
-  }
+}

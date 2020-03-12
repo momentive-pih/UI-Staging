@@ -36,17 +36,30 @@ export class SalesVolumeComponent implements OnInit {
     radiovalue: any;
     productdata: any = [];
     objectKeys = Object.keys;
+
+    selectedSpecList: any = [];
+    CategoryDetails: any = [];
+    salesInformationDetails:any=[];
+    salesDataproducts:any=[];
+    salesInformationLoader:boolean = true;
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private momentiveService: MomentiveService,
                ) {
+
+                this.momentiveService.CategoryEvent.subscribe(data => {
+                  this.salesInformationPage();
+                 });
     }
     ngOnInit() {
 
       this.momentiveService.notifyObservable$.subscribe(value => {
         this.selecteditem = value;
+        this.salesInformationPage();
         console.log(this.selecteditem);
         if (this.selecteditem) {
+      
           setTimeout(() => {
             this.onChangeSales(this.selecteditem);
          }, 0);
@@ -70,24 +83,42 @@ export class SalesVolumeComponent implements OnInit {
         console.error(err);
       });
 
- // saleDataHead
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.saleDataHead = this.productdata.saleDataHead;
-    console.log(this.saleDataHead);
-  }, err => {
-    console.error(err);
-  });
-  // saleDataProducts
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    console.log(this.productdata);
-    this.saleDataProducts = this.productdata.saleDataProducts;
-    console.log(this.saleDataProducts);
-  }, err => {
-    console.error(err);
-  });
+
+
+       this.saleDataHead = [
+        { "field": "Basic data", "header": "Basic Data" },
+        { "field": "Specid", "header": "Specification ID" },
+        { "field":"Material description" ,"header": "Material Description"},
+        { "field": "Material number", "header": "Material Number" },
+        { "field": "Past Sales", "header": "Past Sales" },
+        { "field": "Region where sold", "header": "Region where sold" },
+        { "field":"Sales Org", "header":"Sales Org"}
+      ]
+    }
+
+  salesInformationPage() {
+    this.salesInformationDetails =[];
+    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+    console.log(this.selectedSpecList);
+    this.CategoryDetails = this.momentiveService.ProductCategoryData;
+    console.log(this.CategoryDetails);
+    this.salesInformationDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details': this.CategoryDetails[0],
+    });
+    console.log(this.salesInformationDetails)
+    this.momentiveService.getSalesInformation(this.salesInformationDetails).subscribe(data => {
+      this.salesInformationLoader = false;
+      console.log(data);
+      this.productdata = data;
+       this.salesDataproducts =  this.productdata.saleDataProducts; 
+       console.log(this.salesDataproducts);
+    }, err => {
+      console.error(err);
+    });
   }
+
+
     onChangeSales(item) {
       this.saleTab = item;
       if ( this.saleTab === 'Sales Volume') {
@@ -99,6 +130,7 @@ export class SalesVolumeComponent implements OnInit {
         this.volumeCheck = false;
       }
     }
+
     customSort(event) {
       event.data.sort((data1, data2) => {
           const value1 = data1[event.field];

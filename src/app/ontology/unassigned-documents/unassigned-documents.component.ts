@@ -24,6 +24,8 @@ export class UnassignedDocumentsComponent implements OnInit {
   documentCategory: any;
   documentCategorySection = false;
   productIdFilter: any
+  ontologyServiceDetails:any=[]
+  selectedSpecList:any=[]
 
 
 
@@ -32,6 +34,22 @@ export class UnassignedDocumentsComponent implements OnInit {
                }
 
   ngOnInit() {
+
+    this.ontologyServiceDetails =[];
+    this.ontologyServiceDetails.push({
+      'Category_details' : { Category: "ontology", Subcategory: "unassigned"}
+    });
+      console.log(this.ontologyServiceDetails)
+      this.momentiveService.getOntologyDocumentss(this.ontologyServiceDetails).subscribe(data => {
+        console.log(data);
+      this.ontologyFileDocuments = data;
+      console.log(this.ontologyFileDocuments);
+    }, err => {
+      console.error(err);
+    });
+
+
+
 
       // tslint:disable-next-line: align
         this.momentiveService.getOntologyDocuments().subscribe(data => {

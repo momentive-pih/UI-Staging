@@ -8,11 +8,12 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 import { DropdownModule} from 'primeng/primeng';
 import { MultiSelectModule} from 'primeng/primeng';
-import {EditorModule, SharedModule, ButtonModule} from 'primeng/primeng';
+import {EditorModule, ButtonModule} from 'primeng/primeng';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MomentiveService} from './../service/momentive.service';
 import { OntologyRoutingModule } from './ontology-routing.module';
+import { SharedModule } from '../shared/shared.module';
 import { UnassignedDocumentsComponent } from './unassigned-documents/unassigned-documents.component';
 import { UnassignedDetailsDocumentsComponent } from './unassigned-details-documents/unassigned-details-documents.component';
 
@@ -42,7 +43,7 @@ import { UnassignedDetailsDocumentsComponent } from './unassigned-details-docume
     NgMultiSelectDropDownModule.forRoot(),
     NgSelectModule
   ],
-  providers: [MomentiveService],
+  providers: [],
   bootstrap: []
 })
 export class OntologyModule { }

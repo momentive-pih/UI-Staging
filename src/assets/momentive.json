@@ -1862,12 +1862,7 @@
         
       
         
-        "pc_NotificationHeader" : [
-          { "field": "regulatory_List", "header": "Regulatory List","width": "10%" },
-          { "field": "notification", "header": "Notification","width": "10%"},
-          { "field": "additional_Info", "header": "Additional Info/ Remarks","width": "10%"},
-          { "field": "usage", "header": "Usage","width": "10%" }
-        ],
+       
         
         "pc_NotificationData" : [
           {

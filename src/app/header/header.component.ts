@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy , OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy , OnInit, ViewChild, ElementRef,ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Attribute, IfStmt } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material';
@@ -14,6 +14,9 @@ import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute, NavigationStart, NavigationExtras} from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material';
+import { ToastrManager } from 'ng6-toastr-notifications';
+
+
 
 declare var $: any;
 interface product {
@@ -139,11 +142,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSpecList:any = [];
   banks:any = [];
   specDataListDetails:any;
+  sideSpecList:any;
+  userSelectedSPECDetails:any=[];
+  basicPropertiesLoader:any;
+  public loading;
+  notifier:any;
 
 
     /** control for the selected bank for multi-selection */
     public bankMultiCtrl: FormControl = new FormControl();
-  
+     
     /** control for the MatSelect filter keyword multi-selection */
     public bankMultiFilterCtrl: FormControl = new FormControl();
   
@@ -161,11 +169,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('code', {
     static: true
   }) myselect: ElementRef;
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private homeService: HomeService, private momentiveService: MomentiveService) {
-   
+  constructor(private fb: FormBuilder,public toastr: ToastrManager, vcr: ViewContainerRef,private route: ActivatedRoute, private router: Router, private homeService: HomeService, private momentiveService: MomentiveService) {
+
+  
+
     this.momentiveService.homeEvent.subscribe(data =>{
       this.ngOnInit()
     })
+
+    
+  
     this.reactiveForm = fb.group({
       selectedSearchNew: ['', Validators.required],
     });
@@ -782,10 +795,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.SearchProducts);
     this.searchDataLength = this.SearchProducts.SearchData.length;
     if (this.searchDataLength > 2 && Isfirst) {
-      this.nextLibAvailable = true;
+      this.loading = true
       this.momentiveService.getAllEvents(this.SearchProducts).subscribe(data => {
         if (data) {
-          this.nextLibAvailable = false;
+          this.loading = false;
           console.log('inside', data.concat([]));
           this.product_Name = data;
           this.product_Name.forEach(element => {
@@ -812,12 +825,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(err);
       })
     } else if (Isfirst === false) {
+      this.loading = false;
       this.items$ = this.product_Name.filter((product_Name) => {
         return product_Name.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
          product_Name.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
           product_Name.key.toLowerCase().includes(this.searchTerm.toLowerCase()) 
       });
     } else if (this.searchDataLength <= 0 && Isfirst) {
+      this.loading = false;
       this.product_Name = [];
       this.ProductDrop = [];
       this.clearCheck();
@@ -828,6 +843,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
     else if (this.searchDataLength === 0 && Isfirst) {
+      this.loading = false;
       this.product_Name = [];
       this.items$ = this.product_Name.filter((product_Name) => {
         return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
@@ -889,18 +905,18 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getIntialSpecList(this.selectedSearchText);
     }
     //Basic Details API
-    this.momentiveService.getBasicProperties(data).subscribe(data => {
-      this.basicProperties = data;
-      console.log(this.basicProperties);
-      this.productLevel = this.basicProperties[0].productLevel;
-      console.log(this.productLevel);
-      this.MaterialLevel = this.basicProperties[1].MaterialLevel;
-      console.log(this.MaterialLevel);
-      this.casLevel = this.basicProperties[2].CasLevel;
-      console.log(this.casLevel);
-    }, err => {
-      console.error(err);
-    });
+    // this.momentiveService.getBasicProperties(data).subscribe(data => {
+    //   this.basicProperties = data;
+    //   console.log(this.basicProperties);
+    //   this.productLevel = this.basicProperties[0].productLevel;
+    //   console.log(this.productLevel);
+    //   this.MaterialLevel = this.basicProperties[1].MaterialLevel;
+    //   console.log(this.MaterialLevel);
+    //   this.casLevel = this.basicProperties[2].CasLevel;
+    //   console.log(this.casLevel);
+    // }, err => {
+    //   console.error(err);
+    // });
   }
   clearCheck() {
     this.product_Name = [];
@@ -924,9 +940,26 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.CommunicationHistoryData = this.CopycommunicationHistoryData.filter((customer) => (customer.customer_name == CustomerNameData));
     console.log(this.CommunicationHistoryData);
   }
+
   fireEvent(event) {
     if (event === 'productDetails') {
       $('#basicDetails').modal('show');
+      this.basicPropertiesLoader = [];
+      this.userSelectedSPECDetails =this.momentiveService.categorySelectedSPECList;
+      this.momentiveService.getBasicProperties(this.userSelectedSPECDetails).subscribe(data => {
+      this.basicProperties = data;
+      if(this.basicProperties.length > 0) {
+        this.basicPropertiesLoader = false;
+        this.productLevel = this.basicProperties[0].productLevel;
+        this.MaterialLevel = this.basicProperties[0].materialLevel;
+        this.casLevel = this.basicProperties[0].CASLevel;
+      } else {
+          this.basicPropertiesLoader = true;
+      } 
+   
+      }, err => {
+        console.error(err);
+      });
     }
   }
   Ongtology() {
@@ -944,7 +977,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['ontology/unassigned-documents'])
   }
   OntologyMasterManagement() {
-    this.router.navigate(['/ontology/whole-ontology-management']);
+    this.router.navigate(['/ontology/synonyms']);
   }
   home() {
     this.router.navigate(['/app-pageindex']);
@@ -964,6 +997,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       }
      // set initial selection
      this.bankMultiCtrl.setValue([this.banks[0]]);
+     this.momentiveService.setCategorySpecList([this.banks[0]]);
      // load the initial bank list
      this.filteredBanksMulti.next(this.banks.slice());
      // listen for search field value changes
@@ -978,14 +1012,26 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
+  
+  selectAll(checkAll, select, values) {
+    alert('dddd')
+    //this.toCheck = !this.toCheck;
+    if(checkAll){
+      select.update.emit(values); 
+    }
+    else{
+      select.update.emit([]);
+    }
+  }
 
-
-  selectedTopSpecList(data) {
+  selectedTopSpecList() {
     console.log(this.bankMultiCtrl.value);
-    const sideSpecList = this.bankMultiCtrl.value[0];
-    console.log(sideSpecList);
-    this.momentiveService.setSelectedProductData(sideSpecList);
+    this.sideSpecList = this.bankMultiCtrl.value[0];
+    console.log(this.sideSpecList);
     this.momentiveService.homeEvent.next();
+     this.momentiveService.setSelectedProductData(this.sideSpecList);
+     this.momentiveService.setCategorySpecList(this.bankMultiCtrl.value);
+     this.toastr.successToastr('Specification ID Selected.', 'Success!');
   }
 
 
@@ -997,6 +1043,19 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this._onDestroy.next();
     this._onDestroy.complete();
   }
+
+  toggleSelection(change) :void {
+    this.filteredBanksMulti.pipe(take(1), takeUntil(this._onDestroy))
+      .subscribe(val => {
+        if (change.checked) {
+          this.bankMultiCtrl.patchValue(val);
+        } else {
+          this.bankMultiCtrl.patchValue([]);
+        }
+      })
+      
+  }
+
 
   /**
    * Sets the initial value after the filteredBanks are loaded initially
