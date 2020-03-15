@@ -1,7 +1,17 @@
 
-        <div id="content">
+   <div class="container">
+   <div class="row" *ngIf="ontologySynonymsLoader">
+    <div class="col-md-12">
+      <i class="loader-class fa fa-spinner fa-spin"></i>
+      <span class="loader-text">Loading data....</span>
+    </div>
+  </div> 
+</div>
+
+
+        <div class="container" *ngIf="!ontologySynonymsLoader">
                 <div class="tabs">
-                    <h4><b>Ontology Synonyms Management  </b></h4>
+                    <h4><b>Ontology Synonyms Management </b></h4>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="tab-content">
@@ -9,11 +19,11 @@
                                             <h5><b>Add New Synonyms</b></h5>
                                                 <form [formGroup]="synonymsFieldsForm">
                                                         <div class="row">
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-4 FromGroup">
                                                             <input class="form-control" type="text" placeholder="Add new synonyms" (focus)="focusFunction()" formControlName="synonymsFieldName" name="synonymsFieldName">
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <button class="btn momentive-btn" (click)="addSynonyms()">Add Synonyms</button> &nbsp;
+                                                            <button class="btn momentive-btn" (click)="addNewSynonyms()">Add Synonyms</button> &nbsp;
                                                           
                                                         </div>
                                                         <div class="col-md-6">
@@ -43,9 +53,9 @@
                                                                                         <th style="width:25%">Product Name</th>
                                                                                         <th>#ELA</th>
                                                                                         <th>Created Date</th>
-                                                                                        <th>Created By</th>
+                                                                                        <!-- <th>Created By</th>
                                                                                         
-                                                                                    <th class="td-actions">Actions</th>
+                                                                                    <th class="td-actions">Actions</th> -->
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -54,14 +64,14 @@
                                                                                         <td>{{data.key}}</td>
                                                                                         <td>{{data.synonyms}}</td>
                                                                                         <td>{{data.created_Date}}</td>
-                                                                                        <td>{{data.created_By}}</td>
+                                                                                        <!-- <td>{{data.created_By}}</td>
                                                                                     <td class="td-actions" width="20%">
                                                                                       
                                                                                           <a class="docs-btn" data-toggle="modal" data-target="#editSynonyms"><i class="fa fa-pencil-square-o"></i></a>   
                                                                                           <a class="docs-btn"><i class="fa fa-trash"></i></a>   
                                                                                         								
                                                                                        
-                                                                                    </td>
+                                                                                    </td> -->
                                                                                 </tr>
 
                                                                                 </tbody>
@@ -86,18 +96,14 @@
 
     
     
-                <!-- The Modal -->
-<div class="modal" id="editSynonyms">
+               
+<!-- <div class="modal" id="editSynonyms">
     <div class="modal-dialog">
       <div class="modal-content">
-  
-        <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="syn-modal">Edit Synonyms</h4>
           <button type="button" class="close syn-modal" data-dismiss="modal">&times;</button>
         </div>
-  
-        <!-- Modal body -->
         <div class="modal-body">
             <form [formGroup]="addSynonyms" (ngSubmit)="onSubmit()">
                 <div>
@@ -127,9 +133,6 @@
                 </div>
             </form>
         </div>
-  
- 
-  
       </div>
     </div>
-  </div>
+  </div> -->

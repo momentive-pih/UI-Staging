@@ -1,186 +1,291 @@
 <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-            <div class="board-inner radio-check-mbv">
-                <div class="slide-nav">
-                    <div class="slide-center">
-                        <div class="list-check">
-                            <mat-radio-group aria-label="Select an option">
-                                <mat-radio-button value="1" *ngFor="let item of toxicologyChecks;let i = index" [value]="i" [checked]="item.name === toxicologyTab" (change)="onChangeToxicology(item.name)" value="{{item.value}}"> {{item.name}}</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
+    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
+        <div class="board-inner radio-check-mbv">
+            <div class="slide-nav">
+                <div class="slide-center">
+                    <div class="list-check">
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1" *ngFor="let item of toxicologyChecks;let i = index" [value]="i"
+                                [checked]="item.name === toxicologyTab" (change)="onChangeToxicology(item.name)"
+                                value="{{item.value}}"> {{item.name}}</mat-radio-button>
+                        </mat-radio-group>
                     </div>
                 </div>
-            </div>
-            <div class="modal-body">
-                <div class="card-body">
-                    <div *ngIf="studyCheck">
-                            <h6 class="text-default font-weight-semibold">Study Title and Date:<i class="fa fa-info-circle" role="button" title="This data is from Sharepoint"></i></h6>
-                            <p-table #dt [columns]="toxicologyStudyHead" [value]="toxicologyStudyData" (sortFunction)="customSort($event)" [paginator]="toxicologyStudyDatapaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedSalesVolumeDataProducts" [reorderableColumns]="true" >
-                                    <ng-template pTemplate="caption">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div style="text-align: left">
-                                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="ui-helper-clearfix" style="text-align: right">
-                                                    <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                    <br>
-                              
-                                    <ng-template pTemplate="header" let-columns>
-                                        <tr>
-                                            <th style="width:2.5em"></th>
-                                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                {{col.header}}
-                                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                            </th>
-                                        </tr>
-                                    </ng-template>  
-    
-                                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                        <tr [pReorderableRow]="index">
-                                            <td>
-                                                <i class="fa fa-bars" pReorderableRowHandle></i>
-                                            </td>
-                                            <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                {{rowData[col.field]}}
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                            </p-table>  
-                    </div>
-                    <div *ngIf="monthlyCheck">
-                            <h6 class="text-default font-weight-semibold">Monthly Toxicology Study Title List:<i class="fa fa-info-circle" role="button" title="This data is from Sharepoint"></i></h6>
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h3 class="text-default font-weight-semibold"><span class="head-sub" *ngIf="toxicology_sealant">Sealant</span>
-                  <span class="head-sub" *ngIf="toxicology_silane">Silane </span>
-                            </h3>
-                            </div>
-                            <div class="col-md-3">
-
-                                <mat-form-field>
-                                    <mat-label>Product Category</mat-label>
-                                    <mat-select #ref (selectionChange)="toxicologyProcess(ref.value)">
-                                        <mat-option *ngFor="let composition of toxicologydropData" [value]="composition.value">
-                                            {{composition.type}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                       
-                            <div class="row" *ngIf="toxicology_sealant">
-                                    <p-table #dt [columns]="toxicologyMonthlyHeader" [value]="toxicologyMonthlyData" (sortFunction)="customSort($event)" [paginator]="selectedtoxicologyMonthlyProducts" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedSalesVolumeDataProducts" [reorderableColumns]="true" >
-                                            <ng-template pTemplate="caption">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div style="text-align: left">
-                                                            <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="ui-helper-clearfix" style="text-align: right">
-                                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                            <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ng-template>
-                                            <br>
-                                      
-                                            <ng-template pTemplate="header" let-columns>
-                                                <tr>
-                                                   
-                                                    <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                        {{col.header}}
-                                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                    </th>
-                                                </tr>
-                                            </ng-template>  
-            
-                                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                <tr [pReorderableRow]="index">
-                                                    
-                                                    <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                        {{rowData[col.field]}}
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                    </p-table> 
-                               
-                                
-                            </div>
-                            <div class="row" *ngIf="toxicology_silane">
-                                <div class="col-md-12">
-                                   
-                                        <div class="card-body">
-                                            <div class="row card-inner-body">
-                                                <br>
-                                                <h4 class="text-center">Toxicology Silane Details</h4>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                            </div>
-                    
-                </div>
-                <div *ngIf="summaryCheck">
-                        <h6 class="text-default font-weight-semibold">Toxicology Summary:<i class="fa fa-info-circle" role="button" title="This data is from Sharepoint"></i></h6>
-                        <div class="card-body">
-                            <div class="row">
-                                <!-- <h4>Toxicology Summary Details</h4> -->
-                                <div class="col-md-12">
-                                <div class="box">
-                                        <table class="table table-bordered">
-                                                <thead>
-                                                  <tr>
-                                                    <th><b>Date of Issue</b></th>
-                                                    <th><b>Document Name</b></th>
-                                              
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                  <tr>
-                                                    <td>1st January 2018</td>
-                                                    <td><a href=""  target="_blank">LSR2680 FCA - FDA compliance letter to DARMSTÄDTER GmbH </a> </td>
-                                                    
-                                                  </tr>
-                                                  <tr>
-                                                        <td>1st June 2018</td>
-                                                        <td><a href=""  target="_blank">LSR2680 FCA, 2030,- FDA Compliance Letter to Philips - 2019</a> </td>
-                                                        
-                                                      </tr>
-                                                  
-                                                  
-                                                </tbody>
-                                              </table>
-                                
-                            </div></div>
-                            
-                            </div>
-                        </div>
-                    
-                </div>
-                <div *ngIf="dataCheck">
-                        <h6 class="text-default font-weight-semibold">Toxicology Registration Tracker:<i class="fa fa-info-circle" role="button" title="This data is from SQL DB"></i></h6>
-                        <div class="card-body">
-                            <div class="row card-inner-body">
-                                <h4 class="text-muted font-size-sm">Toxicology Registration Tracker</h4>
-                            </div>
-                        </div>
-                    
-                </div>
-                <div class="clearfix"></div>
             </div>
         </div>
+        <div class="modal-body" *ngIf="studyCheck">
+
+            <span *ngIf="toxicolgyLoader">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+            <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
+                <h6 class="text-default font-weight-semibold">Study Title and Date:<i class="fa fa-info-circle"
+                        role="button" title="This data is from Sharepoint"></i></h6>
+                <p-table #dt [columns]="toxicologyStudyHead" [value]="toxicologyStudyData"
+                    (sortFunction)="customSort($event)" 
+                    [customSort]="true"
+                    [reorderableColumns]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+            
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:2.5em"></th>
+                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pReorderableColumn [ngStyle]="{'width': col.width}">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr [pReorderableRow]="index">
+                            <td>
+                                <i class="fa fa-bars" pReorderableRowHandle></i>
+                            </td>
+                            <td [style]="{'width':'300px'}" *ngFor="let col of columns">
+                                {{rowData[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="modal-body" *ngIf="monthlyCheck">
+
+            <span *ngIf="toxicolgyLoader">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+            
+            <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
+                <h6 class="text-default font-weight-semibold">Monthly Toxicology Study Title List:<i
+                        class="fa fa-info-circle" role="button" title="This data is from Sharepoint"></i></h6>
+                <div class="row">
+                    <div class="col-md-9">
+                        <h3 class="text-default font-weight-semibold"><span class="head-sub"
+                                *ngIf="toxicology_sealant">Sealant</span>
+                            <span class="head-sub" *ngIf="toxicology_silane">Silane </span>
+                        </h3>
+                    </div>
+                    <!-- <div class="col-md-3">
+
+                        <mat-form-field>
+                            <mat-label>Product Category</mat-label>
+                            <mat-select #ref (selectionChange)="toxicologyProcess(ref.value)">
+                                <mat-option *ngFor="let composition of toxicologydropData" [value]="composition.value">
+                                    {{composition.type}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                        <div class="col-md-3">
+
+                            <mat-form-field>
+                                <mat-label>Monthly Toxicology Types</mat-label>
+                                <mat-select name="toxicolgyMonthlyValue" [(value)]="selectedMonthlyToxicologyType"
+                                    placeholder="Select Monthly Toxicology" (selectionChange)="toxicologyProcess($event.value)">
+                                    <mat-option *ngFor="let data of toxicologydropData" [value]="data.type">
+                                        {{data.type}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                      
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="toxicology_silane">
+                    <p-table #dt [columns]="monthlySilaneHeader" [value]="toxicologyMonthlyData"
+                        (sortFunction)="customSort($event)" 
+                        [customSort]="true" >
+                        <ng-template pTemplate="caption">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div style="text-align: left">
+                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ui-helper-clearfix" style="text-align: right">
+                                        <button class="btb pg-button" type="button" label="All Data"
+                                            (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <br>
+
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width:3.5em">S.No</th>
+                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                   [ngStyle]="{'width': col.width}">
+                                    {{col.header}}
+                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                        ariaLabelDesc="Activate to sort in descending order"
+                                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                            <tr>
+                                <td>{{index+1}}</td>
+                                <td *ngFor="let col of columns">
+                                    {{rowData[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+
+                </div>
+                <div class="row"  *ngIf="toxicology_sealant">
+                    <p-table #dt [columns]="monthlySelantHeader" [value]="toxicologyMonthlyData"
+                    (sortFunction)="customSort($event)" 
+                    [customSort]="true" >
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:3.5em">S.No</th>
+                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                [ngStyle]="{'width': col.width}">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr>
+                            <td>{{index+1}}</td>
+                            <td  *ngFor="let col of columns">
+                                {{rowData[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-body" *ngIf="summaryCheck">
+
+            <span *ngIf="toxicolgyLoader">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+            <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
+                <h6 class="text-default font-weight-semibold">Toxicology Summary:<i class="fa fa-info-circle"
+                        role="button" title="This data is from Sharepoint"></i></h6>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- <h4>Toxicology Summary Details</h4> -->
+                        <div class="col-md-12">
+                            <div class="box">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th><b>Specification Id</b></th>
+                                            <th><b>Date of Issue</b></th>
+                                            <th><b>Document Name</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of toxicologySummaryData">
+                                            <td>{{data.spec_Id}}</td>
+                                            <td>{{data.date_Of_Issue}}</td>
+                                            <td><a href="{{data.filename}}" target="_blank">{{data.filename}}</a> </td>
+
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body" *ngIf="dataCheck">
+            <span *ngIf="toxicolgyLoader">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+            <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
+                <h6 class="text-default font-weight-semibold">Toxicology Registration Tracker:<i
+                        class="fa fa-info-circle" role="button" title="This data is from SQL DB"></i></h6>
+                <div class="card-body">
+                    <div class="row card-inner-body">
+                        <h4 class="text-muted font-size-sm">Toxicology Registration Tracker</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
     </div>
 </div>

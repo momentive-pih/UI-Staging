@@ -857,10 +857,8 @@
                               "tab_content":[
                               {
                                 "name": "Sales Volume","id":"1"
-                              },
-                              {
-                                "name": "Regions where sold","id":"2"
-                              }]
+                              }
+                              ]
               
                           
                           },
@@ -1040,11 +1038,8 @@
               {
                 "name": "Sales Volume","id":"1",
                 "sub": []
-              },
-              {
-                "name": "Regions where sold","id":"2",
-                "sub": []
-              }]
+              }
+            ]
 
 
           },
@@ -1212,10 +1207,6 @@
                     "tab_content":[
                      {
                        "name": "Sales Volume","id":"1",
-                       "sub": []
-                     },
-                     {
-                       "name": "Regions where sold","id":"2",
                        "sub": []
                      }]
      
@@ -1497,12 +1488,13 @@
         }],
         
         "toxicologydropData" : [{
-          "type" : "Sealant",
+          "type" : "sealant",
           "value": "sealant"
         }, {
-          "type" : "Silane",
+          "type" : "silane",
           "value": "silane"
         }],
+
         "salesCheckData" : [{
           "name":"Sales Volume",
           "value":"item_2",

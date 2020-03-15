@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input,ViewContainerRef } from '@angular/core';
 import { Attribute } from '@angular/compiler';
 import { MatTableDataSource} from '@angular/material';
 import { TableModule} from 'primeng/table';
@@ -13,6 +13,12 @@ import { FormControl } from '@angular/forms';
 import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material/select';
 import * as xlsx from 'xlsx';
+import { ToastrManager } from 'ng6-toastr-notifications';
+
+interface Bank {
+  id: string;
+  name: string;
+ }
 
 declare var $: any;
 $.fn.modal.Constructor.prototype._enforceFocus = function() {};
@@ -89,22 +95,59 @@ export class ProductAttributesComponent implements OnInit, OnDestroy{
   UserSelectedProducts:any =[];
   SelectedUserData:any;
   compositionSpecID = false;
-
+  SPECdropdownList:any=[];
+  sideSpecList:any=[];
+  banks:any = [];
   sales: any=[];
   SVT_table:any=[];
+  userSelectedProducts:any=[];
 
   scrollableCols: any[];
+  ghsLabelingDataHeader:any=[];
+  productAttributeStructures:any=[]
+  chemicalStructureTable:any = [];
+  molecularFormulaTable:any =[];
+  molecularWeightTable:any=[];
 
 
 
-  @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
+ProductComplianceLoader:boolean = true;
+productAttributeAPIData:any=[];
+selectedSpecList:any=[];
+CategoryDetails:any=[]
+productdata:any=[]
+pihAlertMessage:boolean;
+basicDetailsproducts:any=[];
+primaryBasicDetails:any=[];
+primaryProductApplication:any=[];
+SynthesisDiagram:any=[];
+ManufractureDiagram:any=[];
+ManufractureDiagramPart:boolean;
+SynthesisDiagramPart:boolean;
+ManufractureDiagramCheck:any=[];
+SynthesisDiagramCheck:any=[];
+
+    /** control for the selected bank */
+    public bankCtrl: FormControl = new FormControl();
+
+    /** control for the MatSelect filter keyword */
+   public bankFilterCtrl: FormControl = new FormControl();
+ 
+ 
+   /** list of banks filtered by search keyword */
+   public filteredBanks: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+
+ 
+    /** Subject that emits when the component has been destroyed. */
+    protected _onDestroy = new Subject<void>();
+
+    @ViewChild('singleSelect',{static: false}) singleSelect: MatSelect; 
 
   @ViewChild('SVTtable', { static: false }) SVTtable: ElementRef;
 
   @ViewChild('StandardCompositiontable', { static: false }) StandardCompositiontable: ElementRef;
 
-  /** Subject that emits when the component has been destroyed. */
-  protected _onDestroy = new Subject<void>();
+
 
 
   locations: any = [
@@ -146,24 +189,24 @@ export class ProductAttributesComponent implements OnInit, OnDestroy{
   constructor(private route: ActivatedRoute,
               private router: Router,
               private momentiveService: MomentiveService,
+              public toastr: ToastrManager, vcr: ViewContainerRef,
                ) {
+
+                this.momentiveService.notifyObservable$.subscribe(value => {
+                  this.selecteditem = value;
+                  console.log(this.selecteditem);
+                  this.productAttributebasicDetail();
+                  if (this.selecteditem) {
+                    setTimeout(() => {
+                      this.onChangeProductAttribute(this.selecteditem);
+                   }, 0);
+                 }
+                });
 
     }
     ngOnInit() {
 
-
-    //Kits Spec Id Condition Check:
-
-    this.UserSelectedProducts =JSON.parse(localStorage.getItem('SearchBarData'));
-    console.log(this.UserSelectedProducts);
-    this.SelectedUserData = this.UserSelectedProducts.filter((casNumber) => ( casNumber.key  === 'CAS*'));
-     console.log(this.SelectedUserData);
-     if(this.SelectedUserData.length > 0) {
-       this.compositionSpecID = true;
-     } else {
-       this.compositionSpecID = false;
-     }
- 
+     
 
       this.sales = [
         { 
@@ -272,26 +315,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy{
       AN_Amount:'1.000',
     }
   ]
-       
-      this.momentiveService.notifyObservable$.subscribe(value => {
-        this.selecteditem = value;
-        console.log(this.selecteditem);
-        if (this.selecteditem) {
-          setTimeout(() => {
-            this.onChangeProductAttribute(this.selecteditem);
-         }, 0);
-       }
-      });
 
- 
-    // product_type
-      this.momentiveService.getSearchData().subscribe(data => {      
-      this.productData = data;
-      this.product_type = this.productData.product_type;
-      console.log(this.product_type);
-    }, err => {
-      console.error(err);
-    });
       // compositionPart
       this.momentiveService.getSearchData().subscribe(data => {
         this.productData = data;
@@ -317,31 +341,16 @@ export class ProductAttributesComponent implements OnInit, OnDestroy{
   }, err => {
     console.error(err);
   });
-  // legalProducts
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.legalProducts = this.productData.legalProducts;
-    console.log(this.legalProducts);
-  }, err => {
-    console.error(err);
-  });
 
-  // ghsLabelingHeader
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.ghsLabelingHeader = this.productData.ghsLabelingHeader;
-    console.log(this.ghsLabelingHeader);
-  }, err => {
-    console.error(err);
-  });
-  // ghsLabelingData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.ghsLabelingData = this.productData.ghsLabelingData;
-    console.log(this.ghsLabelingData);
-  }, err => {
-    console.error(err);
-  });
+
+ this.ghsLabelingDataHeader = [
+  { "field": "regulatory_Basis", "header": "Regulatory Basis","width": "20%"},
+  { "field": "symbols", "header": "Symbols","width": "10%"},
+  { "field": "signal_Word", "header": "Signal Word","width": "10%"},
+  { "field": "hazard_Statements", "header": "Hazard Statements","width": "10%" },
+  { "field":"prec_Statements", "header":"Prec Statements","width": "10%"}, 
+  {"field":"additional_Information","header":"Additional Information / Remarks","width": "20%","white-space": "pre-wrap"}
+],
 
   // legalCompositionHead
       this.momentiveService.getSearchData().subscribe(data => {
@@ -359,201 +368,167 @@ export class ProductAttributesComponent implements OnInit, OnDestroy{
   }, err => {
     console.error(err);
   });
-  // hunderedCompositionHead
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.hunderedCompositionHead = this.productData.hunderedCompositionHead;
-    console.log(this.hunderedCompositionHead);
-  }, err => {
-    console.error(err);
-  });
-  // hunderedCompositionData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.hunderedCompositionData = this.productData.hunderedCompositionData;
-    console.log(this.hunderedCompositionData);
-  }, err => {
-    console.error(err);
-  });
-  // standardCompositionHead
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.standardCompositionHead = this.productData.standardCompositionHead;
-    console.log(this.standardCompositionHead);
-  }, err => {
-    console.error(err);
-  });
-  // standardCompositionData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.standardCompositionData = this.productData.standardCompositionData;
-    console.log(this.standardCompositionData);
-    /* Excel Report for Standard Composition */
-    let tempExcelStandardSubData = '';
-    console.log(this.standardCompositionData);
-    this.standardCompositionData.forEach(obj => {
-        tempExcelStandardSubData = '';
-        obj.Component_Name.forEach(componentNew => {
-              tempExcelStandardSubData += ' CAS Name:' + componentNew.cas_name + ' IUPAC Name:' + componentNew.iupac_name + ' INCI Name:' + componentNew.INCI_Name;
-            });
-        this.ExcelStandardData.push({
-          'Component Type': obj.ComponentType,
-          'Component Id': obj.Component_Id,
-          'Case Number': obj.CAS_Number,
-          'Value in %': obj.Value,
-          'Component Name': tempExcelStandardSubData
-      });
-      });
-  }, err => {
-    console.error(err);
-  });
 
-      this.copylegalCompositionData = [
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002925',
-        CAS_Number: '68083-19-2',
-        Component_Name: [
-          {cas_name: 'Decamethylcyclopentasiloxane',
-          iupac_name: 'Cyclopentasiloxane, decamethyl-',
-          INCI_Name: ['CYCLOPENTASILOXANE'],
-        }],
-          Value: '86%'
-      },
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002670',
-        CAS_Number: '556-67-2',
-        Component_Name: [
-          {cas_name: 'Octamethylcyclotetrasiloxane',
-           iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-          INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-        }],
-          Value: '14%'
-      }
-   ];
-      this.copyhunderedCompositionData = [
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002766',
-        CAS_Number: '68083-19-2',
-        Component_Name: [
-          {cas_name: 'Slica',
-          iupac_name: 'Slica',
-          INCI_Name: ['slica', 'SOLUM DIATOMEAE'],
-        }],
-          Value: '29.85%'
-      },
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002652',
-        CAS_Number: '999-97-3',
-        Component_Name: [
-          {cas_name: 'Hexamethyldisilazane',
-           iupac_name: 'Silanamine 1,1,1-trimethyl-N-(trimethylsilyl)-',
-        }],
-          Value: '6.62%'
-      }, {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002932',
-        CAS_Number: '7691-02-3',
-        Component_Name: [
-          {cas_name: 'Divinyltetramethyldisilazane',
-          iupac_name: '1,3-Divinyltetramethyldisilazane',
-        }],
-        Value: '1.24%'
-      }, {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002670',
-        CAS_Number: '556-67-2',
-        Component_Name: [
-          {cas_name: 'Octamethylcyclotetrasiloxane',
-          iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-          INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-        }],
-        Value: '0.12%'
-      }, {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000003091',
-        CAS_Number: '2627-95-4',
-        Component_Name: [
-          {cas_name: 'Divinyltetramethyldisiloxane',
-           iupac_name: 'DISILOXANE, 1,3-DIETHINYL-1,1,3,3-TETRAMETHYL-',
-        }],
-        Value: '0.12%'
-      }, {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002678',
-        CAS_Number: '2554-06-5',
-        Component_Name: [
-          {cas_name: 'Cyclotetrasiloxane, 2,4,6,8-tetraethenyl-2,4,6,8-tetramethyl-',
-           iupac_name: 'CYCLOTETRASILOXANE, 2,4,6,8-TETRAETHYLENE-2,4,6,8-TETRAMETHYL-',
-        }],
-        Value: '0.53%'
-      }
-   ];
-      this.copystandardCompositionData = [
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002925',
-        CAS_Number: '68083-19-2',
-        Component_Name: [
-          { cas_name: 'Decamethylcyclopentasiloxane',
-           iupac_name: 'Cyclopentasiloxane decamethyl-',
-          INCI_Name: ['CYCLOPENTASILOXANE'],
-        }],
-          Value: '84.06%'
-      },
-      {
-        ComponentType: 'Impurity',
-        Component_Id: '000000002681',
-        CAS_Number: '70131-67-8',
-        Component_Name: [
-          { cas_name: 'Siloxanes and Silicones, di-Me hydroxy terminated',
-           iupac_name: 'Dimethylpolysiloxane',
-        }],
-          Value: '15%'
-      }, {
-        ComponentType: 'Impurity',
-        Component_Id: '000000003060',
-        CAS_Number: '540-97-6',
-        Component_Name: [
-          {cas_name: 'Dodecamethylcyclohexasiloxane',
-          iupac_name: 'Cyclohexasiloxane Dodecamethyl-',
-          INCI_Name: ['CYCLOHEXASILOXANE'],
-        }],
-        Value: '2.1%'
-      }, {
-        ComponentType: 'Impurity',
-        Component_Id: '000000002932',
-        CAS_Number: '556-67-2',
-        Component_Name: [
-          {cas_name: 'Octamethylcyclotetrasiloxane',
-          iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-          INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-        }],
-        Value: '0.704 %'
-      }
-     ];
-    this.productApplication = [
-      { app_id: 1, app_text: 'Dental / surgical devices' },
-      { app_id: 2, app_text: 'Diagnostics / imaging' },
-      { app_id: 3, app_text: 'Fluid and drug delivery devices' },
-      { app_id: 4, app_text: 'Orthopedics / prosthetics' },
-      { app_id: 5, app_text: 'Advanced Wound Care & Scar Management' },
-      { app_id: 6, app_text: 'Septa / stoppers / laboratory accessories' },
-      { app_id: 7, app_text: 'Wound drains and bulbs' },
-      { app_id: 8, app_text: 'Sterilization mats' },
-      { app_id: 9, app_text: 'Pharmaceutical closures' },
-      { app_id: 10, app_text: 'Positioning devicess' },
-      { app_id: 11, app_text: 'Catheters' },
-      { app_id: 12, app_text: 'Seals / dialysis o-rings / valves' },
-      { app_id: 13, app_text: 'Respiratory / anesthesia' },
-      { app_id: 14, app_text: 'Medical equipment keypads' },
-    ];
+
+
+
 }
 
 
+
+
+productAttributebasicDetail() {
+  this.ProductComplianceLoader = true;
+  this.pihAlertMessage = false;
+  this.productAttributeAPIData =[];
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = this.momentiveService.ProductCategoryData;
+  console.log(this.CategoryDetails);
+  this.productAttributeAPIData.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails[0],
+  });
+  console.log(this.productAttributeAPIData)
+  this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+    console.log(data);
+    this.productdata = data;
+    console.log(this.productdata);
+    if(this.productdata.length > 0){
+      this.ProductComplianceLoader = false;
+      this.pihAlertMessage = false;
+      this.basicDetailsproducts =  this.productdata; 
+      console.log(this.basicDetailsproducts);
+      this.primaryBasicDetails = this.basicDetailsproducts[0].basic_details;
+      console.log(this.primaryBasicDetails);
+      this.primaryProductApplication = this.basicDetailsproducts[1].product_Application;
+      console.log(this.primaryProductApplication);
+    }
+    else {
+      this.pihAlertMessage = true;
+      this.ProductComplianceLoader = false;
+    }
+  
+  }, err => {
+    console.error(err);
+  });
+}
+
+productAttributeGHSLabeling() {
+
+  this.ProductComplianceLoader = true;
+  this.productAttributeAPIData =[];
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = { index: 1, Category: "Product Attributes", Subcategory: "GHS Labeling" }
+  this.productAttributeAPIData.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails,
+  });
+  console.log(this.productAttributeAPIData)
+  this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+    console.log(data);
+    this.productdata = data;
+    console.log(this.productdata);
+    if(this.productdata.length > 0){
+      this.ProductComplianceLoader = false;
+      this.pihAlertMessage = false;
+      this.ghsLabelingHeader =this.ghsLabelingDataHeader;
+      this.ghsLabelingData =  this.productdata[0].ghs_Labeling; 
+      console.log(this.ghsLabelingData);
+    }
+    else {
+      this.pihAlertMessage = true;
+      this.ProductComplianceLoader = false;
+    }
+  
+  }, err => {
+    console.error(err);
+  });
+}
+
+productAttributeStructureAndFormulas() {
+  this.ProductComplianceLoader = true;
+  this.productAttributeAPIData =[];
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = { index: 2, Category: "Product Attributes", Subcategory: "Structures and Formulas" }
+  console.log(this.CategoryDetails);
+  this.productAttributeAPIData.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails,
+  });
+  console.log(this.productAttributeAPIData)
+  this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+    console.log(data);
+    this.productdata = data;
+    console.log(this.productdata);
+    if(this.productdata.length > 0){
+      this.ProductComplianceLoader = false;
+      this.pihAlertMessage = false;
+      this.productAttributeStructures =  this.productdata; 
+      console.log(this.productAttributeStructures);
+      this.chemicalStructureTable = this.productAttributeStructures[0].chemical_Structure;
+      this.molecularFormulaTable = this.productAttributeStructures[1].molecular_Formula;
+      this.molecularWeightTable = this.productAttributeStructures[2].molecular_Weight;
+    }
+    else {
+      this.pihAlertMessage = true;
+      this.ProductComplianceLoader = false;
+    }
+  
+  }, err => {
+    console.error(err);
+  });
+
+}
+productAttributeFlowdiagram() {
+  this.ProductComplianceLoader = true;
+  this.pihAlertMessage = false;
+  this.productAttributeAPIData =[];
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = { index: 4, Category: "Product Attributes", Subcategory: "Flow Diagrams" }
+  console.log(this.CategoryDetails);
+  this.productAttributeAPIData.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails,
+  });
+  console.log(this.productAttributeAPIData)
+  this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+    console.log(data);
+    this.productdata = data;
+    console.log(this.productdata);
+    if(this.productdata.length > 0){
+      this.ProductComplianceLoader = false;
+      this.pihAlertMessage = false;
+      this.basicDetailsproducts =  this.productdata;
+      this.ManufractureDiagramCheck = this.basicDetailsproducts[0].manufacture_Flow;
+      if(this.ManufractureDiagramCheck.length > 0) {
+           this.ManufractureDiagramPart = true;
+           this.ManufractureDiagram = this.ManufractureDiagramCheck;
+      } else {
+        this.ManufractureDiagramPart = false;
+        }
+      this.SynthesisDiagramCheck = this.basicDetailsproducts[1].synthesis_Diagram;
+      if(this.SynthesisDiagramCheck.length > 0) {
+        this.SynthesisDiagramPart = true;
+        this.SynthesisDiagram = this.SynthesisDiagramCheck;
+      } else {
+        this.SynthesisDiagramPart = false;
+      }
+      console.log(this.ManufractureDiagram);
+      console.log(this.SynthesisDiagram);
+    }
+    else {
+      this.pihAlertMessage = true;
+      this.ProductComplianceLoader = false;
+    }
+  
+  }, err => {
+    console.error(err);
+  });
+}
 
 
 ngOnDestroy() {
@@ -578,30 +553,37 @@ onChangeProductAttribute(item) {
       this.structureAndFormulaTypes = false;
       this.compositionTypes = false;
       this.flowDiagrams = false;
+      this.productAttributebasicDetail();
     } else if ( this.productAttributesCheck === 'GHS Labeling') {
       this.primaryInformtionTypes = false;
       this.ghsLabeling = true;
       this.structureAndFormulaTypes = false;
       this.compositionTypes = false;
       this.flowDiagrams = false;
+      this.productAttributeGHSLabeling();
     } else if (this.productAttributesCheck === 'Structures and Formulas') {
       this.primaryInformtionTypes = false;
       this.ghsLabeling = false;
       this.structureAndFormulaTypes = true;
       this.compositionTypes = false;
       this.flowDiagrams = false;
+      this.productAttributeStructureAndFormulas();
     } else if (this.productAttributesCheck === 'Composition') {
       this.primaryInformtionTypes = false;
       this.ghsLabeling = false;
       this.structureAndFormulaTypes = false;
       this.compositionTypes = true;
       this.flowDiagrams = false;
+      this.userSelectedProducts = this.momentiveService.selectedProduct
+      this.getIntialSpecList(this.userSelectedProducts);
+
     } else if (this.productAttributesCheck === 'Flow Diagrams') {
       this.primaryInformtionTypes = false;
       this.ghsLabeling = false;
       this.structureAndFormulaTypes = false;
       this.compositionTypes = false;
       this.flowDiagrams = true;
+      this.productAttributeFlowdiagram()
     }
   }
 compositionProcess(value) {
@@ -627,26 +609,27 @@ compositionProcess(value) {
 
 
   }
-customSort(event) {
+  customSort(event) {
     event.data.sort((data1, data2) => {
-        const value1 = data1[event.field];
-        const value2 = data2[event.field];
-        const result = null;
+        let value1 = data1[event.field];
+        let value2 = data2[event.field];
+        let result = null;
 
-        if (value1 == null && value2 != null) {
-            const result = -1;
-        } else if (value1 != null && value2 == null) {
-          const result = 1;
-        } else if (value1 == null && value2 == null) {
-          const result = 0;
-        } else if (typeof value1 === 'string' && typeof value2 === 'string') {
-          const  result = value1.localeCompare(value2);
-         } else {
-          const result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
- }
+        if (value1 == null && value2 != null)
+            result = -1;
+        else if (value1 != null && value2 == null)
+            result = 1;
+        else if (value1 == null && value2 == null)
+            result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string')
+            result = value1.localeCompare(value2);
+        else
+            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+
         return (event.order * result);
     });
 }
+
 setMyStyles() {
     const styles = {
       position: this.product_type.length > 16 ? 'absolute' : 'none',
@@ -692,4 +675,73 @@ getAddressData() {
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'StandardCompositiontable.xlsx');
    }
+
+
+   //Composition Tab Functionality
+
+     //SpecID Droopdownlist
+  getIntialSpecList(data) {
+    const SpecListedData = data;
+    console.log(SpecListedData);
+    this.momentiveService.getSpecList(SpecListedData).subscribe(data => {
+    console.log(data)
+    this.SPECdropdownList = data; 
+    this.banks = this.SPECdropdownList;
+   // set initial selection
+   this.bankCtrl.setValue(this.banks[0]);
+   // load the initial bank list
+   this.filteredBanks.next(this.banks.slice());
+   // listen for search field value changes
+   this.bankFilterCtrl.valueChanges
+     .pipe(takeUntil(this._onDestroy))
+     .subscribe(() => {
+       this.filterBanksMulti();
+     });
+    console.log(this.SPECdropdownList);
+  }, err => {
+    console.log(err);
+  })
+}
+ 
+selectedTopSpecList() {
+  console.log(this.bankCtrl.value);
+  this.sideSpecList = this.bankCtrl.value;
+  console.log(this.sideSpecList);
+   this.toastr.successToastr('Specification ID Selected.', 'Success!');
+}
+
+
+ngAfterViewInit() {
+  this.setInitialValue();
+}
+
+     /**
+   * Sets the initial value after the filteredBanks are loaded initially
+   */
+  protected setInitialValue() {
+    this.filteredBanks
+      .pipe(take(1), takeUntil(this._onDestroy))
+      .subscribe(() => {
+        // this.multiSelect.compareWith = (a: Bank, b: Bank) => a && b && a.id === b.id;
+      });
+  }
+
+  protected filterBanksMulti() {
+    if (!this.banks) {
+      return;
+    }
+    // get the search keyword
+    let search = this.bankFilterCtrl.value;
+    console.log(search)
+    if (!search) {
+      this.filteredBanks.next(this.banks.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the banks
+    this.filteredBanks.next(
+      this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
+    );
+  }
 }

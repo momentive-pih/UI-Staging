@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption} from '@ng-select/ng-select';
 import { MomentiveService} from '../service/momentive.service'
 import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 declare var $: any;
 
 
@@ -66,8 +67,31 @@ export class CustomerCommunicationComponent implements OnInit {
     parentObject: any;
     productdata: any = [];
     objectKeys = Object.keys;
+
+   //New
+    CustomerCommunicationDetails:any=[];
+    selectedSpecList:any = [];
+    CategoryDetails:any=[];
+    customerCommunicationLoader:boolean = true;
+    pihAlertMessage:boolean = false;
+    USFDAData:any=[];
+    EUFoodData:any=[];
+    USFDADetailsPage:any = [];
+    filename:any;
+    productName:any;
+    pdfUrl:any;
+    Url:any;
+    documentResult:any;
+    EUFoodDetailsPage:any;
+    Extract_Result:any;
+    communicationHistoryDetails:any =[];
+    USFDADetailDataPage:boolean = false;
+    EUFOODdetailDataPage:boolean = false;
+    CommunicationHistoryDataHead:any =[];
+    HeavyMetalsData:any;
+  
     constructor(private fb: FormBuilder, private route: ActivatedRoute,
-                private router: Router,
+                private router: Router,private sanitizer: DomSanitizer,
                 private momentiveService: MomentiveService,
                 ) {
 
@@ -82,6 +106,7 @@ export class CustomerCommunicationComponent implements OnInit {
       this.momentiveService.notifyObservable$.subscribe(value => {
         this.selecteditem = value;
         console.log(this.selecteditem);
+        this.customerCommunicationUSFDAPage()
         if (this.selecteditem) {
           setTimeout(() => {
             this.onChangeCommunication(this.selecteditem);
@@ -90,259 +115,193 @@ export class CustomerCommunicationComponent implements OnInit {
       });
 
 
- 
-
-      this.CopycommunicationHistoryData = [
-        {
-          case_number: '68083-19-2',
-          first_level: 'Product/Material Information',
-          second_level: 'Customer Product Quality Questionnaires',
-          manufacturing_plant: '-',
-          material_description: '-',
-          material_number: '-',
-          tier_owner: '-',
-          customer_name: 'OU EUROBIO LAB',
-          bu: 'Specialty Fluids.',
-          product_name: 'LSR2050A - US Made',
-          topic: 'Customer Product Quality Questionnaires',
-          email_Content: [
-            {
-              contact_email: 'dmitri.zagorski@eurobiolab.ee',
-              case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-             iupac_name: 'Slica8',
-             attached_docs: 'LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH',
-             // tslint:disable-next-line: max-line-length
-             text_body: 'Dear Sender, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-            },
-          {
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-            // tslint:disable-next-line: max-line-length
-            text_body: 'Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-        },
-        {
-        contact_email: 'dmitri.zagorski@eurobiolab.ee',
-        case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-        attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-       // tslint:disable-next-line: max-line-length
-        text_body: 'Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves.',
-         }],
-        },
-        {
-          case_number: '140641',
-          first_level: 'Product/Material Information',
-          second_level: 'Customer Product Quality Questionnaires',
-          manufacturing_plant: '-',
-          material_description: '-',
-          material_number: '-',
-          tier_owner: '-',
-          customer_name: 'Bang & Bonsomer LLC Moscow',
-          bu: 'Elastomers',
-          product_name: 'LSR2003A',
-          topic: 'Regulatory Information - National or Regional Inventories',
-          email_Content: [{
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            // tslint:disable-next-line: max-line-length
-            text_body: 'Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-          }]
-        },
-        {
-          case_number: '140643',
-          first_level: 'Product/Material Information',
-          second_level: 'Customer Product Quality Questionnaires',
-          manufacturing_plant: '-',
-          material_description: '-',
-          material_number: '-',
-          tier_owner: '-',
-          customer_name: 'ART COSMETICS SRL VIA E.',
-          bu: 'Electronic Materials.',
-          product_name: 'LSR2003B',
-          topic: 'Regulatory Information - Sustainability',
-          email_Content: [{
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            attached_docs: 'Silsoft 840 Manufacturing flow diagram',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            // tslint:disable-next-line: max-line-length
-            text_body: 'This is perfect newtexts. Please fill Vegan declaration that was attached in previous email Lugupidamisega / Best regards / С уважением, Dmitri Zagorski Head of Purchasing Department Tel: +3726120121 Mob:+372 58 181807 Skype ost.eurobiolab',
-          }]
-        },
-        {
-          case_number: '140644',
-          first_level: 'Product/Material Information',
-          second_level: 'Customer Product Quality Questionnaires',
-          manufacturing_plant: '-',
-          material_description: '-',
-          material_number: '-',
-          tier_owner: '-',
-          customer_name: 'Azelis Australia Pty LTd.',
-          bu: 'Basics.',
-          product_name: 'LSR2050B - US Made',
-          topic: 'Regulatory Information - Sustainability',
-          email_Content: [{
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            attached_docs: 'LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            // tslint:disable-next-line: max-line-length
-            text_body: 'striving to improve service to its customers. In order to do this, we would like to ask you to always contact the Commercial Services Center first in case of a request/inquiry.',
-          }]
-        },
-        {
-          case_number: '140645',
-          first_level: 'Product/Material Information',
-          second_level: 'Customer Product Quality Questionnaires',
-          manufacturing_plant: '-',
-          material_description: '-',
-          material_number: '-',
-          tier_owner: '-',
-          customer_name: 'AZELIS CANADA INC.',
-          bu: 'Urethane Additives.',
-          product_name: 'LSR2060A - US Made',
-          topic: 'Regulatory Information - National or Regional Inventories',
-          email_Content: [{
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-           // tslint:disable-next-line: max-line-length
-            text_body: 'Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves.',
-          }]
-        },
-        {
-          case_number: '00116026',
-          first_level: '	Regulatory Information - Animal Testing',
-          second_level: 'Customer Product Quality Questionnaires',
-          manufacturing_plant: '-',
-          material_description: '-',
-          material_number: '-',
-          tier_owner: '-',
-          customer_name: 'Bang & Bonsomer PJC.',
-          bu: 'Sealants.',
-          product_name: 'Silsoft* ETS',
-          topic: 'Regulatory Information - National or Regional Inventories',
-          email_Content: [{
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            // tslint:disable-next-line: max-line-length
-            text_body: 'Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.',
-            attached_docs: 'TIR Silwet 408 lot 17ESVX180',
-          }]
-        },
-        {
-          case_number: '00116027',
-          first_level: '	Regulatory Information - Animal Testing',
-          second_level: 'Customer Product Quality Questionnaires',
-          manufacturing_plant: '-',
-          material_description: '-',
-          material_number: '-',
-          tier_owner: '-',
-          customer_name: 'Bang & Bonsomer PJC.',
-          bu: 'Sealants.',
-          product_name: 'Silsoft* A-843 conditioning agent',
-          topic: 'Regulatory Information - National or Regional Inventories',
-          email_Content: [{
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            attached_docs: 'TIR Silwet 408 lot 17ESVX180',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            // tslint:disable-next-line: max-line-length
-            text_body: 'Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.',
-          }]
-        },
-      ];
-      // communicationPart
-      this.momentiveService.getSearchData().subscribe(data => {
-        this.productdata = data;
-        this.communicationPart = this.productdata.communicationPart;
-        console.log(this.communicationPart);
-      }, err => {
-        console.error(err);
-      });
-      // communicationBU
-      this.momentiveService.getSearchData().subscribe(data => {
-        this.productdata = data;
-        this.communicationBU = this.productdata.communicationBU;
-        console.log(this.communicationBU);
-      }, err => {
-        console.error(err);
-      });
-      // productCommunication
-      this.momentiveService.getSearchData().subscribe(data => {
-        this.productdata = data;
-        this.productCommunication = this.productdata.productCommunication;
-        console.log(this.productCommunication);
-      }, err => {
-        console.error(err);
-      });
-     // topicCommunication
-      this.momentiveService.getSearchData().subscribe(data => {
-        this.productdata = data;
-        this.topicCommunication = this.productdata.topicCommunication;
-        console.log(this.topicCommunication);
-      }, err => {
-        console.error(err);
-      });
      // customerCommunicationChecks
       this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
       this.customerCommunicationChecks = this.productdata.customerCommunicationChecks;
-      console.log(this.customerCommunicationChecks);
     }, err => {
       console.error(err);
     });
 
-  // cols
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.cols = this.productdata.cols;
-    console.log(this.cols);
-  }, err => {
-    console.error(err);
-  });
+
 
   // ccHeavyMetals_Data
       this.momentiveService.getSearchData().subscribe(data => {
     this.productdata = data;
     this.ccHeavyMetals_Data = this.productdata.ccHeavyMetals_Data;
-    console.log(this.ccHeavyMetals_Data);
   }, err => {
     console.error(err);
   });
-  // CommunicationHistoryHead
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.CommunicationHistoryHead = this.productdata.CommunicationHistoryHead;
-    console.log(this.CommunicationHistoryHead);
-  }, err => {
-    console.error(err);
-  });
-  // CommunicationHistoryData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.CommunicationHistoryData = this.productdata.CommunicationHistoryData;
-    console.log(this.CommunicationHistoryData);
-    this.CommunicationHistoryData.forEach(obj => {
-    this.ExcelCommunicationHistoryData.push({
-    'Case Number': obj.case_number,
-    '1st Level Case Classification': obj.first_level,
-    '2nd Level Case Classification': obj.second_level,
-    'Contact Email': obj.contact_email,
-    'Case Subject': obj.case_subject,
-    'Text Body': obj.text_body,
-    'Manufacturing Plantr': obj.manufacturing_plant,
-    'Material Description': obj.material_description,
-    'Material Number': obj.material_number,
-    'Tier 2 Owner': obj.tier_owner,
-    'Attached Documents': obj.attached_docs,
-  });
-  });
-  }, err => {
-    console.error(err);
-  });
+
+  
+  this.CommunicationHistoryDataHead = [
+    { "field": "case_Number", "header": "Case Number","width": "10%"  },
+    { "field": "topic", "header": "Topic","width": "20%" },
+    { "field": "customer_Name", "header": "Customer Name","width": "40%" },
+    { "field": "manufacturing_Plant", "header": "Manufacturing Plant","width": "20%"},
+    { "field": "key", "header": "key","width": "20%"},
+    { "field": "key_Type", "header": "key Type","width": "20%"},
+    { "field": "tier_owner", "header": "Tier 2 Owner","width": "20%"}
+  ]
 
 }
 
- 
+
+
+
+customerCommunicationUSFDAPage() {
+  this.CustomerCommunicationDetails = [];
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = this.momentiveService.ProductCategoryData;
+  console.log(this.CategoryDetails);
+  this.CustomerCommunicationDetails.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails[0],
+  });
+  console.log(this.CustomerCommunicationDetails)
+  this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
+       console.log(data);
+      this.customerCommunicationLoader = true;
+      this.productdata = data;
+    if (this.productdata.length > 0) {
+      this.customerCommunicationLoader = false;
+      this.pihAlertMessage = false;
+      this.USFDAData = this.productdata;
+      console.log(this.USFDAData);
+    } else {
+      this.pihAlertMessage = true;
+      this.customerCommunicationLoader = false;
+    }
+  }, err => {
+    console.error(err);
+  });
+}
+
+
+customerCommunicationEUFOOD() {
+  this.CustomerCommunicationDetails = [];
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = { index: 1, Category: "Customer Communication", Subcategory: "EU Food Contact" }
+  console.log(this.CategoryDetails);
+  this.CustomerCommunicationDetails.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails,
+  });
+  console.log(this.CustomerCommunicationDetails)
+  this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
+       console.log(data);
+      this.customerCommunicationLoader = true;
+      this.productdata = data;
+    if (this.productdata.length > 0) {
+      this.customerCommunicationLoader = false;
+      this.pihAlertMessage = false;
+      this.EUFoodData = this.productdata;
+      console.log(this.EUFoodData);
+    } else {
+      this.pihAlertMessage = true;
+      this.customerCommunicationLoader = false;
+    }
+  }, err => {
+    console.error(err);
+  });
+}
+
+
+customerCommunicationHeavyMetal() {
+  this.CustomerCommunicationDetails = [];
+  this.customerCommunicationLoader = true;
+  this.pihAlertMessage = false;
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = { index: 2, Category: "Customer Communication", Subcategory: "Heavy Metals content" }
+  console.log(this.CategoryDetails);
+  this.CustomerCommunicationDetails.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails,
+  });
+  console.log(this.CustomerCommunicationDetails)
+  this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
+       console.log(data);
+      this.customerCommunicationLoader = true;
+      this.productdata = data;
+    if (this.productdata.length > 0) {
+      this.customerCommunicationLoader = false;
+      this.pihAlertMessage = false;
+      this.HeavyMetalsData = Object.assign({}, this.productdata);
+      console.log(this.HeavyMetalsData);
+    } else {
+      this.pihAlertMessage = true;
+      this.customerCommunicationLoader = false;
+    }
+  }, err => {
+    console.error(err);
+  });
+}
+
+customerCommunicationHistory() {
+  this.customerCommunicationLoader = true;
+  this.pihAlertMessage = false;
+  this.CustomerCommunicationDetails = [];
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = { index: 3, Category: "Customer Communication", Subcategory: "Communication History" }
+  console.log(this.CategoryDetails);
+  this.CustomerCommunicationDetails.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails,
+  });
+  console.log(this.CustomerCommunicationDetails)
+  this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
+       console.log(data);
+      this.customerCommunicationLoader = true;
+      this.productdata = data;
+    if (this.productdata.length > 0) {
+      this.customerCommunicationLoader = false;
+      this.pihAlertMessage = false;
+      this.CommunicationHistoryHead =this.CommunicationHistoryDataHead
+      this.CommunicationHistoryData = this.productdata;
+      console.log(this.CommunicationHistoryData);
+    } else {
+      this.pihAlertMessage = true;
+      this.customerCommunicationLoader = false;
+    }
+  }, err => {
+    console.error(err);
+  });
+}
+
+documentUSFDAPreview(data) {
+this.USFDADetailDataPage = true;
+console.log(data);
+this.USFDADetailsPage = data;
+console.log(this.USFDADetailsPage);
+      this.filename = this.USFDADetailsPage.fileName;
+      this.documentResult = this.USFDADetailsPage.Extract_Field.data;
+      this.pdfUrl = this.USFDADetailsPage.url;
+      console.log(this.filename);
+      console.log(this.productName);
+      console.log(this.pdfUrl);
+      this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
+      console.log(this.Url);
+}
+
+documentsEUFoodPreview(data) {
+  this.EUFOODdetailDataPage = true;
+  console.log(data);
+  this.EUFoodDetailsPage = data;
+console.log(this.EUFoodDetailsPage);
+      this.filename = this.EUFoodDetailsPage.fileName;
+      this.Extract_Result = this.EUFoodDetailsPage.Extract_Field;
+      this.pdfUrl = this.EUFoodDetailsPage.url;
+      console.log(this.filename);
+      console.log(this.Extract_Result);
+      console.log(this.pdfUrl);
+      this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
+      console.log(this.Url);
+}
+
     onChangeCommunication(item) {
       this.customerCommunicationTab = item;
       if (this.customerCommunicationTab === 'US FDA Letter') {
@@ -350,21 +309,25 @@ export class CustomerCommunicationComponent implements OnInit {
         this.EuFoodContact = false;
         this.heavyMetals = false;
         this.communicationHistory = false;
+        this.customerCommunicationUSFDAPage();
       } else if (this.customerCommunicationTab === 'EU Food Contact') {
         this.usFDA = false;
         this.EuFoodContact = true;
         this.heavyMetals = false;
         this.communicationHistory = false;
+        this.customerCommunicationEUFOOD();
       } else if ( this.customerCommunicationTab === 'Heavy Metals content') {
         this.heavyMetals = true;
         this.communicationHistory = false;
         this.usFDA = false;
         this.EuFoodContact = false;
+        this.customerCommunicationHeavyMetal();
       } else if (this.customerCommunicationTab === 'Communication History') {
         this.heavyMetals = false;
         this.communicationHistory = true;
         this.usFDA = false;
         this.EuFoodContact = false;
+        this.customerCommunicationHistory();
       }
     }
  
@@ -411,6 +374,13 @@ export class CustomerCommunicationComponent implements OnInit {
     this.CommunicationHistoryData = this.CopycommunicationHistoryData.filter((customer) => (customer.customer_name == CustomerNameData ));
     console.log(this.CommunicationHistoryData);
   }
+
+  backToUSPage() {
+    this.USFDADetailDataPage = false;
+  }
+  backToEUPage(){
+    this.EUFOODdetailDataPage = false;
+  }
   customSort(event) {
     event.data.sort((data1, data2) => {
         const value1 = data1[event.field];
@@ -431,12 +401,8 @@ export class CustomerCommunicationComponent implements OnInit {
         return (event.order * result);
     });
 }
-
-
-unselect(): void {
-  this.selectedBUValue = undefined;
-  this.selectedProductValue = undefined;
-  this.selectedCustomerValue = undefined;
+intialSort() {
+  return 0;
 }
 
   }

@@ -3,3 +3,55 @@
   max-height: calc(100vh - 212px);
   overflow-y: auto;
  }
+ #backtotop {
+  border-radius: 50%;
+  line-height: 48px;
+  background-color: #333;
+  display: block;
+  position: fixed;
+  bottom: 50px;
+  text-align: center;
+  width: 50px;
+  right: 30px;
+  opacity: 0;
+  transition: all 0.4s ease 0s;
+  color: #FFF;
+  font-size: 11px;
+  height: 50px;
+  z-index: 99999;
+  cursor: pointer;
+}
+
+#backtotop:hover {
+  background-color: #d6644a;
+  transition: .4s;
+  color: #fff;
+}
+
+#backtotop.active {
+  opacity: 1;
+}
+
+.header{
+  position: fixed;
+    width: 100%;
+    height: 64px;
+    background-color: #673ab7;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    will-change: transform;
+   transition: transform 0.25s ease-in-out;
+    fill: hsla(0,0%,100%,.9);
+    z-index: 2;
+}
+.main{
+  background-color: rgba(0,0,0,0.1);
+  height: 150vh;
+  padding-top: 70px;
+}
+.header-unpin{
+     transform: translateY(-100%);
+}
+.header-pin{
+  transform: translateY(0);
+}

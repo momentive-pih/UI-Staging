@@ -5,13 +5,13 @@
                 {"fileName":"LSR2020, 2030, 2040, 2050, 2060, 2070, and 2080  - FDA Compliance Letter to STARLIM Spritzguss GmbH",
                     "category":"US FDA",
                     "productName":"LSR2050",
-                    "id":"LSR2050_7",
+                     "id":"LSR2050_7",
                     "createdDate":"11/03/2018",
                     "url":"assets/images/momentivePdf/LSR2050/LSR2020, 2030, 2040, 2050, 2060, 2070, and 2080  - FDA Compliance Letter to STARLIM Spritzguss GmbH.pdf",
                     "Extract_Field": {
                         "ontology_Key": "LSR2050, LSR2020, LSR2030, LSR2040, LSR2050, LSR2060, LSR2070, LSR2080",
-                         "FDA Compliance": "With regard to your query on the compliance of LSR2020, 2030, 2040,2050,2060,2070 and 2080 with U.S. Food and Drug Administration (FDA) regulations, we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600 - substances employed in the preparation of rubber articles intended for repeated use."
-                     }
+                        "FDA Compliance": "With regard to your query on the compliance of LSR2020, 2030, 2040,2050,2060,2070 and 2080 with U.S. Food and Drug Administration (FDA) regulations, we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600 - substances employed in the preparation of rubber articles intended for repeated use."
+                    }
                    },
                    {"fileName":"LSR2050 - FDA Compliance Letter to Divine Vertriebs GmbH",
                     "category":"US FDA",
@@ -51,7 +51,6 @@
             "id":"USFDA",
             "productName":"LSR2050",
             "categoryName":"US FDA"
-
         },
 
         {
@@ -445,11 +444,6 @@
 "ontology_Unassigneddocuments" : [ 
 
     {
-
-        "category" :"EU Food Contact",
-        "id":"EUFoodContact",
-        "productName":"Unassigned",
-        "categoryName" : "EU Food Contact",
         "EU Food Contact" : [
 
            { "fileName":"2018-4-17 Nordmann, Rassmann GmbH  EU food contact statement Silopren LSR color paste color paste grey _FS",
@@ -463,8 +457,11 @@
                }
               
            }
-        ]
-       
+        ],
+        "category" :"EU Food Contact",
+        "id":"EUFoodContact",
+        "productName":"Unassigned",
+        "categoryName" : "EU Food Contact"
     },
     {
         "US FDA" : [

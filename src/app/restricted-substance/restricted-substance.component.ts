@@ -40,11 +40,13 @@ export class RestrictedSubstanceComponent implements OnInit {
   productdata: any = [];
   selectedSpecList: any = [];
   CategoryDetails: any = [];
-  RestrictedInformationDetails:any =[];
-  restrictedDataproducts:any =[];
-  restrictedLoader:boolean = true;
-  pihAlertMessage:boolean=false;
-  restrictedCaliforniaTableHeader:any=[];
+  RestrictedInformationDetails: any = [];
+  restrictedDataproducts: any = [];
+  restrictedLoader: boolean = true;
+  pihAlertMessage: boolean = false;
+  restrictedCaliforniaTableHeader: any = [];
+  restrictedCaliforniaDataHeader:any=[];
+  restrictedGASDLDataHeader:any=[];
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -73,36 +75,35 @@ export class RestrictedSubstanceComponent implements OnInit {
     }, err => {
       console.error(err);
     });
- 
 
-    this.restrictedGASDLHeader = [
-      { "field": "substance", "header": "Substance","width": "10%" },
-      { "field": "spec-id", "header": "Specification ID","width": "10%" },
-      { "field": "cas_NO", "header": "CAS RN","width": "10%"},
-      { "field": "class_action", "header": "Class Sl FIC Action","width": "10%"},
-      { "field": "reason_Code", "header": "Reason Code","width": "10%" },
-      { "field": "source", "header": "Source(Legal Requirement Regulations)","width": "20%" },
-      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)","width": "20%" },
-      { "field": "weight_Composition", "header": "% Weight in SAP std Composition","width": "20%" }
+
+    this.restrictedGASDLDataHeader = [
+      { "field": "substance", "header": "Substance", "width": "30%" },
+      { "field": "spec_Id", "header": "Specification ID", "width": "10%" },
+      { "field": "cas_NO", "header": "CAS RN", "width": "10%" },
+      { "field": "class_action", "header": "Class Sl FIC Action", "width": "10%" },
+      { "field": "reason_Code", "header": "Reason Code", "width": "10%" },
+      { "field": "source", "header": "Source(Legal Requirement Regulations)", "width": "20%" },
+      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)", "width": "20%" },
+      { "field": "weight_Composition", "header": "% Weight in SAP std Composition", "width": "20%" }
     ]
 
 
-    this.restrictedCaliforniaHeader = [
-      { "field": "chemical", "header": "Chemical","width": "10%" },
-      { "field": "type_Toxicity", "header": "Type of Toxicity","width": "10%"},
-      { "field": "listing_Mechanism", "header": "Listing Mechanism","width": "10%"},
-      { "field": "cas_NO", "header": "CAS NO","width": "10%" },
-      { "field": "date_Listed", "header": "Date Listed","width": "20%" },
-      { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a","width": "20%" },
-      { "field": "weight_Composition", "header": "% Weight in SAP std Composition","width": "20%" }
+    this.restrictedCaliforniaDataHeader = [
+      { "field": "chemical", "header": "Chemical", "width": "10%" },
+      { "field": "type_Toxicity", "header": "Type of Toxicity", "width": "10%" },
+      { "field": "listing_Mechanism", "header": "Listing Mechanism", "width": "10%" },
+      { "field": "cas_NO", "header": "CAS NO", "width": "10%" },
+      { "field": "date_Listed", "header": "Date Listed", "width": "20%" },
+      { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a", "width": "20%" },
+      { "field": "weight_Composition", "header": "% Weight in SAP std Composition", "width": "20%" }
     ]
-    
 
   }
 
 
   restrictedSubstancePage() {
-    this.RestrictedInformationDetails =[];
+    this.RestrictedInformationDetails = [];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     console.log(this.selectedSpecList);
     this.CategoryDetails = this.momentiveService.ProductCategoryData;
@@ -113,11 +114,19 @@ export class RestrictedSubstanceComponent implements OnInit {
     });
     console.log(this.RestrictedInformationDetails)
     this.momentiveService.getRestrictedSubstance(this.RestrictedInformationDetails).subscribe(data => {
-      this.restrictedLoader = false;
-      console.log(data);
-      this.productdata = data;
-       this.restrictedGASDLData =  this.productdata.restrictedGASDLData; 
-       console.log(this.restrictedGASDLData);
+         console.log(data);
+         this.restrictedLoader = true;
+        this.productdata = data;
+      if (this.productdata.restrictedGASDLData.length > 0) {
+        this.restrictedLoader = false;
+        this.pihAlertMessage = false;
+        this.restrictedGASDLHeader = this.restrictedGASDLDataHeader;
+        this.restrictedGASDLData = this.productdata.restrictedGASDLData;
+        console.log(this.restrictedGASDLData);
+      } else {
+        this.pihAlertMessage = true;
+        this.restrictedLoader = false;
+      }
     }, err => {
       console.error(err);
     });
@@ -134,11 +143,10 @@ export class RestrictedSubstanceComponent implements OnInit {
     } else if (this.restrictedSubstanceTab === 'California Prop 65') {
       this.californiaCheck = true;
       this.gadslCheck = false;
-      this.restrictedLoader = true;
-      this.RestrictedInformationDetails =[];
+      this.RestrictedInformationDetails = [];
       this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
       console.log(this.selectedSpecList);
-      this.CategoryDetails = {index: 2, Category: "restrictedSubstanceModal", Subcategory: "CALPROP"}
+      this.CategoryDetails = { index: 2, Category: "restrictedSubstanceModal", Subcategory: "CALPROP" }
       console.log(this.CategoryDetails);
       this.RestrictedInformationDetails.push({
         'Spec_id': this.selectedSpecList,
@@ -147,19 +155,19 @@ export class RestrictedSubstanceComponent implements OnInit {
       console.log(this.RestrictedInformationDetails)
       this.momentiveService.getRestrictedSubstance(this.RestrictedInformationDetails).subscribe(data => {
         console.log(data);
+        this.restrictedLoader = true;
         this.productdata = data;
-        
-        if(this.productdata.restrictedCaliforniaData.length === 0) {
-             this.pihAlertMessage = true;
-             alert('1')
+        if (this.productdata.restrictedCaliforniaData.length > 0) {
+          this.restrictedLoader = false;
+          this.pihAlertMessage = false;
+          this.restrictedCaliforniaTableHeader = this.restrictedCaliforniaDataHeader;
+          this.restrictedCaliforniaData = this.productdata.restrictedCaliforniaData;
+          console.log(this.restrictedCaliforniaData);
         } else {
-           this.restrictedLoader = false;
-           this.pihAlertMessage = false;
-           this.restrictedCaliforniaTableHeader = this.restrictedCaliforniaHeader;
-           this.restrictedCaliforniaData =  this.productdata.restrictedCaliforniaData; 
-           console.log(this.restrictedCaliforniaData);
+          this.pihAlertMessage = true;
+          this.restrictedLoader = false;
         }
-       
+
       }, err => {
         console.error(err);
       });
@@ -168,24 +176,24 @@ export class RestrictedSubstanceComponent implements OnInit {
 
   customSort(event) {
     event.data.sort((data1, data2) => {
-      const value1 = data1[event.field];
-      const value2 = data2[event.field];
-      const result = null;
+        let value1 = data1[event.field];
+        let value2 = data2[event.field];
+        let result = null;
 
-      if (value1 == null && value2 != null) {
-        const result = -1;
-      } else if (value1 != null && value2 == null) {
-        const result = 1;
-      } else if (value1 == null && value2 == null) {
-        const result = 0;
-      } else if (typeof value1 === 'string' && typeof value2 === 'string') {
-        const result = value1.localeCompare(value2);
-      } else {
-        const result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
-      }
-      return (event.order * result);
+        if (value1 == null && value2 != null)
+            result = -1;
+        else if (value1 != null && value2 == null)
+            result = 1;
+        else if (value1 == null && value2 == null)
+            result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string')
+            result = value1.localeCompare(value2);
+        else
+            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+
+        return (event.order * result);
     });
-  }
+}
 
   onItemSelect(item: any) {
     console.log(item);

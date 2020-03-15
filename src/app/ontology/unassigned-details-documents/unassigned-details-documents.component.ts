@@ -71,6 +71,12 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
   extractKeys: any = [];
   disabledkey = true;
   objectKeys = Object.keys;
+  fileURL:any;
+  file:any;
+  pdfSrc:any;
+  ontologyServiceDetails:any = [];
+  selectedSpecList:any = []
+
   public items$: Observable<product_Name[]>;
   public input$ = new Subject<string | null>();
   @ViewChild('code', {static: false}) private codeRef?: ElementRef<HTMLElement>;
@@ -80,6 +86,11 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
               private router: Router, private sanitizer: DomSanitizer,
               private momentiveService: MomentiveService) {
+
+                
+                this.momentiveService.homeEvent.subscribe(data => {
+                  this.ngOnInit();
+                });
     this.reactiveForm = fb.group({
       Searchname: ['', Validators.required]
     });
@@ -106,24 +117,33 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
       console.log(this.documentCategory);
       console.log(this.Product_Id);
     });
-    this.momentiveService.getOntologyDocuments().subscribe(data => {
+
+    this.ontologyServiceDetails =[];
+    this.selectedSpecList = this.momentiveService.getCategorySpecList();
+    console.log(this.selectedSpecList);
+    this.ontologyServiceDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details' : { Category: "ontology", Subcategory: "assigned"}
+    });
+      console.log(this.ontologyServiceDetails)
+
+    this.momentiveService.getOntologyDocumentss(this.ontologyServiceDetails).subscribe(data => {
       this.ontologyFileDocuments = data;
-      this.ontologyProductsName = this.ontologyFileDocuments.ontology_Unassigneddocuments;
+      console.log(this.ontologyFileDocuments);
+      this.ontologyProductsName = this.ontologyFileDocuments.filter((element) => (element.category === this.documentCategory));
       console.log(this.ontologyProductsName);
-      this.PDfOntology = this.ontologyProductsName.filter((element) => (element.productName === this.Product_Id));
+      console.log(this.ontologyProductsName[0][this.documentCategory]);
+      this.PDfOntology = this.ontologyProductsName[0][this.documentCategory].filter((element) => (element.id == this.documentId));
       console.log(this.PDfOntology);
-      this.ontologyNewDocuments = this.PDfOntology.filter((element) => (element.category === this.documentCategory));
-      console.log(this.ontologyNewDocuments);
-      this.ontologyPdfFileData = this.ontologyNewDocuments[0][this.documentCategory].filter((element) => (element.id === this.documentId));
-      console.log(this.ontologyPdfFileData);
-      if (this.ontologyPdfFileData) {
-        // this.extractedFields = this.ontologyPdfFileData[0].Extract_Field;
-        this.extarctPDFData = this.ontologyPdfFileData[0].Extract_Field;
+      if (this.PDfOntology) {
+        //this.extractedFields = this.ontologyPdfFileData[0].Extract_Field;
+        this.extarctPDFData = this.PDfOntology[0].Extract_Field;
         console.log( this.extarctPDFData);
-        this.extractKeys = this.extarctPDFData.ontology_Key;
+        this.extractKeys = this.extarctPDFData.ontologyKey;
+        console.log(this.extractKeys);
         this.extractProductKey = this.extractKeys.split(',');
         console.log(this.extractProductKey);
-         delete this.extarctPDFData.ontology_Key;
+         delete this.extarctPDFData.ontologyKey;
          console.log(this.extractKeys);
 
         this.extractProductKey.forEach(element => {
@@ -135,15 +155,67 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
    
         // this.extractFieldsForm.controls.extractNamedetails.setValue( this.extarctPDFData);
       }
-      this.filename = this.ontologyPdfFileData[0].fileName;
-      this.productName = this.ontologyPdfFileData[0].productName;
-      this.pdfUrl = this.ontologyPdfFileData[0].url;
+      this.filename = this.PDfOntology[0].fileName;
+      this.productName = this.PDfOntology[0].productName;
+      this.pdfUrl = this.PDfOntology[0].url;
       console.log(this.filename);
       console.log(this.productName);
       console.log(this.pdfUrl);
-      this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
-      console.log(this.Url);
+
+      this.pdfSrc = 'https://clditdevstorpih.blob.core.windows.net/momentive-sources-pih/sharepoint-pih/toxicology-pih/studies-tox-team-pih/raw/-Y-12900' + this.pdfUrl;
+       this.Url = this.sanitizer.bypassSecurityTrustUrl(this.pdfSrc);
+
+      //  this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
+      //  this.file = new Blob([this.Url], {type: 'application/pdf'});
+      //  this.fileURL = URL.createObjectURL(this.file);
+      //  console.log(this.fileURL);
+       console.log(this.Url);
 });
+
+     
+      
+
+
+//     this.momentiveService.getOntologyDocuments().subscribe(data => {
+//       this.ontologyFileDocuments = data;
+//       this.ontologyProductsName = this.ontologyFileDocuments.ontology_documents;
+//       console.log(this.ontologyProductsName);
+//       this.PDfOntology = this.ontologyProductsName.filter((element) => (element.productName === this.Product_Id));
+//       console.log(this.PDfOntology);
+//       this.ontologyNewDocuments = this.PDfOntology.filter((element) => (element.category === this.documentCategory));
+//       console.log(this.ontologyNewDocuments);
+//       this.ontologyPdfFileData = this.ontologyNewDocuments[0][this.documentCategory].filter((element) => (element.id === this.documentId));
+//       console.log(this.ontologyPdfFileData);
+//       if (this.ontologyPdfFileData) {
+//         // this.extractedFields = this.ontologyPdfFileData[0].Extract_Field;
+//         this.extarctPDFData = this.ontologyPdfFileData[0].Extract_Field;
+//         console.log( this.extarctPDFData);
+//         this.extractKeys = this.extarctPDFData.ontology_Key;
+//         this.extractProductKey = this.extractKeys.split(',');
+//         console.log(this.extractProductKey);
+//          delete this.extarctPDFData.ontology_Key;
+//          console.log(this.extractKeys);
+
+//         this.extractProductKey.forEach(element => {
+//          this.keyselected.push({name:element, product: 'Nam Prod'});
+//         });
+//         console.log(this.keyselected);
+//         this.ontologyExtractKey = this.keyselected;
+//         console.log(this.ontologyExtractKey);
+   
+//         // this.extractFieldsForm.controls.extractNamedetails.setValue( this.extarctPDFData);
+//       }
+//       this.filename = this.ontologyPdfFileData[0].fileName;
+//       this.productName = this.ontologyPdfFileData[0].productName;
+//       this.pdfUrl = this.ontologyPdfFileData[0].url;
+//       console.log(this.filename);
+//       console.log(this.productName);
+//       console.log(this.pdfUrl);
+//       this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
+//       console.log(this.Url);
+// });
+
+
 
 
   // Product Name

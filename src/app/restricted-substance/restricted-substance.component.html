@@ -14,137 +14,144 @@
             </div>
         </div>
 
-     
 
-        <div class="modal-body">
+
+        <div class="modal-body" *ngIf="gadslCheck">
+
             <span *ngIf="restrictedLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
-    
-           </span>
-            <div class="card-body">
-                <div *ngIf="gadslCheck">
-                    <span  *ngIf="!restrictedLoader">
-                    <h6 class="text-default font-weight-semibold">GADSL:<i class="fa fa-info-circle" role="button"
-                            title="This data is from GADSL/External Website"></i></h6>
-                     
-                    <p-table #dt [columns]="restrictedGASDLHeader" [value]="restrictedGASDLData"
-                        (sortFunction)="customSort($event)" [customSort]="true">
-                        <ng-template pTemplate="caption">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div style="text-align: left">
-                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
-                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                        <button class="btb pg-button" type="button" label="All Data"
-                                            (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                    </div>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+
+            <div *ngIf="!restrictedLoader && !pihAlertMessage">
+                <h6 class="text-default font-weight-semibold">GADSL:<i class="fa fa-info-circle" role="button"
+                        title="This data is from GADSL/External Website"></i></h6>
+
+                <p-table #dt [columns]="restrictedGASDLHeader" [value]="restrictedGASDLData"
+                    (sortFunction)="customSort($event)" [customSort]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
                                 </div>
                             </div>
-                        </ng-template>
-                        <br>
-
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th style="width:2.5em">S.No</th>
-                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                    [ngStyle]="{'width': col.width}">
-                                    {{col.header}}
-                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                        ariaLabelDesc="Activate to sort in descending order"
-                                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                </th>
-                            </tr>
-                        </ng-template>
-
-                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                            <tr [pReorderableRow]="index">
-                                <td>{{index+1}}</td>
-                                <td>{{rowData.substance}}</td>
-                                <td>{{rowData.spec-id}}</td>
-                                <td>{{rowData.cas_NO}}</td>
-                                <td>{{rowData.class_action}}</td>
-                                <td>{{rowData.reason_Code}}</td>
-                                <td>{{rowData.source}}</td>
-                                <td>{{rowData.reporting_threshold}}</td>
-                                <td>{{rowData.weight_Composition}}</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </span>
-                </div>
-
-
-
-                <div *ngIf="californiaCheck">
-
-                            <span *ngIf="pihAlertMessage">
-                                <h5 class="loader-text">No Data Found..</h5>
-                            </span>
-                            
-                            <span *ngIf="!restrictedLoader"> 
-                            <h6 class="text-default font-weight-semibold">California Prop 65:<i
-                                class="fa fa-info-circle" role="button"
-                                title="This data is from Cal Porp 65 website/External Website"></i></h6>
-                            <p-table #dt [columns]="restrictedCaliforniaTableHeader" [value]="restrictedCaliforniaData"
-                                (sortFunction)="customSort($event)" [customSort]="true">
-
-                                <ng-template pTemplate="caption">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div style="text-align: left">
-                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                <input type="text" class="pg-search" pInputText size="50"
-                                                    placeholder="Search"
-                                                    (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="ui-helper-clearfix" style="text-align: right">
-                                                <button class="btb pg-button" type="button" label="All Data"
-                                                    (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                                <br>
-
-                                <ng-template pTemplate="header" let-columns>
-                                    <tr>
-                                        <th style="width:2.5em">S.No</th>
-                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                            [ngStyle]="{'width': col.width}">
-                                            {{col.header}}
-                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                                ariaLabelDesc="Activate to sort in descending order"
-                                                ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                        </th>
-                                    </tr>
-                                </ng-template>
-
-                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                    <tr>
-                                        <td>{{index+1}}</td>
-                                        <td>{{rowData.chemical}}</td>
-                                        <td>{{rowData.type_Toxicity}}</td>
-                                        <td>{{rowData.listing_Mechanism}}</td>
-                                        <td>{{rowData.cas_NO}}</td>
-                                        <td>{{rowData.date_Listed}}</td>
-                                        <td>{{rowData.NSRL_Data}}</td>
-                                        <td>{{rowData.weight_Composition}}</td>
-                                    </tr>
-                                </ng-template>
-                            </p-table> </span>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                </div>
+                            </div>
                         </div>
+                    </ng-template>
+                    <br>
+
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:3.5em">S.No</th>
+                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                [ngStyle]="{'width': col.width}">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr [pReorderableRow]="index">
+                            <td>{{index+1}}</td>
+                            <td>{{rowData.substance}}</td>
+                            <td>{{rowData.spec_Id}}</td>
+                            <td>{{rowData.cas_NO}}</td>
+                            <td>{{rowData.class_action}}</td>
+                            <td>{{rowData.reason_Code}}</td>
+                            <td>{{rowData.source}}</td>
+                            <td>{{rowData.reporting_threshold}}</td>
+                            <td>{{rowData.weight_Composition}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
             </div>
-            <div class="clearfix"></div>
+
+
+
         </div>
+
+
+
+        <div class="modal-body" *ngIf="californiaCheck">
+
+            <span *ngIf="restrictedLoader">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+
+            <div *ngIf="!restrictedLoader && !pihAlertMessage">
+
+                <h6 class="text-default font-weight-semibold">California Prop 65:<i class="fa fa-info-circle"
+                        role="button" title="This data is from Cal Porp 65 website/External Website"></i></h6>
+                <p-table #dt [columns]="restrictedCaliforniaTableHeader" [value]="restrictedCaliforniaData"
+                    (sortFunction)="customSort($event)" [customSort]="true">
+
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:3.5em">S.No</th>
+                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                [ngStyle]="{'width': col.width}">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr>
+                            <td>{{index+1}}</td>
+                            <td>{{rowData.chemical}}</td>
+                            <td>{{rowData.type_Toxicity}}</td>
+                            <td>{{rowData.listing_Mechanism}}</td>
+                            <td>{{rowData.cas_NO}}</td>
+                            <td>{{rowData.date_Listed}}</td>
+                            <td>{{rowData.NSRL_Data}}</td>
+                            <td>{{rowData.weight_Composition}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
     </div>
 </div>

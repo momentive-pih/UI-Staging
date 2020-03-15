@@ -16,6 +16,7 @@ export class SynonymsComponent implements OnInit {
   submitted = false;
 
   synonymsFieldsForm: FormGroup;
+
   addField = false;
   ontologySynonymsDocuments: any = [];
   OntologyKeysynonyms: any =[];
@@ -31,6 +32,7 @@ export class SynonymsComponent implements OnInit {
   globalSynonyms: any;
   SelectedKey: String;
   documentCategorySection = false;
+  ontologySynonymsLoader:boolean = true;
   synonymsAddbtn = false;
   ontologyManagementSynonyms:any=[];
   userFilter: any = { key: '' };
@@ -48,8 +50,11 @@ export class SynonymsComponent implements OnInit {
     this.momentiveService.getOntologyManagement().subscribe(data => {
      console.log(data);
      this.ontologyManagementSynonyms = data;
-     this.Ontologysynonyms  = this.ontologyManagementSynonyms[0].ontology_Details
+     if(this.ontologyManagementSynonyms[0].ontology_Details.length > 0) {
+       this.ontologySynonymsLoader = false;
+      this.Ontologysynonyms  = this.ontologyManagementSynonyms[0].ontology_Details
       console.log(this.Ontologysynonyms);
+     } 
     }, err => {
       console.error(err);
     });
@@ -75,5 +80,9 @@ onSubmit() {
   }
 
   alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.addSynonyms.value))
+}
+
+addNewSynonyms() {
+
 }
 }

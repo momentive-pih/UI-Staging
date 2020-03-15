@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
 declare var $: any;
 
 
@@ -32,6 +33,15 @@ export class ReportDataComponent implements OnInit {
   CategoryDetails: any = [];
   reportDataDetails: any = [];
   reportLoader: boolean = true;
+  pihAlertMessage:boolean;
+  documentTypes:any;
+  historical_documents:boolean;
+  released_documents:boolean = true;
+  DocumentPart:any;
+  reportHistoryDataDataproducts:any =[]
+
+  selectedDocuments: string = "Released Documents";
+  selectedCompositionControl = new FormControl(this.selectedDocuments);
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -47,6 +57,14 @@ export class ReportDataComponent implements OnInit {
   ngOnInit() {
 
    this.releaseDocumentsPage()
+
+   this.DocumentPart =  [ {
+    "type" : "Released Documents",
+    "value": "Released Documents"
+  },{
+    "type" : "Historical Documents",
+    "value": "Historical Documents"
+  },],
   
     this.reportDataHead = [
       { "field": "category", "header": "Category" },
@@ -59,6 +77,7 @@ export class ReportDataComponent implements OnInit {
   }
 
   releaseDocumentsPage() {
+    this.reportLoader = true;
     this.reportDataDetails =[];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     console.log(this.selectedSpecList);
@@ -70,17 +89,74 @@ export class ReportDataComponent implements OnInit {
     });
     console.log(this.reportDataDetails)
     this.momentiveService.getReportDocuments(this.reportDataDetails).subscribe(data => {
-      this.reportLoader = false;
       console.log(data);
       this.productdata = data;
-       this.reportDataproducts =  this.productdata.reportDataproducts; 
-       console.log(this.reportDataproducts);
+      console.log(this.productdata);
+      if(this.productdata.length > 0){
+        this.reportLoader = false;
+        this.pihAlertMessage = false;
+        this.reportHistoryDataDataproducts =  this.productdata; 
+        console.log(this.reportHistoryDataDataproducts);
+        this.reportDataproducts = this.reportHistoryDataDataproducts.filter((element) => (element.status  === 'Released'))
+        console.log(this.reportDataproducts);
+      }
+      else {
+        this.pihAlertMessage = true;
+        this.reportLoader = false;
+      }
+    
+    }, err => {
+      console.error(err);
+    });
+  }
+
+
+
+  historicalDocumentsPage() {
+    this.reportLoader = true;
+    this.reportDataDetails =[];
+    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+    console.log(this.selectedSpecList);
+    this.CategoryDetails = this.momentiveService.ProductCategoryData;
+    console.log(this.CategoryDetails);
+    this.reportDataDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details': this.CategoryDetails[0],
+    });
+    console.log(this.reportDataDetails)
+    this.momentiveService.getReportDocuments(this.reportDataDetails).subscribe(data => {
+      console.log(data);
+      this.productdata = data;
+      if(this.productdata.length > 0){
+        this.reportLoader = false;
+        this.pihAlertMessage = false;
+        this.reportHistoryDataDataproducts =  this.productdata; 
+        this.reportDataproducts = this.reportHistoryDataDataproducts.filter((report) => (report.status  === 'Historical'))
+        console.log(this.reportDataproducts);
+      }
+      else {
+        this.pihAlertMessage = true;
+        this.reportLoader = false;
+      }
     
     }, err => {
       console.error(err);
     });
   }
  
+  selectDocumentsType(value) {
+    console.log(value);
+    this.documentTypes = value;
+    if (this.documentTypes === 'Historical Documents') {
+      this.historical_documents = true;
+      this.released_documents = false;
+      this.historicalDocumentsPage();
+    } else if (this.documentTypes === 'Released Documents') {
+      this.historical_documents = false;
+      this.released_documents = true;
+      this.releaseDocumentsPage();
+    } 
+  }
 
   customSort(event) {
     event.data.sort((data1, data2) => {

@@ -85,6 +85,9 @@ background: whitesmoke;
 }
 .basic-scrl {
   padding:25px;
+  overflow-y: auto;
+  height: 100vh;
+  max-height: calc(100vh - 60px);
 }
 .modal-open .modal {
   overflow-x: hidden;
@@ -92,8 +95,8 @@ background: whitesmoke;
 }
 
 .tab-content {
-  overflow-y: scroll;
-  height: 400px;
+  overflow-y: auto;
+  max-height: calc(100vh - 250px);
 }
 .font-weight-semibold {
   font-weight: 600;
@@ -327,4 +330,52 @@ select option {border: 1px solid #ddd; background: #fff; padding:10px; margin:20
 border-radius: 0px;
 background: #1a355e;
 color:#fff;
+}
+
+
+.modal-dialog {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width:none !important;
+
+}
+
+.modal-content {
+  height: auto !important;
+  min-height: 100% !important;
+  border-radius: 0 !important;
+  /* background-color: #ececec !important  */
+}
+
+.modal-header {
+  border-bottom: 1px solid #9ea2a2 !important;
+  padding: 15px;
+}
+
+.modal-footer {
+  border-top: 1px solid #9ea2a2 !important;
+}
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5385;
+}
+.modal{
+  right:-17px !important;
+}
+.modal-body {
+  position: absolute;
+  top: 50px;
+  bottom: 60px;
+  width: 100%;
+  font-weight: 300;
+  overflow: auto;
+}
+.filter-basic-part{
+  width: 100%;
+  margin-bottom: 10px;
+}
+.syn-search{
+  width: 50%;
 }

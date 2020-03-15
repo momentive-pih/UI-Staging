@@ -15,60 +15,694 @@
 
         </div>
         <div class="modal-body">
-  
             <div *ngIf="primaryInformtionTypes">
-                <div class="card-body">
-                    <div class="row card-btm">
-                        <div class="col-md-4">
 
 
-                            <h6 class="card-subtitle mb-2  text-default font-weight-semibold">Product Identification: <i
-                                    class="fa fa-info-circle" title="This data is from SAP"></i></h6><span
-                                class="text-muted">LSR2680FC,
-                                LSR2680,NLR160-80,NLR160-80,T6227</span>
-                        </div>
-                        <div class="col-md-4">
-                            <h6 class="card-subtitle mb-2 text-default font-weight-semibold ">Relabels: <i
-                                    class="fa fa-info-circle" title="This data is from SAP"></i><span> N/A</span></h6>
-                        </div>
-                        <div class="col-md-4">
-                            <h6 class="card-subtitle mb-2 text-default font-weight-semibold ">Chemical Name: <i
-                                    class="fa fa-info-circle" title="This data is from SAP"></i><span> N/A</span></h6>
-                        </div>
-                    </div>
+                <span *ngIf="ProductComplianceLoader">
+                    <i class="loader-class fa fa-spinner fa-spin"></i>
+                    <span class="loader-text">Loading data....</span>
+                </span>
+
+                <span *ngIf="pihAlertMessage">
+                    <h5 class="loader-text">No Data Found..</h5>
+                </span>
+                <div *ngIf="!ProductComplianceLoader && !pihAlertMessage">
                     <div class="row card-innerProduct-body">
                         <div class="col-md-12">
-                            <h6 class="card-subtitle mb-2 text-default font-weight-semibold ">Product Application: <i
-                                    class="fa fa-info-circle" title="This data is from Momentive website"></i></h6>
+                            <h6 class="card-subtitle mb-2 text-default font-weight-semibold ">Product Identification: <i
+                                    class="fa fa-info-circle" title="This data is from SAP"></i></h6>
 
                             <div class="row">
-                                <div class="col-md-4" *ngFor="let data of productApplication">
-                                    <div class="text-muted">
-                                        <span class="badge badge-mark border-grey-400 mr-1"></span>
-                                        {{data.app_text}}
-                                    </div>
+                                <div class="col-md-12">
+                                    <table>
+                                        <thead>
+                                            <th style="width:5%">S.No</th>
+                                            <th style="width:20%">Specifiction Id</th>
+                                            <th style="width:20%">Product Name</th>
+                                            <th style="width:20%">Relabels</th>
+
+
+
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of primaryBasicDetails; let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.spec_Id}}</td>
+                                                <td>{{data.product_Identification}}</td>
+                                                <td>{{data.relables}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
                             </div>
                         </div>
                     </div>
+
                     <br>
-                    <div class="row card-inner-body">
-                        <div class="col-md-12">
-                            <h6 class="card-subtitle mb-2 text-default font-weight-semibold">Registered Quantity Per
-                                Legal Entity: <i class="fa fa-info-circle" role="button"
-                                    title="This data is from SAP"></i></h6>
+                    <div class="card-innerProduct-body">
+                        <h5>Product Application</h5>
+
+                        <!-- <div class="row">
+          <div class="col-md-6">
+          
+          </div>
+          <div class="col-md-6 mr-r">
+            <button class="docs-btn" (click)="expand()">Show All</button>
+            <button class="docs-btn" (click)="collapse()">Hide All</button>
+          </div> -->
+
+
+                        <div class="row">
+                            <div class="col-md-12" *ngFor="let data of primaryProductApplication;let i = index">
+
+
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h6 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse"
+                                                    data-parent="#accordion" [attr.href]="'#'+data.spec_Id"
+                                                    aria-expanded="true" aria-controls="collapseOne">
+                                                    Specification ID - {{data.spec_Id}}
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div id="{{data.spec_Id}}" class="panel-collapse collapse" role="tabpanel"
+                                            aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Product Name</th>
+                                                            <th>Product Application</th>
+
+                                                            <th class="td-actions">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let each of data[data.spec_Id] ;let i = index">
+                                                            <td>{{i+1}}</td>
+                                                            <td>{{each.product}}</td>
+                                                            <td style="width:40%"> <a class="doc-link"
+                                                                    href="{{each.prod_App}}" target="_blank">{{each.prod_App}}</a></td>
+
+                                                            <td class="td-actions">
+                                                                <button class="btn sm-btn"> <a class="doc-link"
+                                                                    href="{{each.prod_App}}" target="_blank"></a>
+                                                                    <i class="fa fa-eye"></i> Preview</button> &nbsp;
+                                                                <button class="btn sm-btn" downlaod
+                                                                    href="https://www.techadvisor.co.uk/cmsdata/features/3679232/how-to-extract-pages-from-a-pdf-thumb_thumb1200_4-3.jpg" target="_blank">
+                                                                    <i class="icon-download"></i> Download</button>
+
+                                                            </td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div *ngIf="ghsLabeling">
-                <div class="card-body">
-                    <h6 class="text-default font-weight-semibold">GHS Labeling: <i class="fa fa-info-circle"
-                            role="button" title="This data is from SAP"></i></h6>
-                    <p-table #dt [columns]="ghsLabelingHeader" [value]="ghsLabelingData"
-                        (sortFunction)="customSort($event)" [paginator]="legalpaginator" [rows]="5" [customSort]="true"
-                        selectionMode="multiple" [(selection)]="selectedLabelingProducts" [reorderableColumns]="true">
+
+
+        
+
+        <div *ngIf="ghsLabeling">
+
+
+            <span *ngIf="ProductComplianceLoader">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+            <div *ngIf="!ProductComplianceLoader && !pihAlertMessage">
+                <h6 class="text-default font-weight-semibold">GHS Labeling: <i class="fa fa-info-circle" role="button"
+                        title="This data is from SAP"></i></h6>
+                <p-table #dt [columns]="ghsLabelingHeader" [value]="ghsLabelingData" (sortFunction)="customSort($event)"
+                    [customSort]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:3.5em">S.No</th>
+                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pReorderableColumn [ngStyle]="{'width': col.width}">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                   
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr>
+                            <td>
+                                {{index+1}}
+                            </td>
+                            <td>
+                                {{rowData.regulatory_Basis}}
+                            </td>
+                            <td>
+                                {{rowData.symbols}}
+                            </td>
+                            <td>
+                                {{rowData.signal_Word}}
+                            </td>
+                            <td>
+                                {{rowData.hazard_Statements}}
+                            </td>
+                            <td>
+                                {{rowData.prec_Statements}}
+                            </td>
+                            <td>
+                                {{rowData.additional_Information}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div *ngIf="structureAndFormulaTypes">
+
+            <span *ngIf="ProductComplianceLoader">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+
+            <div *ngIf="!ProductComplianceLoader && !pihAlertMessage">
+
+                <div class="row" *ngIf="chemicalStructureTable.length > 0">
+                    <div class="col-md-12">
+                        <h6 class="text-default font-weight-semibold mb-2 mh-2">Chemical Structure: <i
+                                class="fa fa-info-circle" role="button"
+                                title="This data is from Document on Shared Drive - P"></i></h6>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Specification ID</th>
+                                    <th>Product Type</th>
+                                    <th>Product</th>
+                                    <th>CAS Diagram</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of chemicalStructureTable ;let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.spec_Id}}</td>
+                                    <td>{{data.product_Type}}</td>
+                                    <td>{{data.product}}</td>
+                                    <td style="width:40%"> 
+                                        <a href="{{data.file_Path}}" target="new">
+                                            <img [src] ="data.file_Path" alt="random image" width="400" height="100">
+                                        </a>  
+                                        
+                                       </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+
+
+                <br>
+                <div class="row" *ngIf="molecularFormulaTable.length > 0">
+                    <div class="col-md-12">
+                        <h6 class="text-default font-weight-semibold mb-2 mh-2">Molecular Formula: <i
+                                class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i></h6>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Specification ID</th>
+                                    <th>Product Type</th>
+                                    <th>Product</th>
+                                    <th>CAS Diagram</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of molecularFormulaTable;let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.spec_Id}}</td>
+                                    <td>{{data.product_Type}}</td>
+                                    <td>{{data.product}}</td>
+                                    <td style="width:40%"> <a href="{{data.file_Path}}" target="_blank">{{data.file_Path}}</a></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <br>
+                <div class="row" *ngIf="molecularWeightTable.length > 0">
+                    <div class="col-md-12">
+                        <h6 class="text-default font-weight-semibold mb-2 mh-2 ">Molecular Weight:<i
+                                class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i>
+                        </h6>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Specification ID</th>
+                                    <th>Product</th>
+                                    <th>Product Type</th>
+                                    <th>Moelcular Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of molecularWeightTable ;let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.spec_Id}}</td>
+                                    <td>{{data.product}}</td>
+                                    <td>{{data.product_Type}}</td>
+                                    <td>{{data.moelcular_Weight}}</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span *ngIf="molecularWeightTable.length < 0">No Data Found</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div *ngIf="compositionTypes">
+
+            <!-- Start row -->
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- Start accordion -->
+                    <div id="accordion" class="">
+
+                        <!-- Start First collapse -->
+                        <div class="panel ">
+                            <div class="productLevel" role="tab" id="headingOne">
+
+                                <div class="row">
+                                    <div class="col-3 col-lg-3">
+
+                                        <h4 class="checkout-step-title"> <a role="button"> Product Level &
+                                                Material Level Details</a></h4>
+                                    </div>
+
+                                    <div class="col-8 col-lg-8">
+                                        <!-- <ul class="nav spec-toggle"  *ngIf="compositionSpecID"> <h5> SPEC ID - </h5> 
+                                                <li class="nav-item">
+                                                    <a class="select-spec active" data-toggle="tab" (click)="selectSpec()">000000053217
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="select-spec" data-toggle="tab" (click)="selectSpec()">M00000005037</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="select-spec" data-toggle="tab" (click)="selectSpec()">M00000005056</a>
+                                                </li>
+                                            </ul> -->
+                                    </div>
+
+                                    <div class="col-1 col-lg-1 text-right d-none d-sm-block d-md-block d-lg-block d-xl-block"
+                                        data-toggle="collapse" data-parent="#accordion" href="#productLevel">
+                                        <button id="nextBtn" name="nextBtn" class="btn btn-default imc-jfeditbtn"><i
+                                                class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+
+                                    <div class="col-1 col-lg-1 text-right d-md-none d-lg-none" data-toggle="collapse"
+                                        data-parent="#accordion" href="#productLevel">
+                                        <button id="nextBtn" name="nextBtn" class="btn btn-default imc-jfeditbtn"><i
+                                                class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div id="productLevel" class="collapse show">
+
+                                <!-- Start collapse body -->
+
+                                <div class="checkout-step-body">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="card-comp">
+                                                <span>
+                                                    <p><b>REAL SUB Number </b> : 000000053217 </p>
+                                                    <p><b>Product Name</b> : Silsoft* 876 , SILSOFT 876 FLUID
+                                                    </p>
+                                                    <p><b>Relabel Name(s)</b> : None</p>
+                                                    <p><b>INCI Name</b> : PEG-12 Dimethicone
+                                                        NAM Prod: Silsoft* 876</p>
+                                                </span>
+                                            </div>
+                                            <br>
+                                            <div>
+                                                <mat-form-field>
+                                                    <mat-select name="compositionVaraible"
+                                                        [(value)]="selectedComposition"
+                                                        placeholder="Select Composition Type"
+                                                        (selectionChange)="compositionProcess($event.value)">
+                                                        <mat-option *ngFor="let data of compositionsTypes"
+                                                            [value]="data.name">
+                                                            {{data.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-12 custyle">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <nav>
+                                                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                                            <a class="nav-item nav-link active" id="nav-home-tab"
+                                                                data-toggle="tab" href="#nav-home" role="tab"
+                                                                aria-controls="nav-home" aria-selected="true">All
+                                                                Material</a>
+                                                            <a class="nav-item nav-link" id="nav-profile-tab"
+                                                                data-toggle="tab" href="#nav-profile" role="tab"
+                                                                aria-controls="nav-profile" aria-selected="false">Active
+                                                                Material</a>
+                                                        </div>
+                                                    </nav>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <!-- <mat-form-field class="composition-specDrop">
+                                                            <mat-select [formControl]="bankMultiCtrl" name="bankMultiCtrl" placeholder="Select SPEC ID"
+                                                                disableOptionCentering panelClass="myPanelClass" [multiple]="true" #multiSelect>
+                                                                <mat-select-filter [formControl]="bankMultiFilterCtrl" ngDefaultControl
+                                                                    placeholderLabel="Search SPEC...">
+                                                                </mat-select-filter>
+                                                      
+                                                                <mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank"
+                                                                   >
+                                                                    {{bank.name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field> -->
+
+                                                    <mat-form-field class="composition-specDrop">
+                                                        <mat-select [formControl]="bankCtrl" name="bankCtrl"
+                                                            placeholder="Select SPEC ID" disableOptionCentering
+                                                            panelClass="myPanelClass" #singleSelect>
+                                                            <mat-select-filter [formControl]="bankFilterCtrl"
+                                                                ngDefaultControl></mat-select-filter>
+                                                            <mat-option *ngFor="let bank of filteredBanks | async"
+                                                                [value]="bank">
+                                                                {{bank.name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+
+
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="tab-content" id="nav-tabContent">
+                                                        <div class="tab-pane fade show active" id="nav-home"
+                                                            role="tabpanel" aria-labelledby="nav-home-tab">
+                                                            <table class="table" id="rtable">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>MM#</th>
+                                                                        <th>Material Description</th>
+                                                                        <th>Profit center</th>
+                                                                        <th>Profit center Text</th>
+                                                                        <th>Market Segment-1</th>
+                                                                        <th>Market Segment-2</th>
+                                                                        <th>Ext.Matl Grp</th>
+                                                                        <th>Basic Data Text</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>132379
+                                                                        </td>
+                                                                        <td>SILSOFT 876/STL DR/210KG
+                                                                        </td>
+                                                                        <td>410
+                                                                        </td>
+                                                                        <td>SPECIALTY FLUIDS
+                                                                        </td>
+                                                                        <td>SKIN AND COLOUR CO
+                                                                        </td>
+                                                                        <td>HAIR CARE
+                                                                        </td>
+                                                                        <td>ECOM
+                                                                        </td>
+                                                                        <td>Silsoft* 876 fluid
+                                                                        </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>132379
+                                                                        </td>
+                                                                        <td>SILSOFT 876/STL DR/210KG
+                                                                        </td>
+                                                                        <td>410
+                                                                        </td>
+                                                                        <td>SPECIALTY FLUIDS
+                                                                        </td>
+                                                                        <td>SKIN AND COLOUR CO
+                                                                        </td>
+                                                                        <td>HAIR CARE
+                                                                        </td>
+                                                                        <td>ECOM
+                                                                        </td>
+                                                                        <td>Silsoft* 876 fluid
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                                            aria-labelledby="nav-profile-tab">
+                                                            <table class="table" id="rtable">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>MM#</th>
+                                                                        <th>Material Description</th>
+                                                                        <th>Profit center</th>
+                                                                        <th>Profit center Text</th>
+                                                                        <th>Market Segment-1</th>
+                                                                        <th>Market Segment-2</th>
+                                                                        <th>Ext.Matl Grp</th>
+                                                                        <th>Basic Data Text</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>132379
+                                                                        </td>
+                                                                        <td>SILSOFT 876/STL DR/210KG
+                                                                        </td>
+                                                                        <td>410
+                                                                        </td>
+                                                                        <td>SPECIALTY FLUIDS
+                                                                        </td>
+                                                                        <td>SKIN AND COLOUR CO
+                                                                        </td>
+                                                                        <td>HAIR CARE
+                                                                        </td>
+                                                                        <td>ECOM
+                                                                        </td>
+                                                                        <td>Silsoft* 876 fluid
+                                                                        </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>132379
+                                                                        </td>
+                                                                        <td>SILSOFT 876/STL DR/210KG
+                                                                        </td>
+                                                                        <td>410
+                                                                        </td>
+                                                                        <td>SPECIALTY FLUIDS
+                                                                        </td>
+                                                                        <td>SKIN AND COLOUR CO
+                                                                        </td>
+                                                                        <td>HAIR CARE
+                                                                        </td>
+                                                                        <td>ECOM
+                                                                        </td>
+                                                                        <td>Silsoft* 876 fluid
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <!-- End collapse body -->
+                            </div>
+                        </div>
+                        <!-- End First collapse -->
+                    </div>
+                    <!-- End accordion -->
+                </div>
+            </div>
+            <!-- End row -->
+
+
+            <h5>Composition Details</h5>
+            <div class="row">
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-select name="locationVaraible" [(value)]="selectedlocation"
+                            placeholder="Rating and Validity Area"
+                            (selectionChange)="SubLevelComposition($event.value)">
+                            <mat-option *ngFor="let region of locations" [value]="region.name">
+                                {{region.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-9">
+                    <button (click)="exportToStandardCompostionExcel()" class="btn spec-btn pull-right">Export To
+                        Excel</button>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="row" *ngIf="compositionSHI">
+                <div class="col-md-12">
+                    <div class="table-responsive" #StandardCompositiontable>
+                        <div class="table-responsive" id="sailorTableArea">
+                            <table id="sailorTable" class="table table-striped table-bordered" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3" style="background-color:  #a0a3e0;color:#fff !important;">
+                                            Component
+                                            Details</th>
+                                        <th colspan="3" style="background-color: #ebc3db;color:#fff !important;">
+                                            Standard
+                                            Composition</th>
+                                        <th colspan="3" style="background-color: #c7e2bb;color:#fff !important;">100 %
+                                            Composition</th>
+                                        <th colspan="3"
+                                            style="background-color: rgb(235, 195, 65);color:#fff !important;">
+                                            INCI Composition</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Pure Spec ID</th>
+                                        <th>CAS Number</th>
+                                        <th style="width:15%">Ingredient Name</th>
+                                        <th>Component Type</th>
+                                        <th>Value</th>
+                                        <th style="width:5%">Unit</th>
+                                        <th>Component Type</th>
+                                        <th>Value</th>
+                                        <th style="width:5%">Unit</th>
+                                        <th>Component Type</th>
+                                        <th>Value</th>
+                                        <th style="width:5%">Unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let sale of sales">
+                                        <td>{{sale.Specification}}</td>
+                                        <td>{{sale.cas_Number}}</td>
+                                        <td style="word-break:break-word;">{{sale.ingredient}}</td>
+                                        <td>{{sale.std_component}}</td>
+                                        <td>{{sale.std_value}}</td>
+                                        <td style="width:5%">{{sale.std_unit}}</td>
+                                        <td>{{sale.hundered_component}}</td>
+                                        <td>{{sale.hundered_value}}</td>
+                                        <td style="width:5%">{{sale.hundered_unit}}</td>
+                                        <td>{{sale.inic_component}}</td>
+                                        <td>{{sale.inic_value}}</td>
+                                        <td style="width:5%">{{sale.inic_unit}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3">Total</td>
+                                        <td colspan="3">
+                                            <p class="spec-toggle">18.00 %</p>
+                                        </td>
+                                        <td colspan="3">
+                                            <p class="spec-toggle">22.80 %</p>
+                                        </td>
+                                        <td colspan="3">
+                                            <p class="spec-toggle">44.80 %</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row" *ngIf="compositionLegalTypes">
+                <!-- Legal Composition -->
+                <div class="col-md-12">
+                    <h5>Legal Composition</h5>
+                    <p-table #dt [columns]="legalCompositionHead" [value]="legalCompositionData"
+                        (sortFunction)="customSort($event)" [paginator]="false" [rows]="5" [customSort]="true"
+                        selectionMode="multiple" [(selection)]="selectedlegalCompositionProducts"
+                        [reorderableColumns]="true">
                         <ng-template pTemplate="caption">
                             <div class="row">
                                 <div class="col-md-6">
@@ -80,15 +714,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="ui-helper-clearfix" style="text-align: right">
-                                        <button class="btb pg-button" type="button" label="All Data"
-                                            (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                        <!-- <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                            <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                        <!-- <button class="btb pg-button" (click)="exportLegalXLSX()"><i class="fa fa-file-excel-o">  Export CSV</i></button> -->
+                                        <button class="btb pg-button"><i class="fa fa-file-excel-o"> Export
+                                                CSV</i></button>
                                     </div>
                                 </div>
                             </div>
                         </ng-template>
                         <br>
-
                         <ng-template pTemplate="header" let-columns>
                             <tr>
                                 <th style="width:2.5em"></th>
@@ -101,589 +736,207 @@
                                 </th>
                             </tr>
                         </ng-template>
-
-                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <ng-template pTemplate="body" let-rowData let-legalData let-index="rowIndex">
                             <tr [pReorderableRow]="index">
                                 <td>
                                     <i class="fa fa-bars" pReorderableRowHandle></i>
                                 </td>
-                                <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                    {{rowData[col.field]}}
+
+                                <td>
+                                    {{legalData.Specification}}
+                                </td>
+                                <td>
+                                    {{legalData.CAS_Number}}
+                                </td>
+                                <td>
+                                    {{legalData.Ingredient_Name}}
+                                </td>
+
+                                <td>
+                                    {{legalData.Component_Type}}
+                                </td>
+
+                                <td>
+                                    {{legalData.Legal_Composition}}
+                                </td>
+
+                                <td>
+                                    {{legalData.Unit}}
                                 </td>
                             </tr>
                         </ng-template>
                     </p-table>
                 </div>
-            </div>
-            <div *ngIf="structureAndFormulaTypes">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h6 class="text-default font-weight-semibold mb-2 mh-2">Chemical Structure: <i
-                                    class="fa fa-info-circle" role="button"
-                                    title="This data is from Document on Shared Drive - P"></i></h6>
-                            <br>
-                            <h6 class="text-muted">CAS Number: 68083-19-2 </h6>
-                            <img src="../../assets/images/momentive/chemicalStructure.png" />
-                        </div>
-                        <div class="col-md-4">
-                            <h6 class="text-default font-weight-semibold mb-2 mh-2">Molecular Formula: <i
-                                    class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i>
-                            </h6>
-                            <br>
-                            <ol class="structure">
-                                <li class="text-muted"> M1.99 D10.01 D”0.98 T20.01:
-                                    where D”= -(CH3)Si-CH2CH2CH2O(EO)7.3-OH</li>
-                            </ol>
-                        </div>
-
-                        <div class="col-md-4">
-                            <h6 class="text-default font-weight-semibold mb-2 mh-2 ">Molecular Weight:<i
-                                    class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i>
-                            </h6>
-                            <br>
-                            <ol class="structure">
-                                <li class="text-muted">Monoisotopic Molecular Weight: 548.19/788.20 Da</li>
-
-                                <li class="text-muted"> Average Molecular Weight: 548.92/789.43 Da </li>
-                            </ol>
-
-                        </div>
-                    </div>
-                </div>
 
             </div>
-            <div *ngIf="compositionTypes">
-                <div class="card-body">
-
-
-                    <!-- Start row -->
-
+            <br>
+            <!-- SVT Legal Composition -->
+            <div class="row">
+                <div class="col-md-12" *ngIf="subCompositionLevel">
                     <div class="row">
-                        <div class="col-md-12">
-
-                            <!-- Start accordion -->
-                            <div id="accordion" class="">
-
-                                <!-- Start First collapse -->
-                                <div class="panel ">
-                                    <div class="productLevel" role="tab" id="headingOne">
-
-                                        <div class="row">
-                                            <div class="col-3 col-lg-3">
-
-                                                <h4 class="checkout-step-title"> <a role="button"> Product Level &
-                                                        Material Level Details</a></h4>
-                                            </div>
-
-                                            <div class="col-8 col-lg-8">
-                                                <!-- <ul class="nav spec-toggle"  *ngIf="compositionSpecID"> <h5> SPEC ID - </h5> 
-                                                <li class="nav-item">
-                                                    <a class="select-spec active" data-toggle="tab" (click)="selectSpec()">000000053217
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="select-spec" data-toggle="tab" (click)="selectSpec()">M00000005037</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="select-spec" data-toggle="tab" (click)="selectSpec()">M00000005056</a>
-                                                </li>
-                                            </ul> -->
-                                            </div>
-
-                                            <div class="col-1 col-lg-1 text-right d-none d-sm-block d-md-block d-lg-block d-xl-block"
-                                                data-toggle="collapse" data-parent="#accordion" href="#productLevel">
-                                                <button id="nextBtn" name="nextBtn"
-                                                    class="btn btn-default imc-jfeditbtn"><i class="fa fa-angle-down"
-                                                        aria-hidden="true"></i></button>
-                                            </div>
-
-                                            <div class="col-1 col-lg-1 text-right d-md-none d-lg-none"
-                                                data-toggle="collapse" data-parent="#accordion" href="#productLevel">
-                                                <button id="nextBtn" name="nextBtn"
-                                                    class="btn btn-default imc-jfeditbtn"><i class="fa fa-angle-down"
-                                                        aria-hidden="true"></i></button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div id="productLevel" class="collapse show">
-
-                                        <!-- Start collapse body -->
-
-                                        <div class="checkout-step-body">
-                                            <div class="row">
-                                                <div class="col-md-4 col-sm-12">
-                                                    <div class="card-comp">
-                                                        <span>
-                                                            <p><b>REAL SUB Number </b> : 000000053217 </p>
-                                                            <p><b>Product Name</b> : Silsoft* 876 , SILSOFT 876 FLUID
-                                                            </p>
-                                                            <p><b>Relabel Name(s)</b> : None</p>
-                                                            <p><b>INCI Name</b> : PEG-12 Dimethicone
-                                                                NAM Prod: Silsoft* 876</p>
-                                                        </span>
-                                                    </div>
-                                                    <br>
-                                                    <div>
-                                                        <mat-form-field>
-                                                            <mat-select name="compositionVaraible"
-                                                                [(value)]="selectedComposition"
-                                                                placeholder="Select Composition Type"
-                                                                (selectionChange)="compositionProcess($event.value)">
-                                                                <mat-option *ngFor="let data of compositionsTypes"
-                                                                    [value]="data.name">
-                                                                    {{data.name}}
-                                                                </mat-option>
-                                                            </mat-select>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-8 col-sm-12 custyle">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <nav>
-                                                                <div class="nav nav-tabs nav-fill" id="nav-tab"
-                                                                    role="tablist">
-                                                                    <a class="nav-item nav-link active"
-                                                                        id="nav-home-tab" data-toggle="tab"
-                                                                        href="#nav-home" role="tab"
-                                                                        aria-controls="nav-home"
-                                                                        aria-selected="true">All Material</a>
-                                                                    <a class="nav-item nav-link" id="nav-profile-tab"
-                                                                        data-toggle="tab" href="#nav-profile" role="tab"
-                                                                        aria-controls="nav-profile"
-                                                                        aria-selected="false">Active Material</a>
-                                                                </div>
-                                                            </nav>
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <div class="tab-content" id="nav-tabContent">
-                                                                <div class="tab-pane fade show active" id="nav-home"
-                                                                    role="tabpanel" aria-labelledby="nav-home-tab">
-                                                                    <table class="table" id="rtable">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>MM#</th>
-                                                                                <th>Material Description</th>
-                                                                                <th>Profit center</th>
-                                                                                <th>Profit center Text</th>
-                                                                                <th>Market Segment-1</th>
-                                                                                <th>Market Segment-2</th>
-                                                                                <th>Ext.Matl Grp</th>
-                                                                                <th>Basic Data Text</th>
-
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td>132379
-                                                                                </td>
-                                                                                <td>SILSOFT 876/STL DR/210KG
-                                                                                </td>
-                                                                                <td>410
-                                                                                </td>
-                                                                                <td>SPECIALTY FLUIDS
-                                                                                </td>
-                                                                                <td>SKIN AND COLOUR CO
-                                                                                </td>
-                                                                                <td>HAIR CARE
-                                                                                </td>
-                                                                                <td>ECOM
-                                                                                </td>
-                                                                                <td>Silsoft* 876 fluid
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>132379
-                                                                                </td>
-                                                                                <td>SILSOFT 876/STL DR/210KG
-                                                                                </td>
-                                                                                <td>410
-                                                                                </td>
-                                                                                <td>SPECIALTY FLUIDS
-                                                                                </td>
-                                                                                <td>SKIN AND COLOUR CO
-                                                                                </td>
-                                                                                <td>HAIR CARE
-                                                                                </td>
-                                                                                <td>ECOM
-                                                                                </td>
-                                                                                <td>Silsoft* 876 fluid
-                                                                                </td>
-
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="nav-profile"
-                                                                    role="tabpanel" aria-labelledby="nav-profile-tab">
-                                                                    <table class="table" id="rtable">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>MM#</th>
-                                                                                <th>Material Description</th>
-                                                                                <th>Profit center</th>
-                                                                                <th>Profit center Text</th>
-                                                                                <th>Market Segment-1</th>
-                                                                                <th>Market Segment-2</th>
-                                                                                <th>Ext.Matl Grp</th>
-                                                                                <th>Basic Data Text</th>
-
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td>132379
-                                                                                </td>
-                                                                                <td>SILSOFT 876/STL DR/210KG
-                                                                                </td>
-                                                                                <td>410
-                                                                                </td>
-                                                                                <td>SPECIALTY FLUIDS
-                                                                                </td>
-                                                                                <td>SKIN AND COLOUR CO
-                                                                                </td>
-                                                                                <td>HAIR CARE
-                                                                                </td>
-                                                                                <td>ECOM
-                                                                                </td>
-                                                                                <td>Silsoft* 876 fluid
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>132379
-                                                                                </td>
-                                                                                <td>SILSOFT 876/STL DR/210KG
-                                                                                </td>
-                                                                                <td>410
-                                                                                </td>
-                                                                                <td>SPECIALTY FLUIDS
-                                                                                </td>
-                                                                                <td>SKIN AND COLOUR CO
-                                                                                </td>
-                                                                                <td>HAIR CARE
-                                                                                </td>
-                                                                                <td>ECOM
-                                                                                </td>
-                                                                                <td>Silsoft* 876 fluid
-                                                                                </td>
-
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-                                        <!-- End collapse body -->
-                                    </div>
-                                </div>
-                                <!-- End First collapse -->
-                            </div>
-                            <!-- End accordion -->
+                        <div class="col-md-6">
+                            <h5><b>SVT Substance Details</b></h5>
+                        </div>
+                        <div class="col-md-6">
+                            <button (click)="exportToSVTTableExcel()" class="btn spec-btn pull-right">Export
+                                To Excel</button>
                         </div>
                     </div>
-                    <!-- End row -->
+                    <br>
 
 
-                    <h5>Composition Details</h5>
-                    <div class="row">
-
-                        <div class="col-md-3">
-                            <mat-form-field>
-                                <mat-select name="locationVaraible" [(value)]="selectedlocation"
-                                    placeholder="Rating and Validity Area"
-                                    (selectionChange)="SubLevelComposition($event.value)">
-                                    <mat-option *ngFor="let region of locations" [value]="region.name">
-                                        {{region.name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                        </div>
-<div class="col-md-9">
-    <button (click)="exportToStandardCompostionExcel()" class="btn btn-success pull-right">Export To Excel</button> 
-</div>
-                      
-
-
-                    </div>
-
-
-                    <div class="row" *ngIf="compositionSHI">
-                        <div class="col-md-12">
-                            <div class="table-responsive" #StandardCompositiontable>
-                                <div class="table-responsive" id="sailorTableArea">
-                                    <table id="sailorTable" class="table table-striped table-bordered" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="3"
-                                                    style="background-color:  #a0a3e0;color:#fff !important;">Component
-                                                    Details</th>
-                                                <th colspan="3"
-                                                    style="background-color: #ebc3db;color:#fff !important;">Standard
-                                                    Composition</th>
-                                                <th colspan="3"
-                                                    style="background-color: #c7e2bb;color:#fff !important;">100 %
-                                                    Composition</th>
-                                                <th colspan="3"
-                                                    style="background-color: rgb(235, 195, 65);color:#fff !important;">
-                                                    INCI Composition</th>
-                                            </tr>
-                                            <tr>
-                                                <th>Pure Spec ID</th>
-                                                <th>CAS Number</th>
-                                                <th style="width:15%">Ingredient Name</th>
-                                                <th>Component Type</th>
-                                                <th>Value</th>
-                                                <th style="width:5%">Unit</th>
-                                                <th>Component Type</th>
-                                                <th>Value</th>
-                                                <th style="width:5%">Unit</th>
-                                                <th>Component Type</th>
-                                                <th>Value</th>
-                                                <th style="width:5%">Unit</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let sale of sales">
-                                                <td>{{sale.Specification}}</td>
-                                                <td>{{sale.cas_Number}}</td>
-                                                <td style="word-break:break-word;">{{sale.ingredient}}</td>
-                                                <td>{{sale.std_component}}</td>
-                                                <td>{{sale.std_value}}</td>
-                                                <td style="width:5%">{{sale.std_unit}}</td>
-                                                <td>{{sale.hundered_component}}</td>
-                                                <td>{{sale.hundered_value}}</td>
-                                                <td style="width:5%">{{sale.hundered_unit}}</td>
-                                                <td>{{sale.inic_component}}</td>
-                                                <td>{{sale.inic_value}}</td>
-                                                <td style="width:5%">{{sale.inic_unit}}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="3">Total</td>
-                                                <td colspan="3">
-                                                    <p class="spec-toggle">18.00 %</p>
-                                                </td>
-                                                <td colspan="3">
-                                                    <p class="spec-toggle">22.80 %</p>
-                                                </td>
-                                                <td colspan="3">
-                                                    <p class="spec-toggle">44.80 %</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="row" *ngIf="compositionLegalTypes">
-                        <!-- Legal Composition -->
-                        <div class="col-md-12">
-                            <h5>Legal Composition</h5>
-                            <p-table #dt [columns]="legalCompositionHead" [value]="legalCompositionData"
-                                (sortFunction)="customSort($event)" [paginator]="false" [rows]="5" [customSort]="true"
-                                selectionMode="multiple" [(selection)]="selectedlegalCompositionProducts"
-                                [reorderableColumns]="true">
-                                <ng-template pTemplate="caption">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div style="text-align: left">
-                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                <input type="text" class="pg-search" pInputText size="50"
-                                                    placeholder="Search"
-                                                    (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="ui-helper-clearfix" style="text-align: right">
-                                                <!-- <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                            <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                <!-- <button class="btb pg-button" (click)="exportLegalXLSX()"><i class="fa fa-file-excel-o">  Export CSV</i></button> -->
-                                                <button class="btb pg-button"><i class="fa fa-file-excel-o"> Export
-                                                        CSV</i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                                <br>
-                                <ng-template pTemplate="header" let-columns>
+                    <div class="table-responsive" #SVTtable>
+                        <div class="table-responsive" id="sailorTableArea">
+                            <table id="sailorTable" class="table table-striped table-bordered" width="100%">
+                                <thead>
                                     <tr>
-                                        <th style="width:2.5em"></th>
-                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                            pReorderableColumn [ngStyle]="{'width': col.width}">
-                                            {{col.header}}
-                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                                ariaLabelDesc="Activate to sort in descending order"
-                                                ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                        <th colspan="1" style="background-color:  #a0a3e0;color:#fff !important;">
+                                            Scenario</th>
+                                        <th colspan="4" style="background-color: #ebc3db;color:#fff !important;">SVT LV
                                         </th>
+                                        <th colspan="4" style="background-color: #c7e2bb;color:#fff !important;">SVT TE
+                                        </th>
+                                        <th colspan="4"
+                                            style="background-color: rgb(235, 195, 65);color:#fff !important;">
+                                            SVT AN</th>
                                     </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-legalData let-index="rowIndex">
-                                    <tr [pReorderableRow]="index">
-                                        <td>
-                                            <i class="fa fa-bars" pReorderableRowHandle></i>
-                                        </td>
-                                      
-                                        <td>
-                                            {{legalData.Specification}}
-                                        </td>
-                                        <td>
-                                            {{legalData.CAS_Number}}
-                                        </td>
-                                        <td>
-                                            {{legalData.Ingredient_Name}}
-                                        </td>
-                                        
-                                        <td>
-                                            {{legalData.Component_Type}}
-                                        </td>
-                                         
-                                        <td>
-                                                {{legalData.Legal_Composition}}
-                                            </td>
-                                             
-                                        <td>
-                                                {{legalData.Unit}}
-                                            </td>
+                                    <tr>
+                                        <th>Pure Spec ID</th>
+                                        <th>2018</th>
+                                        <th>2019</th>
+                                        <th>2020</th>
+                                        <th>Amount Limit in tones</th>
+                                        <th>2018</th>
+                                        <th>2019</th>
+                                        <th>2020</th>
+                                        <th>Amount Limit in tones</th>
+                                        <th>2018</th>
+                                        <th>2019</th>
+                                        <th>2020</th>
+                                        <th>Amount Limit in tones</th>
                                     </tr>
-                                </ng-template>
-                            </p-table>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let legalData of SVT_table">
+                                        <td>{{legalData.spec_id}}</td>
+                                        <td>{{legalData.Lv_2018}}</td>
+                                        <td>{{legalData.Lv_2019}}</td>
+                                        <td>{{legalData.Lv_2020}}</td>
+                                        <td>{{legalData.Lv_Amount}}</td>
+                                        <td>{{legalData.TE_2018}}</td>
+                                        <td>{{legalData.TE_2019}}</td>
+                                        <td>{{legalData.TE_2020}}</td>
+                                        <td>{{legalData.TE_Amount}}</td>
+                                        <td>{{legalData.inic_component}}</td>
+                                        <td>{{legalData.AN_2018}}</td>
+                                        <td>{{legalData.AN_2019}}</td>
+                                        <td>{{legalData.AN_2020}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="1"><b>Total</b></td>
+                                        <td colspan="4">
+                                            <p class="spec-toggle"><b>1,999,998,0000</b></p>
+                                        </td>
+                                        <td colspan="4">
+                                            <p class="spec-toggle"><b>2</b></p>
+                                        </td>
+                                        <td colspan="4">
+                                            <p class="spec-toggle"><b>1</b></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-
-                    </div>
-<br>
-                        <!-- SVT Legal Composition -->
-                        <div class="row">
-                        <div class="col-md-12" *ngIf="subCompositionLevel">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5><b>SVT Substance Details</b></h5>
-                                    </div>
-                                <div class="col-md-6">
-                                    <button (click)="exportToSVTTableExcel()" class="btn btn-success pull-right">Export To Excel</button> 
-                                </div>
-                            </div>
-                            <br>
-                           
-                          
-                                <div class="table-responsive" #SVTtable>
-                                    <div class="table-responsive" id="sailorTableArea">
-                                        <table id="sailorTable" class="table table-striped table-bordered" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="1"
-                                                        style="background-color:  #a0a3e0;color:#fff !important;">
-                                                        Scenario</th>
-                                                    <th colspan="4"
-                                                        style="background-color: #ebc3db;color:#fff !important;">SVT LV
-                                                    </th>
-                                                    <th colspan="4"
-                                                        style="background-color: #c7e2bb;color:#fff !important;">SVT TE
-                                                    </th>
-                                                    <th colspan="4"
-                                                        style="background-color: rgb(235, 195, 65);color:#fff !important;">
-                                                        SVT AN</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>Pure Spec ID</th>
-                                                    <th>2018</th>
-                                                    <th>2019</th>
-                                                    <th>2020</th>
-                                                    <th>Amount Limit in tones</th>
-                                                    <th>2018</th>
-                                                    <th>2019</th>
-                                                    <th>2020</th>
-                                                    <th>Amount Limit in tones</th>
-                                                    <th>2018</th>
-                                                    <th>2019</th>
-                                                    <th>2020</th>
-                                                    <th>Amount Limit in tones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let legalData of SVT_table">
-                                                    <td>{{legalData.spec_id}}</td>
-                                                    <td>{{legalData.Lv_2018}}</td>
-                                                    <td>{{legalData.Lv_2019}}</td>
-                                                    <td>{{legalData.Lv_2020}}</td>
-                                                    <td>{{legalData.Lv_Amount}}</td>
-                                                    <td>{{legalData.TE_2018}}</td>
-                                                    <td>{{legalData.TE_2019}}</td>
-                                                    <td>{{legalData.TE_2020}}</td>
-                                                    <td>{{legalData.TE_Amount}}</td>
-                                                    <td>{{legalData.inic_component}}</td>
-                                                    <td>{{legalData.AN_2018}}</td>
-                                                    <td>{{legalData.AN_2019}}</td>
-                                                    <td>{{legalData.AN_2020}}</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="1"><b>Total</b></td>
-                                                    <td colspan="4">
-                                                        <p class="spec-toggle"><b>1,999,998,0000</b></p>
-                                                    </td>
-                                                    <td colspan="4">
-                                                        <p class="spec-toggle"><b>2</b></p>
-                                                    </td>
-                                                    <td colspan="4">
-                                                        <p class="spec-toggle"><b>1</b></p>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                      </div>
                     </div>
                 </div>
             </div>
 
+        </div>
 
+        <div *ngIf="flowDiagrams">
 
-            <div *ngIf="flowDiagrams">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h6 class="text-default font-weight-semibold mb-2 ">Manufacturing Flow Diagram: <i
-                                    class="fa fa-info-circle" role="button"
-                                    title="This data is from Document on Shared Drive - P"></i> <span
-                                    class="img-down"><a
-                                        href="../../assets/images/momentive/ManufracturingFlowDiagram.png"
-                                        class="btn btn-primary btn-sm" target="_self" download>Download</a></span></h6>
-                            <div class="img-content">
-                                <img src="../../assets/images/momentive/ManufracturingFlowDiagram.png" width="80%">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h6 class="text-default font-weight-semibold mb-2 ">Synthesis Diagram: <i
-                                    class="fa fa-info-circle" role="button"
-                                    title="This data is from Document on Shared Drive - P"></i><span class="img-down"><a
-                                        href="../../assets/images/momentive/SynthesisDiagram.png"
-                                        class="btn btn-primary btn-sm" target="_self" download>Download</a></span></h6>
-                            <div class="img-content">
-                                <img src="../../assets/images/momentive/SynthesisDiagram.png"></div>
-                        </div>
-                    </div>
+            <span *ngIf="ProductComplianceLoader">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </span>
+
+            <span *ngIf="pihAlertMessage">
+                <h5 class="loader-text">No Data Found..</h5>
+            </span>
+
+         <div  *ngIf="!ProductComplianceLoader && !pihAlertMessage">
+             
+            <div class="row" *ngIf="ManufractureDiagramPart">
+                <div class="col-md-12">
+                    <h6 class="text-default font-weight-semibold mb-2 ">Manufacturing Flow Diagram: <i
+                            class="fa fa-info-circle" role="button"
+                            title="This data is from Document on Shared Drive - P"></i></h6>
+                    <table>
+                        <thead>
+                            <th style="width:5%">S.No</th>
+                            <th>Specification Id</th>
+                            <th>Product Name</th>
+                            <th style="width:50%">File Name</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of ManufractureDiagram;let i =index">  
+                                <td>{{i+1}}</td>
+                                <td>{{data.spec_Id}}</td>
+                                <td>{{data.product}}</td>
+                                <td><a href="{{data.file_Path}}"
+                                        target="_blank">{{data.file_Path}}</a></td>
+                                <td class="potential-btn">
+                                    <button class="docs-btn"><i class="fa fa-eye" title="preview">
+                                        <a href="{{data.file_Path}}"
+                                        target="_blank">Preview</a> </i> </button> &nbsp;
+                                    <button class="docs-btn"> <i class="fa fa-share" title="download">
+                                        <a href="{{data.file_Path}}"
+                                        download>download</a></i></button> &nbsp;
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="clearfix"></div>
+            <br>
+
+            <div class="row" *ngIf="SynthesisDiagramPart">
+                <div class="col-md-12">
+                    <h6 class="text-default font-weight-semibold mb-2 ">Synthesis Diagram: <i class="fa fa-info-circle"
+                            role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                    <table>
+                        <thead>
+                            <th style="width:5%">S.No</th>
+                            <th>Specification Id</th>
+                            <th>Product Name</th>
+                            <th style="width:50%">File Name</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of SynthesisDiagram;let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.spec_Id}}</td>
+                                <td>{{data.product}}</td>
+                                <td><a href="{{data.file_Path}}"
+                                        target="_blank">{{data.file_Path}}</a></td>
+                                <td class="potential-btn">
+                                    <button class="docs-btn"><a href="{{data.file_Path}}"
+                                        target="_blank"></a><i class="fa fa-eye" title="preview">
+                                            Preview</i> </button> &nbsp;
+
+
+                                    <button class="docs-btn"> <a href="{{data.file_Path}}"
+                                        download ></a><i class="fa fa-share" title="download">
+                                            download</i></button> &nbsp;
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+        </div>
+        <div class="clearfix"></div>

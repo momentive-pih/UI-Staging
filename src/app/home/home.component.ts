@@ -209,7 +209,6 @@ export class HomeComponent implements OnInit {
     // this.onChangeProductAttribute(this.radioItem);
     this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
     setTimeout(() => {
-      alert('entry')
       this.momentiveService.callMethodOfSecondComponent(this.radioItem);
     }, 0);
   } else if ( this.modalValue === 'complianceModal') {
@@ -311,7 +310,6 @@ MouseModalBox(id: any, data: any) {
           $(this.openId).modal('show');
        }, 100);
        if (index === 0){
-         alert('1ityir');
         const Item = 'Basic Information'
         this.selectItem(index, ModalBoxId, Item);
        }

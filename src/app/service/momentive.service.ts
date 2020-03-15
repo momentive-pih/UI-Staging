@@ -79,7 +79,7 @@ export class MomentiveService {
 
  //ProductAttributes
   getProductAttributes(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "productAttributes/postProductAttributes",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postProductAttributes",data);
   }
 
   //ProductCompliance

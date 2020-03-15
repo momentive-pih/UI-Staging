@@ -24,43 +24,45 @@ export class UnassignedDocumentsComponent implements OnInit {
   documentCategory: any;
   documentCategorySection = false;
   productIdFilter: any
-  ontologyServiceDetails:any=[]
-  selectedSpecList:any=[]
+  unassignedDocument:boolean = true;;
+  keyDocuments: any =[];
+  alertText: any;
+  ontologyServiceDetails:any = [];
+  selectedSpecList:any = [];
+  ontologyassignedDocument:boolean = true;
+  ontologyAlertDocument:boolean = false;
 
 
 
   constructor(private route: ActivatedRoute,
               private router: Router, private momentiveService: MomentiveService) {
+
+                this.momentiveService.homeEvent.subscribe(data => {
+                  this.ngOnInit();
+                });
                }
 
   ngOnInit() {
 
     this.ontologyServiceDetails =[];
+    this.selectedSpecList = this.momentiveService.getCategorySpecList();
+    console.log(this.selectedSpecList);
     this.ontologyServiceDetails.push({
       'Category_details' : { Category: "ontology", Subcategory: "unassigned"}
     });
       console.log(this.ontologyServiceDetails)
+      this.ontologyassignedDocument = true;
       this.momentiveService.getOntologyDocumentss(this.ontologyServiceDetails).subscribe(data => {
         console.log(data);
       this.ontologyFileDocuments = data;
+      if(this.ontologyFileDocuments.length > 0) {
+        this.ontologyassignedDocument = false;
+      } 
       console.log(this.ontologyFileDocuments);
     }, err => {
       console.error(err);
     });
 
-
-
-
-      // tslint:disable-next-line: align
-        this.momentiveService.getOntologyDocuments().subscribe(data => {
-        this.ontologyFileDocuments = data;
-        this.PDfOntology = this.ontologyFileDocuments.ontology_Unassigneddocuments;
-        this.PDfOntology = this.PDfOntology.filter((element: { productName: any; }) => (element.productName === 'Unassigned'));
-        console.log(this.PDfOntology);
-        // tslint:disable-next-line: max-line-length
-      }, err => {
-        console.error(err);
-      });
 
       $("a.collapsed").click(function(){
         $(this).find(".btn:contains('answer')").toggleClass("collapsed");
@@ -69,16 +71,16 @@ export class UnassignedDocumentsComponent implements OnInit {
   }
 
 
- ontologyDocuments(id: any, categeory: any) {
+  ontologyUnassignedDocuments(id: any, categeory: any, productName: any) {
    console.log(id);
    const navigationExtras: NavigationExtras = {
     queryParams: {
       'document_id' : id,
       'category_Name': categeory,
-      'Product_Name': 'Unassigned'
+      'Product_Name': productName
     }
   };
-   this.router.navigate(['ontology/unassigned-details-documents'], navigationExtras);
+  this.router.navigate(['ontology/unassigned-details-documents'], navigationExtras);
  }
 
 

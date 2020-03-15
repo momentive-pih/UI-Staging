@@ -10,3 +10,23 @@
     margin: 3px;
     cursor: pointer;
 }
+.link-data{
+  color:#007ad9;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.result-text{
+  font-size:12px;
+}
+.back-btn{
+float:right;
+cursor: pointer;
+}
+.btn-back{
+    background-color: #1a355e !important;
+    border: 0px;
+    padding: 5px;
+    margin: 3px;
+    cursor: pointer;
+    color:#fff;
+}

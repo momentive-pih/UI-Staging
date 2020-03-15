@@ -42,6 +42,7 @@ export class SalesVolumeComponent implements OnInit {
     salesInformationDetails:any=[];
     salesDataproducts:any=[];
     salesInformationLoader:boolean = true;
+    pihAlertMessage:boolean;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -86,17 +87,18 @@ export class SalesVolumeComponent implements OnInit {
 
 
        this.saleDataHead = [
-        { "field": "Basic data", "header": "Basic Data" },
-        { "field": "Specid", "header": "Specification ID" },
-        { "field":"Material description" ,"header": "Material Description"},
-        { "field": "Material number", "header": "Material Number" },
-        { "field": "Past Sales", "header": "Past Sales" },
-        { "field": "Region where sold", "header": "Region where sold" },
-        { "field":"Sales Org", "header":"Sales Org"}
+        { "field": "basic_data", "header": "Basic Data" },
+        { "field": "spec_id", "header": "Specification ID" },
+        { "field":"material_description" ,"header": "Material Description"},
+        { "field": "material_number", "header": "Material Number" },
+        { "field": "past_Sales", "header": "Past Sales" },
+        { "field": "region_sold", "header": "Region where sold" },
+        { "field": "sales_Org", "header":"Sales Org"}
       ]
     }
 
   salesInformationPage() {
+    this.salesInformationLoader = true;
     this.salesInformationDetails =[];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     console.log(this.selectedSpecList);
@@ -108,11 +110,18 @@ export class SalesVolumeComponent implements OnInit {
     });
     console.log(this.salesInformationDetails)
     this.momentiveService.getSalesInformation(this.salesInformationDetails).subscribe(data => {
-      this.salesInformationLoader = false;
       console.log(data);
       this.productdata = data;
-       this.salesDataproducts =  this.productdata.saleDataProducts; 
-       console.log(this.salesDataproducts);
+      if(this.productdata.length > 0){
+        this.salesInformationLoader = false;
+        this.pihAlertMessage = false;
+        this.salesDataproducts =  this.productdata[0].saleDataProducts; 
+        console.log(this.salesDataproducts);
+      } else {
+        this.pihAlertMessage = true;
+        this.salesInformationLoader = false;
+      }
+      
     }, err => {
       console.error(err);
     });
@@ -133,24 +142,25 @@ export class SalesVolumeComponent implements OnInit {
 
     customSort(event) {
       event.data.sort((data1, data2) => {
-          const value1 = data1[event.field];
-          const value2 = data2[event.field];
-          const result = null;
+          let value1 = data1[event.field];
+          let value2 = data2[event.field];
+          let result = null;
   
-          if (value1 == null && value2 != null) {
-              const result = -1;
-          } else if (value1 != null && value2 == null) {
-            const result = 1;
-          } else if (value1 == null && value2 == null) {
-            const result = 0;
-          } else if (typeof value1 === 'string' && typeof value2 === 'string') {
-            const  result = value1.localeCompare(value2);
-           } else {
-            const result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
-   }
+          if (value1 == null && value2 != null)
+              result = -1;
+          else if (value1 != null && value2 == null)
+              result = 1;
+          else if (value1 == null && value2 == null)
+              result = 0;
+          else if (typeof value1 === 'string' && typeof value2 === 'string')
+              result = value1.localeCompare(value2);
+          else
+              result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+  
           return (event.order * result);
       });
   }
+  
   
   onItemSelect(item: any) {
       console.log(item);
@@ -163,6 +173,27 @@ export class SalesVolumeComponent implements OnInit {
   }
   onDeSelectAll(items: any) {
       console.log(items);
+  }
+
+  mySort(event: any, field: string) {
+    event.data.sort((data1, data2) => {
+      let value1 = data1[event.field];
+      let value2 = data2[event.field];
+      let result = null;
+
+      if (value1 == null && value2 != null)
+          result = -1;
+      else if (value1 != null && value2 == null)
+          result = 1;
+      else if (value1 == null && value2 == null)
+          result = 0;
+      else if (typeof value1 === 'string' && typeof value2 === 'string')
+          result = value1.localeCompare(value2);
+      else
+          result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+
+      return (event.order * result);
+  });
   }
   
   }

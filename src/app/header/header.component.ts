@@ -15,6 +15,7 @@ import { Router, ActivatedRoute, NavigationStart, NavigationExtras} from '@angul
 import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import * as xlsx from 'xlsx';
 
 
 
@@ -147,7 +148,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   basicPropertiesLoader:any;
   public loading;
   notifier:any;
+  userSelectedProducts:any;
 
+  userCASFilter:any = {cas_Number:''};
+  userMaterialFilter: any = {material_Number:''};
+  userProductFilter:any = {prodIdentifiers:''};
 
     /** control for the selected bank for multi-selection */
     public bankMultiCtrl: FormControl = new FormControl();
@@ -166,9 +171,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('code', {
     static: false
   }) private codeRef?: ElementRef<HTMLElement>;
+
   @ViewChild('code', {
     static: true
   }) myselect: ElementRef;
+
+  @ViewChild('basicProduct', { static: false }) basicProduct: ElementRef;
+
+  @ViewChild('basicMaterial', { static: false }) basicMaterial: ElementRef;
+
+  @ViewChild('basicCas', { static: false }) basicCas: ElementRef;
+
   constructor(private fb: FormBuilder,public toastr: ToastrManager, vcr: ViewContainerRef,private route: ActivatedRoute, private router: Router, private homeService: HomeService, private momentiveService: MomentiveService) {
 
   
@@ -195,7 +208,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.url = window.location.href.includes('home');
     console.log(this.url);
 
-
+    this.fireEvent(event);
     // intialData_Details
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
@@ -225,507 +238,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.keyword = 'name';
     this.historyHeading = 'Recently selected';
 
-    this.copyproduct_type = [
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Product Attributes',
-        image: 'https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg',
-        modal_id: 'composition',
-        tab_modal: 'compositionModal'
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Product Complaince',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT',
-        modal_id: 'product_Compliance',
-        tab_modal: 'complianceModal'
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Customer Communication',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL',
-        modal_id: 'customerCommunication',
-        tab_modal: 'communicationModal'
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Restricted Substance',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-',
-        modal_id: 'restrictedSubstance',
-        tab_modal: 'restrictedSubstanceModal'
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Toxicology',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnge4Y9lv59WO3hYGJRSerUUSTG1FUWE4MNlFPaLu2CFOc0rsR',
-        modal_id: 'toxicology',
-        tab_modal: 'toxicologyModal'
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Sales Information',
-        image: 'https://flaptics.io/images/yu.png',
-        modal_id: 'sales_Information',
-        tab_modal: 'salesModal'
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Report Data',
-        image: 'https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt',
-        modal_id: 'report_Data',
-        tab_modal: 'reportModal'
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3',
-        id: 'LSR 2680FC A',
-        Name: 'Self Service Report',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSReXGibHOlD7Z5nNqD4d4V52CVMmi-fGUEKMH2HE7srV_SzNn_g',
-        modal_id: 'serviceReport',
-        tab_modal: 'serviceReportModal'
-      }];
-    this.copysidebarData = [
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Product Attributes',
-        image: 'https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg',
-        sales_tab: 'product_attribute',
-        modal_id: 'composition',
-        tab_modal: 'compositionModal',
-        tab_content: [
-          {
-            name: 'Basic Information',
-            id: 1,
-          },
-          {
-            name: 'GHS Labeling',
-            id: 2,
-          },
-          {
-            name: 'Structures and Formulas',
-            id: 3,
-          },
-          {
-            name: 'Composition',
-            id: 4,
-          },
-          {
-            name: 'Flow Diagrams',
-            id: 5,
-          }],
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Product Complaince',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT',
-        sales_tab: 'product_Compliance',
-        modal_id: 'product_Compliance',
-        tab_modal: 'complianceModal',
-        tab_content: [
-          {
-            name: 'Notification Status',
-            id: 1,
-          },
-          {
-            name: 'AG Registration Status',
-            id: 2,
-          }],
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Customer Communication',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL',
-        sales_tab: 'customerCommunication',
-        modal_id: 'customerCommunication',
-        tab_modal: 'communicationModal',
-        customer_name: 'OU EUROBIO LAB',
-        tab_content: [
-          {
-            name: 'US FDA Letter',
-            id: 1,
-          },
-          {
-            name: 'EU Food Contact',
-            id: 2,
-          },
-          {
-            name: 'Heavy Metals Composition',
-            id: 3,
-          },
-          {
-            name: 'Communication History',
-            id: 4,
-          }],
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Toxicology',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnge4Y9lv59WO3hYGJRSerUUSTG1FUWE4MNlFPaLu2CFOc0rsR',
-        sales_tab: 'toxicology',
-        modal_id: 'toxicology',
-        tab_modal: 'toxicologyModal',
-        tab_content: [
-          {
-            name: 'Study Title and Date',
-            id: 1,
-          },
-          {
-            name: 'Monthly Toxicology Study List',
-            id: 2,
-          },
-          {
-            name: 'Toxicology Summary',
-            id: 2,
-          },
-          {
-            name: 'Toxicology Registration Tracker',
-            id: 2,
-          }],
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Restricted Substance',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-',
-        sales_tab: 'restrictedSubstance',
-        modal_id: 'restrictedSubstance',
-        tab_modal: 'restrictedSubstanceModal',
-        tab_content: [
-          {
-            name: 'GADSL',
-            id: 1,
-          },
-          {
-            name: 'California Pro 65',
-            id: 2,
-          }],
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Sales Information',
-        image: 'https://flaptics.io/images/yu.png',
-        sales_tab: 'sales_Information',
-        modal_id: 'sales_Information',
-        tab_modal: 'salesModal',
-        tab_content: [
-          {
-            name: 'Sales Volume',
-            id: 1,
-          },
-          {
-            name: 'Location Details',
-            id: 2,
-          }],
-      },
-      {
-        product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-        id: 'LSR 2680FC A',
-        Name: 'Report Data',
-        image: 'https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt',
-        sales_tab: 'report_Data',
-        modal_id: 'report_Data',
-        tab_modal: 'reportModal',
-        tab_content: [
-          {
-            name: 'Relesed Documents',
-            id: 1,
-          }],
-      }];
-    this.copylegalCompositionData = [
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002925',
-        CAS_Number: '68083-19-2',
-        Component_Name: [
-          {
-            cas_name: 'Decamethylcyclopentasiloxane',
-            iupac_name: 'Cyclopentasiloxane, decamethyl-',
-            INCI_Name: ['CYCLOPENTASILOXANE'],
-          }],
-        Value: '86%'
-      },
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002670',
-        CAS_Number: '556-67-2',
-        Component_Name: [
-          {
-            cas_name: 'Octamethylcyclotetrasiloxane',
-            iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-            INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-          }],
-        Value: '14%'
-      }];
-    this.copyhunderedCompositionData = [
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002766',
-        CAS_Number: '68083-19-2',
-        Component_Name: [
-          {
-            cas_name: 'Slica',
-            iupac_name: 'Slica',
-            INCI_Name: ['slica', 'SOLUM DIATOMEAE'],
-          }],
-        Value: '29.85%'
-      },
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002652',
-        CAS_Number: '999-97-3',
-        Component_Name: [
-          {
-            cas_name: 'Hexamethyldisilazane',
-            iupac_name: 'Silanamine 1,1,1-trimethyl-N-(trimethylsilyl)-',
-          }],
-        Value: '6.62%'
-      }, {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002932',
-        CAS_Number: '7691-02-3',
-        Component_Name: [
-          {
-            cas_name: 'Divinyltetramethyldisilazane',
-            iupac_name: '1,3-Divinyltetramethyldisilazane',
-          }],
-        Value: '1.24%'
-      }, {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002670',
-        CAS_Number: '556-67-2',
-        Component_Name: [
-          {
-            cas_name: 'Octamethylcyclotetrasiloxane',
-            iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-            INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-          }],
-        Value: '0.12%'
-      }, {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000003091',
-        CAS_Number: '2627-95-4',
-        Component_Name: [
-          {
-            cas_name: 'Divinyltetramethyldisiloxane',
-            iupac_name: 'DISILOXANE, 1,3-DIETHINYL-1,1,3,3-TETRAMETHYL-',
-          }],
-        Value: '0.12%'
-      }, {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002678',
-        CAS_Number: '2554-06-5',
-        Component_Name: [
-          {
-            cas_name: 'Cyclotetrasiloxane, 2,4,6,8-tetraethenyl-2,4,6,8-tetramethyl-',
-            iupac_name: 'CYCLOTETRASILOXANE, 2,4,6,8-TETRAETHYLENE-2,4,6,8-TETRAMETHYL-',
-          }],
-        Value: '0.53%'
-      }];
-    this.copystandardCompositionData = [
-      {
-        ComponentType: 'Active ingredient',
-        Component_Id: '000000002925',
-        CAS_Number: '68083-19-2',
-        Component_Name: [
-          {
-            cas_name: 'Decamethylcyclopentasiloxane',
-            iupac_name: 'Cyclopentasiloxane decamethyl-',
-            INCI_Name: ['CYCLOPENTASILOXANE'],
-          }],
-        Value: '84.06%'
-      },
-      {
-        ComponentType: 'Impurity',
-        Component_Id: '000000002681',
-        CAS_Number: '70131-67-8',
-        Component_Name: [
-          {
-            cas_name: 'Siloxanes and Silicones, di-Me hydroxy terminated',
-            iupac_name: 'Dimethylpolysiloxane',
-          }],
-        Value: '15%'
-      }, {
-        ComponentType: 'Impurity',
-        Component_Id: '000000003060',
-        CAS_Number: '540-97-6',
-        Component_Name: [
-          {
-            cas_name: 'Dodecamethylcyclohexasiloxane',
-            iupac_name: 'Cyclohexasiloxane Dodecamethyl-',
-            INCI_Name: ['CYCLOHEXASILOXANE'],
-          }],
-        Value: '2.1%'
-      }, {
-        ComponentType: 'Impurity',
-        Component_Id: '000000002932',
-        CAS_Number: '556-67-2',
-        Component_Name: [
-          {
-            cas_name: 'Octamethylcyclotetrasiloxane',
-            iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-            INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-          }],
-        Value: '0.704 %'
-      }];
-    this.CopycommunicationHistoryData = [
-      {
-        case_number: '68083-19-2',
-        first_level: 'Product/Material Information',
-        second_level: 'Customer Product Quality Questionnaires',
-        manufacturing_plant: '-',
-        material_description: '-',
-        material_number: '-',
-        tier_owner: '-',
-        customer_name: 'OU EUROBIO LAB',
-        bu: 'Specialty Fluids.',
-        product_name: 'LSR2050A - US Made',
-        topic: 'Customer Product Quality Questionnaires',
-        email_Content: [
-          {
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            iupac_name: 'Slica8',
-            attached_docs: 'LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH',
-            text_body: 'Dear Sender, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-          },
-          {
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-            text_body: 'Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-          },
-          {
-            contact_email: 'dmitri.zagorski@eurobiolab.ee',
-            case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-            attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-            text_body: 'Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves.',
-          }],
-      },
-      {
-        case_number: '140641',
-        first_level: 'Product/Material Information',
-        second_level: 'Customer Product Quality Questionnaires',
-        manufacturing_plant: '-',
-        material_description: '-',
-        material_number: '-',
-        tier_owner: '-',
-        customer_name: 'Bang & Bonsomer LLC Moscow',
-        bu: 'Elastomers',
-        product_name: 'LSR2003A',
-        topic: 'Regulatory Information - National or Regional Inventories',
-        email_Content: [{
-          contact_email: 'dmitri.zagorski@eurobiolab.ee',
-          attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-          case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-          text_body: 'Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-        }]
-      },
-      {
-        case_number: '140643',
-        first_level: 'Product/Material Information',
-        second_level: 'Customer Product Quality Questionnaires',
-        manufacturing_plant: '-',
-        material_description: '-',
-        material_number: '-',
-        tier_owner: '-',
-        customer_name: 'ART COSMETICS SRL VIA E.',
-        bu: 'Electronic Materials.',
-        product_name: 'LSR2003B',
-        topic: 'Regulatory Information - Sustainability',
-        email_Content: [{
-          contact_email: 'dmitri.zagorski@eurobiolab.ee',
-          attached_docs: 'Silsoft 840 Manufacturing flow diagram',
-          case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-          text_body: 'This is perfect newtexts. Please fill Vegan declaration that was attached in previous email Lugupidamisega / Best regards / С уважением, Dmitri Zagorski Head of Purchasing Department Tel: +3726120121 Mob:+372 58 181807 Skype ost.eurobiolab',
-        }]
-      },
-      {
-        case_number: '140644',
-        first_level: 'Product/Material Information',
-        second_level: 'Customer Product Quality Questionnaires',
-        manufacturing_plant: '-',
-        material_description: '-',
-        material_number: '-',
-        tier_owner: '-',
-        customer_name: 'Azelis Australia Pty LTd.',
-        bu: 'Basics.',
-        product_name: 'LSR2050B - US Made',
-        topic: 'Regulatory Information - Sustainability',
-        email_Content: [{
-          contact_email: 'dmitri.zagorski@eurobiolab.ee',
-          attached_docs: 'LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH',
-          case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-          text_body: 'striving to improve service to its customers. In order to do this, we would like to ask you to always contact the Commercial Services Center first in case of a request/inquiry.',
-        }]
-      },
-      {
-        case_number: '140645',
-        first_level: 'Product/Material Information',
-        second_level: 'Customer Product Quality Questionnaires',
-        manufacturing_plant: '-',
-        material_description: '-',
-        material_number: '-',
-        tier_owner: '-',
-        customer_name: 'AZELIS CANADA INC.',
-        bu: 'Urethane Additives.',
-        product_name: 'LSR2060A - US Made',
-        topic: 'Regulatory Information - National or Regional Inventories',
-        email_Content: [{
-          contact_email: 'dmitri.zagorski@eurobiolab.ee',
-          case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-          attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-          text_body: 'Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves.',
-        }]
-      },
-      {
-        case_number: '00116026',
-        first_level: '	Regulatory Information - Animal Testing',
-        second_level: 'Customer Product Quality Questionnaires',
-        manufacturing_plant: '-',
-        material_description: '-',
-        material_number: '-',
-        tier_owner: '-',
-        customer_name: 'Bang & Bonsomer PJC.',
-        bu: 'Sealants.',
-        product_name: 'Silsoft* ETS',
-        topic: 'Regulatory Information - National or Regional Inventories',
-        email_Content: [{
-          contact_email: 'dmitri.zagorski@eurobiolab.ee',
-          case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-          text_body: 'Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.',
-          attached_docs: 'TIR Silwet 408 lot 17ESVX180',
-        }]
-      },
-      {
-        case_number: '00116027',
-        first_level: '	Regulatory Information - Animal Testing',
-        second_level: 'Customer Product Quality Questionnaires',
-        manufacturing_plant: '-',
-        material_description: '-',
-        material_number: '-',
-        tier_owner: '-',
-        customer_name: 'Bang & Bonsomer PJC.',
-        bu: 'Sealants.',
-        product_name: 'Silsoft* A-843 conditioning agent',
-        topic: 'Regulatory Information - National or Regional Inventories',
-        email_Content: [{
-          contact_email: 'dmitri.zagorski@eurobiolab.ee',
-          attached_docs: 'TIR Silwet 408 lot 17ESVX180',
-          case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-          text_body: 'Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.',
-        }]
-      },];
 
 
     this.dropdownSettings = {
@@ -797,7 +309,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.searchDataLength > 2 && Isfirst) {
       this.loading = true
       this.momentiveService.getAllEvents(this.SearchProducts).subscribe(data => {
-        if (data) {
+        if (data.length > 0) {
           this.loading = false;
           console.log('inside', data.concat([]));
           this.product_Name = data;
@@ -806,19 +318,21 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
               this.ProductDrop.push(element.type);
             }
           });
-          console.log(this.searchTerm);
-
-           if(this.searchTerm.includes("*")) {
-            const searchTermNew = this.searchTerm.split('*');
-            this.searchTextTerms = searchTermNew[1];
-            console.log(this.searchTextTerms);
-           }
-        
+               console.log(this.searchTerm);
+              if(this.searchTerm.includes("*")) {
+              const searchTermNew = this.searchTerm.split('*');
+              this.searchTextTerms = searchTermNew[1];
+              console.log(this.searchTextTerms);
+            } 
+            else {
+              this.searchTextTerms = null;
+            }
+          
           this.items$ = this.product_Name.filter((product_Name) => {
             return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
              product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
-             product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
-             product_Name.name.toLowerCase().startsWith(this.searchTextTerms.toLowerCase());
+             product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+             product_Name.name.toLowerCase().startsWith(this.searchTextTerms) 
           });
         } 
       }, err => {
@@ -904,19 +418,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       this.getIntialSpecList(this.selectedSearchText);
     }
-    //Basic Details API
-    // this.momentiveService.getBasicProperties(data).subscribe(data => {
-    //   this.basicProperties = data;
-    //   console.log(this.basicProperties);
-    //   this.productLevel = this.basicProperties[0].productLevel;
-    //   console.log(this.productLevel);
-    //   this.MaterialLevel = this.basicProperties[1].MaterialLevel;
-    //   console.log(this.MaterialLevel);
-    //   this.casLevel = this.basicProperties[2].CasLevel;
-    //   console.log(this.casLevel);
-    // }, err => {
-    //   console.error(err);
-    // });
+ 
   }
   clearCheck() {
     this.product_Name = [];
@@ -944,8 +446,15 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   fireEvent(event) {
     if (event === 'productDetails') {
       $('#basicDetails').modal('show');
+
+      this.productLevel = [];
+      this.MaterialLevel = [];
+      this.casLevel = [];
       this.basicPropertiesLoader = [];
-      this.userSelectedSPECDetails =this.momentiveService.categorySelectedSPECList;
+      this.userSelectedProducts = this.momentiveService.selectedProduct
+      this.momentiveService.getSpecList(this.userSelectedProducts).subscribe(data => {
+        console.log(data)
+      this.userSelectedSPECDetails = data;
       this.momentiveService.getBasicProperties(this.userSelectedSPECDetails).subscribe(data => {
       this.basicProperties = data;
       if(this.basicProperties.length > 0) {
@@ -960,7 +469,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       }, err => {
         console.error(err);
       });
-    }
+    });
+  } 
   }
   Ongtology() {
     this.router.navigate(['/app-ontology-home']);
@@ -1014,7 +524,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   
   selectAll(checkAll, select, values) {
-    alert('dddd')
     //this.toCheck = !this.toCheck;
     if(checkAll){
       select.update.emit(values); 
@@ -1028,7 +537,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.bankMultiCtrl.value);
     this.sideSpecList = this.bankMultiCtrl.value[0];
     console.log(this.sideSpecList);
-    this.momentiveService.homeEvent.next();
+     this.momentiveService.homeEvent.next();
      this.momentiveService.setSelectedProductData(this.sideSpecList);
      this.momentiveService.setCategorySpecList(this.bankMultiCtrl.value);
      this.toastr.successToastr('Specification ID Selected.', 'Success!');
@@ -1086,4 +595,28 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
     );
   }
+
+
+  exportToBasicProductTable() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.basicProduct.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'Product-Level.xlsx');
+   }
+   exportToBasicMaterialLevel() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.basicMaterial.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'Material-Level.xlsx');
+   }
+
+   exportToBasicCasLevel() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.basicCas.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'CAS-Level.xlsx');
+   }
 }
