@@ -369,3 +369,28 @@ color:#fff;
   text-decoration: none;
   color: #fff;
 }
+
+.ptable-size{
+  font-size: 12px;
+  width: 20%;
+  white-space: initial;
+  word-break: break-word;
+}
+.ptable-head{
+font-size: 12px;
+font-weight: 600;
+width: 20%;
+white-space: initial;
+}
+
+
+.docs-btn a{
+  color: #ffffff;
+  background-color: #1a355e;
+  border-color: #cccccc;
+  padding:5px;
+}
+.mat-act {
+  height: 200px;
+  overflow-y: scroll;
+}

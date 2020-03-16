@@ -309,10 +309,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.searchDataLength > 2 && Isfirst) {
       this.loading = true
       this.momentiveService.getAllEvents(this.SearchProducts).subscribe(data => {
+        console.log(data);
         if (data.length > 0) {
-          this.loading = false;
           console.log('inside', data.concat([]));
           this.product_Name = data;
+          this.loading = false;
           this.product_Name.forEach(element => {
             if (this.ProductDrop.indexOf(element.type) == -1) {
               this.ProductDrop.push(element.type);
@@ -324,9 +325,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
               this.searchTextTerms = searchTermNew[1];
               console.log(this.searchTextTerms);
             } 
-            else {
-              this.searchTextTerms = null;
-            }
+            
           
           this.items$ = this.product_Name.filter((product_Name) => {
             return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
@@ -334,7 +333,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
              product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
              product_Name.name.toLowerCase().startsWith(this.searchTextTerms) 
           });
-        } 
+        } else {
+          this.product_Name =[];
+          this.loading = false;
+          this.items$ = this.product_Name.filter((product_Name) => {
+            return product_Name.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+             product_Name.type.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
+             product_Name.key.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+             product_Name.name.toLowerCase().includes(this.searchTextTerms) 
+          });
+        }
       }, err => {
         console.log(err);
       })

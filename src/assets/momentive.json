@@ -1690,13 +1690,7 @@
           }],
 
            
-        "toxicologyStudyHead" : [
-          { "field": "product_Name", "header": "product Name" },
-          { "field": "ELA", "header": "ELA #" },
-          { "field": "test_description", "header": "Test Article Describtion" },
-          { "field": "study_Title", "header": "Study Title" },
-          { "field":"final_Report", "header":"Final Report Date"}
-        ],
+   
         
         
         "toxicologyStudyData" : [

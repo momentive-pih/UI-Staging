@@ -1424,7 +1424,9 @@ a.article, a.article:hover {
   }
 
 
-
+  #open {
+    display:none;
+}
 
 
 

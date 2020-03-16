@@ -87,10 +87,10 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
               private router: Router, private sanitizer: DomSanitizer,
               private momentiveService: MomentiveService) {
 
-                
                 this.momentiveService.homeEvent.subscribe(data => {
                   this.ngOnInit();
                 });
+
     this.reactiveForm = fb.group({
       Searchname: ['', Validators.required]
     });
@@ -119,11 +119,9 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
     });
 
     this.ontologyServiceDetails =[];
-    this.selectedSpecList = this.momentiveService.getCategorySpecList();
-    console.log(this.selectedSpecList);
     this.ontologyServiceDetails.push({
       'Spec_id': this.selectedSpecList,
-      'Category_details' : { Category: "ontology", Subcategory: "assigned"}
+      'Category_details' : { Category: "ontology", Subcategory: "unassigned"}
     });
       console.log(this.ontologyServiceDetails)
 
@@ -161,14 +159,7 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
       console.log(this.filename);
       console.log(this.productName);
       console.log(this.pdfUrl);
-
-      this.pdfSrc = 'https://clditdevstorpih.blob.core.windows.net/momentive-sources-pih/sharepoint-pih/toxicology-pih/studies-tox-team-pih/raw/-Y-12900' + this.pdfUrl;
-       this.Url = this.sanitizer.bypassSecurityTrustUrl(this.pdfSrc);
-
-      //  this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
-      //  this.file = new Blob([this.Url], {type: 'application/pdf'});
-      //  this.fileURL = URL.createObjectURL(this.file);
-      //  console.log(this.fileURL);
+       this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
        console.log(this.Url);
 });
 

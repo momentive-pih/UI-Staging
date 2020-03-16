@@ -61,6 +61,8 @@ export class ToxicologyComponent implements OnInit {
     toxicologySummaryData:any = [];
     toxicologyRegistrationTracker:any = [];
     registartion_Tracker_Data:any = [];
+    toxicologyStudyDataHead:any = [];
+    toxicologyMonthlyDataCheck:any =[];
 
   selectedMonthlyToxicologyType: string = "sealant";
   selectedmonthlytoxicologyControl = new FormControl(this.selectedMonthlyToxicologyType);
@@ -100,40 +102,16 @@ export class ToxicologyComponent implements OnInit {
       }, err => {
         console.error(err);
       });
-// toxicologyStudyHead
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.toxicologyStudyHead = this.productdata.toxicologyStudyHead;
-    console.log(this.toxicologyStudyHead);
-  }, err => {
-    console.error(err);
-  });
-  // toxicologyStudyData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.toxicologyStudyData = this.productdata.toxicologyStudyData;
-    console.log(this.toxicologyStudyData);
-  }, err => {
-    console.error(err);
-  });
-  // toxicologyMonthlyHeader
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.toxicologyMonthlyHeader = this.productdata.toxicologyMonthlyHeader;
-    console.log(this.toxicologyMonthlyHeader);
-  }, err => {
-    console.error(err);
-  });
-  // toxicologyMonthlyData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productdata = data;
-    this.toxicologyMonthlyData = this.productdata.toxicologyMonthlyData;
-    console.log(this.toxicologyMonthlyData);
-  }, err => {
-    console.error(err);
-  });
 
-   
+
+   this.toxicologyStudyDataHead =[
+    { "field": "product_Name", "header": "product Name" },
+    { "field": "ELA", "header": "ELA #" },
+    {" field":"spec_Id","header": "SPecification ID"},
+    { "field": "test_Description", "header": "Test Article Describtion" },
+    { "field": "study_Title", "header": "Study Title" },
+    { "field":"final_Report", "header":"Final Report Date"}
+  ],
         
   this.toxicologyMonthlysilaneHeader = [
     { "field": "spec_Id", "header": "Specification ID" },
@@ -172,6 +150,8 @@ export class ToxicologyComponent implements OnInit {
       this.toxicolgyLoader = true;
       this.productdata = data;
       if (this.productdata.length > 0) {
+        this.toxicologyStudyHead = this.toxicologyStudyDataHead;
+        this.toxicologyStudyData = this.productdata;
         this.toxicolgyLoader = false;
         this.pihAlertMessage = false;
       } else {
@@ -201,13 +181,15 @@ export class ToxicologyComponent implements OnInit {
       if ( this.monthlyType === 'sealant') {
           this.toxicolgyLoader = true;
           this.productdata = data;
-        if (this.productdata.length > 0) {   
-          this.toxicolgyLoader = false;
-          this.pihAlertMessage = false;
-          this.monthlySelantHeader = this.toxicologyMonthlyselantHeader;
-          this.toxicologyMonthlyData = this.productdata[0].selant;
-          console.log(this.toxicologyMonthlyData);
-        } else {
+          this.toxicologyMonthlyDataCheck = this.productdata[0].selant;
+         if(this.toxicologyMonthlyDataCheck.length > 0) {
+        this.toxicolgyLoader = false;
+        this.pihAlertMessage = false;
+           this.monthlySelantHeader = this.toxicologyMonthlyselantHeader;
+           this.toxicologyMonthlyData = this.toxicologyMonthlyDataCheck;
+           console.log(this.toxicologyMonthlyData);
+        }
+       else {
           this.pihAlertMessage = true;
           this.toxicolgyLoader = false;
         }
@@ -215,13 +197,13 @@ export class ToxicologyComponent implements OnInit {
       } if ( this.monthlyType === 'silane') {
            this.toxicolgyLoader = true;
            this.productdata = data;
-        if (this.productdata.length > 0) {
-           this.toxicolgyLoader = false;
-           this.pihAlertMessage = false;
-           this.monthlySilaneHeader = this.toxicologyMonthlysilaneHeader;
-           this.toxicologyMonthlyData = this.productdata[0].silanes;
-           console.log(this.toxicologyMonthlyData);
-        } else {
+           this.toxicologyMonthlyDataCheck = this.productdata[0].silanes;
+           if(this.toxicologyMonthlyDataCheck > 0){
+            this.toxicolgyLoader = false;
+            this.pihAlertMessage = false;
+            this.monthlySilaneHeader = this.toxicologyMonthlysilaneHeader;
+            this.toxicologyMonthlyData = this.toxicologyMonthlyDataCheck;
+           } else {
            this.pihAlertMessage = true;
            this.toxicolgyLoader = false;
         }
@@ -251,10 +233,10 @@ export class ToxicologyComponent implements OnInit {
       console.log(data);
       this.toxicolgyLoader = true;
       this.productdata = data;
-      if (this.productdata[0].toxicology_Summary.length > 0) {
+      if (this.productdata.length > 0) {
         this.toxicolgyLoader = false;
         this.pihAlertMessage = false;
-        this.toxicologySummaryData = this.productdata[0].toxicology_Summary;
+        this.toxicologySummaryData = this.productdata;
         console.log(this.toxicologySummaryData);
       } else {
         this.pihAlertMessage = true;
@@ -281,10 +263,10 @@ export class ToxicologyComponent implements OnInit {
       console.log(data);
       this.toxicolgyLoader = true;
       this.productdata = data;
-      if (this.productdata[0].registartion_Tracker.length > 0) {
+      if (this.productdata.length > 0) {
         this.toxicolgyLoader = false;
         this.pihAlertMessage = false;
-        this.registartion_Tracker_Data = this.productdata[0].registartion_Tracker;
+        this.registartion_Tracker_Data = this.productdata;
         console.log(this.registartion_Tracker_Data);
       } else {
         this.pihAlertMessage = true;

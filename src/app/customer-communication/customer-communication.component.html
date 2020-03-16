@@ -73,9 +73,10 @@
                     <div class="col-md-6">
                         <label class="text-default font-weight-semibold">Document Panel</label>
                         <div>
-                            <embed class="food-document" alt="Thumbnail [200x250]"
-                               [src]="Url" type="application/pdf"
-                                style="width:550px; height:700px;">
+                                <embed class="food-document" alt="Thumbnail [200x250]"  style="width:550px; height:700px;"
+                                [src]="Url" type="application/pdf"
+                                >
+                        
                         </div>
                     </div>
 
@@ -261,20 +262,20 @@
 
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th style="width: 3em"></th>
-                            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                          
+                            <th class="ptable-head"*ngFor="let col of columns" [pSortableColumn]="col.field">
                                 {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
                             </th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                         <tr>
-                            <td>
+                            <!-- <td>
                                 <a href="#" [pRowToggler]="rowData">
                                     <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                 </a>
-                            </td>
-                            <td *ngFor="let col of columns">
+                            </td> -->
+                            <td class="ptable-size" *ngFor="let col of columns">
                                 {{rowData[col.field]}}
                             </td>
                         </tr>

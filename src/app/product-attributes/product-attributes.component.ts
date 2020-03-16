@@ -91,7 +91,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy{
   specDetails:any;
   objectKeys = Object.keys;
   subLevelData:any;
-  subCompositionLevel = false;
+  svtCompositionLevel = false;
   UserSelectedProducts:any =[];
   SelectedUserData:any;
   compositionSpecID = false;
@@ -126,6 +126,16 @@ ManufractureDiagramPart:boolean;
 SynthesisDiagramPart:boolean;
 ManufractureDiagramCheck:any=[];
 SynthesisDiagramCheck:any=[];
+PotentialApplicationDetails:any=[];
+potentialAPPData:boolean;
+
+productLevelDetails:any=[];
+allMaterialLevel:any =[];
+activeMaterial:any=[];
+firstSpecData:any;
+compositionlocations:any=[];
+compositionDataLevel:boolean
+compositionStandardData:any=[];
 
     /** control for the selected bank */
     public bankCtrl: FormControl = new FormControl();
@@ -147,24 +157,7 @@ SynthesisDiagramCheck:any=[];
 
   @ViewChild('StandardCompositiontable', { static: false }) StandardCompositiontable: ElementRef;
 
-
-
-
-  locations: any = [
-    {
-      name: "Public : Reg_world",
-    },
-    {
-      name: "Public : Reg_REACH",
-    },
-    {
-      name: "Europe",
-    },
-    {
-      name: "Canada",
-    }
-  ];
-
+  @ViewChild('LegalCompositiontable',{ static: false }) LegalCompositiontable: ElementRef;
 
   compositionsTypes: any =[
     {
@@ -176,13 +169,10 @@ SynthesisDiagramCheck:any=[];
       value:"legal"
     }
   ]
-  selectedlocation: string = "Public : Reg_world";
-  
-  selectedLocationControl = new FormControl(this.selectedlocation);
-
-  selectedComposition: string = "Standard, 100 % & INCI Composition";
-  
-  selectedCompositionControl = new FormControl(this.selectedComposition);
+  selectedlocation:any;
+  selectedComposition:any;
+  selectedLocationControl = new FormControl();
+  selectedCompositionControl = new FormControl();
 
 
 
@@ -205,8 +195,6 @@ SynthesisDiagramCheck:any=[];
 
     }
     ngOnInit() {
-
-     
 
       this.sales = [
         { 
@@ -315,7 +303,7 @@ SynthesisDiagramCheck:any=[];
       AN_Amount:'1.000',
     }
   ]
-
+  this.compositionDataLevel = false;
       // compositionPart
       this.momentiveService.getSearchData().subscribe(data => {
         this.productData = data;
@@ -350,32 +338,9 @@ SynthesisDiagramCheck:any=[];
   { "field": "hazard_Statements", "header": "Hazard Statements","width": "10%" },
   { "field":"prec_Statements", "header":"Prec Statements","width": "10%"}, 
   {"field":"additional_Information","header":"Additional Information / Remarks","width": "20%","white-space": "pre-wrap"}
-],
-
-  // legalCompositionHead
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.legalCompositionHead = this.productData.legalCompositionHead;
-    console.log(this.legalCompositionHead);
-  }, err => {
-    console.error(err);
-  });
-  // legalCompositionData
-      this.momentiveService.getSearchData().subscribe(data => {
-    this.productData = data;
-    this.legalCompositionData = this.productData.legalCompositionData;
-    console.log(this.legalCompositionData);
-  }, err => {
-    console.error(err);
-  });
-
-
-
+]
 
 }
-
-
-
 
 productAttributebasicDetail() {
   this.ProductComplianceLoader = true;
@@ -402,6 +367,12 @@ productAttributebasicDetail() {
       this.primaryBasicDetails = this.basicDetailsproducts[0].basic_details;
       console.log(this.primaryBasicDetails);
       this.primaryProductApplication = this.basicDetailsproducts[1].product_Application;
+      if(this.primaryProductApplication.length > 0) {
+        this.PotentialApplicationDetails = this.primaryProductApplication;
+        this.potentialAPPData = true;
+      } else {
+        this.potentialAPPData = false;
+      }
       console.log(this.primaryProductApplication);
     }
     else {
@@ -445,6 +416,30 @@ productAttributeGHSLabeling() {
   }, err => {
     console.error(err);
   });
+}
+
+productAttributeComposition(){
+  this.ProductComplianceLoader = true;
+  this.pihAlertMessage = false;
+  this.productAttributeAPIData =[];
+  this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  console.log(this.selectedSpecList);
+  this.CategoryDetails = { index: 3, Category: "Product Attributes", Subcategory: "Composition" }
+  console.log(this.CategoryDetails);
+  this.productAttributeAPIData.push({
+    'Spec_id': this.selectedSpecList,
+    'Category_details': this.CategoryDetails,
+  });
+  console.log(this.productAttributeAPIData)
+  this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+    console.log(data);
+    this.productData = data;
+    this.productLevelDetails =  this.productData[0].product_Level;
+    console.log(this.productLevelDetails);
+    this.allMaterialLevel =this.productData[0].all_material;
+    this.activeMaterial = this.productData[0].active_material
+  });
+
 }
 
 productAttributeStructureAndFormulas() {
@@ -576,6 +571,7 @@ onChangeProductAttribute(item) {
       this.flowDiagrams = false;
       this.userSelectedProducts = this.momentiveService.selectedProduct
       this.getIntialSpecList(this.userSelectedProducts);
+      this.productAttributeComposition();
 
     } else if (this.productAttributesCheck === 'Flow Diagrams') {
       this.primaryInformtionTypes = false;
@@ -592,19 +588,67 @@ compositionProcess(value) {
      if (this.compostionCheck === 'Legal Composition') {
       this.compositionLegalTypes = true;
       this.compositionSHI = false;
+      this.productAttributeAPIData =[];
+      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+      console.log(this.selectedSpecList);
+      this.CategoryDetails = { index: 0, Category: "Composition", Subcategory: "Legal Composition" }
+      this.productAttributeAPIData.push({
+        'Spec_id': this.selectedSpecList,
+        'Category_details': this.CategoryDetails,
+      });
+      console.log(this.productAttributeAPIData)
+      this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+        console.log(data);
+        this.productdata = data;
+        this.compositionlocations = this.productdata;
+        console.log(this.compositionlocations);
+      });
+
     } else if (this.compostionCheck === 'Standard, 100 % & INCI Composition') {
       this.compositionLegalTypes = false;
       this.compositionSHI = true;
+      this.productAttributeAPIData =[];
+      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+      this.CategoryDetails = { index: 0, Category: "Composition", Subcategory: "Standard, 100 % & INCI Composition"}
+      this.productAttributeAPIData.push({
+        'Spec_id': this.selectedSpecList,
+        'Category_details': this.CategoryDetails,
+      });
+      console.log(this.productAttributeAPIData)
+      this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+        console.log(data);
+        this.productdata = data;
+        this.compositionlocations= this.productdata;
+        console.log(this.compositionlocations);
+      });
     }
  
  }
+
   SubLevelComposition(value) {
+    this.productAttributeAPIData=[];
+    this.compositionDataLevel = true;
     console.log(value);
     this.subLevelData = value;
-    if(this.subLevelData === 'Public : Reg_REACH') {
-       this.subCompositionLevel = true;
+    this.selectedSpecList = this.firstSpecData;
+    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+    this.CategoryDetails = { Subcategory: this.compostionCheck, validity: this.subLevelData}
+    this.productAttributeAPIData.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details':  this.CategoryDetails
+    });
+    console.log(this.productAttributeAPIData);
+    this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+      console.log(data);
+      this.productdata = data;
+      this.compositionStandardData = this.productdata;
+      this.legalCompositionData = this.productdata.legal_composition;
+    });
+
+    if(this.subLevelData === 'Reg : Reg_REACH') {
+       this.svtCompositionLevel = true;
     } else {
-      this.subCompositionLevel = false;
+      this.svtCompositionLevel = false;
     }
 
 
@@ -676,7 +720,13 @@ getAddressData() {
     xlsx.writeFile(wb, 'StandardCompositiontable.xlsx');
    }
 
-
+   exportToLegalCompostionExcel(){
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.LegalCompositiontable.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'LegalCompositiontable.xlsx');
+   }
    //Composition Tab Functionality
 
      //SpecID Droopdownlist
@@ -689,6 +739,8 @@ getAddressData() {
     this.banks = this.SPECdropdownList;
    // set initial selection
    this.bankCtrl.setValue(this.banks[0]);
+
+   this.firstSpecData = this.bankCtrl.setValue(this.banks[0]);
    // load the initial bank list
    this.filteredBanks.next(this.banks.slice());
    // listen for search field value changes
@@ -726,6 +778,7 @@ ngAfterViewInit() {
       });
   }
 
+
   protected filterBanksMulti() {
     if (!this.banks) {
       return;
@@ -744,4 +797,6 @@ ngAfterViewInit() {
       this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
     );
   }
+
+
 }

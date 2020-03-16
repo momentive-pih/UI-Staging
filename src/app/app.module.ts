@@ -40,6 +40,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatSelectFilterModule } from 'mat-select-filter';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { SharedModule } from '../app/shared/shared.module';
+import { ImageViewerModule } from 'ng2-image-viewer';
 
 
 
@@ -90,6 +91,7 @@ import { SharedModule } from '../app/shared/shared.module';
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
+    ImageViewerModule,
     MatSelectModule,MatSelectFilterModule,MatIconModule,MatToolbarModule,
     NgMultiSelectDropDownModule.forRoot(),
     ToastrModule.forRoot(),

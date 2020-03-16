@@ -174,6 +174,7 @@ export class ProductComplianceComponent implements OnInit {
 
   productComplianceNotification() {
     this.ProductComplianceTabLoader = true;
+    this.pihAlertMessage = false;
     this.ProductComlianceDetails = [];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     console.log(this.selectedSpecList);
@@ -204,6 +205,7 @@ export class ProductComplianceComponent implements OnInit {
 
   productComplianceAgRegistration(locationValue) {
     this.ProductComplianceTabLoader = true;
+    this.pihAlertMessage = false;
     let locationBasedRegistration = locationValue;
     console.log(locationBasedRegistration);
     this.ProductComlianceDetails = [];
@@ -219,6 +221,7 @@ export class ProductComplianceComponent implements OnInit {
     this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
       if (locationBasedRegistration == 'EU') {
         this.ProductComplianceTabLoader = true;
+        this.pihAlertMessage = false;
         this.productdata = data;
         if (this.productdata[0].length > 0) {
           this.ProductComplianceTabLoader = false;
@@ -234,6 +237,7 @@ export class ProductComplianceComponent implements OnInit {
       }
       if (locationBasedRegistration == 'canada') {
         this.ProductComplianceTabLoader = true;
+        this.pihAlertMessage = false;
         this.productdata = data;
         if (this.productdata[0].complianceRegistrationCanada_Data.length > 0) {
           this.ProductComplianceTabLoader = false;
@@ -248,6 +252,7 @@ export class ProductComplianceComponent implements OnInit {
       }
       if (locationBasedRegistration == 'Latin') {
         this.ProductComplianceTabLoader = true;
+        this.pihAlertMessage = false;
         this.productdata = data;
         if (this.productdata[0].length > 0) {
           this.ProductComplianceTabLoader = false;

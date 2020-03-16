@@ -30,3 +30,15 @@ cursor: pointer;
     cursor: pointer;
     color:#fff;
 }
+.ptable-size{
+  font-size: 12px;
+  width: 20%;
+  white-space: initial;
+  word-break: break-word;
+}
+.ptable-head{
+font-size: 12px;
+font-weight: 600;
+width: 20%;
+white-space: initial;
+}

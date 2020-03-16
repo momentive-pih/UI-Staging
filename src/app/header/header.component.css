@@ -376,6 +376,17 @@ color:#fff;
   width: 100%;
   margin-bottom: 10px;
 }
-.syn-search{
+.syn-search {
   width: 50%;
+}
+.basic-TD {
+  width:30%;
+  font-size:12px;
+  word-wrap:none;
+  word-break: break-all;
+}
+.basic-head{
+  font-weight:bold;
+  font-size:14px;
+  word-break: break-all;
 }

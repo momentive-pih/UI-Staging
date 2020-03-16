@@ -45,8 +45,6 @@ export class UnassignedDocumentsComponent implements OnInit {
   ngOnInit() {
 
     this.ontologyServiceDetails =[];
-    this.selectedSpecList = this.momentiveService.getCategorySpecList();
-    console.log(this.selectedSpecList);
     this.ontologyServiceDetails.push({
       'Category_details' : { Category: "ontology", Subcategory: "unassigned"}
     });

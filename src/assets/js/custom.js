@@ -230,6 +230,36 @@ $(document).ready(function() {
         }
     }
     
+    // $('.fancybox').fancybox({
+ 
+    //     closeBtn    : false, // hide close button
+    //     closeClick  : false, // prevents closing when clicking INSIDE fancybox
+    //     helpers     : { 
+    //         // prevents closing when clicking OUTSIDE fancybox
+    //         overlay : {closeClick: false} 
+    //     },
+    //     keys : {
+    //         // prevents closing when press ESC button
+    //         close  : null
+    //     }
+    //    });
+
+
+
+       $("a.myselector").fancybox({
+        'overlayShow'   :   true,
+        'autoScale': true,
+        'autoDimensions': false,
+        'modal': true,
+        'type': 'iframe',
+        'autoSize' : false,
+        'width' : '90%',
+        'showCloseButton' : true,
+        afterShow : function() {
+            $('.fancybox-skin').append('<a title="Close" class="fancybox-item fancybox-close" href="javascript:jQuery.fancybox.close();"></a>');
+        }
+         
+    });
     $('[data-toggle="offcanvas"]').click(function () {
           $('#wrapper').toggleClass('toggled');
     });  
@@ -239,7 +269,7 @@ $(document).ready(function() {
     //     var height = $(window).height() - 200;
     //     $(this).find(".modal-body").css("max-height", height);
     //   });
-
+ 
 
   });
 

@@ -78,25 +78,25 @@ export class RestrictedSubstanceComponent implements OnInit {
 
 
     this.restrictedGASDLDataHeader = [
-      { "field": "substance", "header": "Substance", "width": "30%" },
-      { "field": "spec_Id", "header": "Specification ID", "width": "10%" },
-      { "field": "cas_NO", "header": "CAS RN", "width": "10%" },
-      { "field": "class_action", "header": "Class Sl FIC Action", "width": "10%" },
-      { "field": "reason_Code", "header": "Reason Code", "width": "10%" },
-      { "field": "source", "header": "Source(Legal Requirement Regulations)", "width": "20%" },
-      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)", "width": "20%" },
-      { "field": "weight_Composition", "header": "% Weight in SAP std Composition", "width": "20%" }
+      { "field": "substance", "header": "Substance" },
+      { "field": "spec_Id", "header": "Specification ID"},
+      { "field": "cas_NO", "header": "CAS RN"},
+      { "field": "class_action", "header": "Class Sl FIC Action"},
+      { "field": "reason_Code", "header": "Reason Code"},
+      { "field": "source", "header": "Source(Legal Requirement Regulations)"},
+      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)"},
+      { "field": "weight_Composition", "header": "% Weight in SAP std Composition" }
     ]
 
 
     this.restrictedCaliforniaDataHeader = [
-      { "field": "chemical", "header": "Chemical", "width": "10%" },
-      { "field": "type_Toxicity", "header": "Type of Toxicity", "width": "10%" },
-      { "field": "listing_Mechanism", "header": "Listing Mechanism", "width": "10%" },
-      { "field": "cas_NO", "header": "CAS NO", "width": "10%" },
-      { "field": "date_Listed", "header": "Date Listed", "width": "20%" },
-      { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a", "width": "20%" },
-      { "field": "weight_Composition", "header": "% Weight in SAP std Composition", "width": "20%" }
+      { "field": "chemical", "header": "Chemical"},
+      { "field": "type_Toxicity", "header": "Type of Toxicity"},
+      { "field": "listing_Mechanism", "header": "Listing Mechanism"},
+      { "field": "cas_NO", "header": "CAS NO"},
+      { "field": "date_Listed", "header": "Date Listed"},
+      { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a"},
+      { "field": "weight_Composition", "header": "% Weight in SAP std Composition"}
     ]
 
   }
@@ -157,11 +157,11 @@ export class RestrictedSubstanceComponent implements OnInit {
         console.log(data);
         this.restrictedLoader = true;
         this.productdata = data;
-        if (this.productdata.restrictedCaliforniaData.length > 0) {
+        if (this.productdata.length > 0) {
           this.restrictedLoader = false;
           this.pihAlertMessage = false;
           this.restrictedCaliforniaTableHeader = this.restrictedCaliforniaDataHeader;
-          this.restrictedCaliforniaData = this.productdata.restrictedCaliforniaData;
+          this.restrictedCaliforniaData = this.productdata;
           console.log(this.restrictedCaliforniaData);
         } else {
           this.pihAlertMessage = true;

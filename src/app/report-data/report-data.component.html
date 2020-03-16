@@ -70,7 +70,7 @@
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th style="width:3.5em">S.No</th>
-                    <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" 
+                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" 
                         [ngStyle]="{'width': col.width}">
                         {{col.header}}
                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
@@ -83,14 +83,14 @@
             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
                 <tr>
                     <td>{{index+1}}</td>
-                    <td><span *ngIf="rowData.category === 'MSDS'"><a href="http://sds.momentive.com/ehswww/servlet/MultiFileServlet?msdsstr=rowData.material_details&region=USA&lang=English" download>{{rowData.category}}</a></span>
+                    <td class="ptable-size"><span *ngIf="rowData.category === 'MSDS'"><a href="http://sds.momentive.com/ehswww/servlet/MultiFileServlet?msdsstr=rowData.material_details&region=USA&lang=English" download>{{rowData.category}}</a></span>
                         <span *ngIf="rowData.category !== 'MSDS'">{{rowData.category}}</span>
                     </td>
-                    <td>{{rowData.spec_id}}</td>
-                    <td>{{rowData.generation_Variant}}</td>
-                    <td>{{rowData.language}}</td>
-                    <td>{{rowData.version}}</td>
-                    <td>{{rowData.released_on}}</td>
+                    <td class="ptable-size">{{rowData.spec_id}}</td>
+                    <td class="ptable-size">{{rowData.generation_Variant}}</td>
+                    <td class="ptable-size">{{rowData.language}}</td>
+                    <td class="ptable-size">{{rowData.version}}</td>
+                    <td class="ptable-size">{{rowData.released_on}}</td>
 
                    
                 </tr>

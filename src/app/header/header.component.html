@@ -256,15 +256,17 @@
 						<div class="col-md-12">
 							<table class="table table-bordered" #basicProduct>
 								<thead>
-									<th><b>Spec ID</b></th>
-									<th><b>All Nam Prod Identifiers</b></th>
-									<th><b>Synonyms</b></th>
+									<th><b>S.No</b></th>
+									<th class="basic-head"><b>Spec ID</b></th>
+									<th class="basic-head"><b>All Nam Prod Identifiers</b></th>
+									<th class="basic-head"><b>Synonyms</b></th>
 								</thead>
 								<tbody>
 									<tr *ngFor="let data of productLevel|filterBy:userProductFilter;let i = index">
-										<td>{{data.specId}}</td>
-										<td>{{data.prodIdentifiers}}</td>
-										<td>{{data.synonyms}}</td>
+										<td class="basic-TD">{{i+1}}</td>
+										<td class="basic-TD">{{data.specId}}</td>
+										<td class="basic-TD"> {{data.prodIdentifiers}}</td>
+										<td class="basic-TD">{{data.synonyms}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -302,20 +304,22 @@
 										style="border-collapse:collapse;">
 										<thead>
 											<tr>
-												<th style="width:30%"><b>Specification ID</b></th>
-												<th><b>Material Number</b></th>
-												<th><b>Material Describtion</b></th>
-												<th><b>BDT</b></th>
+												<th>S.No</th>
+												<th class="basic-head"><b>Specification ID</b></th>
+												<th class="basic-head"><b>Material Number</b></th>
+												<th class="basic-head"><b>Material Describtion</b></th>
+												<th class="basic-head"><b>BDT</b></th>
 
 											</tr>
 										</thead>
 										<tbody>
 											<tr
 												*ngFor="let data of MaterialLevel | filterBy:userMaterialFilter; let i = index">
-												<td>{{data.spec_Id}}</td>
-												<td>{{data.material_Number}}<br></td>
-												<td>{{data.description}}</td>
-												<td>{{data.BDT}}</td>
+												<td class="basic-TD">{{i+1}}</td>
+												<td class="basic-TD">{{data.spec_Id}}</td>
+												<td class="basic-TD">{{data.material_Number}}<br></td>
+												<td class="basic-TD">{{data.description}}</td>
+												<td class="basic-TD">{{data.BDT}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -353,18 +357,20 @@
 									<table class="table table-condensed" #basicCas style="border-collapse:collapse;">
 										<thead>
 											<tr>
-												<th style="width:30%"><b>Specification ID</b></th>
-												<th><b>Pure Specification</b></th>
-												<th><b>Chemical Name</b></th>
-												<th><b>CAS#</b></th>
+												<th><b>S.No</b></th>
+												<th class="basic-head"><b>Specification ID</b></th>
+												<th class="basic-head"><b>Pure Specification</b></th>
+												<th class="basic-head"><b>Chemical Name</b></th>
+												<th class="basic-head"><b>CAS#</b></th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr *ngFor="let data of casLevel| filterBy: userCASFilter; let i = index">
-												<td>{{data.spec_Id}}</td>
-												<td>{{data.pure_Spec_Id}}</td>
-												<td>{{data.chemical_Name}}</td>
-												<td>{{data.cas_Number}}</td>
+												<td>{{i+1}}</td>
+												<td class="basic-TD">{{data.spec_Id}}</td>
+												<td class="basic-TD">{{data.pure_Spec_Id}}</td>
+												<td class="basic-TD">{{data.chemical_Name}}</td>
+												<td class="basic-TD">{{data.cas_Number}}</td>
 											</tr>
 										</tbody>
 									</table>
