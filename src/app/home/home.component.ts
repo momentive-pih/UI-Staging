@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
     // console.log(this.UserSelectedProducts);
 
      // intialHOmeDataDetails
-
+      this.UserSelectedProducts = [];
       this.UserSelectedProducts = this.momentiveService.selectedProduct;
       console.log(this.UserSelectedProducts);
 

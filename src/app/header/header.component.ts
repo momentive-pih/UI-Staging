@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy , OnInit, ViewChild, ElementRef,ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Attribute, IfStmt } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material';
@@ -7,11 +7,11 @@ import * as frLocale from 'date-fns/locale/fr';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HomeService } from '../service/home-service.service';
-import { Observable, Subject ,ReplaySubject} from 'rxjs';
+import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption, NgSelectComponent } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
-import { Router, ActivatedRoute, NavigationStart, NavigationExtras} from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart, NavigationExtras } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material';
 import { ToastrManager } from 'ng6-toastr-notifications';
@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   product_Name: any = [];
   ProductDrop: any = [];
   reactiveForm: FormGroup;
-  SpecreactiveForm:FormGroup
+  SpecreactiveForm: FormGroup
   product_type: any = [];
   copyproduct_type: any = [];
   compositionPart: any = [];
@@ -128,45 +128,45 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   searchAlertMessage: any;
   relatedProducts = true;
   searchLoader = false;
-  searchTextTerms:any;
-  searchTerm:any;
+  searchTextTerms: any;
+  searchTerm: any;
   objectKeys = Object.keys;
   public items$: Observable<product[]>;
   public input$ = new Subject<string | null>();
 
   /**SPECID dropdown List */
 
-  SPECdropdownList:any = [];
-  selectedSPECItems:any = [];
+  SPECdropdownList: any = [];
+  selectedSPECItems: any = [];
   dropdownSettings = {};
   firstSpecData = [];
-  selectedSpecList:any = [];
-  banks:any = [];
-  specDataListDetails:any;
-  sideSpecList:any;
-  userSelectedSPECDetails:any=[];
-  basicPropertiesLoader:any;
+  selectedSpecList: any = [];
+  banks: any = [];
+  specDataListDetails: any;
+  sideSpecList: any;
+  userSelectedSPECDetails: any = [];
+  basicPropertiesLoader: any;
   public loading;
-  notifier:any;
-  userSelectedProducts:any;
+  notifier: any;
+  userSelectedProducts: any;
 
-  userCASFilter:any = {cas_Number:''};
-  userMaterialFilter: any = {material_Number:''};
-  userProductFilter:any = {prodIdentifiers:''};
+  userCASFilter: any = { cas_Number: '' };
+  userMaterialFilter: any = { material_Number: '' };
+  userProductFilter: any = { prodIdentifiers: '' };
 
-    /** control for the selected bank for multi-selection */
-    public bankMultiCtrl: FormControl = new FormControl();
-     
-    /** control for the MatSelect filter keyword multi-selection */
-    public bankMultiFilterCtrl: FormControl = new FormControl();
-  
-    /** list of banks filtered by search keyword */
-    public filteredBanksMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
-  
-    @ViewChild('multiSelect',{static:false}) multiSelect: MatSelect;
-  
-    /** Subject that emits when the component has been destroyed. */
-    protected _onDestroy = new Subject<void>();
+  /** control for the selected bank for multi-selection */
+  public bankMultiCtrl: FormControl = new FormControl();
+
+  /** control for the MatSelect filter keyword multi-selection */
+  public bankMultiFilterCtrl: FormControl = new FormControl();
+
+  /** list of banks filtered by search keyword */
+  public filteredBanksMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+
+  @ViewChild('multiSelect', { static: false }) multiSelect: MatSelect;
+
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
 
   @ViewChild('code', {
     static: false
@@ -182,26 +182,29 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('basicCas', { static: false }) basicCas: ElementRef;
 
-  constructor(private fb: FormBuilder,public toastr: ToastrManager, vcr: ViewContainerRef,private route: ActivatedRoute, private router: Router, private homeService: HomeService, private momentiveService: MomentiveService) {
+  constructor(private fb: FormBuilder, public toastr: ToastrManager, vcr: ViewContainerRef, private route: ActivatedRoute, private router: Router, private homeService: HomeService, private momentiveService: MomentiveService) {
 
-  
 
-    this.momentiveService.homeEvent.subscribe(data =>{
+
+    this.momentiveService.homeEvent.subscribe(data => {
       this.ngOnInit()
+
+
+
     })
 
-    
-  
+
+
     this.reactiveForm = fb.group({
       selectedSearchNew: ['', Validators.required],
     });
-    console.log( this.reactiveForm.value);
+    console.log(this.reactiveForm.value);
 
     this.SpecreactiveForm = fb.group({
       selectedSPECItems: ['', Validators.required],
     })
     this.input$.subscribe(
-      (term) => this.searchProduct(term, this.product_Name, this.Isfirst)); 
+      (term) => this.searchProduct(term, this.product_Name, this.Isfirst));
   }
   ngOnInit() {
     this.categoryType = 'NAM Product'
@@ -274,18 +277,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.product_NameData = this.product_Name.filter((ProductName) => (ProductName.includes(data)));
       console.log(this.product_NameData);
     }
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
   }
   onFocused(data) {
     this.onChangeSearch(data);
   }
-  communicationProcess(data) {
-    this.commuicationDataCheck = data;
-    console.log(this.commuicationDataCheck);
-    this.CommunicationHistoryData = this.CopycommunicationHistoryData.filter((communication) => (communication.customer_name === this.commuicationDataCheck || communication.product_name === this.commuicationDataCheck || communication.bu === this.commuicationDataCheck || communication.topic === this.commuicationDataCheck));
-    console.log(this.CommunicationHistoryData);
-  }
+ 
   onItemSelect(item: any) {
     console.log(item);
   }
@@ -304,8 +300,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.SearchProducts = {
       'SearchData': this.searchTerm
     };
+
     console.log(this.SearchProducts);
     this.searchDataLength = this.SearchProducts.SearchData.length;
+    if(this.searchTerm.length < 1) {
+      this.product_Name = [];
+    }
     if (this.searchDataLength > 2 && Isfirst) {
       this.loading = true
       this.momentiveService.getAllEvents(this.SearchProducts).subscribe(data => {
@@ -319,28 +319,30 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
               this.ProductDrop.push(element.type);
             }
           });
-               console.log(this.searchTerm);
-              if(this.searchTerm.includes("*")) {
-              const searchTermNew = this.searchTerm.split('*');
-              this.searchTextTerms = searchTermNew[1];
-              console.log(this.searchTextTerms);
-            } 
-            
-          
+          console.log(this.searchTerm);
+       
+          if (this.searchTerm.includes("*")) {
+            const searchTermNew = this.searchTerm.split('*');
+            this.searchTextTerms = searchTermNew[1];
+            console.log(this.searchTextTerms);
+          } else {
+             this.searchTextTerms = this.searchTerm;
+          }
+
           this.items$ = this.product_Name.filter((product_Name) => {
             return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
-             product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
-             product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
-             product_Name.name.toLowerCase().startsWith(this.searchTextTerms) 
+              product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+              product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+              product_Name.name.toLowerCase().startsWith(this.searchTextTerms.toLowerCase())
           });
         } else {
-          this.product_Name =[];
+          this.product_Name = [];
           this.loading = false;
           this.items$ = this.product_Name.filter((product_Name) => {
             return product_Name.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-             product_Name.type.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
-             product_Name.key.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-             product_Name.name.toLowerCase().includes(this.searchTextTerms) 
+              product_Name.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+              product_Name.key.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+              product_Name.name.toLowerCase().includes(this.searchTextTerms.toLowerCase())
           });
         }
       }, err => {
@@ -350,27 +352,28 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.loading = false;
       this.items$ = this.product_Name.filter((product_Name) => {
         return product_Name.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-         product_Name.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          product_Name.key.toLowerCase().includes(this.searchTerm.toLowerCase()) 
+          product_Name.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          product_Name.key.toLowerCase().includes(this.searchTerm.toLowerCase())
       });
-    } else if (this.searchDataLength <= 0 && Isfirst) {
+
+    } else if (this.searchDataLength === 0 || this.searchDataLength <= 0 && Isfirst) {
       this.loading = false;
       this.product_Name = [];
       this.ProductDrop = [];
       this.clearCheck();
       this.items$ = this.product_Name.filter((product_Name) => {
-        return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
-        product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
-         product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase());
+        return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+          product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+          product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase());
       });
     }
     else if (this.searchDataLength === 0 && Isfirst) {
       this.loading = false;
       this.product_Name = [];
       this.items$ = this.product_Name.filter((product_Name) => {
-        return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
-        product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) || 
-        product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase());
+        return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+          product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+          product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase());
       });
     }
   }
@@ -390,7 +393,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.momentiveService.homeEvent.next();
     this.momentiveService.setSelectedProductData(this.selectedSearchText);
     this.router.navigate(['/app-home']);
-    localStorage.setItem('SearchBarData', JSON.stringify(data))
+    localStorage.setItem('SearchBarData', JSON.stringify(data));
     if (data.length <= 0) {
       this.product_Name = [];
       this.basicDetails = true;
@@ -426,13 +429,15 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       this.getIntialSpecList(this.selectedSearchText);
     }
- 
+
   }
   clearCheck() {
-    this.product_Name = [];
-    this.suggestionDrop = false;
-    this.Isfirst = true;
-    this.ProductDrop = [];
+    if(this.searchTerm.length < 1) {
+      this.product_Name = [];
+      this.suggestionDrop = false;
+      this.Isfirst = true;
+      this.ProductDrop = [];
+    }
   }
   // fileter the Standard Composition-CAS Number
   casNumberFileter() {
@@ -462,23 +467,23 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.userSelectedProducts = this.momentiveService.selectedProduct
       this.momentiveService.getSpecList(this.userSelectedProducts).subscribe(data => {
         console.log(data)
-      this.userSelectedSPECDetails = data;
-      this.momentiveService.getBasicProperties(this.userSelectedSPECDetails).subscribe(data => {
-      this.basicProperties = data;
-      if(this.basicProperties.length > 0) {
-        this.basicPropertiesLoader = false;
-        this.productLevel = this.basicProperties[0].productLevel;
-        this.MaterialLevel = this.basicProperties[0].materialLevel;
-        this.casLevel = this.basicProperties[0].CASLevel;
-      } else {
-          this.basicPropertiesLoader = true;
-      } 
-   
-      }, err => {
-        console.error(err);
+        this.userSelectedSPECDetails = data;
+        this.momentiveService.getBasicProperties(this.userSelectedSPECDetails).subscribe(data => {
+          this.basicProperties = data;
+          if (this.basicProperties.length > 0) {
+            this.basicPropertiesLoader = false;
+            this.productLevel = this.basicProperties[0].productLevel;
+            this.MaterialLevel = this.basicProperties[0].materialLevel;
+            this.casLevel = this.basicProperties[0].CASLevel;
+          } else {
+            this.basicPropertiesLoader = true;
+          }
+
+        }, err => {
+          console.error(err);
+        });
       });
-    });
-  } 
+    }
   }
   Ongtology() {
     this.router.navigate(['/app-ontology-home']);
@@ -503,40 +508,40 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //SpecID Droopdownlist
   getIntialSpecList(data) {
-      const SpecListedData = data;
+    const SpecListedData = data;
     this.momentiveService.getSpecList(SpecListedData).subscribe(data => {
       console.log(data)
-      this.SPECdropdownList = data; 
+      this.SPECdropdownList = data;
       this.banks = this.SPECdropdownList;
-      if(this.banks.length === 1) {
+      if (this.banks.length === 1) {
         this.specDataListDetails = false;
       } else {
         this.specDataListDetails = true;
       }
-     // set initial selection
-     this.bankMultiCtrl.setValue([this.banks[0]]);
-     this.momentiveService.setCategorySpecList([this.banks[0]]);
-     // load the initial bank list
-     this.filteredBanksMulti.next(this.banks.slice());
-     // listen for search field value changes
-     this.bankMultiFilterCtrl.valueChanges
-       .pipe(takeUntil(this._onDestroy))
-       .subscribe(() => {
-         this.filterBanksMulti();
-       });
+      // set initial selection
+      this.bankMultiCtrl.setValue([this.banks[0]]);
+      this.momentiveService.setCategorySpecList([this.banks[0]]);
+      // load the initial bank list
+      this.filteredBanksMulti.next(this.banks.slice());
+      // listen for search field value changes
+      this.bankMultiFilterCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+          this.filterBanksMulti();
+        });
       console.log(this.SPECdropdownList);
     }, err => {
       console.log(err);
     })
   }
 
-  
+
   selectAll(checkAll, select, values) {
     //this.toCheck = !this.toCheck;
-    if(checkAll){
-      select.update.emit(values); 
+    if (checkAll) {
+      select.update.emit(values);
     }
-    else{
+    else {
       select.update.emit([]);
     }
   }
@@ -545,10 +550,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.bankMultiCtrl.value);
     this.sideSpecList = this.bankMultiCtrl.value[0];
     console.log(this.sideSpecList);
-     this.momentiveService.homeEvent.next();
-     this.momentiveService.setSelectedProductData(this.sideSpecList);
-     this.momentiveService.setCategorySpecList(this.bankMultiCtrl.value);
-     this.toastr.successToastr('Specification ID Selected.', 'Success!');
+    this.momentiveService.setSelectedProductData(this.sideSpecList);
+    this.momentiveService.setCategorySpecList(this.bankMultiCtrl.value);
+    this.momentiveService.homeEvent.next();
+    this.toastr.successToastr('Specification ID Selected.', 'Success!');
   }
 
 
@@ -561,7 +566,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this._onDestroy.complete();
   }
 
-  toggleSelection(change) :void {
+  toggleSelection(change): void {
     this.filteredBanksMulti.pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(val => {
         if (change.checked) {
@@ -570,7 +575,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.bankMultiCtrl.patchValue([]);
         }
       })
-      
+
   }
 
 
@@ -606,25 +611,25 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   exportToBasicProductTable() {
-    const ws: xlsx.WorkSheet =   
-    xlsx.utils.table_to_sheet(this.basicProduct.nativeElement);
+    const ws: xlsx.WorkSheet =
+      xlsx.utils.table_to_sheet(this.basicProduct.nativeElement);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Product-Level.xlsx');
-   }
-   exportToBasicMaterialLevel() {
-    const ws: xlsx.WorkSheet =   
-    xlsx.utils.table_to_sheet(this.basicMaterial.nativeElement);
+  }
+  exportToBasicMaterialLevel() {
+    const ws: xlsx.WorkSheet =
+      xlsx.utils.table_to_sheet(this.basicMaterial.nativeElement);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Material-Level.xlsx');
-   }
+  }
 
-   exportToBasicCasLevel() {
-    const ws: xlsx.WorkSheet =   
-    xlsx.utils.table_to_sheet(this.basicCas.nativeElement);
+  exportToBasicCasLevel() {
+    const ws: xlsx.WorkSheet =
+      xlsx.utils.table_to_sheet(this.basicCas.nativeElement);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'CAS-Level.xlsx');
-   }
+  }
 }

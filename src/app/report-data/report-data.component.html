@@ -83,7 +83,7 @@
             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
                 <tr>
                     <td>{{index+1}}</td>
-                    <td class="ptable-size"><span *ngIf="rowData.category === 'MSDS'"><a href="http://sds.momentive.com/ehswww/servlet/MultiFileServlet?msdsstr=rowData.material_details&region=USA&lang=English" download>{{rowData.category}}</a></span>
+                    <td class="ptable-size"><span *ngIf="rowData.category === 'MSDS'"><a href="http://sds.momentive.com/ehswww/servlet/MultiFileServlet?msdsstr={{rowData.material_details}}&region=USA&lang=English" download>{{rowData.category}}</a></span>
                         <span *ngIf="rowData.category !== 'MSDS'">{{rowData.category}}</span>
                     </td>
                     <td class="ptable-size">{{rowData.spec_id}}</td>

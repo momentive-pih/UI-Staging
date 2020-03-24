@@ -81,6 +81,8 @@
                                         <td>{{each.product}}</td>
                                         <td style="width:70%"> <a data-fancybox  data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{each.prod_App}}">{{each.prod_App}}</a></td>
 
+
+                                        
                                         <td class="td-actions">
                                                     <span class ="docs-btn"><a href="{{each.prod_App}}"
                                                         download><i class="fa fa-share">
@@ -201,10 +203,18 @@
                                 {{index+1}}
                             </td>
                             <td>
+                                {{rowData.spec_Id}}
+                            </td>
+                            <td>
                                 {{rowData.regulatory_Basis}}
                             </td>
                             <td>
-                                {{rowData.symbols}}
+                                {{rowData.usage}}
+                            </td>
+                            <td>
+                               <span *ngIf = "rowData.symbols != null"><img src ="{{rowData.symbols}}" width="50px" height="50px"></span> 
+                               <span *ngIf = "rowData.symbols === null">None</span>
+
                             </td>
                             <td>
                                 {{rowData.signal_Word}}
@@ -404,8 +414,8 @@
                                                                 data-toggle="tab" href="#allMaterial" role="tab"
                                                                 aria-controls="nav-home" aria-selected="true">All
                                                                 Material</a>
-                                                            <a class="nav-item nav-link" id="activeMaterial"
-                                                                data-toggle="tab" href="#nav-profile" role="tab"
+                                                            <a class="nav-item nav-link" id="nav-tab"
+                                                                data-toggle="tab" href="#activeMaterial" role="tab"
                                                                 aria-controls="nav-profile" aria-selected="false">Active
                                                                 Material</a>
                                                         </div>
@@ -544,10 +554,10 @@
             <div class="row" *ngIf="compositionSHI">
                 <div class="col-md-12">
                     <div class="table-responsive" #StandardCompositiontable>
-                        <div class="table-responsive" id="sailorTableArea">
+                        <div class="table-responsive">
                             <h5>Standard, 100% & INCI Composition    <button (click)="exportToStandardCompostionExcel()" class="btn spec-btn pull-right">Export To
                                 Excel</button></h5>
-                            <table id="sailorTable" class="table table-striped table-bordered" width="100%">
+                            <table  class="table table-striped table-bordered" width="100%">
                                 <thead>
                                     <tr>
                                         <th colspan="3" style="background-color:  #a0a3e0;color:#fff !important;">
@@ -619,11 +629,14 @@
             <div class="row" *ngIf="compositionLegalTypes">
                 <!-- Legal Composition -->
                 <div class="col-md-12">
+                    <div class="table-responsive" #LegalCompositiontable>
+                        <div class="table-responsive">
                     <h5>Legal Composition  <button (click)="exportToLegalCompostionExcel()" class="btn spec-btn pull-right">Export To
                         Excel</button></h5>
 
-                    <table #LegalCompositiontable>
+                    <table class="table table-striped table-bordered" width="100%">
                         <thead>
+                            <tr>
                             <th>
                                  S.No
                             </th>
@@ -644,7 +657,7 @@
                             </th>
                             <th>
                                 Legal Value
-                            </th>
+                            </th></tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let data of legalCompositionData; let i = index">
@@ -678,7 +691,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div></div></div>
             <br>
             <!-- SVT Legal Composition -->
             <div class="row">
@@ -696,8 +709,8 @@
 
 
                     <div class="table-responsive" #SVTtable>
-                        <div class="table-responsive" id="sailorTableArea">
-                            <table id="sailorTable" class="table table-striped table-bordered" width="100%">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" width="100%">
                                 <thead>
                                     <tr>
                                         <th colspan="1" style="background-color:  #a0a3e0;color:#fff !important;">
@@ -715,46 +728,37 @@
                                         <th>2018</th>
                                         <th>2019</th>
                                         <th>2020</th>
-                                        <th>Amount Limit in tones</th>
+                                        <th>Amount Limit in tons</th>
                                         <th>2018</th>
                                         <th>2019</th>
                                         <th>2020</th>
-                                        <th>Amount Limit in tones</th>
+                                        <th>Amount Limit in tons</th>
                                         <th>2018</th>
                                         <th>2019</th>
                                         <th>2020</th>
-                                        <th>Amount Limit in tones</th>
+                                        <th>Amount Limit in tons</th>
                                     </tr>
                                 </thead>
+
+
                                 <tbody>
                                     <tr *ngFor="let legalData of SVT_table">
-                                        <td>{{legalData.spec_id}}</td>
-                                        <td>{{legalData.Lv_2018}}</td>
-                                        <td>{{legalData.Lv_2019}}</td>
-                                        <td>{{legalData.Lv_2020}}</td>
-                                        <td>{{legalData.Lv_Amount}}</td>
-                                        <td>{{legalData.TE_2018}}</td>
-                                        <td>{{legalData.TE_2019}}</td>
-                                        <td>{{legalData.TE_2020}}</td>
-                                        <td>{{legalData.TE_Amount}}</td>
-                                        <td>{{legalData.inic_component}}</td>
-                                        <td>{{legalData.AN_2018}}</td>
-                                        <td>{{legalData.AN_2019}}</td>
-                                        <td>{{legalData.AN_2020}}</td>
+                                        <td>{{legalData.pure_spec_Id}}</td>
+                                        <td>{{legalData.SVT_LV_eight}}</td>
+                                        <td>{{legalData.SVT_LV_nine}}</td>
+                                        <td>{{legalData.SVT_LV_twenty}}</td>
+                                        <td>{{legalData.amount_limit_SVT_LV}}</td>
+                                        <td>{{legalData.SVT_TE_eight}}</td>
+                                        <td>{{legalData.SVT_TE_nine}}</td>
+                                        <td>{{legalData.SVT_TE_Twenty}}</td>
+                                        <td>{{legalData.amount_limit_SVT_TE}}</td>
+                                        <td>{{legalData.SVT_AN_eight}}</td>
+                                        <td>{{legalData.SVT_AN_nine}}</td>
+                                        <td>{{legalData.SVT_AN_twenty}}</td>
+                                        <td>{{legalData.amount_limit_SVT_AN}}</td>
                                     </tr>
 
-                                    <tr>
-                                        <td colspan="1"><b>Total</b></td>
-                                        <td colspan="4">
-                                            <p class="spec-toggle"><b>1,999,998,0000</b></p>
-                                        </td>
-                                        <td colspan="4">
-                                            <p class="spec-toggle"><b>2</b></p>
-                                        </td>
-                                        <td colspan="4">
-                                            <p class="spec-toggle"><b>1</b></p>
-                                        </td>
-                                    </tr>
+                            
                                 </tbody>
                             </table>
                         </div>

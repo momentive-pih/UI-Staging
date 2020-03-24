@@ -196,113 +196,8 @@ compositionStandardData:any=[];
     }
     ngOnInit() {
 
-      this.sales = [
-        { 
-        Specification: '000000003280', 
-        cas_Number: '68937-54-2', 
-        ingredient: 'Siloxane Polyalkyleneoxide Copolymer', 
-        std_component: 'Active Ingredient', 
-        std_value: '83.14',
-        std_unit: '%', 
-        hundered_component: 'Active Ingredient', 
-        hundered_value: '83.14', 
-        hundered_unit: '%', 
-        inic_component: 'Active Ingredient',
-        inic_value: '83.14',
-        inic_unit: '%'
-       },
-       { 
-        Specification: '000000003657', 
-        cas_Number: '27274-31-3', 
-        ingredient: 'Polyalkylene Oxide', 
-        std_component: 'Active Ingredient', 
-        std_value: '9.00',
-        std_unit: '%', 
-        hundered_component: 'Active Ingredient', 
-        hundered_value: '9.00', 
-        hundered_unit: '%', 
-        inic_component: 'Active Ingredient',
-        inic_value: '9.00',
-        inic_unit: '%'
-       },
-       { 
-        Specification: '000000003060', 
-        cas_Number: '540-97-6', 
-        ingredient: 'Dodecamethylcyclohexasiloxane', 
-        std_component: 'impurity', 
-        std_value: '9.00',
-        std_unit: '%', 
-        hundered_component: 'impurity', 
-        hundered_value: '9.00', 
-        hundered_unit: '%', 
-        inic_component: 'impurity',
-        inic_value: '9.00',
-        inic_unit: '%'
-       },
-       { 
-        Specification: '000000003657', 
-        cas_Number: '102-81-8', 
-        ingredient: '2-Dibutylaminoethanol', 
-        std_component: 'Trade Secret Active', 
-        std_value: '0.0099',
-        std_unit: '%', 
-        hundered_component: 'Trade Secret Active', 
-        hundered_value: '0.0099', 
-        hundered_unit: '%', 
-        inic_component: 'Trade Secret Active',
-        inic_value: '0.0099',
-        inic_unit: '%'
-       },
-       { 
-        Specification: '000000003657', 
-        cas_Number: '541-02-6', 
-        ingredient: 'Decamethylcyclopentasiloxane', 
-        std_component: 'impurity', 
-        std_value: '9.00',
-        std_unit: '%', 
-        hundered_component: 'impurity', 
-        hundered_value: '9.00', 
-        hundered_unit: '%', 
-        inic_component: 'impurity',
-        inic_value: '9.00',
-        inic_unit: '%'
-       },
+ 
 
-       
-    ];
-
-    this.SVT_table = [
-      {
-      spec_id:'000000002652',
-      Lv_2018:'832.0500',
-      Lv_2019:'673.0600',
-      Lv_2020:'212.2600',
-      Lv_Amount:'999,999.0000',
-      TE_2018:'832.0500',
-      TE_2019:'673.0600',
-      TE_2020:'212.2600',
-      TE_Amount:'999,999.0000',
-      AN_2018:'0',
-      AN_2019:'0',
-      AN_2020:'0',
-      AN_Amount:'0',
-    },
-    {
-      spec_id:'000000002670',
-      Lv_2018:'28,657.30',
-      Lv_2019:'23906.29797',
-      Lv_2020:'6002.859',
-      Lv_Amount:'999,999.0000',
-      TE_2018:'85.0444',
-      TE_2019:'86.0622',
-      TE_2020:'6.7964',
-      TE_Amount:'1.0000',
-      AN_2018:'414.7938',
-      AN_2019:'326.1478',
-      AN_2020:'44.1400',
-      AN_Amount:'1.000',
-    }
-  ]
   this.compositionDataLevel = false;
       // compositionPart
       this.momentiveService.getSearchData().subscribe(data => {
@@ -332,11 +227,13 @@ compositionStandardData:any=[];
 
 
  this.ghsLabelingDataHeader = [
-  { "field": "regulatory_Basis", "header": "Regulatory Basis","width": "20%"},
-  { "field": "symbols", "header": "Symbols","width": "10%"},
-  { "field": "signal_Word", "header": "Signal Word","width": "10%"},
-  { "field": "hazard_Statements", "header": "Hazard Statements","width": "10%" },
-  { "field":"prec_Statements", "header":"Prec Statements","width": "10%"}, 
+  { "field": "spec_Id", "header": "Specification Id"},
+  { "field": "regulatory_Basis", "header": "Regulatory Basis"},
+  {"field":"usage","header":"Usage"},
+  { "field": "symbols", "header": "Symbols"},
+  { "field": "signal_Word", "header": "Signal Word"},
+  { "field": "hazard_Statements", "header": "Hazard Statements"},
+  { "field":"prec_Statements", "header":"Prec Statements"}, 
   {"field":"additional_Information","header":"Additional Information / Remarks","width": "20%","white-space": "pre-wrap"}
 ]
 
@@ -643,9 +540,10 @@ compositionProcess(value) {
       this.productdata = data;
       this.compositionStandardData = this.productdata;
       this.legalCompositionData = this.productdata.legal_composition;
+      this.SVT_table = this.productdata.svt;
     });
 
-    if(this.subLevelData === 'Reg : Reg_REACH') {
+    if(this.compostionCheck === "Legal Composition" && this.subLevelData === 'REACH: REG_REACH') {
        this.svtCompositionLevel = true;
     } else {
       this.svtCompositionLevel = false;

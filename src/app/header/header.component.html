@@ -25,7 +25,7 @@
     
     </ul>  -->
 		<span class="navbar-text mr-md-auto mr-md-3 form-width">
-			<div class="">
+			<div >
 				<div class="forms">
 					<div class="reactive-form">
 						<form autocomplete="off" novalidate [formGroup]="reactiveForm">
@@ -38,7 +38,7 @@
 											[typeahead]="input$" [dropdownPosition]="'bottom'" [searchable]="true"
 											[selectableGroupAsModel]="false" [compareWith]="compareAccounts"
 											[selectableGroup]="false" groupBy="group" (change)="onChangeData($event)"
-											[closeOnSelect]="false" (remove)="clearCheck()" [loading]="loading"
+											[closeOnSelect]="false" (remove)="clearCheck()" [loading]="loading" 
 											typeToSearchText="Enter 3 characters to begin your search.."
 											notFoundText="Fetching data...">
 											<ng-template ng-header-tmp style="color:#ddd" *ngIf="selectedProducts">
@@ -206,7 +206,7 @@
 <!-- Page header -->
 <div class="page-header">
 	<div class="page-header-content header-elements-md-inline">
-		<div class="">
+		<div >
 		</div>
 	</div>
 </div>
@@ -263,10 +263,10 @@
 								</thead>
 								<tbody>
 									<tr *ngFor="let data of productLevel|filterBy:userProductFilter;let i = index">
-										<td class="basic-TD">{{i+1}}</td>
-										<td class="basic-TD">{{data.specId}}</td>
-										<td class="basic-TD"> {{data.prodIdentifiers}}</td>
-										<td class="basic-TD">{{data.synonyms}}</td>
+										<td>{{i+1}}</td>
+										<td>{{data.specId}}</td>
+										<td>{{data.prodIdentifiers}}</td>
+										<td>{{data.synonyms}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -293,33 +293,29 @@
 							<button (click)="exportToBasicMaterialLevel()" class="btn spec-btn pull-right">Export
 								To Excel</button>
 						</div>
+
 					</div>
 					<div class="row">
-
-
 						<div class="col-lg-12">
 							<div class="panel panel-default">
 								<div class="panel-body">
-									<table class="table table-condensed" #basicMaterial
-										style="border-collapse:collapse;">
+									<table class="table table-condensed" #basicMaterial style="border-collapse:collapse;">
 										<thead>
 											<tr>
-												<th>S.No</th>
+												<th><b>S.No</b></th>
 												<th class="basic-head"><b>Specification ID</b></th>
 												<th class="basic-head"><b>Material Number</b></th>
 												<th class="basic-head"><b>Material Describtion</b></th>
 												<th class="basic-head"><b>BDT</b></th>
-
 											</tr>
 										</thead>
 										<tbody>
-											<tr
-												*ngFor="let data of MaterialLevel | filterBy:userMaterialFilter; let i = index">
-												<td class="basic-TD">{{i+1}}</td>
-												<td class="basic-TD">{{data.spec_Id}}</td>
-												<td class="basic-TD">{{data.material_Number}}<br></td>
-												<td class="basic-TD">{{data.description}}</td>
-												<td class="basic-TD">{{data.BDT}}</td>
+											<tr *ngFor="let data of MaterialLevel| filterBy: userMaterialFilter; let i = index">
+												<td>{{i+1}}</td>
+												<td>{{data.spec_Id}}</td>
+												<td>{{data.material_Number}}<br></td>
+												<td>{{data.description}}</td>
+												<td>{{data.BDT}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -328,6 +324,7 @@
 						</div>
 					</div>
 				</div>
+			
 				<br>
 				<div *ngIf="casLevel.length > 0">
 					<h5><b>CAS Level Details</b></h5>
@@ -367,10 +364,10 @@
 										<tbody>
 											<tr *ngFor="let data of casLevel| filterBy: userCASFilter; let i = index">
 												<td>{{i+1}}</td>
-												<td class="basic-TD">{{data.spec_Id}}</td>
-												<td class="basic-TD">{{data.pure_Spec_Id}}</td>
-												<td class="basic-TD">{{data.chemical_Name}}</td>
-												<td class="basic-TD">{{data.cas_Number}}</td>
+												<td>{{data.spec_Id}}</td>
+												<td>{{data.pure_Spec_Id}}</td>
+												<td>{{data.chemical_Name}}</td>
+												<td>{{data.cas_Number}}</td>
 											</tr>
 										</tbody>
 									</table>

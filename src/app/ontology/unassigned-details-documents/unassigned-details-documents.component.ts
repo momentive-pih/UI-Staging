@@ -75,7 +75,8 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
   file:any;
   pdfSrc:any;
   ontologyServiceDetails:any = [];
-  selectedSpecList:any = []
+  selectedSpecList:any = [];
+  PIHpdfURL:any;
 
   public items$: Observable<product_Name[]>;
   public input$ = new Subject<string | null>();
@@ -159,8 +160,17 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
       console.log(this.filename);
       console.log(this.productName);
       console.log(this.pdfUrl);
-       this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
-       console.log(this.Url);
+      //  this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
+      //  console.log(this.Url);
+       let sasToken =  
+       "?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-03-27T18:08:33Z&st=2020-03-17T10:08:33Z&spr=https&sig=aSpIHsulTElmoehIDeC%2FBq57KD3ipzzzN9vOPM%2BHuEI%3D"
+      //  this.Url ="{this.pdfUrl}{sasToken}";
+
+   '    this.Url = this.sanitizer.bypassSecurityTrustUrl(this.pdfUrl + sasToken);'
+       this.Url = this.sanitizer.bypassSecurityTrustUrl(this.pdfUrl + sasToken);
+         this.PIHpdfURL = this.Url.changingThisBreaksApplicationSecurity;
+      //  let Fileurl = encodeURI(this.Url);
+       console.log(this.Url.changingThisBreaksApplicationSecurity);
 });
 
      

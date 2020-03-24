@@ -188,11 +188,10 @@ export class ProductComplianceComponent implements OnInit {
       console.log(data);
       this.ProductComplianceTabLoader = true;
       this.productdata = data;
-      console.log(this.productdata[0].length);
-      if (this.productdata[0].length > 0) {
+      if (this.productdata.length > 0) {
         this.ProductComplianceTabLoader = false;
         this.pihAlertMessage = false;
-        this.pc_NotificationData = this.productdata[0].pc_NotificationData;
+        this.pc_NotificationData = this.productdata;
         this.pc_NotificationHeader = this.pc_NotificationDataHeader;
       } else {
         this.pihAlertMessage = true;
@@ -206,8 +205,8 @@ export class ProductComplianceComponent implements OnInit {
   productComplianceAgRegistration(locationValue) {
     this.ProductComplianceTabLoader = true;
     this.pihAlertMessage = false;
-    let locationBasedRegistration = locationValue;
-    console.log(locationBasedRegistration);
+    this.locationBasedRegistration = locationValue;
+    console.log(this.locationBasedRegistration);
     this.ProductComlianceDetails = [];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     console.log(this.selectedSpecList);
@@ -218,12 +217,13 @@ export class ProductComplianceComponent implements OnInit {
       'Category_details': this.CategoryDetails,
     });
     console.log(this.ProductComlianceDetails)
-    this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
-      if (locationBasedRegistration == 'EU') {
+      if (this.locationBasedRegistration === 'EU') {
         this.ProductComplianceTabLoader = true;
         this.pihAlertMessage = false;
-        this.productdata = data;
-        if (this.productdata[0].length > 0) {
+        this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
+          console.log(data);
+          this.productdata = data;
+        if (this.productdata[0].complianceRegistrationEUData.length > 0) {
           this.ProductComplianceTabLoader = false;
           this.pihAlertMessage = false;
           this.complianceLocationRegistrationData = this.productdata[0].complianceRegistrationEUData;
@@ -233,12 +233,16 @@ export class ProductComplianceComponent implements OnInit {
           this.pihAlertMessage = true;
           this.ProductComplianceTabLoader = false;
         }
-
+      },err => {
+        console.error(err);
+    });
       }
-      if (locationBasedRegistration == 'canada') {
+      if (this.locationBasedRegistration === 'canada') {
         this.ProductComplianceTabLoader = true;
         this.pihAlertMessage = false;
-        this.productdata = data;
+        this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
+          console.log(data);
+          this.productdata = data;
         if (this.productdata[0].complianceRegistrationCanada_Data.length > 0) {
           this.ProductComplianceTabLoader = false;
           this.pihAlertMessage = false;
@@ -249,12 +253,17 @@ export class ProductComplianceComponent implements OnInit {
           this.pihAlertMessage = true;
           this.ProductComplianceTabLoader = false;
         }
+      },err => {
+        console.error(err);
+    });
       }
-      if (locationBasedRegistration == 'Latin') {
+      if (this.locationBasedRegistration === 'Latin') {
         this.ProductComplianceTabLoader = true;
         this.pihAlertMessage = false;
+        this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
         this.productdata = data;
-        if (this.productdata[0].length > 0) {
+        console.log(data);
+        if (this.productdata[0].complianceRegistrationLatin_Data.length > 0) {
           this.ProductComplianceTabLoader = false;
           this.pihAlertMessage = false;
           this.complianceLocationRegistrationData = this.productdata[0].complianceRegistrationLatin_Data;
@@ -264,11 +273,11 @@ export class ProductComplianceComponent implements OnInit {
           this.pihAlertMessage = true;
           this.ProductComplianceTabLoader = false;
         }
-      }
-
-    }, err => {
-      console.error(err);
+      } ,err => {
+        console.error(err);
     });
+    }
+
   }
 
   public selectionItemForFilter(e) {

@@ -41,6 +41,7 @@ import { MatSelectFilterModule } from 'mat-select-filter';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { SharedModule } from '../app/shared/shared.module';
 import { ImageViewerModule } from 'ng2-image-viewer';
+import { MatRadioModule } from '@angular/material';
 
 
 
@@ -85,6 +86,7 @@ import { ImageViewerModule } from 'ng2-image-viewer';
     EditorModule,
     DropdownModule,
     MultiSelectModule,
+    MatRadioModule,
     SliderModule,
     InputTextModule,
     NgSelectModule,

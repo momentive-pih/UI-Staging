@@ -261,7 +261,8 @@
                                         <tr *ngFor="let data of toxicologySummaryData">
                                             <td>{{data.spec_Id}}</td>
                                             <td>{{data.date_Of_Issue}}</td>
-                                            <td><a data-fancybox  data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{data.filename}}">{{data.filename}}</a> </td>
+                                            <td><a href="{{data.filename}}" target="_self">{{data.filename}}</a></td>
+                                           
 
                                         </tr>
                                        
@@ -301,7 +302,10 @@
                                                 <tr *ngFor="let data of registartion_Tracker_Data">
                                                     <td>{{data.spec_Id}}</td>
                                                     <td>{{data.date_Of_Issue}}</td>
-                                                    <td><a href="{{data.filename}}" target="_blank">{{data.filename}}</a> </td>
+                                                    <td><a href="{{data.filename}}" target="_self">{{data.filename}}</a></td>
+                                                    <!-- <td> <embed src="{{data.filename}}" type="application/pdf"   height="300px" width="100%" class="responsive">
+                                                        <a href="{{data.filename}}">download</a></td> -->
+                                                    <!-- <td><a data-fancybox   src="{{data.filename}}" data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{data.filename}}">{{data.filename}}</a> </td> -->
         
                                                 </tr>
                                                

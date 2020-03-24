@@ -379,13 +379,8 @@ color:#fff;
 .syn-search {
   width: 50%;
 }
-.basic-TD {
-  width:30%;
-  font-size:12px;
-  word-wrap:none;
-  word-break: break-all;
-}
 .basic-head{
+  width:25%;
   font-weight:bold;
   font-size:14px;
   word-break: break-all;

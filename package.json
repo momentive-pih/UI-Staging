@@ -25,6 +25,7 @@
     "@ng-select/ng-select": "^3.3.0",
     "angular-alert-module": "^2.0.3",
     "angular-fancybox-plus": "^1.0.3",
+    "angular-material": "^1.1.21",
     "angular-ng-autocomplete": "^1.1.14",
     "angular-notifier": "^6.0.1",
     "angular2-multiselect-dropdown": "^4.6.3",
