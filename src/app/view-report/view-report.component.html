@@ -40,9 +40,6 @@
                         </div>
                         <!-- /sidebar search -->
 
-
-
-
                         <!-- Sub navigation -->
                         <div class="card mb-2">
                             <div class="card-header bg-transparent header-elements-inline">
@@ -85,7 +82,7 @@
                                                 <a class="nav-link">
                                                     <div class="form-group">
                                                         <input type="checkbox" [(ngModel)]="data.checkValue"
-                                                            (change)="subCheckBox(data.checkValue,data,i,top)"
+                                                            (change)="subCheckBox(data.checkValue,data,i,product.Name,top)"
                                                             id="{{data.name}}"> <label for="{{data.name}}">
                                                             {{data.name}}</label></div>
                                                     <!-- <span *ngIf="data.sub.length > 0" data-toggle="collapse"
@@ -127,7 +124,7 @@
 
 
                 <!-- Right content -->
-                <div *ngIf="noReportPage">
+                <!-- <div *ngIf="noReportPage">
                     <div class="panel panel-primary">
                         <div class="panel-body-view">
                             <div class="row">
@@ -148,7 +145,6 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h5 class="panel-title text-default font-weight-semibold">
-                                        <!-- If any of the category is selected in the side panel, self service report will be generated and displayed, Generate Report Button will be displayed. -->
                                         Select the category options from the left panel to enable the Self Service
                                         Report Generation.
                                     </h5>
@@ -157,9 +153,11 @@
                         </div>
                     </div>
 
-                </div>
+                </div> -->
 
-                <div *ngIf="viewReportPage">
+        <div class="container-fluid">
+
+        
                     <div class="row">
                         <div class="col-md-12">
                             <button class="btn mom-btn text-right" (click)="downloadAsPDF()"> <i
@@ -173,9 +171,9 @@
                                     <div class="panel-body-view">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h4 class="panel-title text-default font-weight-semibold">
-                                                    LSR 2680FC A
-                                                </h4>
+                                                <h6 class="panel-title text-default font-weight-semibold">
+                                                   {{UserSelectedProducts[0].name}}
+                                                </h6>
                                             </div>
                                             <div class="col-md-6">
                                                 <h4 class="pdf-logo">
@@ -186,98 +184,60 @@
                                         </div>
                                         <div class="row">
                                             <div class="tab-content">
-                                                <div class="header-pdf">
-                                                    <h5>Basic Information</h5>
-                                                </div>
-                                                <div class="card-body">
+                                                <div *ngIf="productAttributeReport && productAttributeReport.tab_content">
+                                                <div class="card-body" *ngIf="productAttributeReport.tab_content[0].checkValue">
+                                                    <h5 class="text-default font-weight-semibold mb-2">Basic Information</h5>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <h6 class="text-default font-weight-semibold mb-2 ">Product
-                                                                Identification:</h6>
-                                                            <span class="product-identifiation text-font">LSR2680FC,
-                                                                LSR2680,NLR160-80,NLR160-80,T6227</span>
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                 <tr>
+                                                                 <th>Product Identification </th>
+                                                                 <th>Relabels </th>
+                                                                 <th>Chemical Name </th>
+                                                                </tr>
+                                                             </thead>
+                                                             <tbody>
+                                                                 <tr>
+                                                                     <td>LSR2680FC, LSR2680,NLR160-80,NLR160-80,T6227</td>
+                                                                     <td>N/A</td>
+                                                                     <td>N/A</td>
+                                                                 </tr>
+                                                             </tbody>
+                                                         </table>
                                                         </div>
                                                     </div>
-
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <h6 class="text-default font-weight-semibold mb-2">Relabels:
-                                                                <span>N/A</span></h6>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <h6 class="text-default font-weight-semibold mb-2">Chemical
-                                                                Name: <span>N/A</span></h6>
-                                                        </div>
-                                                    </div>
-
+<br>
                                                     <div class="row card-innerProduct-body">
                                                         <div class="col-md-12">
                                                             <h6 class="text-default font-weight-semibold mb-2">Product
                                                                 Application:</h6>
-                                                            <div class="row">
-                                                                <div class="col-md-4"
-                                                                    *ngFor="let data of productApplication">
-                                                                    <div class="text-font">
-                                                                        <span
-                                                                            class="badge badge-mark border-grey-400 mr-1"></span>
-                                                                        {{data.app_text}}
-                                                                    </div>
+                                                              <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table id="mytable" class="table print-friendly">
+                                                                        <thead class="custabs-head">
+                                                                            <tr>
+                                                                            <th>Specification -Id</th>
+                                                                            <th>Product Application </th>
+                                                                           </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>LSR2680FC, LSR2680,NLR160-80,NLR160-80,T6227</td>
+                                                                                <td>N/A</td>
+                                                                                
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <br>
-                                                    <div class="row card-inner-body">
-                                                        <div class="col-md-12">
-                                                            <h6 class="text-default font-weight-semibold mb-2">
-                                                                Registered Quantity Per Legal Entity: </h6>
-                                                        </div>
-                                                    </div>
+                                                
                                                 </div>
 
-
-                                                <div class="header-pdf">
-                                                    <h5>Structure and Formulas</h5>
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <h6 class="card-subtitle mb-2 mh-2">Chemical Structure</h6>
-                                                            <br>
-                                                            <h6>CAS Number: 68083-19-2 </h6>
-                                                            <img class="img-responsive"
-                                                                src="../../assets/images/momentive/chemicalStructure.png" />
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h6 class="card-subtitle mb-2 mh-2">Molecular Formula</h6>
-                                                            <br>
-                                                            <ol class="structure">
-                                                                <li> M1.99 D10.01 D”0.98 T20.01:
-                                                                    where D”= -(CH3)Si-CH2CH2CH2O(EO)7.3-OH</li>
-                                                            </ol>
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <h6 class="card-subtitle mb-2 mh-2">Molecular Weight</h6>
-                                                            <br>
-                                                            <ol class="structure">
-                                                                <li>Monoisotopic Molecular Weight: 548.19/788.20 Da</li>
-
-                                                                <li> Average Molecular Weight: 548.92/789.43 Da </li>
-                                                            </ol>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="header-pdf">
+                                                <div class="card-body" *ngIf="productAttributeReport.tab_content[1].checkValue">
                                                     <h5>GHS Labelings</h5>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -326,13 +286,42 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="header-pdf">
+
+                                                <div class="card-body" *ngIf="productAttributeReport.tab_content[2].checkValue">
+                                                    <h5>Structure and Formulas</h5>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <h6 class="card-subtitle mb-2 mh-2">Chemical Structure</h6>
+                                                            <br>
+                                                            <h6>CAS Number: 68083-19-2 </h6>
+                                                            <img class="img-responsive"
+                                                                src="../../assets/images/momentive/chemicalStructure.png" />
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h6 class="card-subtitle mb-2 mh-2">Molecular Formula</h6>
+                                                            <br>
+                                                            <ol class="structure">
+                                                                <li> M1.99 D10.01 D”0.98 T20.01:
+                                                                    where D”= -(CH3)Si-CH2CH2CH2O(EO)7.3-OH</li>
+                                                            </ol>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <h6 class="card-subtitle mb-2 mh-2">Molecular Weight</h6>
+                                                            <br>
+                                                            <ol class="structure">
+                                                                <li>Monoisotopic Molecular Weight: 548.19/788.20 Da</li>
+
+                                                                <li> Average Molecular Weight: 548.92/789.43 Da </li>
+                                                            </ol>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-body" *ngIf="productAttributeReport.tab_content[3].checkValue">
                                                     <h5>Compositions</h5>
-                                                </div>
-                                                <div class="header-pdf">
                                                     <h6>Standard Composition</h6>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -409,10 +398,9 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="header-pdf">
+                                              
+                                                <div class="card-body" *ngIf="productAttributeReport.tab_content[3].checkValue">
                                                     <h6>Legal Composition</h6>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -488,10 +476,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="header-pdf">
+
+                                                <div class="card-body" *ngIf="productAttributeReport.tab_content[3].checkValue">
                                                     <h6>100% Composition</h6>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -568,39 +555,60 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="header-pdf">
+
+                                                <div class="card-body" *ngIf="productAttributeReport.tab_content[4].checkValue">
                                                     <h5>Flow Diagrams</h5>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <h6 class="card-subtitle mb-2 text-muted">Manufacturing Flow
-                                                                Diagram</h6>
-                                                            <div class="img-content">
-                                                                <img class="img-responsive"
-                                                                    src="../../assets/images/momentive/ManufracturingFlowDiagram.png"
-                                                                    width="80%">
-                                                            </div>
+
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                 <tr>
+                                                                 <th>Specification Id </th>
+                                                                 <th>Manufacturing Flow
+                                                                 </th>
+                                                                
+                                                                </tr>
+                                                             </thead>
+                                                             <tbody>
+                                                                 <tr>
+                                                                     <td>LSR2680FC, LSR2680,NLR160-80,NLR160-80,T6227</td>
+                                                                     <td><a href="../../assets/images/momentive/ManufracturingFlowDiagram.png">https://ManufracturingFlowDiagram.png</a></td>
+                                                                     
+                                                                 </tr>
+                                                             </tbody>
+                                                         </table>
+                                                         
                                                         </div>
                                                     </div>
+                                                    <br>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <h6 class="card-subtitle mb-2 text-muted">Synthesis Diagram
-                                                            </h6>
-                                                            <div class="img-content">
-                                                                <img class="img-responsive"
-                                                                    src="../../assets/images/momentive/SynthesisDiagram.png">
-                                                            </div>
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                 <tr>
+                                                                 <th>Specification Id </th>
+                                                                 <th>Synthesis Diagram
+                                                                 </th>
+                                                                
+                                                                </tr>
+                                                             </thead>
+                                                             <tbody>
+                                                                 <tr>
+                                                                     <td>LSR2680FC, LSR2680,NLR160-80,NLR160-80,T6227</td>
+                                                                     <td><a href="../../assets/images/momentive/ManufracturingFlowDiagram.png">https://SynthesisDiagram.png</a></td>
+                                                                     
+                                                                 </tr>
+                                                             </tbody>
+                                                         </table>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
-                                                <div class="header-pdf">
-                                                    <h6>Notification Status
-                                                    </h6>
-                                                </div>
-                                                <div class="card-body">
+
+                                            </div>
+                                            <div *ngIf="productComplianceReport && productComplianceReport.tab_content">
+                                                <div class="card-body" *ngIf="productComplianceReport.tab_content[0].checkValue">
+                                                    <h6>Notification Status</h6>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -676,12 +684,10 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="header-pdf">
+                                                <div class="card-body"  *ngIf="productComplianceReport.tab_content[1].checkValue">
                                                     <h6>AG Registration Status
                                                     </h6>
                                                     <p>EU Region</p>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -734,13 +740,9 @@
                                                     </div>
                                                 </div>
 
-
-                                                <div class="header-pdf">
+                                                <div class="card-body"  *ngIf="productComplianceReport.tab_content[1].checkValue">
                                                     <h6>US Canada
                                                     </h6>
-
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -806,13 +808,9 @@
                                                     </div>
                                                 </div>
 
-
-                                                <div class="header-pdf">
+                                                <div class="card-body"  *ngIf="productComplianceReport.tab_content[1].checkValue">
                                                     <h6>Latin America
                                                     </h6>
-
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -936,16 +934,16 @@
                                                     </div>
                                                 </div>
 
+                                            </div>
 
-                                                <div class="header-pdf">
+                                            <div *ngIf="customerCommunicationReport && customerCommunicationReport.tab_content">
+                                                <div class="card-body"  *ngIf="customerCommunicationReport.tab_content[0].checkValue">
                                                     <h6>Customer Communication
                                                     </h6>
                                                     <p>
                                                         US FDA Letter
 
                                                     </p>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <span>
@@ -964,13 +962,8 @@
                                                 </div>
 
 
-                                                <div class="header-pdf">
-                                                    <h6>EU Food Contact
-
-                                                    </h6>
-
-                                                </div>
-                                                <div class="card-body">
+                                                <div class="card-body"  *ngIf="customerCommunicationReport.tab_content[1].checkValue">
+                                                    <h6>EU Food Contact </h6>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <span>
@@ -1008,12 +1001,10 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="header-pdf">
+
+                                                <div class="card-body"  *ngIf="customerCommunicationReport.tab_content[2].checkValue">
                                                     <h6>Heavy Metal
                                                     </h6>
-
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -1053,20 +1044,28 @@
                                                                     <tr>
                                                                         <td> Arsenic(As) </td>
                                                                         <td>
-                                                                            < 0.12 PPM</td> </tr> <tr>
+                                                                            < 0.12 PPM</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td> Barium(Ba) </td>
                                                                         <td>
-                                                                            < 0.12 PPM</td> </tr> <tr>
+                                                                            < 0.12 PPM</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td> Beryillum(Be) </td>
                                                                         <td>
-                                                                            < 0.12 PPM</td> </tr> <tr>
+                                                                            < 0.12 PPM</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td> Boron(B) </td>
                                                                         <td>-</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td> Cadmium(cd) </td>
                                                                         <td>
-                                                                            < 0.12 PPM</td> </tr> <tr>
+                                                                            < 0.12 PPM</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td> Calcium(ca) </td>
                                                                         <td> 1.36 PPM</td>
                                                                     </tr>
@@ -1080,12 +1079,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="header-pdf">
+
+                                                <div class="card-body"  *ngIf="customerCommunicationReport.tab_content[3].checkValue">
                                                     <h6>Customer Communication
                                                     </h6>
 
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -1152,15 +1150,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
 
-
-                                                <div class="header-pdf">
+                                            <div *ngIf="toxicologyReport && toxicologyReport.tab_content">
+                                                <div class="card-body"  *ngIf="toxicologyReport.tab_content[0].checkValue">
                                                     <h6>Toxicology
                                                     </h6>
                                                     <p>Study Title and Date</p>
 
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -1206,14 +1203,12 @@
                                                 </div>
 
 
-                                                <div class="header-pdf">
+                                                <div class="card-body" *ngIf="toxicologyReport.tab_content[1].checkValue">
                                                     <h6>Monthly Toxicology Study List
 
                                                     </h6>
 
                                                     <p>Sealant</p>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -1276,11 +1271,8 @@
                                                 </div>
 
 
-                                                <div class="header-pdf">
-
+                                                <div class="card-body" *ngIf="toxicologyReport.tab_content[1].checkValue">
                                                     <p>Silane</p>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h5>Toxicology Silane Details</h5>
@@ -1290,12 +1282,9 @@
 
 
 
-                                                <div class="header-pdf">
-
+                                                <div class="card-body" *ngIf="toxicologyReport.tab_content[2].checkValue">
                                                     <h6>Toxicology Summary
                                                     </h6>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -1321,12 +1310,9 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="header-pdf">
-
+                                                <div class="card-body" *ngIf="toxicologyReport.tab_content[3].checkValue">
                                                     <h6>Toxicology Registration Tracker
                                                     </h6>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h6>Toxicology Registration Tracker</h6>
@@ -1334,13 +1320,14 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="header-pdf">
+                                                </div>
 
+                                                <div *ngIf="restrictedSubstanceReport && restrictedSubstanceReport.tab_content">
+                                                <div class="card-body" *ngIf="restrictedSubstanceReport.tab_content[0].checkValue">
+                                                    
                                                     <h6>Restricted Substance
                                                     </h6>
                                                     <p>GADSL</p>
-                                                </div>
-                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <table id="mytable" class="table print-friendly">
@@ -1375,161 +1362,137 @@
                                                 </div>
 
 
-
-
-                                                <div class="header-pdf">
-
+                                                <div class="card-body" *ngIf="restrictedSubstanceReport.tab_content[1].checkValue">
                                                     <h6>California Prop 65
                                                     </h6>
-                                                </div>
-                                        
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <table id="mytable" class="table print-friendly">
-                                                            <thead class="custabs-head">
-                                                                <th>Chemical</th>
-                                                                <th>Type of Toxicity</th>
-                                                                <th>Listing Mechanism</th>
-                                                                <th>CAS NO</th>
-                                                                <th>Date Listed</th>
-                                                                <th>NSRL or MADL(aeg/day)a
-                                                                </th>
-                                                                <th>% weight in SAP std Composition</th>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Chemical</th>
+                                                                    <th>Type of Toxicity</th>
+                                                                    <th>Listing Mechanism</th>
+                                                                    <th>CAS NO</th>
+                                                                    <th>Date Listed</th>
+                                                                    <th>NSRL or MADL(aeg/day)a
+                                                                    </th>
+                                                                    <th>% weight in SAP std Composition</th>
 
 
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>A-alpha-c(2-Amino-9H-pyrido[2,3-b]indole)</td>
-                                                                    <td>Cancer</td>
-                                                                    <td>AB</td>
-                                                                    <td>68083-19-2</td>
-                                                                    <td>1-Jan-90</td>
-                                                                    <td>2</td>
-                                                                    <td>10 %</td>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>A-alpha-c(2-Amino-9H-pyrido[2,3-b]indole)
+                                                                        </td>
+                                                                        <td>Cancer</td>
+                                                                        <td>AB</td>
+                                                                        <td>68083-19-2</td>
+                                                                        <td>1-Jan-90</td>
+                                                                        <td>2</td>
+                                                                        <td>10 %</td>
 
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Abiratenone acetate</td>
-                                                                    <td>Developmental, Female, Male</td>
-                                                                    <td>FR</td>
-                                                                    <td>68083-19-2</td>
-                                                                    <td>8-Apr-16</td>
-                                                                    <td>-</td>
-                                                                    <td>20 %</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Abiratenone acetate</td>
+                                                                        <td>Developmental, Female, Male</td>
+                                                                        <td>FR</td>
+                                                                        <td>68083-19-2</td>
+                                                                        <td>8-Apr-16</td>
+                                                                        <td>-</td>
+                                                                        <td>20 %</td>
 
-                                                                </tr>
+                                                                    </tr>
 
 
-                                                            </tbody>
-                                                        </table>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="header-pdf">
-
-                                                <h6>Sales Information
-                                                </h6>
-                                                <p>Sales Volume</p>
-                                            </div>
-                                        
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table id="mytable" class="table print-friendly">
-                                                        <thead class="custabs-head">
-                                                            <th>Material Number</th>
-                                                            <th>Material Description</th>
-                                                            <th>Basic Data Text</th>
-                                                            <th>Sales ORG</th>
-                                                            <th>3 years past sales(BW Filed 1)</th>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>114686</td>
-                                                                <td>LSR2680FC/DRUM KIT/400KG</td>
-                                                                <td>LSR2680FC</td>
-                                                                <td>N/A</td>
-                                                                <td>1000 Kg</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>121856</td>
-                                                                <td>LSR2680 TH/Drum kit/400Kg</td>
-                                                                <td>LSR2680</td>
-                                                                <td>Hong Kong - HK01 Momentive Hong Kong China - NG01
-                                                                    Nantong Momentive, SH01 Momentive SH Trading
-                                                                    Thailand - TH01 Momentive Thailand</td>
-                                                                <td>2000 Kg</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>131438</td>
-                                                                <td>NLR160-80/PAILKIT/88LB-40KG</td>
-                                                                <td>NLR160-80</td>
-                                                                <td>China - NG01 Nantong Momentive, SH01 Momentive SH
-                                                                    Trading</td>
-                                                                <td>3000 Kg</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>114686</td>
-                                                                <td>LSR2680FC/DRUM KIT/400KG</td>
-                                                                <td>LSR2680FC</td>
-                                                                <td>N/A</td>
-                                                                <td>1000 Kg</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    
 
 
-                                    <div class="header-pdf">
+                                                <div *ngIf="salesInformationReport && salesInformationReport.tab_content">
+                                                <div class="card-body" *ngIf="salesInformationReport.tab_content[0].checkValue">
+                                                    <h6>Sales Information
+                                                    </h6>
+                                                    <p>Sales Volume</p>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Material Number</th>
+                                                                    <th>Material Description</th>
+                                                                    <th>Basic Data Text</th>
+                                                                    <th>Sales ORG</th>
+                                                                    <th>3 years past sales(BW Filed 1)</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>114686</td>
+                                                                        <td>LSR2680FC/DRUM KIT/400KG</td>
+                                                                        <td>LSR2680FC</td>
+                                                                        <td>N/A</td>
+                                                                        <td>1000 Kg</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>121856</td>
+                                                                        <td>LSR2680 TH/Drum kit/400Kg</td>
+                                                                        <td>LSR2680</td>
+                                                                        <td>Hong Kong - HK01 Momentive Hong Kong China -
+                                                                            NG01
+                                                                            Nantong Momentive, SH01 Momentive SH Trading
+                                                                            Thailand - TH01 Momentive Thailand</td>
+                                                                        <td>2000 Kg</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>131438</td>
+                                                                        <td>NLR160-80/PAILKIT/88LB-40KG</td>
+                                                                        <td>NLR160-80</td>
+                                                                        <td>China - NG01 Nantong Momentive, SH01
+                                                                            Momentive SH
+                                                                            Trading</td>
+                                                                        <td>3000 Kg</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>114686</td>
+                                                                        <td>LSR2680FC/DRUM KIT/400KG</td>
+                                                                        <td>LSR2680FC</td>
+                                                                        <td>N/A</td>
+                                                                        <td>1000 Kg</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
 
-                                            <h6>Location Details:
-                                            </h6>
-                                           
-                                        </div>
-                                    
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h6>Manufacturing Location and Address </h6>
-                                                
-                                                <h6>Production Sites</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="header-pdf">
-
-                                            <h6>Relesed Documents
-                                            </h6>
-                                           
-                                        </div>
-                                    
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                    <table id="mytable" class="table print-friendly">
-                                                            <thead class="custabs-head">
-                                                                <th>Category</th>
-                                                                <th>Generation Variant</th>
-                                                                <th>Language</th>
-                                                                <th>Version</th>
-                                                                <th>Relesed on</th>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>ROHS Compliance</td>
-                                                                    <td>ROHS - ROHS Regulatory Document without Data</td>
-                                                                    <td>English</td>
-                                                                    <td>V1.0</td>
-                                                                    <td>10.01.2017</td>
-                                                                </tr>
-                                                                <tr>
+                                                <div *ngIf="releaseReport && releaseReport.tab_content">
+                                                <div class="card-body" *ngIf="releaseReport.tab_content[0].checkValue">
+                                                    <h6>Relesed Documents
+                                                    </h6>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="mytable" class="table print-friendly">
+                                                                <thead class="custabs-head">
+                                                                    <th>Category</th>
+                                                                    <th>Generation Variant</th>
+                                                                    <th>Language</th>
+                                                                    <th>Version</th>
+                                                                    <th>Relesed on</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>ROHS Compliance</td>
+                                                                        <td>ROHS - ROHS Regulatory Document without Data
+                                                                        </td>
+                                                                        <td>English</td>
+                                                                        <td>V1.0</td>
+                                                                        <td>10.01.2017</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td>Material safety data sheet</td>
                                                                         <td>RMSDS KR - Gen Variant for MSDS Korea</td>
                                                                         <td>English</td>
@@ -1537,35 +1500,39 @@
                                                                         <td>10.01.2018</td>
                                                                     </tr>
                                                                     <tr>
-                                                                            <td>Material safety data sheet</td>
-                                                                            <td>NLR160-80/PAILKIT/88LB-40KG</td>
-                                                                            <td>NLR160-80</td>
-                                                                            <td>China - NG01 Nantong Momentive, SH01 Momentive SH Trading</td>
-                                                                            <td>17.07.2018</td>
-                                                                        </tr>
+                                                                        <td>Material safety data sheet</td>
+                                                                        <td>NLR160-80/PAILKIT/88LB-40KG</td>
+                                                                        <td>NLR160-80</td>
+                                                                        <td>China - NG01 Nantong Momentive, SH01
+                                                                            Momentive SH Trading</td>
+                                                                        <td>17.07.2018</td>
+                                                                    </tr>
 
-                                                                        <tr>
-                                                                                <td>Material safety data sheet</td>
-                                                                                <td>MSDS KR - Gen Variant for MSDS Korea</td>
-                                                                                <td>Korean</td>
-                                                                                <td>V1.2</td>
-                                                                                <td>10.01.2018</td>
-                                                                            </tr>
+                                                                    <tr>
+                                                                        <td>Material safety data sheet</td>
+                                                                        <td>MSDS KR - Gen Variant for MSDS Korea</td>
+                                                                        <td>Korean</td>
+                                                                        <td>V1.2</td>
+                                                                        <td>10.01.2018</td>
+                                                                    </tr>
 
-                                                                            <tr>
-                                                                                    <td>Material safety data sheet</td>
-                                                                                    <td>MSDS SG - Gen Variant for MSDS Singapore</td>
-                                                                                    <td>English</td>
-                                                                                    <td>V1.0</td>
-                                                                                    <td>29.03.2017</td>
-                                                                                </tr>
-                                                            
-                                                            </tbody></table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                    <!-- <div class="header-pdf">
+                                                                    <tr>
+                                                                        <td>Material safety data sheet</td>
+                                                                        <td>MSDS SG - Gen Variant for MSDS Singapore
+                                                                        </td>
+                                                                        <td>English</td>
+                                                                        <td>V1.0</td>
+                                                                        <td>29.03.2017</td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+
+                                                <!-- <div class="header-pdf">
                                                                      
                                                                         </div>
                                                                         <div class="card-body">
@@ -1574,23 +1541,21 @@
                                                                             </div> -->
 
 
-                                    <div class="clearfix"></div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
+
                 </div>
+                    <!-- /right content -->
+                <!-- /inner container -->
             </div>
-
         </div>
-        <!-- /right content -->
-
+        <!-- /content area -->
     </div>
-    <!-- /inner container -->
-
-</div>
-</div>
-<!-- /content area -->
-
-</div>
