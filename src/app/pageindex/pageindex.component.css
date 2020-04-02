@@ -1,42 +1,50 @@
 .profile-img {
     height: 30px;
-    width:30px;
+    width: 30px;
     background: white;
-  }
-  .job {
+}
+
+.job {
     color: #666666;
     font-size: 17px;
-  }
-  .mail {
+}
+
+.mail {
     font-size: 16px;
-   }
-   .my-card
-  {
+}
+
+.my-card {
     position: absolute;
     left: 30%;
     top: -60px;
     border-radius: 50%;
-  }
-  .border-info{
+}
+
+.border-info {
     margin: 20px;
-  }
-  .card-new{
+}
+
+.card-new {
     height: 185px;
     border-radius: 0px;
     border: none;
-  }
-  .w-100 {
+}
+
+.w-100 {
     width: 100%!important;
     margin: 25px 0px 25px;
-  }
-  .icon-size{
-    font-size:8px;
-  }
-  .border-info{
+}
+
+.icon-size {
+    font-size: 8px;
+}
+
+.border-info {
     margin: 25px;
-  }
-  .basic-details-btn{
+}
+
+.basic-details-btn {
     float: right;
     cursor: pointer;
     margin: 10px;
-  }
+}

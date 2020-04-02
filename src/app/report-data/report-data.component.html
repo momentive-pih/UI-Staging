@@ -1,35 +1,19 @@
-
-    <!-- <div class="col-md-12">
-        <div class="card-body">
-            <h6 class="text-default font-weight-semibold"><span class="">Released Document:<i class="fa fa-info-circle"
-                        role="button" title="This data is from SAP"></i></span>
-            </h6>
-        </div>
-    </div> -->
-
-
-
-
-
-
-
 <div class="modal-body">
-
+    <!--Dropdown Section-->
     <div class="row">
         <div class="col-md-9">
             <h6 class="text-default font-weight-semibold mb-2">
                 <span *ngIf="released_documents">Released Documents <i class="fa fa-info-circle" role="button"
                         title="This data is from SAP"></i> </span>
-                        <span *ngIf="historical_documents">Historical Documents <i
+                <span *ngIf="historical_documents">Historical Documents <i
                             class="fa fa-info-circle" role="button"
                             title="This data is from SAP"></i></span></h6>
-                
+
         </div>
         <div class="col-md-3">
             <mat-form-field>
                 <mat-label>Documents</mat-label>
-                <mat-select name="releseDocuments" [(value)]="selectedDocuments"
-                    placeholder="Select Documents Type" (selectionChange)="selectDocumentsType($event.value)">
+                <mat-select name="releseDocuments" [(value)]="selectedDocuments" placeholder="Select Documents Type" (selectionChange)="selectDocumentsType($event.value)">
                     <mat-option *ngFor="let data of DocumentPart" [value]="data.type">
                         {{data.type}}
                     </mat-option>
@@ -37,7 +21,7 @@
             </mat-form-field>
         </div>
     </div>
-
+    <!--Alert Message and Loading section-->
     <span *ngIf="reportLoader">
         <i class="loader-class fa fa-spinner fa-spin"></i>
         <span class="loader-text">Loading Released Document data....</span>
@@ -46,15 +30,14 @@
     <span *ngIf="pihAlertMessage">
         <h5 class="loader-text">No Data Found..</h5>
     </span>
-       <div *ngIf="!reportLoader && !pihAlertMessage">
-        <p-table #dt [columns]="reportDataHead" [value]="reportDataproducts"
-            (sortFunction)="customSort($event)" [customSort]="true">
+    <!--Release Document Details-->
+    <div *ngIf="!reportLoader && !pihAlertMessage">
+        <p-table #dt [columns]="reportDataHead" [value]="reportDataproducts" (sortFunction)="customSort($event)" [customSort]="true">
             <ng-template pTemplate="caption">
                 <div class="row">
                     <div class="col-md-6">
                         <div style="text-align: left">
-                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
-                                (input)="dt.filterGlobal($event.target.value, 'contains')">
+                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -70,12 +53,9 @@
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th style="width:3.5em">S.No</th>
-                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" 
-                        [ngStyle]="{'width': col.width}">
+                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
                         {{col.header}}
-                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                            ariaLabelDesc="Activate to sort in descending order"
-                            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                     </th>
                 </tr>
             </ng-template>
@@ -91,10 +71,7 @@
                     <td class="ptable-size">{{rowData.language}}</td>
                     <td class="ptable-size">{{rowData.version}}</td>
                     <td class="ptable-size">{{rowData.released_on}}</td>
-
-                   
                 </tr>
             </ng-template>
         </p-table>
-</div>
-
+    </div>

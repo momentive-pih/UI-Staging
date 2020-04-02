@@ -1,17 +1,19 @@
 .modal-body {
-  background-color: #fff;
-  max-height: calc(100vh - 212px);
-  overflow-y: auto;
- }
- .ptable-size{
+    background-color: #fff;
+    max-height: calc(100vh - 212px);
+    overflow-y: auto;
+}
+
+.ptable-size {
     font-size: 12px;
     width: 20%;
     white-space: initial;
     word-break: break-word;
- }
- .ptable-head{
-  font-size: 12px;
-  font-weight: 600;
-  width: 20%;
-  white-space: initial;
- }
+}
+
+.ptable-head {
+    font-size: 12px;
+    font-weight: 600;
+    width: 20%;
+    white-space: initial;
+}

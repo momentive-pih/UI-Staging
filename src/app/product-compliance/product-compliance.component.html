@@ -5,125 +5,109 @@
                 <div class="slide-center">
                     <div class="list-check">
                         <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button *ngFor="let item of ProductComplianceCheck;let i = index" [value]="i"
-                                [checked]="item.name === productComplianceCheck"
-                                (change)="onChangeProductCompliance(item.name)"> {{item.name}}</mat-radio-button>
+                            <mat-radio-button *ngFor="let item of ProductComplianceCheck;let i = index" [value]="i" [checked]="item.name === productComplianceCheck" (change)="onChangeProductCompliance(item.name)"> {{item.name}}</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
             </div>
         </div>
 
-       
-        <div class="modal-body" *ngIf="complianceNotification">
-         
 
-                    <span *ngIf="ProductComplianceTabLoader">
+        <div class="modal-body" *ngIf="complianceNotification">
+            <!--Alert Message and Loading section-->
+            <span *ngIf="ProductComplianceTabLoader">
                         <i class="loader-class fa fa-spinner fa-spin"></i>
                         <span class="loader-text">Loading data....</span>
-                    </span>
-
-                    <span *ngIf="pihAlertMessage">
+            </span>
+            <span *ngIf="pihAlertMessage">
                         <h5 class="loader-text">No Data Found..</h5>
                     </span>
 
-              <div *ngIf ="!ProductComplianceTabLoader && !pihAlertMessage">
-
-                    <h6 class="text-default font-weight-semibold">Notification Status: <i class="fa fa-info-circle"
-                        role="button" title="This data is from SAP"></i></h6>
-
-                    <p-table #dt [columns]="pc_NotificationHeader"
-                        [value]="pc_NotificationData" (sortFunction)="customSort($event)" [customSort]="true">
-                        <ng-template pTemplate="caption">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div style="text-align: left">
-                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
-                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                        <button class="btb pg-button" type="button" label="All Data"
-                                            (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                    </div>
+            <!--Notification Status-->
+            <div *ngIf="!ProductComplianceTabLoader && !pihAlertMessage">
+                <h6 class="text-default font-weight-semibold">Notification Status: <i class="fa fa-info-circle" role="button" title="This data is from SAP"></i></h6>
+                <p-table #dt [columns]="pc_NotificationHeader" [value]="pc_NotificationData" (sortFunction)="customSort($event)" [customSort]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
                                 </div>
                             </div>
-                        </ng-template>
-                        <br>
-
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th style="width:3.5em">S.No</th>
-                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                    pReorderableColumn [ngStyle]="{'width': col.width}">
-                                    {{col.header}}
-                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                        ariaLabelDesc="Activate to sort in descending order"
-                                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                </th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                            <tr>
-                                <td>
-                                    {{index+1}}
-                                </td>
-                                <td class="ptable-size">
-                                    {{rowData.spec_id}}
-                                </td>
-                                <td class="ptable-size">
-                                    {{rowData.regulatory_List}}
-                                </td>
-                                <td class="ptable-size">
-                                    {{rowData.notification}}
-                                </td>
-                                <td class="ptable-size">
-                                    {{rowData.additional_Info}}
-                                </td>
-                                <td class="ptable-size">
-                                    {{rowData.usage}}
-                                </td>
-
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                
-              </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:3.5em">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr>
+                            <td>
+                                {{index+1}}
+                            </td>
+                            <td class="ptable-size">
+                                {{rowData.spec_id}}
+                            </td>
+                            <td class="ptable-size">
+                                {{rowData.regulatory_List}}
+                            </td>
+                            <td class="ptable-size">
+                                {{rowData.notification}}
+                            </td>
+                            <td class="ptable-size">
+                                {{rowData.additional_Info}}
+                            </td>
+                            <td class="ptable-size">
+                                {{rowData.usage}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
         </div>
 
+        <!--Compliance Registration-->
         <div class="modal-body" *ngIf="complianceRegistration">
-         
-                    <div class="row">
-                        <div class="col-md-9">
-                            <h6 class="text-default font-weight-semibold mb-2 "><span *ngIf="complaint_EU">EU: <i
+            <div class="row">
+                <div class="col-md-9">
+                    <h6 class="text-default font-weight-semibold mb-2 "><span *ngIf="complaint_EU">EU: <i
                                         class="fa fa-info-circle" role="button"
                                         title="This data is from Document on Shared Drive - P"></i></span>
-                                <span *ngIf="complaint_canada">US Canada: <i class="fa fa-info-circle" role="button"
+                        <span *ngIf="complaint_canada">US Canada: <i class="fa fa-info-circle" role="button"
                                         title="This data is from Document on Shared Drive - P"></i> </span>
-                                <span *ngIf="complaint_latin">Latin America : <i class="fa fa-info-circle" role="button"
+                        <span *ngIf="complaint_latin">Latin America : <i class="fa fa-info-circle" role="button"
                                         title="This data is from Document on Shared Drive - P"></i></span></h6>
-                        </div>
-                        <div class="col-md-3">
+                </div>
+                <!--Dropdown Section -->
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Region</mat-label>
+                        <mat-select name="registraionVaraible" [(value)]="selectedAGRegistrationLocation" placeholder="Select Region" (selectionChange)="selectRegionProcess($event.value)">
+                            <mat-option *ngFor="let composition of regionPart" [value]="composition.type">
+                                {{composition.type}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
 
-                            <mat-form-field>
-                                <mat-label>Region</mat-label>
-                                <mat-select name="registraionVaraible" [(value)]="selectedAGRegistrationLocation"
-                                    placeholder="Select Region" (selectionChange)="selectRegionProcess($event.value)">
-                                    <mat-option *ngFor="let composition of regionPart" [value]="composition.type">
-                                        {{composition.type}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
+            <!--EU Location-->
+            <div class="row" *ngIf="complaint_EU">
+                <div class="col-md-12">
 
-                   
-                    <div class="row" *ngIf="complaint_EU">
-                        <div class="col-md-12">
-                                         
                     <span *ngIf="ProductComplianceTabLoader">
                         <i class="loader-class fa fa-spinner fa-spin"></i>
                         <span class="loader-text">Loading data....</span>
@@ -135,23 +119,18 @@
 
                     <div *ngIf="!pihAlertMessage && !ProductComplianceTabLoader">
                         <!-- EU Composition -->
-                        <p-table #dt
-                            [columns]="complianceRegistrationEUHeader" [value]="complianceLocationRegistrationData"
-                            (sortFunction)="customSort($event)" [customSort]="true">
+                        <p-table #dt [columns]="complianceRegistrationEUHeader" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true">
                             <ng-template pTemplate="caption">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div style="text-align: left">
                                             <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                            <input type="text" class="pg-search" pInputText size="50"
-                                                placeholder="Search"
-                                                (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="ui-helper-clearfix" style="text-align: right">
-                                            <button class="btb pg-button" type="button" label="All Data"
-                                                (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
                                             <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
                                         </div>
                                     </div>
@@ -162,12 +141,9 @@
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width:2.5em">S.No</th>
-                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                        pReorderableColumn [ngStyle]="{'width': col.width}">
+                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
                                         {{col.header}}
-                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                            ariaLabelDesc="Activate to sort in descending order"
-                                            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                     </th>
                                 </tr>
                             </ng-template>
@@ -193,38 +169,33 @@
 
                     </div>
                 </div>
-                    </div>
+            </div>
+            <!--Canada Location-->
+            <div class="row" *ngIf="complaint_canada">
+                <div class="col-md-12">
 
-                 <div class="row" *ngIf="complaint_canada">
-                    <div class="col-md-12">
-
-                        <span *ngIf="ProductComplianceTabLoader">
+                    <span *ngIf="ProductComplianceTabLoader">
                             <i class="loader-class fa fa-spinner fa-spin"></i>
                             <span class="loader-text">Loading data....</span>
-                        </span>
+                    </span>
 
-                        <span *ngIf="pihAlertMessage">
+                    <span *ngIf="pihAlertMessage">
                             <h5 class="loader-text">No Data Found..</h5>
                         </span>
 
-                        <div *ngIf="!pihAlertMessage && !ProductComplianceTabLoader">
-                        <p-table  #dt
-                            [columns]="complianceRegistrationCanada_Header" [value]="complianceLocationRegistrationData"
-                            (sortFunction)="customSort($event)" [customSort]="true">
+                    <div *ngIf="!pihAlertMessage && !ProductComplianceTabLoader">
+                        <p-table #dt [columns]="complianceRegistrationCanada_Header" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true">
                             <ng-template pTemplate="caption">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div style="text-align: left">
                                             <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                            <input type="text" class="pg-search" pInputText size="50"
-                                                placeholder="Search"
-                                                (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="ui-helper-clearfix" style="text-align: right">
-                                            <button class="btb pg-button" type="button" label="All Data"
-                                                (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
                                             <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
                                         </div>
                                     </div>
@@ -235,12 +206,9 @@
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width:3.5em">S.No</th>
-                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                        [ngStyle]="{'width': col.width}">
+                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
                                         {{col.header}}
-                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                            ariaLabelDesc="Activate to sort in descending order"
-                                            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                     </th>
                                 </tr>
                             </ng-template>
@@ -266,39 +234,35 @@
                                 </tr>
                             </ng-template>
                         </p-table>
-                        </div></div>
+                    </div>
                 </div>
-
-                    <div class="row" *ngIf="complaint_latin">
-                        <div class="col-md-12">
-                        <span *ngIf="ProductComplianceTabLoader">
+            </div>
+            <!--Latin Location-->
+            <div class="row" *ngIf="complaint_latin">
+                <div class="col-md-12">
+                    <span *ngIf="ProductComplianceTabLoader">
                             <i class="loader-class fa fa-spinner fa-spin"></i>
                             <span class="loader-text">Loading data....</span>
-                        </span>
+                    </span>
 
-                        <span *ngIf="pihAlertMessage">
+                    <span *ngIf="pihAlertMessage">
                             <!-- <span class="loader-text"><img src="./assets/images/momentive/nodataAlert.png"/></span> -->
-                            <h5 class="loader-text">No Data Found..</h5>
-                        </span>
+                    <h5 class="loader-text">No Data Found..</h5>
+                    </span>
 
-                        <div *ngIf= "!pihAlertMessage && !ProductComplianceTabLoader">
-                        <p-table  #dt
-                            [columns]="complianceRegistrationLatin_Header" [value]="complianceLocationRegistrationData"
-                            (sortFunction)="customSort($event)" [customSort]="true">
+                    <div *ngIf="!pihAlertMessage && !ProductComplianceTabLoader">
+                        <p-table #dt [columns]="complianceRegistrationLatin_Header" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true">
                             <ng-template pTemplate="caption">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div style="text-align: left">
                                             <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                            <input type="text" class="pg-search" pInputText size="50"
-                                                placeholder="Search"
-                                                (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="ui-helper-clearfix" style="text-align: right">
-                                            <button class="btb pg-button" type="button" label="All Data"
-                                                (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
                                             <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
                                         </div>
                                     </div>
@@ -309,12 +273,9 @@
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th style="width:3.5em">S.No</th>
-                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                        [ngStyle]="{'width': col.width}">
+                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
                                         {{col.header}}
-                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                            ariaLabelDesc="Activate to sort in descending order"
-                                            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                     </th>
                                 </tr>
                             </ng-template>
@@ -336,10 +297,9 @@
                                 </tr>
                             </ng-template>
                         </p-table>
-                         </div>  </div>
                     </div>
-            
-            
+                </div>
+            </div>
             <div class="clearfix"></div>
         </div>
     </div>

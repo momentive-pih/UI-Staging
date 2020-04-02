@@ -76,8 +76,8 @@ export class ProductComplianceComponent implements OnInit {
   selectedSpecList: any = [];
   CategoryDetails: any = [];
   ProductComlianceDetails: any = [];
-  ProductComplianceTabLoader:boolean;
-  pihAlertMessage:boolean = false;
+  ProductComplianceTabLoader: boolean;
+  pihAlertMessage: boolean = false;
   pc_NotificationDataHeader: any = [];
   complianceLocationRegistrationData: any = [];
   locationBasedRegistration: any;
@@ -87,10 +87,7 @@ export class ProductComplianceComponent implements OnInit {
   selectedAGRegistrationLocation: string = "EU";
   selectedCompositionControl = new FormControl(this.selectedAGRegistrationLocation);
 
-  constructor(private route: ActivatedRoute,
-    private router: Router,
-    private momentiveService: MomentiveService,
-  ) {
+  constructor(private route: ActivatedRoute,private router: Router, private momentiveService: MomentiveService) {
   }
 
   ngOnInit() {
@@ -125,6 +122,7 @@ export class ProductComplianceComponent implements OnInit {
       }
     });
 
+    //Notification Header
     this.pc_NotificationDataHeader = [
       { "field": "spec_id", "header": "Specification ID", "width": "10%" },
       { "field": "regulatory_List", "header": "Regulatory List", "width": "10%" },
@@ -133,7 +131,7 @@ export class ProductComplianceComponent implements OnInit {
       { "field": "usage", "header": "Usage", "width": "10%" }
     ],
 
-
+    //AG Registration Eu Location Header
       this.complianceRegistrationDataEUHeader = [
         { "field": "spec_id", "header": "Specification ID", "width": "10%" },
         { "field": "product", "header": "product", "width": "10%" },
@@ -144,7 +142,7 @@ export class ProductComplianceComponent implements OnInit {
         { "field": "status", "header": "Status", "width": "10%" },
         { "field": "certificate", "header": "Certificate", "width": "10%" }
       ],
-
+   //AG Registration Canada Location Header
       this.complianceRegistrationDataCanada_Header = [
         { "field": "spec_id", "header": "Specification ID", "width": "10%" },
         { "field": "product", "header": "Product Name", "width": "10%" },
@@ -157,7 +155,7 @@ export class ProductComplianceComponent implements OnInit {
         { "field": "OMRI_Reneval_Date", "header": "OMRI Reneval Date", "width": "10%" },
         { "field": "PMRA", "header": "PMRA", "width": "10%" }
       ]
-
+ //AG Registration Latin Location Header
     this.complianceRegistrationDataLatin_Header = [
       { "field": "spec_id", "header": "Specification ID", "width": "10%" },
       { "field": "product", "header": "product", "width": "10%" },
@@ -171,7 +169,7 @@ export class ProductComplianceComponent implements OnInit {
 
   }
 
-
+//Notification API Call
   productComplianceNotification() {
     this.ProductComplianceTabLoader = true;
     this.pihAlertMessage = false;
@@ -202,6 +200,7 @@ export class ProductComplianceComponent implements OnInit {
     });
   }
 
+  //AG Registration API Call
   productComplianceAgRegistration(locationValue) {
     this.ProductComplianceTabLoader = true;
     this.pihAlertMessage = false;
@@ -217,12 +216,12 @@ export class ProductComplianceComponent implements OnInit {
       'Category_details': this.CategoryDetails,
     });
     console.log(this.ProductComlianceDetails)
-      if (this.locationBasedRegistration === 'EU') {
-        this.ProductComplianceTabLoader = true;
-        this.pihAlertMessage = false;
-        this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
-          console.log(data);
-          this.productdata = data;
+    if (this.locationBasedRegistration === 'EU') {
+      this.ProductComplianceTabLoader = true;
+      this.pihAlertMessage = false;
+      this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
+        console.log(data);
+        this.productdata = data;
         if (this.productdata[0].complianceRegistrationEUData.length > 0) {
           this.ProductComplianceTabLoader = false;
           this.pihAlertMessage = false;
@@ -233,16 +232,16 @@ export class ProductComplianceComponent implements OnInit {
           this.pihAlertMessage = true;
           this.ProductComplianceTabLoader = false;
         }
-      },err => {
+      }, err => {
         console.error(err);
-    });
-      }
-      if (this.locationBasedRegistration === 'canada') {
-        this.ProductComplianceTabLoader = true;
-        this.pihAlertMessage = false;
-        this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
-          console.log(data);
-          this.productdata = data;
+      });
+    }
+    if (this.locationBasedRegistration === 'canada') {
+      this.ProductComplianceTabLoader = true;
+      this.pihAlertMessage = false;
+      this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
+        console.log(data);
+        this.productdata = data;
         if (this.productdata[0].complianceRegistrationCanada_Data.length > 0) {
           this.ProductComplianceTabLoader = false;
           this.pihAlertMessage = false;
@@ -253,14 +252,14 @@ export class ProductComplianceComponent implements OnInit {
           this.pihAlertMessage = true;
           this.ProductComplianceTabLoader = false;
         }
-      },err => {
+      }, err => {
         console.error(err);
-    });
-      }
-      if (this.locationBasedRegistration === 'Latin') {
-        this.ProductComplianceTabLoader = true;
-        this.pihAlertMessage = false;
-        this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
+      });
+    }
+    if (this.locationBasedRegistration === 'Latin') {
+      this.ProductComplianceTabLoader = true;
+      this.pihAlertMessage = false;
+      this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
         this.productdata = data;
         console.log(data);
         if (this.productdata[0].complianceRegistrationLatin_Data.length > 0) {
@@ -273,9 +272,9 @@ export class ProductComplianceComponent implements OnInit {
           this.pihAlertMessage = true;
           this.ProductComplianceTabLoader = false;
         }
-      } ,err => {
+      }, err => {
         console.error(err);
-    });
+      });
     }
 
   }
@@ -292,33 +291,34 @@ export class ProductComplianceComponent implements OnInit {
       e.value.pop();
     }
   }
+
+  //Sort Functionality 
   customSort(event) {
     event.data.sort((data1, data2) => {
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+      let value1 = data1[event.field];
+      let value2 = data2[event.field];
+      let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+      if (value1 == null && value2 != null)
+        result = -1;
+      else if (value1 != null && value2 == null)
+        result = 1;
+      else if (value1 == null && value2 == null)
+        result = 0;
+      else if (typeof value1 === 'string' && typeof value2 === 'string')
+        result = value1.localeCompare(value2);
+      else
+        result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
+      return (event.order * result);
     });
-}
+  }
 
 
-  /*Product compliance*/
+  //Product compliance Tab Change Functionality
   onChangeProductCompliance(item) {
     this.ProductComplianceTabLoader = true;
     this.productComplianceCheck = item;
-    // tslint:disable-next-line: align
     if (this.productComplianceCheck === 'Notification Status') {
       this.complianceNotification = true;
       this.complianceRegistration = false;
@@ -332,7 +332,7 @@ export class ProductComplianceComponent implements OnInit {
     }
   }
 
-
+//AG Registration Dropdown select value
   selectRegionProcess(value) {
     console.log(value);
     this.regionValueCheck = value;

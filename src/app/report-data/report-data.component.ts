@@ -33,52 +33,50 @@ export class ReportDataComponent implements OnInit {
   CategoryDetails: any = [];
   reportDataDetails: any = [];
   reportLoader: boolean = true;
-  pihAlertMessage:boolean;
-  documentTypes:any;
-  historical_documents:boolean;
-  released_documents:boolean = true;
-  DocumentPart:any;
-  reportHistoryDataDataproducts:any =[]
-
+  pihAlertMessage: boolean;
+  documentTypes: any;
+  historical_documents: boolean;
+  released_documents: boolean = true;
+  DocumentPart: any;
+  reportHistoryDataDataproducts: any = []
   selectedDocuments: string = "Released Documents";
   selectedCompositionControl = new FormControl(this.selectedDocuments);
 
-  constructor(private route: ActivatedRoute,
-    private router: Router,
-    private momentiveService: MomentiveService,
+  constructor(private route: ActivatedRoute,private router: Router,private momentiveService: MomentiveService
   ) {
-
-        this.momentiveService.CategoryEvent.subscribe(data => {
-        this.releaseDocumentsPage();
-       });
+    this.momentiveService.CategoryEvent.subscribe(data => {
+      this.releaseDocumentsPage();
+    });
 
 
   }
   ngOnInit() {
 
-   this.releaseDocumentsPage()
+    this.releaseDocumentsPage()
 
-   this.DocumentPart =  [ {
-    "type" : "Released Documents",
-    "value": "Released Documents"
-  },{
-    "type" : "Historical Documents",
-    "value": "Historical Documents"
-  },],
-  
-    this.reportDataHead = [
-      { "field": "category", "header": "Category" },
-      { "field":"spec_id" ,"header": "Specification ID"},
-      { "field": "generation_Variant", "header": "Generation Variant" },
-      { "field": "language", "header": "Language" },
-      { "field": "version", "header": "Version" },
-      { "field":"released_on", "header":"Released on"}
-    ]
+    this.DocumentPart = [{
+      "type": "Released Documents",
+      "value": "Released Documents"
+    }, {
+      "type": "Historical Documents",
+      "value": "Historical Documents"
+    },],
+
+    //Report Data Header
+      this.reportDataHead = [
+        { "field": "category", "header": "Category" },
+        { "field": "spec_id", "header": "Specification ID" },
+        { "field": "generation_Variant", "header": "Generation Variant" },
+        { "field": "language", "header": "Language" },
+        { "field": "version", "header": "Version" },
+        { "field": "released_on", "header": "Released on" }
+      ]
   }
 
+  //Release Document API Call
   releaseDocumentsPage() {
     this.reportLoader = true;
-    this.reportDataDetails =[];
+    this.reportDataDetails = [];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     console.log(this.selectedSpecList);
     this.CategoryDetails = this.momentiveService.ProductCategoryData;
@@ -92,29 +90,29 @@ export class ReportDataComponent implements OnInit {
       console.log(data);
       this.productdata = data;
       console.log(this.productdata);
-      if(this.productdata.length > 0){
+      if (this.productdata.length > 0) {
         this.reportLoader = false;
         this.pihAlertMessage = false;
-        this.reportHistoryDataDataproducts =  this.productdata; 
+        this.reportHistoryDataDataproducts = this.productdata;
         console.log(this.reportHistoryDataDataproducts);
-        this.reportDataproducts = this.reportHistoryDataDataproducts.filter((element) => (element.status  === 'Released'))
+        this.reportDataproducts = this.reportHistoryDataDataproducts.filter((element) => (element.status === 'Released'))
         console.log(this.reportDataproducts);
       }
       else {
         this.pihAlertMessage = true;
         this.reportLoader = false;
       }
-    
+
     }, err => {
       console.error(err);
     });
   }
 
 
-
+//Historical Document API call
   historicalDocumentsPage() {
     this.reportLoader = true;
-    this.reportDataDetails =[];
+    this.reportDataDetails = [];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     console.log(this.selectedSpecList);
     this.CategoryDetails = this.momentiveService.ProductCategoryData;
@@ -127,23 +125,24 @@ export class ReportDataComponent implements OnInit {
     this.momentiveService.getReportDocuments(this.reportDataDetails).subscribe(data => {
       console.log(data);
       this.productdata = data;
-      if(this.productdata.length > 0){
+      if (this.productdata.length > 0) {
         this.reportLoader = false;
         this.pihAlertMessage = false;
-        this.reportHistoryDataDataproducts =  this.productdata; 
-        this.reportDataproducts = this.reportHistoryDataDataproducts.filter((report) => (report.status  === 'Historical'))
+        this.reportHistoryDataDataproducts = this.productdata;
+        this.reportDataproducts = this.reportHistoryDataDataproducts.filter((report) => (report.status === 'Historical'))
         console.log(this.reportDataproducts);
       }
       else {
         this.pihAlertMessage = true;
         this.reportLoader = false;
       }
-    
+
     }, err => {
       console.error(err);
     });
   }
- 
+
+  //Dropdown select Function
   selectDocumentsType(value) {
     console.log(value);
     this.documentTypes = value;
@@ -155,29 +154,30 @@ export class ReportDataComponent implements OnInit {
       this.historical_documents = false;
       this.released_documents = true;
       this.releaseDocumentsPage();
-    } 
+    }
   }
 
+  //sorting  Functionality
   customSort(event) {
     event.data.sort((data1, data2) => {
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+      let value1 = data1[event.field];
+      let value2 = data2[event.field];
+      let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+      if (value1 == null && value2 != null)
+        result = -1;
+      else if (value1 != null && value2 == null)
+        result = 1;
+      else if (value1 == null && value2 == null)
+        result = 0;
+      else if (typeof value1 === 'string' && typeof value2 === 'string')
+        result = value1.localeCompare(value2);
+      else
+        result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
+      return (event.order * result);
     });
-}
+  }
 
 
   onItemSelect(item: any) {

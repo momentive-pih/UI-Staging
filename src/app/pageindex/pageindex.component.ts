@@ -20,6 +20,7 @@ export class PageindexComponent implements OnInit {
 
   ngOnInit() {
 
+    //Categories index Details API call 
     this.momentiveService.getSearchData().subscribe(data => {
       this.productData = data;
       this.PageIndexData = this.productData.sidebarData;

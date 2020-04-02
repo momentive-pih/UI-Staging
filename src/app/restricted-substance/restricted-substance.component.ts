@@ -45,8 +45,8 @@ export class RestrictedSubstanceComponent implements OnInit {
   restrictedLoader: boolean = true;
   pihAlertMessage: boolean = false;
   restrictedCaliforniaTableHeader: any = [];
-  restrictedCaliforniaDataHeader:any=[];
-  restrictedGASDLDataHeader:any=[];
+  restrictedCaliforniaDataHeader: any = [];
+  restrictedGASDLDataHeader: any = [];
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -76,32 +76,32 @@ export class RestrictedSubstanceComponent implements OnInit {
       console.error(err);
     });
 
-
+//GASDL Header Section
     this.restrictedGASDLDataHeader = [
       { "field": "substance", "header": "Substance" },
-      { "field": "spec_Id", "header": "Specification ID"},
-      { "field": "cas_NO", "header": "CAS RN"},
-      { "field": "class_action", "header": "Class Sl FIC Action"},
-      { "field": "reason_Code", "header": "Reason Code"},
-      { "field": "source", "header": "Source(Legal Requirement Regulations)"},
-      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)"},
+      { "field": "spec_Id", "header": "Specification ID" },
+      { "field": "cas_NO", "header": "CAS RN" },
+      { "field": "class_action", "header": "Class Sl FIC Action" },
+      { "field": "reason_Code", "header": "Reason Code" },
+      { "field": "source", "header": "Source(Legal Requirement Regulations)" },
+      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)" },
       { "field": "weight_Composition", "header": "% Weight in SAP std Composition" }
     ]
 
-
+//California Header Section
     this.restrictedCaliforniaDataHeader = [
-      { "field": "chemical", "header": "Chemical"},
-      { "field": "type_Toxicity", "header": "Type of Toxicity"},
-      { "field": "listing_Mechanism", "header": "Listing Mechanism"},
-      { "field": "cas_NO", "header": "CAS NO"},
-      { "field": "date_Listed", "header": "Date Listed"},
-      { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a"},
-      { "field": "weight_Composition", "header": "% Weight in SAP std Composition"}
+      { "field": "chemical", "header": "Chemical" },
+      { "field": "type_Toxicity", "header": "Type of Toxicity" },
+      { "field": "listing_Mechanism", "header": "Listing Mechanism" },
+      { "field": "cas_NO", "header": "CAS NO" },
+      { "field": "date_Listed", "header": "Date Listed" },
+      { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a" },
+      { "field": "weight_Composition", "header": "% Weight in SAP std Composition" }
     ]
 
   }
 
-
+//ResitrictedSubstance  GASDL API call
   restrictedSubstancePage() {
     this.RestrictedInformationDetails = [];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
@@ -114,9 +114,9 @@ export class RestrictedSubstanceComponent implements OnInit {
     });
     console.log(this.RestrictedInformationDetails)
     this.momentiveService.getRestrictedSubstance(this.RestrictedInformationDetails).subscribe(data => {
-         console.log(data);
-         this.restrictedLoader = true;
-        this.productdata = data;
+      console.log(data);
+      this.restrictedLoader = true;
+      this.productdata = data;
       if (this.productdata.restrictedGASDLData.length > 0) {
         this.restrictedLoader = false;
         this.pihAlertMessage = false;
@@ -133,7 +133,7 @@ export class RestrictedSubstanceComponent implements OnInit {
   }
 
 
-
+//Restricted Substance Tab Change function
   onChangeRestricted(item) {
     this.restrictedSubstanceTab = item;
     if (this.restrictedSubstanceTab === 'GADSL') {
@@ -174,26 +174,27 @@ export class RestrictedSubstanceComponent implements OnInit {
     }
   }
 
+  //Sorting Functionality
   customSort(event) {
     event.data.sort((data1, data2) => {
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+      let value1 = data1[event.field];
+      let value2 = data2[event.field];
+      let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+      if (value1 == null && value2 != null)
+        result = -1;
+      else if (value1 != null && value2 == null)
+        result = 1;
+      else if (value1 == null && value2 == null)
+        result = 0;
+      else if (typeof value1 === 'string' && typeof value2 === 'string')
+        result = value1.localeCompare(value2);
+      else
+        result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
+      return (event.order * result);
     });
-}
+  }
 
   onItemSelect(item: any) {
     console.log(item);

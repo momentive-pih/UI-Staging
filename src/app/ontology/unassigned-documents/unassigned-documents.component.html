@@ -1,71 +1,71 @@
-
 <div class="container">
-  <br>
- <div class="row" *ngIf="ontologyassignedDocument">
-  <div class="col-md-12">
-    <i class="loader-class fa fa-spinner fa-spin"></i>
-    <span class="loader-text">Loading data....</span>
-  </div>
-</div> 
+    <br>
+    <!--Loading Section-->
+    <div class="row" *ngIf="ontologyassignedDocument">
+        <div class="col-md-12">
+            <i class="loader-class fa fa-spinner fa-spin"></i>
+            <span class="loader-text">Loading data....</span>
+        </div>
+    </div>
 </div>
-     
 
-     <div id="content" *ngIf="!ontologyassignedDocument">
-      <div class="row">
+<!--List Of Unassigned Document-->
+<div id="content" *ngIf="!ontologyassignedDocument">
+    <div class="row">
         <div class="col-md-6">
-          <h5>All UnAssigned Documents</h5>
+            <h5>All UnAssigned Documents</h5>
         </div>
         <div class="col-md-6 mr-r">
-          <button class="docs-btn" (click)="expand()">Show All</button>
-          <button class="docs-btn" (click)="collapse()">Hide All</button>
+            <button class="docs-btn" (click)="expand()">Show All</button>
+            <button class="docs-btn" (click)="collapse()">Hide All</button>
         </div>
 
-      </div><br>
-                    <div class="row">
-                        <div class="col-md-12 col-md-offset-2"  *ngFor="let data of ontologyFileDocuments;let i = index">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                      <div class="panel panel-primary">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                          <h6 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+data.category"  aria-expanded="true" aria-controls="collapseOne">
+    </div><br>
+    <div class="row">
+        <div class="col-md-12 col-md-offset-2" *ngFor="let data of ontologyFileDocuments;let i = index">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h6 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+data.category" aria-expanded="true" aria-controls="collapseOne">
                               {{data.category}}
                             </a>
-                          </h6>
-                        </div>
-                        <div id="{{data.category}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                          <div class="panel-body">
+                        </h6>
+                    </div>
+                    <div id="{{data.category}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
                             <table class="table table-striped table-bordered">
-                              <thead>
-                                  <tr>
-                                          <th>S.No</th>
-                                          <th>Created Date</th>
-                                          <th>Product Name</th>
-                                          <th>Documents Name</th>
-      
-                                      <th class="td-actions">Actions</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                            <tr  *ngFor="let each of data[data.category];let i = index">
-                              <td>{{i+1}}</td>
-                              <td>{{each.createdDate}}</td>
-                              <td>{{each.productName}}</td>
-                              <td (click)="ontologyUnassignedDocuments(each.id,data.category,each.productName)"> <img class="pdf-img" src="https://www.techadvisor.co.uk/cmsdata/features/3679232/how-to-extract-pages-from-a-pdf-thumb_thumb1200_4-3.jpg"><a class="doc-link"> {{each.fileName}}</a></td>
-                            
-                          <td class="td-actions ontology-action">
-                              <button class="btn sm-btn"  (click)="ontologyUnassignedDocuments(each.id,data.category,each.productName)">
-                                      <i class="fa fa-eye"></i> Preview</button>	&nbsp;					
-                             <button class="btn sm-btn">
-                                  <i class="icon-download"></i> Download</button>							
-                            
-                          </td>
-                      </tr></tbody></table>
-                          </div>
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Created Date</th>
+                                        <th>Product Name</th>
+                                        <th>Documents Name</th>
+
+                                        <th class="td-actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let each of data[data.category];let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{each.createdDate}}</td>
+                                        <td>{{each.productName}}</td>
+                                        <td (click)="ontologyUnassignedDocuments(each.id,data.category,each.productName)"> <img class="pdf-img" src="https://www.techadvisor.co.uk/cmsdata/features/3679232/how-to-extract-pages-from-a-pdf-thumb_thumb1200_4-3.jpg"><a class="doc-link"> {{each.fileName}}</a></td>
+
+                                        <td class="td-actions ontology-action">
+                                            <button class="btn sm-btn" (click)="ontologyUnassignedDocuments(each.id,data.category,each.productName)">
+                                      <i class="fa fa-eye"></i> Preview</button> &nbsp;
+                                            <button class="btn sm-btn">
+                                  <i class="icon-download"></i> Download</button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                      </div>
-                 
-              
-                      </div>
                     </div>
-                    </div>
-                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

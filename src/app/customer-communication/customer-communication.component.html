@@ -5,78 +5,66 @@
                 <div class="slide-center">
                     <div class="list-check">
                         <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button *ngFor="let item of customerCommunicationChecks;let i = index" [value]="i"
-                                [checked]="item.name === customerCommunicationTab"
-                                (change)="onChangeCommunication(item.name)"> {{item.name}}</mat-radio-button>
+                            <mat-radio-button *ngFor="let item of customerCommunicationChecks;let i = index" [value]="i" [checked]="item.name === customerCommunicationTab" (change)="onChangeCommunication(item.name)"> {{item.name}}</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-body" *ngIf="usFDA">
-
+            <!--LOADING OPTION SECTION-->
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
             </span>
-
+            <!--NO DATA FOUND SECTION-->
             <span *ngIf="pihAlertMessage">
                 <h5 class="loader-text">No Data Found..</h5>
             </span>
 
+            <!--USFDA CODE SECTION-->
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage && !USFDADetailDataPage">
-                <h6 class="text-default font-weight-semibold">US FDA Letter: <i class="fa fa-info-circle" role="button"
-                        title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
-              <div class="row">
-                <div class="col-md-12">
-                      <!-- <h5 class="text-default font-weight-semibold">US-FDA Documents</h5> -->
-                    <div class="box">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th><b>S.NO</b></th>
-                                    <th><b>Date of Issue</b></th>
-                                    <th><b>Product Name</b></th>
-                                    <th><b>Document Name</b></th>
-                                    <td>Action</td>
+                <h6 class="text-default font-weight-semibold">US FDA Letter: <i class="fa fa-info-circle" role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><b>S.NO</b></th>
+                                        <th><b>Date of Issue</b></th>
+                                        <th><b>Product Name</b></th>
+                                        <th><b>Document Name</b></th>
+                                        <td>Action</td>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor ="let data of USFDAData; let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{data.createdDate}}</td>
-                                    <td>{{data.productName}}</td>
-                                    <td (click)="documentUSFDAPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
-                                     <td><button class="btn btn-momentive" (click)="documentUSFDAPreview(data)">Preview</button>&nbsp;<button class="btn btn-momentive">Download</button></td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of USFDAData; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.createdDate}}</td>
+                                        <td>{{data.productName}}</td>
+                                        <td (click)="documentUSFDAPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
+                                        <td><button class="btn btn-momentive" (click)="documentUSFDAPreview(data)">Preview</button>&nbsp;<button class="btn btn-momentive">Download</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-
-                </div>
-
-
             </div>
 
 
-                 
-            <!--US-FDA Detail PAge-->
 
-                <div *ngIf="USFDADetailDataPage">
-                    <h6 class="text-default font-weight-semibold">US FDA Documents -<span>{{filename}}</span></h6>
-                  <div class="row">
+            <!--US FDA DETAIL PAGE-->
 
+            <div *ngIf="USFDADetailDataPage">
+                <h6 class="text-default font-weight-semibold">US FDA Documents -<span>{{filename}}</span></h6>
+                <div class="row">
                     <div class="col-md-6">
                         <label class="text-default font-weight-semibold">Document Panel</label>
                         <div>
-                                <embed class="food-document" alt="Thumbnail [200x250]"  style="width:550px; height:700px;"
-                                [src]="Url" type="application/pdf"
-                                >
-                        
+                            <embed class="food-document" alt="Thumbnail [200x250]" style="width:550px; height:700px;" [src]="Url" type="application/pdf">
                         </div>
                     </div>
 
@@ -96,12 +84,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
 
-        </div>
-  
+        <!--EU FOOD CONTACT SECTION-->
+
         <div class="modal-body" *ngIf="EuFoodContact">
-
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
@@ -111,54 +99,47 @@
                 <h5 class="loader-text">No Data Found..</h5>
             </span>
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage && !EUFOODdetailDataPage">
-                <h6 class="text-default font-weight-semibold">Eu Food Contact: <i class="fa fa-info-circle"
-                    role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
-              <div class="row">
-                <div class="col-md-12">
-                      <!-- <h5 class="text-default font-weight-semibold">US-FDA Documents</h5> -->
-                    <div class="box">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th><b>S.NO</b></th>
-                                    <th><b>Date of Issue</b></th>
-                                    <th><b>Product Name</b></th>
-                                    <th><b>Document Name</b></th>
-                                    <td>Action</td>
+                <h6 class="text-default font-weight-semibold">Eu Food Contact: <i class="fa fa-info-circle" role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><b>S.NO</b></th>
+                                        <th><b>Date of Issue</b></th>
+                                        <th><b>Product Name</b></th>
+                                        <th><b>Document Name</b></th>
+                                        <td>Action</td>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor ="let data of EUFoodData; let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{data.createdDate}}</td>
-                                    <td>{{data.productName}}</td>
-                                    <td (click)="documentsEUFoodPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
-                                     <td><button class="btn btn-momentive" (click)="documentsEUFoodPreview(data)">Preview</button>&nbsp;<button class="btn btn-momentive">Download</button></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of EUFoodData; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.createdDate}}</td>
+                                        <td>{{data.productName}}</td>
+                                        <td (click)="documentsEUFoodPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
+                                        <td><button class="btn btn-momentive" (click)="documentsEUFoodPreview(data)">Preview</button>&nbsp;<button class="btn btn-momentive">Download</button></td>
 
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
 
+                        </div>
                     </div>
                 </div>
-
-                </div>
-
-
             </div>
 
-            <!--EU Food Contact Detail Page-->
+            <!--EU FOOD CONTACT DETAIL SECTION-->
             <div *ngIf="EUFOODdetailDataPage">
-                <h6 class="text-default font-weight-semibold">Eu Food Contact Document - <i class="fa fa-info-circle"
-                        role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
-                    <p>{{filename}}</p>
+                <h6 class="text-default font-weight-semibold">Eu Food Contact Document - <i class="fa fa-info-circle" role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
+                <p>{{filename}}</p>
                 <div class="row">
                     <div class="col-md-6">
                         <label class="text-default font-weight-semibold">Document Panel</label>
                         <div>
-                            <embed class="food-document" alt="Thumbnail [200x250]"
-                            [src]="Url" type="application/pdf" style="width:550px; height:600px;">
+                            <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:550px; height:600px;">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -166,27 +147,26 @@
                         <label class="text-default font-weight-semibold">Result Panel</label>
                         <div class="box">
 
-                <table class="table table-bordered table-bc">
+                            <table class="table table-bordered table-bc">
                                 <thead>
                                     <th>Keys </th>
                                     <th>Values</th>
                                 </thead>
                                 <tbody>
-                                
-                            <tr *ngFor="let data of Extract_Result | keyvalue : intialSort; let i = index">
-                                <td width="20%"><b>{{data.key}}</b></td>
-                                <td width="65%">
-                                    <textarea class="form-control">{{data.value}}</textarea></td>
-                             
-                            </tr>
-                        </tbody>
-                    </table>
+                                    <tr *ngFor="let data of Extract_Result | keyvalue : intialSort; let i = index">
+                                        <td width="20%"><b>{{data.key}}</b></td>
+                                        <td width="65%">
+                                            <textarea class="form-control">{{data.value}}</textarea></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!--HEAVY METAL SECTION-->
         <div class="modal-body" *ngIf="heavyMetals">
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
@@ -197,28 +177,25 @@
                 <h5 class="loader-text">No Data Found..</h5>
             </span>
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage">
-                <h6 class="text-default font-weight-semibold">Heavy Metals: <i class="fa fa-info-circle" role="button"
-                        title="This data is from Document on Shared Drive - P"></i></h6>
+                <h6 class="text-default font-weight-semibold">Heavy Metals: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box">
                             <table class="table">
                                 <tbody>
                                     <tr *ngFor="let product of HeavyMetalsData[0] | keyvalue ">
-                                         <td><b>{{product.key}}</b></td>
-                                         <td>{{product.value}}</td>
-                                </tr>
+                                        <td><b>{{product.key}}</b></td>
+                                        <td>{{product.value}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
 
-
+        <!--COMMUNICATION HISTORY SECTION-->
         <div class="modal-body" *ngIf="communicationHistory">
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
@@ -230,26 +207,18 @@
             </span>
 
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage">
-                <h6 class="text-default font-weight-semibold">Communication History:<i class="fa fa-info-circle"
-                        role="button" title="This data is from SFDC"></i></h6>
-
-                <p-table #dt [columns]="CommunicationHistoryHead" [value]="CommunicationHistoryData"
-                    dataKey="case_number" (sortFunction)="customSort($event)" [customSort]="true" 
-                   >
-
+                <h6 class="text-default font-weight-semibold">Communication History:<i class="fa fa-info-circle" role="button" title="This data is from SFDC"></i></h6>
+                <p-table #dt [columns]="CommunicationHistoryHead" [value]="CommunicationHistoryData" dataKey="case_number" (sortFunction)="customSort($event)" [customSort]="true">
                     <ng-template pTemplate="caption">
                         <div class="row">
                             <div class="col-md-6" style="text-align: left">
-
                                 <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
-                                    (input)="dt.filterGlobal($event.target.value,'contains')">
+                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value,'contains')">
                             </div>
                             <div class="col-md-6" style="text-align: right">
 
                                 <div class="ui-helper-clearfix" style="text-align: right">
-                                    <button class="btb pg-button" type="button" label="All Data"
-                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
                                     <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
                                     <!-- <button class="btb pg-button" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o">&nbsp;Export CSV Data</i></button> -->
                                     <!-- <button class="btb pg-button" ><i class="fa fa-file-excel-o">&nbsp;Export CSV
@@ -259,12 +228,11 @@
                         </div>
                     </ng-template>
 
-
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                          
-                            <th class="ptable-head"*ngFor="let col of columns" [pSortableColumn]="col.field">
-                                {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
                             </th>
                         </tr>
                     </ng-template>
@@ -297,8 +265,7 @@
                                                 <b>Text Body:</b> {{each.text_Body}}
                                             </div>
                                             <div class="ui-g-12">
-                                                <b>Attached Documents:</b><a href=""
-                                                    target="_blank">{{each.attached_Docs}}</a>
+                                                <b>Attached Documents:</b><a href="" target="_blank">{{each.attached_Docs}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -309,7 +276,6 @@
                 </p-table>
             </div>
             <div class="clearfix"></div>
-
         </div>
     </div>
 </div>

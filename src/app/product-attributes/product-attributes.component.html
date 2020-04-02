@@ -5,9 +5,7 @@
                 <div class="slide-center">
                     <div class="list-check">
                         <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button *ngFor="let item of productAttributeCheck ;let i = index" [value]="i"
-                                [checked]="item.name === productAttributesCheck"
-                                (change)="onChangeProductAttribute(item.name)"> {{item.name}}</mat-radio-button>
+                            <mat-radio-button *ngFor="let item of productAttributeCheck ;let i = index" [value]="i" [checked]="item.name === productAttributesCheck" (change)="onChangeProductAttribute(item.name)"> {{item.name}}</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -15,22 +13,21 @@
 
         </div>
         <div class="modal-body">
+            <!--Alert Meaasge and Loading Section-->
             <div *ngIf="primaryInformtionTypes">
-
-
-                <span *ngIf="ProductComplianceLoader">
+                <span *ngIf="ProductAttributeLoader">
                     <i class="loader-class fa fa-spinner fa-spin"></i>
                     <span class="loader-text">Loading data....</span>
                 </span>
-
                 <span *ngIf="pihAlertMessage">
                     <h5 class="loader-text">No Data Found..</h5>
                 </span>
-                <div *ngIf="!ProductComplianceLoader && !pihAlertMessage">
+
+                <!--Basic Information and Product Application-->
+                <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
                     <div class="row card-innerProduct-body">
                         <div class="col-md-12">
-                            <h6 class="card-subtitle mb-2 text-default font-weight-semibold ">Product Identification: <i
-                                    class="fa fa-info-circle" title="This data is from SAP"></i></h6>
+                            <h6 class="card-subtitle mb-2 text-default font-weight-semibold ">Product Identification: <i class="fa fa-info-circle" title="This data is from SAP"></i></h6>
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -40,9 +37,6 @@
                                             <th style="width:20%">Specifiction Id</th>
                                             <th style="width:20%">Product Name</th>
                                             <th style="width:20%">Relabels</th>
-
-
-
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let data of primaryBasicDetails; let i = index">
@@ -54,15 +48,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                     <br>
                     <div class="card-innerProduct-body" *ngIf="potentialAPPData">
                         <h5>Product Application</h5>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table">
@@ -76,304 +67,209 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr *ngFor="let each of PotentialApplicationDetails ;let i = index">
-                                        <td>{{i+1}}</td>
-                                        <td>{{each.product}}</td>
-                                        <td style="width:70%"> <a data-fancybox  data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{each.prod_App}}">{{each.prod_App}}</a></td>
-
-
-                                        
-                                        <td class="td-actions">
-                                                    <span class ="docs-btn"><a href="{{each.prod_App}}"
+                                        <tr *ngFor="let each of PotentialApplicationDetails ;let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{each.product}}</td>
+                                            <td style="width:70%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{each.prod_App}}">{{each.prod_App}}</a></td>
+                                            <td class="td-actions">
+                                                <span class="docs-btn"><a href="{{each.prod_App}}"
                                                         download><i class="fa fa-share">
                                                             </i> Download</a></span>
-                                        </td>
-
-                                    </tr></tbody>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-
-                                <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading" role="tab" id="headingOne">
-                                            <h6 class="panel-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse"
-                                                    data-parent="#accordion" [attr.href]="'#'+data.spec_Id"
-                                                    aria-expanded="true" aria-controls="collapseOne">
-                                                    Specification ID - {{data.spec_Id}}
-                                                </a>
-                                            </h6>
-                                        </div>
-                                        <div id="{{data.spec_Id}}" class="panel-collapse collapse" role="tabpanel"
-                                            aria-labelledby="headingOne">
-                                            <div class="panel-body">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>S.No</th>
-                                                            <th>Product Name</th>
-                                                            <th>Product Application</th>
-
-                                                            <th class="td-actions">Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr *ngFor="let each of data[data.spec_Id] ;let i = index">
-                                                            <td>{{i+1}}</td>
-                                                            <td>{{each.product}}</td>
-                                                            <td style="width:40%"> <a class="doc-link"
-                                                                    href="{{each.prod_App}}" target="_blank">{{each.prod_App}}</a></td>
-
-                                                            <td class="td-actions">
-                                                                <button class="btn sm-btn"> <a class="doc-link"
-                                                                    href="{{each.prod_App}}" target="_blank"></a>
-                                                                    <i class="fa fa-eye"></i> Preview</button> &nbsp;
-                                                                <button class="btn sm-btn" downlaod
-                                                                    href="https://www.techadvisor.co.uk/cmsdata/features/3679232/how-to-extract-pages-from-a-pdf-thumb_thumb1200_4-3.jpg" target="_blank">
-                                                                    <i class="icon-download"></i> Download</button>
-
-                                                            </td>
-
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        <div *ngIf="ghsLabeling">
-
-
-            <span *ngIf="ProductComplianceLoader">
+            <!--GHS Labeling Section-->
+            <div *ngIf="ghsLabeling">
+                <span *ngIf="ProductAttributeLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
-            </span>
+                </span>
 
-            <span *ngIf="pihAlertMessage">
+                <span *ngIf="pihAlertMessage">
                 <h5 class="loader-text">No Data Found..</h5>
             </span>
-            <div *ngIf="!ProductComplianceLoader && !pihAlertMessage">
-                <h6 class="text-default font-weight-semibold">GHS Labeling: <i class="fa fa-info-circle" role="button"
-                        title="This data is from SAP"></i></h6>
-                <p-table #dt [columns]="ghsLabelingHeader" [value]="ghsLabelingData" (sortFunction)="customSort($event)"
-                    [customSort]="true">
-                    <ng-template pTemplate="caption">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div style="text-align: left">
+                <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
+                    <h6 class="text-default font-weight-semibold">GHS Labeling: <i class="fa fa-info-circle" role="button" title="This data is from SAP"></i></h6>
+                    <p-table #dt [columns]="ghsLabelingHeader" [value]="ghsLabelingData" (sortFunction)="customSort($event)" [customSort]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div style="text-align: left">
 
-                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
-                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ui-helper-clearfix" style="text-align: right">
+                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="ui-helper-clearfix" style="text-align: right">
-                                    <button class="btb pg-button" type="button" label="All Data"
-                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                        </ng-template>
+                        <br>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width:3.5em">S.No</th>
+                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                    {{col.header}}
+                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
 
-                                </div>
-                            </div>
-                        </div>
-                    </ng-template>
-                    <br>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                            <tr>
+                                <td>
+                                    {{index+1}}
+                                </td>
+                                <td>
+                                    {{rowData.spec_Id}}
+                                </td>
+                                <td>
+                                    {{rowData.regulatory_Basis}}
+                                </td>
+                                <td>
+                                    {{rowData.usage}}
+                                </td>
+                                <td>
+                                    <span *ngIf="rowData.symbols != null"><img src ="{{rowData.symbols}}" width="50px" height="50px"></span>
+                                    <span *ngIf="rowData.symbols === null">None</span>
 
-                    <ng-template pTemplate="header" let-columns>
-                        <tr>
-                            <th style="width:3.5em">S.No</th>
-                            <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                pReorderableColumn [ngStyle]="{'width': col.width}">
-                                {{col.header}}
-                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                    ariaLabelDesc="Activate to sort in descending order"
-                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                            </th>
-                        </tr>
-                    </ng-template>
-                   
-                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                        <tr>
-                            <td>
-                                {{index+1}}
-                            </td>
-                            <td>
-                                {{rowData.spec_Id}}
-                            </td>
-                            <td>
-                                {{rowData.regulatory_Basis}}
-                            </td>
-                            <td>
-                                {{rowData.usage}}
-                            </td>
-                            <td>
-                               <span *ngIf = "rowData.symbols != null"><img src ="{{rowData.symbols}}" width="50px" height="50px"></span> 
-                               <span *ngIf = "rowData.symbols === null">None</span>
-
-                            </td>
-                            <td>
-                                {{rowData.signal_Word}}
-                            </td>
-                            <td>
-                                {{rowData.hazard_Statements}}
-                            </td>
-                            <td>
-                                {{rowData.prec_Statements}}
-                            </td>
-                            <td>
-                                {{rowData.additional_Information}}
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
+                                </td>
+                                <td>
+                                    {{rowData.signal_Word}}
+                                </td>
+                                <td>
+                                    {{rowData.hazard_Statements}}
+                                </td>
+                                <td>
+                                    {{rowData.prec_Statements}}
+                                </td>
+                                <td>
+                                    {{rowData.additional_Information}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
             </div>
-        </div>
-
-        <div *ngIf="structureAndFormulaTypes">
-
-            <span *ngIf="ProductComplianceLoader">
+            <!--Structure and Formulas-->
+            <div *ngIf="structureAndFormulaTypes">
+                <span *ngIf="ProductAttributeLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
-            </span>
+                </span>
 
-            <span *ngIf="pihAlertMessage">
+                <span *ngIf="pihAlertMessage">
                 <h5 class="loader-text">No Data Found..</h5>
-            </span>
-
-            <div *ngIf="!ProductComplianceLoader && !pihAlertMessage">
-
-                <div class="row" *ngIf="chemicalStructureTable.length > 0">
-                    <div class="col-md-12">
-                        <h6 class="text-default font-weight-semibold mb-2 mh-2">Chemical Structure: <i
-                                class="fa fa-info-circle" role="button"
-                                title="This data is from Document on Shared Drive - P"></i></h6>
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Specification ID</th>
-                                    <th>Product Type</th>
-                                    <th>Product</th>
-                                    <th>CAS Diagram</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let data of chemicalStructureTable ;let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{data.spec_Id}}</td>
-                                    <td>{{data.product_Type}}</td>
-                                    <td>{{data.product}}</td>
-                                    <td style="width:40%"> 
-                                        <a data-fancybox  data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{data.file_Path}}">
+              </span>
+                <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
+                    <div class="row" *ngIf="chemicalStructureTable.length > 0">
+                        <div class="col-md-12">
+                            <h6 class="text-default font-weight-semibold mb-2 mh-2">Chemical Structure: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Specification ID</th>
+                                        <th>Product Type</th>
+                                        <th>Product</th>
+                                        <th>CAS Diagram</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of chemicalStructureTable ;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.spec_Id}}</td>
+                                        <td>{{data.product_Type}}</td>
+                                        <td>{{data.product}}</td>
+                                        <td style="width:40%">
+                                            <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">
                                            {{data.file_Path}}
-                                        </a>  
-                                        
-                                       </td>
+                                        </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" *ngIf="molecularFormulaTable.length > 0">
+                        <div class="col-md-12">
+                            <h6 class="text-default font-weight-semibold mb-2 mh-2">Molecular Formula: <i class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i></h6>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Specification ID</th>
+                                        <th>Product Type</th>
+                                        <th>Product</th>
+                                        <th>CAS Diagram</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of molecularFormulaTable;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.spec_Id}}</td>
+                                        <td>{{data.product_Type}}</td>
+                                        <td>{{data.product}}</td>
+                                        <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" *ngIf="molecularWeightTable.length > 0">
+                        <div class="col-md-12">
+                            <h6 class="text-default font-weight-semibold mb-2 mh-2 ">Molecular Weight:<i class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i>
+                            </h6>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Specification ID</th>
+                                        <th>Product</th>
+                                        <th>Product Type</th>
+                                        <th>Moelcular Weight</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of molecularWeightTable ;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.spec_Id}}</td>
+                                        <td>{{data.product}}</td>
+                                        <td>{{data.product_Type}}</td>
+                                        <td>{{data.moelcular_Weight}}</td>
 
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <span *ngIf="molecularWeightTable.length < 0">No Data Found</span>
+                        </div>
                     </div>
                 </div>
-
-
-                <br>
-                <div class="row" *ngIf="molecularFormulaTable.length > 0">
-                    <div class="col-md-12">
-                        <h6 class="text-default font-weight-semibold mb-2 mh-2">Molecular Formula: <i
-                                class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i></h6>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Specification ID</th>
-                                    <th>Product Type</th>
-                                    <th>Product</th>
-                                    <th>CAS Diagram</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let data of molecularFormulaTable;let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{data.spec_Id}}</td>
-                                    <td>{{data.product_Type}}</td>
-                                    <td>{{data.product}}</td>
-                                    <td style="width:40%"> <a  data-fancybox  data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-
-                <br>
-                <div class="row" *ngIf="molecularWeightTable.length > 0">
-                    <div class="col-md-12">
-                        <h6 class="text-default font-weight-semibold mb-2 mh-2 ">Molecular Weight:<i
-                                class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i>
-                        </h6>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Specification ID</th>
-                                    <th>Product</th>
-                                    <th>Product Type</th>
-                                    <th>Moelcular Weight</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let data of molecularWeightTable ;let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{data.spec_Id}}</td>
-                                    <td>{{data.product}}</td>
-                                    <td>{{data.product_Type}}</td>
-                                    <td>{{data.moelcular_Weight}}</td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                        <span *ngIf="molecularWeightTable.length < 0">No Data Found</span>
-                    </div>
-                </div>
-
             </div>
-        </div>
-
-        <div *ngIf="compositionTypes">
-
-            <!-- Start row -->
-
-            <div class="row">
-                <div class="col-md-12">
-
-                    <!-- Start accordion -->
-                    <div id="accordion" class="">
-
-                        <!-- Start First collapse -->
-                        <div class="panel ">
-                            <div class="productLevel" role="tab" id="headingOne">
-
-                                <div class="row">
-                                    <div class="col-3 col-lg-3">
-
-                                        <h4 class="checkout-step-title"> <a role="button"> Product Level &
-                                                Material Level Details</a> &nbsp;  &nbsp;<i  data-toggle="collapse" data-parent="#accordion" href="#productLevel"
-                                                class="fa fa-angle-down" aria-hidden="true"></i></h4>
-                                    </div>
-
-        
-                                    <!-- <div class="col-1 col-lg-1 text-right d-none d-sm-block d-md-block d-lg-block d-xl-block"
+            <!--Composition section-->
+            <div *ngIf="compositionTypes">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="accordion" class="">
+                            <div class="panel ">
+                                <div class="productLevel" role="tab" id="headingOne">
+                                    <div class="row">
+                                        <div class="col-3 col-lg-3">
+                                            <h4 class="checkout-step-title"> <a role="button"> Product Level &
+                                                Material Level Details</a> &nbsp; &nbsp;<i data-toggle="collapse" data-parent="#accordion" href="#productLevel" class="fa fa-angle-down" aria-hidden="true"></i></h4>
+                                        </div>
+                                        <!-- <div class="col-1 col-lg-1 text-right d-none d-sm-block d-md-block d-lg-block d-xl-block"
                                         data-toggle="collapse" data-parent="#accordion" href="#productLevel">
                                         <button id="nextBtn" name="nextBtn" class="btn btn-default imc-jfeditbtn"><i
                                                 class="fa fa-angle-down" aria-hidden="true"></i></button>
@@ -384,173 +280,135 @@
                                         <button id="nextBtn" name="nextBtn" class="btn btn-default imc-jfeditbtn"><i
                                                 class="fa fa-angle-down" aria-hidden="true"></i></button>
                                     </div> -->
+                                    </div>
                                 </div>
-
-                            </div>
-                            <div id="productLevel" class="collapse show">
-
-                                <!-- Start collapse body -->
-
-                                <div class="checkout-step-body">
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="card-comp" *ngIf="productLevelDetails">
-                                                <span>
+                                <div id="productLevel" class="collapse show">
+                                    <!-- Start collapse body -->
+                                    <div class="checkout-step-body">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="card-comp" *ngIf="productLevelDetails">
+                                                    <span>
                                                     <p><b>REAL SUB Number </b> {{productLevelDetails.real_Sub_Number}} </p>
                                                     <p><b>Product Name</b> : {{productLevelDetails.product_Name}}
                                                     </p>
                                                     <p><b>Relabel Name(s)</b> : {{productLevelDetails.relabels}}</p>
                                                     <p><b>INCI Name</b> : {{productLevelDetails.INCI_name}}</p>
                                                 </span>
+                                                </div>
                                             </div>
-                                        
-                                        </div>
-                                        <div class="col-md-8 col-sm-12 custyle">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <nav>
-                                                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                                            <a class="nav-item nav-link active" id="nav-home-tab"
-                                                                data-toggle="tab" href="#allMaterial" role="tab"
-                                                                aria-controls="nav-home" aria-selected="true">All
+                                            <div class="col-md-8 col-sm-12 custyle">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <nav>
+                                                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#allMaterial" role="tab" aria-controls="nav-home" aria-selected="true">All
                                                                 Material</a>
-                                                            <a class="nav-item nav-link" id="nav-tab"
-                                                                data-toggle="tab" href="#activeMaterial" role="tab"
-                                                                aria-controls="nav-profile" aria-selected="false">Active
+                                                                <a class="nav-item nav-link" id="nav-tab" data-toggle="tab" href="#activeMaterial" role="tab" aria-controls="nav-profile" aria-selected="false">Active
                                                                 Material</a>
-                                                        </div>
-                                                    </nav>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <mat-form-field class="composition-specDrop">
-                                                        <mat-select [formControl]="bankCtrl" name="bankCtrl"
-                                                            placeholder="Select SPEC ID" disableOptionCentering
-                                                            panelClass="myPanelClass" #singleSelect>
-                                                            <mat-select-filter [formControl]="bankFilterCtrl"
-                                                                ngDefaultControl></mat-select-filter>
-                                                            <mat-option *ngFor="let bank of filteredBanks | async"
-                                                                [value]="bank">
-                                                                {{bank.name}}
-                                                            </mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-
-
-                                                </div>
-
-                                                <div class="col-md-12">
-                                                    <div class="tab-content mat-act" id="nav-tabContent">
-                                                        <div class="tab-pane fade show active" id="allMaterial"
-                                                            role="tabpanel" aria-labelledby="nav-home-tab">
-                                                            <table class="table" id="rtable">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>S.No</th>
-                                                                        <th>Material Number</th>
-                                                                        <th>Material Description</th>
-                                                                        <th>Basic Data Text</th>
-
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr *ngFor="let data of allMaterialLevel; let i = index">
-                                                                        <td>{{i+1}}</td>
-                                                                        <td>{{data.material_Number}}
-                                                                        </td>
-                                                                        <td>{{data.description}}
-                                                                        </td>
-                                                                        <td>{{data.bdt}}
-                                                                        </td>
-                                                                      
-
-                                                                    </tr>
-                                                                    
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="tab-pane fade" id="activeMaterial" role="tabpanel"
-                                                            aria-labelledby="nav-profile-tab">
-                                                            <table class="table" id="rtable">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>S.No</th>
-                                                                        <th>Material Number</th>
-                                                                        <th>Material Description</th>
-                                                                        <th>Basic Data Text</th>
-
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr *ngFor="let data of activeMaterial;let i = index">
-                                                                        <td>{{i+1}}</td>
-                                                                        <td>{{data.material_Number}}
-                                                                        </td>
-                                                                        <td>{{data.description}}
-                                                                        </td>
-                                                                        <td>{{data.bdt}}
-                                                                        </td>
-
-                                                                    </tr>
-                                                                   
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-
+                                                            </div>
+                                                        </nav>
                                                     </div>
+                                                    <div class="col-md-8">
+                                                        <mat-form-field class="composition-specDrop">
+                                                            <mat-select [formControl]="specList" name="specList" placeholder="Select SPEC ID" disableOptionCentering panelClass="myPanelClass" #singleSelect>
+                                                                <mat-select-filter [formControl]="specFilterCtrl" ngDefaultControl></mat-select-filter>
+                                                                <mat-option *ngFor="let specDetails of filteredspecList | async" [value]="specDetails">
+                                                                    {{specDetails.name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="tab-content mat-act" id="nav-tabContent">
+                                                            <div class="tab-pane fade show active" id="allMaterial" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                                <table class="table" id="rtable">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>S.No</th>
+                                                                            <th>Material Number</th>
+                                                                            <th>Material Description</th>
+                                                                            <th>Basic Data Text</th>
 
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let data of allMaterialLevel; let i = index">
+                                                                            <td>{{i+1}}</td>
+                                                                            <td>{{data.material_Number}}
+                                                                            </td>
+                                                                            <td>{{data.description}}
+                                                                            </td>
+                                                                            <td>{{data.bdt}}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="tab-pane fade" id="activeMaterial" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                                <table class="table" id="rtable">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>S.No</th>
+                                                                            <th>Material Number</th>
+                                                                            <th>Material Description</th>
+                                                                            <th>Basic Data Text</th>
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let data of activeMaterial;let i = index">
+                                                                            <td>{{i+1}}</td>
+                                                                            <td>{{data.material_Number}}
+                                                                            </td>
+                                                                            <td>{{data.description}}
+                                                                            </td>
+                                                                            <td>{{data.bdt}}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                 </div>
-                                <!-- End collapse body -->
                             </div>
                         </div>
-                        <!-- End First collapse -->
                     </div>
-                    <!-- End accordion -->
-                </div>
-            </div>
-            <!-- End row -->
-
-
-            <h5>Composition Level Details</h5>
-            <div class="row">
-
-                <div class="col-md-3">
-                <mat-form-field>
-                    <mat-select name="compositionVaraible"
-                        [(value)]="selectedComposition"
-                        placeholder="Select Composition Type"
-                        (selectionChange)="compositionProcess($event.value)">
-                        <mat-option *ngFor="let data of compositionsTypes"
-                            [value]="data.name">
-                            {{data.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
                 </div>
 
-                <div class="col-md-3">
-                    <mat-form-field>
-                        <mat-select name="locationVaraible" [(value)]="selectedlocation"
-                            placeholder="Rating and Validity Area"
-                            (selectionChange)="SubLevelComposition($event.value)">
-                            <mat-option *ngFor="let region of compositionlocations" [value]="region.name">
-                                {{region.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                <h5>Composition Level Details</h5>
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select name="compositionVaraible" [(value)]="selectedComposition" placeholder="Select Composition Type" (selectionChange)="compositionProcess($event.value)">
+                                <mat-option *ngFor="let data of compositionsTypes" [value]="data.name">
+                                    {{data.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select name="locationVaraible" [(value)]="selectedlocation" placeholder="Rating and Validity Area" (selectionChange)="SubLevelComposition($event.value)">
+                                <mat-option *ngFor="let region of compositionlocations" [value]="region.name">
+                                    {{region.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
 
                 </div>
-            
-
-            </div>
-
-<span *ngIf="compositionDataLevel">
+                <!--Standard Composition-->
+                <span *ngIf="compositionDataLevel">
             <div class="row" *ngIf="compositionSHI">
                 <div class="col-md-12">
                     <div class="table-responsive" #StandardCompositiontable>
@@ -604,8 +462,8 @@
                                         <td>{{sale.inci_value_unit}}</td>
                                        
                                     </tr>
-<!-- 
-                                    <tr>
+
+                                   <!-- <tr>
                                         <td colspan="3">Total</td>
                                         <td colspan="3">
                                             <p class="spec-toggle">18.00 %</p>
@@ -623,8 +481,7 @@
                     </div>
                 </div>
             </div>
-
-
+<!--Legal Composition-->
 
             <div class="row" *ngIf="compositionLegalTypes">
                 <!-- Legal Composition -->
@@ -706,8 +563,6 @@
                         </div>
                     </div>
                     <br>
-
-
                     <div class="table-responsive" #SVTtable>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered" width="100%">
@@ -757,8 +612,6 @@
                                         <td>{{legalData.SVT_AN_twenty}}</td>
                                         <td>{{legalData.amount_limit_SVT_AN}}</td>
                                     </tr>
-
-                            
                                 </tbody>
                             </table>
                         </div>
@@ -766,85 +619,79 @@
                 </div>
             </div>
 </span>
-        </div>
+            </div>
 
-        <div *ngIf="flowDiagrams">
-
-            <span *ngIf="ProductComplianceLoader">
+            <!--Flow Diagram Section-->
+            <div *ngIf="flowDiagrams">
+                <span *ngIf="ProductAttributeLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
-            </span>
-
-            <span *ngIf="pihAlertMessage">
+                </span>
+                <span *ngIf="pihAlertMessage">
                 <h5 class="loader-text">No Data Found..</h5>
             </span>
 
-         <div  *ngIf="!ProductComplianceLoader && !pihAlertMessage">
+                <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
+                    <div class="row" *ngIf="ManufractureDiagramPart">
+                        <div class="col-md-12">
+                            <h6 class="text-default font-weight-semibold mb-2 ">Manufacturing Flow Diagram: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                            <table>
+                                <thead>
+                                    <th style="width:5%">S.No</th>
+                                    <th>Specification Id</th>
+                                    <th>Product Key</th>
+                                    <th style="width:50%">File Name</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of ManufractureDiagram;let i =index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.spec_Id}}</td>
+                                        <td>{{data.product}}</td>
 
-            <div class="row" *ngIf="ManufractureDiagramPart">
-                <div class="col-md-12">
-                    <h6 class="text-default font-weight-semibold mb-2 ">Manufacturing Flow Diagram: <i
-                            class="fa fa-info-circle" role="button"
-                            title="This data is from Document on Shared Drive - P"></i></h6>
-                    <table>
-                        <thead>
-                            <th style="width:5%">S.No</th>
-                            <th>Specification Id</th>
-                            <th>Product Key</th>
-                            <th style="width:50%">File Name</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let data of ManufractureDiagram;let i =index">  
-                                <td>{{i+1}}</td>
-                                <td>{{data.spec_Id}}</td>
-                                <td>{{data.product}}</td>
 
-                                
-                                <td><a  data-fancybox  data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
-                                <td class="potential-btn">
-                                
-                                    <span class ="docs-btn"><a href="{{data.file_Path}}"
+                                        <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
+                                        <td class="potential-btn">
+
+                                            <span class="docs-btn"><a href="{{data.file_Path}}"
                                         download><i class="fa fa-share">
                                             </i> Download</a></span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <br>
-
-            <div class="row" *ngIf="SynthesisDiagramPart">
-                <div class="col-md-12">
-                    <h6 class="text-default font-weight-semibold mb-2 ">Synthesis Diagram: <i class="fa fa-info-circle"
-                            role="button" title="This data is from Document on Shared Drive - P"></i></h6>
-                    <table>
-                        <thead>
-                            <th style="width:5%">S.No</th>
-                            <th>Specification Id</th>
-                            <th>Product Key</th>
-                            <th style="width:50%">File Name</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let data of SynthesisDiagram;let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{data.spec_Id}}</td>
-                                <td>{{data.product}}</td>
-                                <td><a  data-fancybox  data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
-                                <td class="potential-btn">
-                                    <span class ="docs-btn"><a href="{{data.file_Path}}"
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <!--Synthesis Diagram-->
+                    <div class="row" *ngIf="SynthesisDiagramPart">
+                        <div class="col-md-12">
+                            <h6 class="text-default font-weight-semibold mb-2 ">Synthesis Diagram: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                            <table>
+                                <thead>
+                                    <th style="width:5%">S.No</th>
+                                    <th>Specification Id</th>
+                                    <th>Product Key</th>
+                                    <th style="width:50%">File Name</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of SynthesisDiagram;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.spec_Id}}</td>
+                                        <td>{{data.product}}</td>
+                                        <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
+                                        <td class="potential-btn">
+                                            <span class="docs-btn"><a href="{{data.file_Path}}"
                                         download><i class="fa fa-share">
                                             </i> Download</a></span> &nbsp;
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-</div>
-        </div>
         <div class="clearfix"></div>
-

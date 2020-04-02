@@ -1,382 +1,320 @@
-<!-- Main navbar -->
+<!-- Main navbar with logo -->
 <div class="navbar navbar-expand-md navbar-dark">
-	<div class="navbar-brand wmin-200">
-		<a href="index.html" class="d-inline-block">
-			<img src="../../assets/images/momentive/momentivelogo.png" alt="">
-		</a>
-	</div>
-	<!-- <div class="d-md-none">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
-      <i class="icon-tree5"></i>
-    </button>
-    <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
-      <i class="icon-paragraph-justify3"></i>
-    </button>
-  </div> -->
-	<div class="collapse navbar-collapse" id="navbar-mobile">
-		<!-- <ul class="navbar-nav">
-  
-      <li class="nav-item">
-        <a href="#" class="navbar-nav-link sidebar-control sidebar-secondary-toggle d-none d-md-block" data-popup="tooltip-demo" title="Show secondary" data-placement="bottom" data-container="body" data-trigger="hover">
-          <i class="icon-transmission">View-2</i>
+    <div class="navbar-brand wmin-200">
+        <a href="index.html" class="d-inline-block">
+            <img src="../../assets/images/momentive/momentivelogo.png" alt="">
         </a>
-      </li>
-      
-    
-    </ul>  -->
-		<span class="navbar-text mr-md-auto mr-md-3 form-width">
-			<div >
-				<div class="forms">
-					<div class="reactive-form">
-						<form autocomplete="off" novalidate [formGroup]="reactiveForm">
-							<div class="row">
-								<div class="col-md-11">
-									<div class="new-search">
-										<ng-select #code class="custom" [items]="items$" placeholder="Enter the details"
-											bindLabel="name" bindValue="name" formControlName="selectedSearchNew"
-											[closeOnSelect]="true" [multiple]="true" [hideSelected]="false"
-											[typeahead]="input$" [dropdownPosition]="'bottom'" [searchable]="true"
-											[selectableGroupAsModel]="false" [compareWith]="compareAccounts"
-											[selectableGroup]="false" groupBy="group" (change)="onChangeData($event)"
-											[closeOnSelect]="false" (remove)="clearCheck()" [loading]="loading" 
-											typeToSearchText="Enter 3 characters to begin your search.."
-											notFoundText="Fetching data...">
-											<ng-template ng-header-tmp style="color:#ddd" *ngIf="selectedProducts">
-												<div class="selcted-crt">
-													<b class="selected-sug">Criteria Selected -</b> &nbsp;<span
-														class="selected-sug"
-														*ngFor="let data of selectedSearchText;let i=index">
-														<b>{{data.type}}</b>-{{data.name}}{{i== selectedSearchText.length-1 ? '': ','}}
-													</span>
-												</div>
-												<div class="new-line" *ngIf="relatedProducts">
-													<b class="selected-sug">Remaining Categories - </b>
-													<span class="selected-sug"
-														*ngFor="let data of ProductDrop;let i=index">
-														{{data}}{{i== ProductDrop.length-1 ? '': ','}} </span>
-												</div>
-											</ng-template>
-											<ng-template ng-typetosearch-tmp>
-												<div class="ng-option disabled" *ngIf="relatedProducts"> Enter 3
-													characters to begin your
-													search.. </div>
-											</ng-template>
-											<ng-template ng-notfound-tmp>
-												<div class="ng-option disabled"> No data found </div>
-											</ng-template>
-
-										</ng-select>
-									</div>
-								</div>
-								<div class="col-md-1">
-									<div class="dropdown-select warning">
-										<a class="select"><i class="fa fa-info-circle" aria-hidden="true"></i> </a>
-										<ul class="option-list">
-
-											<li><a class="category-list"><b>Search Key Fields</b></a></li>
-											<li><a class="category-list"><b>NAM*</b> - Product Name</a></li>
-											<li><a class="category-list"><b>BDT*</b> - Basic Data Text</a></li>
-											<li><a class="category-list"><b>MAT*</b> - Material Number</a></li>
-											<li><a class="category-list"><b>CAS*</b> - CAS Number</a></li>
-											<li><a class="category-list"><b>SPEC*</b> - Specification ID</a></li>
-											<li><a class="category-list"><b>RSPEC*</b> - Real Specification ID</a></li>
-											<li><a class="category-list"><b>PSPEC*</b> - Pure Specification ID</a></li>
-											<li><a class="category-list"><b>SYN*</b> - Product Synonyms</a></li>
-											<li><a class="category-list"><b>CHEM*</b> - Chemical Name</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</span>
-		<!-- <ul class="navbar-nav">
-			<li class="nav-item dropdown dropdown-user">
-				<a href="#" class="navbar-nav-link" data-toggle="dropdown">
-					<img src="https://www.pngfind.com/pngs/m/470-4703547_icon-user-icon-hd-png-download.png"
-						class="rounded-circle" alt="">
-					<span>Welcome, Karan &nbsp; <i class="fa fa-angle-down"></i></span>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right">
-					<a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-				
-					<div class="dropdown-divider"></div>
-					
-					<a href="#" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
-				</div>
-			</li>
-		</ul> -->
-	</div>
+    </div>
+    <!--Header Search Section-->
+    <div class="collapse navbar-collapse" id="navbar-mobile">
+        <span class="navbar-text mr-md-auto mr-md-3 form-width">
+		  <div>
+			 <div class="forms">
+				<div class="reactive-form">
+				   <form autocomplete="off" novalidate [formGroup]="reactiveForm">
+					  <div class="row">
+						 <div class="col-md-11">
+							<div class="new-search">
+							   <ng-select #code class="custom" [items]="items$" placeholder="Enter the details"
+							   bindLabel="name" bindValue="name" formControlName="selectedSearchNew"
+							   [closeOnSelect]="true" [multiple]="true" [hideSelected]="false"
+							   [typeahead]="input$" [dropdownPosition]="'bottom'" [searchable]="true"
+							   [selectableGroupAsModel]="false" [compareWith]="compareAccounts"
+							   [selectableGroup]="false" groupBy="group" (change)="onChangeData($event)"
+							   [closeOnSelect]="false" (remove)="clearCheck()" [loading]="loading" 
+							   typeToSearchText="Enter 3 characters to begin your search.."
+							   notFoundText="Fetching data...">
+							   <ng-template ng-header-tmp style="color:#ddd" *ngIf="selectedProducts">
+								  <div class="selcted-crt">
+									 <b class="selected-sug">Criteria Selected -</b> &nbsp;<span
+										class="selected-sug"
+										*ngFor="let data of selectedSearchText;let i=index">
+									 <b>{{data.type}}</b>-{{data.name}}{{i== selectedSearchText.length-1 ? '': ','}}
+									 </span>
+    </div>
+    <div class="new-line" *ngIf="relatedProducts">
+        <b class="selected-sug">Remaining Categories - </b>
+        <span class="selected-sug" *ngFor="let data of ProductDrop;let i=index">
+									 {{data}}{{i== ProductDrop.length-1 ? '': ','}} </span>
+    </div>
+    </ng-template>
+    <ng-template ng-typetosearch-tmp>
+        <div class="ng-option disabled" *ngIf="relatedProducts"> Enter 3 characters to begin your search.. </div>
+    </ng-template>
+    <ng-template ng-notfound-tmp>
+        <div class="ng-option disabled"> No data found </div>
+    </ng-template>
+    </ng-select>
 </div>
-<!-- /main navbar -->
+</div>
+<div class="col-md-1">
+    <div class="dropdown-select warning">
+        <a class="select"><i class="fa fa-info-circle" aria-hidden="true"></i> </a>
+        <ul class="option-list">
+            <li><a class="category-list"><b>Search Key Fields</b></a></li>
+            <li><a class="category-list"><b>NAM*</b> - Product Name</a></li>
+            <li><a class="category-list"><b>BDT*</b> - Basic Data Text</a></li>
+            <li><a class="category-list"><b>MAT*</b> - Material Number</a></li>
+            <li><a class="category-list"><b>CAS*</b> - CAS Number</a></li>
+            <li><a class="category-list"><b>SPEC*</b> - Specification ID</a></li>
+            <li><a class="category-list"><b>RSPEC*</b> - Real Specification ID</a></li>
+            <li><a class="category-list"><b>PSPEC*</b> - Pure Specification ID</a></li>
+            <li><a class="category-list"><b>SYN*</b> - Product Synonyms</a></li>
+            <li><a class="category-list"><b>CHEM*</b> - Chemical Name</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</span>
+</div>
+</div>
+
 <!--Primary Nav Bar-->
 <div class="navbar navbar-expand-md navbar-light" *ngIf="!secondaryNavBar">
-	<div class="text-center d-md-none w-100">
-		<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
-			data-target="#navbar-navigation">
-			<i class="icon-unfold mr-2"></i> Navigation </button>
-	</div>
-	<div class="navbar-collapse collapse" id="navbar-navigation">
-		<ul class="navbar-nav">
-			<li class="nav-item dropdown font-weight-semibold">
-				<a (click)="home()" class="navbar-nav-link">
-					<i class="fa fa-home mr-2"></i> Home </a>
-			</li>
-			<li class="nav-item dropdown font-weight-semibold">
-				<a (click)="UnassignedDocuments()" class="navbar-nav-link">
-					<i class="fa fa-file-pdf-o mr-2"></i> Ontology Documents </a>
-			</li>
-			<li class="nav-item dropdown font-weight-semibold">
-				<a (click)="OntologyMasterManagement()" class="navbar-nav-link">
-					<i class="fa fa-random mr-2"></i> Ontology Management </a>
-			</li>
-		</ul>
-	</div>
+    <div class="text-center d-md-none w-100">
+        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-navigation">
+	   <i class="icon-unfold mr-2"></i> Navigation </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-navigation">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown font-weight-semibold">
+                <a (click)="home()" class="navbar-nav-link">
+                    <i class="fa fa-home mr-2"></i> Home </a>
+            </li>
+            <li class="nav-item dropdown font-weight-semibold">
+                <a (click)="UnassignedDocuments()" class="navbar-nav-link">
+                    <i class="fa fa-file-pdf-o mr-2"></i> Ontology Documents </a>
+            </li>
+            <li class="nav-item dropdown font-weight-semibold">
+                <a (click)="OntologyMasterManagement()" class="navbar-nav-link">
+                    <i class="fa fa-random mr-2"></i> Ontology Management </a>
+            </li>
+        </ul>
+    </div>
 </div>
+
 <!-- secondary navbar -->
 <div class="navbar navbar-expand-md navbar-light" *ngIf="secondaryNavBar">
-	<ul class="navbar-nav">
-		<li class="nav-item">
-			<a *ngIf="sidebarIcon" class="navbar-nav-link sidebar-control sidebar-right-main-hide d-none d-md-block">
-				<i class="fa fa-align-justify" aria-hidden="true"></i>
-			</a>
-		</li>
-	</ul>
-	<div class="text-center d-md-none w-100">
-		<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
-			data-target="#navbar-navigation">
-			<i class="icon-unfold mr-2"></i> Navigation </button>
-	</div>
-	<div class="navbar-collapse collapse" id="navbar-navigation">
-		<ul class="navbar-nav col-md-9">
-			<li class="nav-item font-weight-semibold">
-				<a (click)="changePage('app-home', true)" class="navbar-nav-link">
-					<i class="fa fa-home mr-2"></i> Home </a>
-			</li>
-			<li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
-				<a (click)="fireEvent('productDetails')" class="navbar-nav-link">
-					<i class="fa fa-th-large mr-2"></i> Basic Properties </a>
-			</li>
-			<!-- <li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
-				<a (click)="changePage('app-view-report', false)" class="navbar-nav-link">
-					<i class="fa fa-stack-exchange mr-2"></i> Self Service </a>
-			</li> -->
-			<li class="nav-item dropdown font-weight-semibold">
-				<a (click)="changePage('ontology', false)" class="navbar-nav-link">
-					<i class="fa fa-file-pdf-o mr-2"></i> Ontology Documents </a>
-			</li>
-			<li class="nav-item dropdown font-weight-semibold">
-				<a (click)="changePage('ontology/synonyms', false)" class="navbar-nav-link">
-					<i class="fa fa-random mr-2"></i> Ontology Management </a>
-			</li>
-		</ul>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a *ngIf="sidebarIcon" class="navbar-nav-link sidebar-control sidebar-right-main-hide d-none d-md-block">
+                <i class="fa fa-align-justify" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+    <div class="text-center d-md-none w-100">
+        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-navigation">
+	   <i class="icon-unfold mr-2"></i> Navigation </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-navigation">
+        <ul class="navbar-nav col-md-9">
+            <li class="nav-item font-weight-semibold">
+                <a (click)="changePage('app-home', true)" class="navbar-nav-link">
+                    <i class="fa fa-home mr-2"></i> Home </a>
+            </li>
+            <li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
+                <a (click)="basicPropertiesEvent('productDetails')" class="navbar-nav-link">
+                    <i class="fa fa-th-large mr-2"></i> Basic Properties </a>
+            </li>
+            <!-- <li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
+			 <a (click)="changePage('app-view-report', false)" class="navbar-nav-link">
+				 <i class="fa fa-stack-exchange mr-2"></i> Self Service </a>
+			 </li> -->
+            <li class="nav-item dropdown font-weight-semibold">
+                <a (click)="changePage('ontology', false)" class="navbar-nav-link">
+                    <i class="fa fa-file-pdf-o mr-2"></i> Ontology Documents </a>
+            </li>
+            <li class="nav-item dropdown font-weight-semibold">
+                <a (click)="changePage('ontology/synonyms', false)" class="navbar-nav-link">
+                    <i class="fa fa-random mr-2"></i> Ontology Management </a>
+            </li>
+        </ul>
 
-
-
-		<ul class="navbar-nav col-md-2">
-			<mat-form-field>
-				<mat-select [formControl]="bankMultiCtrl" name="bankMultiCtrl" placeholder="Select SPEC ID"
-					disableOptionCentering panelClass="myPanelClass" [multiple]="true" #multiSelect>
-					<mat-select-filter [formControl]="bankMultiFilterCtrl" ngDefaultControl
-						placeholderLabel="Search SPEC...">
-					</mat-select-filter>
-					<mat-checkbox [disabled]="!specDataListDetails" class="mat-option" [disableRipple]="true"
-						(change)="toggleSelection($event)">
-						select All
-					</mat-checkbox>
-					<mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank"
-						[disabled]="!specDataListDetails">
-						{{bank.name}}
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
-
-		</ul>
-		<ul class="navbar-nav col-md-1">
-			<button class="btn spec-btn" [disabled]="!specDataListDetails" (click)="selectedTopSpecList()"
-				type='submit'>submit</button>
-		</ul>
-
-	</div>
+        <!--SPEC LIST DROPDOWN-->
+        <ul class="navbar-nav col-md-2">
+            <mat-form-field>
+                <mat-select [formControl]="specMultiCtrl" name="specMultiCtrl" placeholder="Select SPEC ID" disableOptionCentering panelClass="myPanelClass" [multiple]="true" #multiSelect>
+                    <mat-select-filter [formControl]="specMultiFilterCtrl" ngDefaultControl placeholderLabel="Search SPEC...">
+                    </mat-select-filter>
+                    <mat-checkbox [disabled]="!specDataListDetails" class="mat-option" [disableRipple]="true" (change)="toggleSelection($event)">
+                        select All
+                    </mat-checkbox>
+                    <mat-option *ngFor="let SpecList of filteredSpecMulti | async" [value]="SpecList" [disabled]="!specDataListDetails">
+                        {{SpecList.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ul>
+        <ul class="navbar-nav col-md-1">
+            <button class="btn spec-btn" [disabled]="!specDataListDetails" (click)="selectedTopSpecList()" type='submit'>submit</button>
+        </ul>
+    </div>
 </div>
-
 <!-- /secondary navbar -->
 <!-- Page header -->
 <div class="page-header">
-	<div class="page-header-content header-elements-md-inline">
-		<div >
-		</div>
-	</div>
+    <div class="page-header-content header-elements-md-inline">
+        <div>
+        </div>
+    </div>
 </div>
 <!-- /page header -->
-<!--BASIC Modal Details-->
-<!--BASIC Modal Details-->
-<div class="modal fade momodel modal-fluid" id="basicDetails" data-backdrop="static" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog momodel modal-fluid" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title custom_align" id="Heading">Basic Properties</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
-						class="fa fa-times mom-close" aria-hidden="true"></span></button>
-			</div>
 
 
-			<div class="basic-scrl">
-
-				<span *ngIf="basicPropertiesLoader">
-					<i class="loader-class fa fa-spinner fa-spin"></i>
-					<span class="loader-text">Loading Basic Properties data....</span>
-				</span>
-
-
-				<div *ngIf="productLevel.length > 0">
-					<h5><b>Product Level Details</b></h5>
-					<div class="row filter-basic-part">
-						<div class="col-md-6">
-							<form class="syn-search" action="#">
-								<div class="form-group-feedback form-group-feedback-right">
-									<input type="search" class="form-control" name="product"
-										[(ngModel)]="userProductFilter.prodIdentifiers" autocomplete="off"
-										placeholder="Search Product Name">
-									<div class="form-control-feedback">
-										<i class="fa fa-search font-size-base text-muted"></i>
-									</div>
-								</div>
-							</form>
-						</div>
-						<div class="col-md-6">
-							<button (click)="exportToBasicProductTable()" class="btn spec-btn pull-right">Export
-								To Excel</button>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<table class="table table-bordered" #basicProduct>
-								<thead>
-									<th><b>S.No</b></th>
-									<th class="basic-head"><b>Spec ID</b></th>
-									<th class="basic-head"><b>All Nam Prod Identifiers</b></th>
-									<th class="basic-head"><b>Synonyms</b></th>
-								</thead>
-								<tbody>
-									<tr *ngFor="let data of productLevel|filterBy:userProductFilter;let i = index">
-										<td>{{i+1}}</td>
-										<td>{{data.specId}}</td>
-										<td>{{data.prodIdentifiers}}</td>
-										<td>{{data.synonyms}}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<br>
-				<div *ngIf="MaterialLevel.length > 0">
-					<h5><b>Material Level Details</b></h5>
-					<div class="row filter-basic-part">
-						<div class="col-md-6">
-							<form class="syn-search" action="#">
-								<div class="form-group-feedback form-group-feedback-right">
-									<input type="search" class="form-control" name="material"
-										[(ngModel)]="userMaterialFilter.material_Number" autocomplete="off"
-										placeholder="Search Material Number">
-									<div class="form-control-feedback">
-										<i class="fa fa-search font-size-base text-muted"></i>
-									</div>
-								</div>
-							</form>
-						</div>
-						<div class="col-md-6">
-							<button (click)="exportToBasicMaterialLevel()" class="btn spec-btn pull-right">Export
-								To Excel</button>
-						</div>
-
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-								<div class="panel-body">
-									<table class="table table-condensed" #basicMaterial style="border-collapse:collapse;">
-										<thead>
-											<tr>
-												<th><b>S.No</b></th>
-												<th class="basic-head"><b>Specification ID</b></th>
-												<th class="basic-head"><b>Material Number</b></th>
-												<th class="basic-head"><b>Material Describtion</b></th>
-												<th class="basic-head"><b>BDT</b></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let data of MaterialLevel| filterBy: userMaterialFilter; let i = index">
-												<td>{{i+1}}</td>
-												<td>{{data.spec_Id}}</td>
-												<td>{{data.material_Number}}<br></td>
-												<td>{{data.description}}</td>
-												<td>{{data.BDT}}</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			
-				<br>
-				<div *ngIf="casLevel.length > 0">
-					<h5><b>CAS Level Details</b></h5>
-					<div class="row filter-basic-part">
-						<div class="col-md-6">
-
-							<form class="syn-search" action="#">
-								<div class="form-group-feedback form-group-feedback-right">
-									<input type="search" class="form-control" name="casNumber"
-										[(ngModel)]="userCASFilter.cas_Number" autocomplete="off" placeholder="Search CAS Number">
-									<div class="form-control-feedback">
-										<i class="fa fa-search font-size-base text-muted"></i>
-									</div>
-								</div>
-							</form>
-						</div>
-						<div class="col-md-6">
-							<button (click)="exportToBasicCasLevel()" class="btn spec-btn pull-right">Export
-								To Excel</button>
-						</div>
-
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-								<div class="panel-body">
-									<table class="table table-condensed" #basicCas style="border-collapse:collapse;">
-										<thead>
-											<tr>
-												<th><b>S.No</b></th>
-												<th class="basic-head"><b>Specification ID</b></th>
-												<th class="basic-head"><b>Pure Specification</b></th>
-												<th class="basic-head"><b>Chemical Name</b></th>
-												<th class="basic-head"><b>CAS#</b></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let data of casLevel| filterBy: userCASFilter; let i = index">
-												<td>{{i+1}}</td>
-												<td>{{data.spec_Id}}</td>
-												<td>{{data.pure_Spec_Id}}</td>
-												<td>{{data.chemical_Name}}</td>
-												<td>{{data.cas_Number}}</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<!--BASIC PROPERTIES DETAILS-->
+<div class="modal fade momodel modal-fluid" id="basicDetails" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog momodel modal-fluid" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title custom_align" id="Heading">Basic Properties</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+				class="fa fa-times mom-close" aria-hidden="true"></span></button>
+            </div>
+            <div class="basic-scrl">
+                <span *ngIf="basicPropertiesLoader">
+			 <i class="loader-class fa fa-spinner fa-spin"></i>
+			 <span class="loader-text">Loading Basic Properties data....</span>
+                </span>
+                <div *ngIf="productLevel.length > 0">
+                    <h5><b>Product Level Details</b></h5>
+                    <div class="row filter-basic-part">
+                        <div class="col-md-6">
+                            <form class="syn-search" action="#">
+                                <div class="form-group-feedback form-group-feedback-right">
+                                    <input type="search" class="form-control" name="product" [(ngModel)]="userProductFilter.prodIdentifiers" autocomplete="off" placeholder="Search Product Name">
+                                    <div class="form-control-feedback">
+                                        <i class="fa fa-search font-size-base text-muted"></i>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <button (click)="exportToBasicProductTable()" class="btn spec-btn pull-right">Export
+					  To Excel</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered" #basicProduct>
+                                <thead>
+                                    <th><b>S.No</b></th>
+                                    <th class="basic-head"><b>Spec ID</b></th>
+                                    <th class="basic-head"><b>All Nam Prod Identifiers</b></th>
+                                    <th class="basic-head"><b>Synonyms</b></th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of productLevel|filterBy:userProductFilter;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.specId}}</td>
+                                        <td>{{data.prodIdentifiers}}</td>
+                                        <td>{{data.synonyms}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div *ngIf="MaterialLevel.length > 0">
+                    <h5><b>Material Level Details</b></h5>
+                    <div class="row filter-basic-part">
+                        <div class="col-md-6">
+                            <form class="syn-search" action="#">
+                                <div class="form-group-feedback form-group-feedback-right">
+                                    <input type="search" class="form-control" name="material" [(ngModel)]="userMaterialFilter.material_Number" autocomplete="off" placeholder="Search Material Number">
+                                    <div class="form-control-feedback">
+                                        <i class="fa fa-search font-size-base text-muted"></i>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <button (click)="exportToBasicMaterialLevel()" class="btn spec-btn pull-right">Export
+					  To Excel</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-condensed" #basicMaterial style="border-collapse:collapse;">
+                                        <thead>
+                                            <tr>
+                                                <th><b>S.No</b></th>
+                                                <th class="basic-head"><b>Specification ID</b></th>
+                                                <th class="basic-head"><b>Material Number</b></th>
+                                                <th class="basic-head"><b>Material Describtion</b></th>
+                                                <th class="basic-head"><b>BDT</b></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of MaterialLevel| filterBy: userMaterialFilter; let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.spec_Id}}</td>
+                                                <td>{{data.material_Number}}<br></td>
+                                                <td>{{data.description}}</td>
+                                                <td>{{data.BDT}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div *ngIf="casLevel.length > 0">
+                    <h5><b>CAS Level Details</b></h5>
+                    <div class="row filter-basic-part">
+                        <div class="col-md-6">
+                            <form class="syn-search" action="#">
+                                <div class="form-group-feedback form-group-feedback-right">
+                                    <input type="search" class="form-control" name="casNumber" [(ngModel)]="userCASFilter.cas_Number" autocomplete="off" placeholder="Search CAS Number">
+                                    <div class="form-control-feedback">
+                                        <i class="fa fa-search font-size-base text-muted"></i>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <button (click)="exportToBasicCasLevel()" class="btn spec-btn pull-right">Export
+					  To Excel</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-condensed" #basicCas style="border-collapse:collapse;">
+                                        <thead>
+                                            <tr>
+                                                <th><b>S.No</b></th>
+                                                <th class="basic-head"><b>Specification ID</b></th>
+                                                <th class="basic-head"><b>Pure Specification</b></th>
+                                                <th class="basic-head"><b>Chemical Name</b></th>
+                                                <th class="basic-head"><b>CAS#</b></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of casLevel| filterBy: userCASFilter; let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.spec_Id}}</td>
+                                                <td>{{data.pure_Spec_Id}}</td>
+                                                <td>{{data.chemical_Name}}</td>
+                                                <td>{{data.cas_Number}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

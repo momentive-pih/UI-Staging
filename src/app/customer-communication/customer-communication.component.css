@@ -1,44 +1,51 @@
 .modal-body {
-  background-color: #fff;
-  max-height: calc(100vh - 212px);
-  overflow-y: auto;
- }
-  .docs-btn {
+    background-color: #fff;
+    max-height: calc(100vh - 212px);
+    overflow-y: auto;
+}
+
+.docs-btn {
     color: #1a355e !important;
     border: 0px;
     padding: 5px;
     margin: 3px;
     cursor: pointer;
 }
-.link-data{
-  color:#007ad9;
-  text-decoration: underline;
-  cursor: pointer;
+
+.link-data {
+    color: #007ad9;
+    text-decoration: underline;
+    cursor: pointer;
 }
-.result-text{
-  font-size:12px;
+
+.result-text {
+    font-size: 12px;
 }
-.back-btn{
-float:right;
-cursor: pointer;
+
+.back-btn {
+    float: right;
+    cursor: pointer;
 }
-.btn-back{
+
+.btn-back {
     background-color: #1a355e !important;
     border: 0px;
     padding: 5px;
     margin: 3px;
     cursor: pointer;
-    color:#fff;
+    color: #fff;
 }
-.ptable-size{
-  font-size: 12px;
-  width: 20%;
-  white-space: initial;
-  word-break: break-word;
+
+.ptable-size {
+    font-size: 12px;
+    width: 20%;
+    white-space: initial;
+    word-break: break-word;
 }
-.ptable-head{
-font-size: 12px;
-font-weight: 600;
-width: 20%;
-white-space: initial;
+
+.ptable-head {
+    font-size: 12px;
+    font-weight: 600;
+    width: 20%;
+    white-space: initial;
 }

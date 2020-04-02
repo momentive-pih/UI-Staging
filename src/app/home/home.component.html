@@ -1,6 +1,5 @@
 <div class="page-content">
     <div class="sidebar sidebar-light sidebar-right sidebar-expand-md align-self-start">
-
         <!-- Sidebar mobile toggler -->
         <div class="sidebar-mobile-toggler text-center">
             <a href="#" class="sidebar-mobile-secondary-toggle">
@@ -14,39 +13,29 @@
         </div>
         <!-- /sidebar mobile toggler -->
 
-
         <!-- Sidebar content -->
         <div class="sidebar-content">
-
             <div class="card card-sidebar-mobile">
                 <ul class="nav nav-sidebar" data-nav-type="accordion">
-
                     <!-- Sidebar search -->
                     <div class="">
                         <div class="card-header bg-transparent header-elements-inline">
                             <span class="text-uppercase font-size-sm font-weight-semibold">Categories</span>
-
                         </div>
                     </div>
 
                     <li class="nav-item sidebar-nav" *ngFor="let product of sidebarCategoriesData ;let i = index">
                         <a class="nav-link">
                             <img class="media-object img-circle profile-img img-side" src="{{product.image}}">
-                            <span (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)"
-                                data-toggle="modal" data-title="Edit"
-                                [attr.data-target]="'#'+product.tab_modal">{{product.Name}}
+                            <span (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)" data-toggle="modal" data-title="Edit" [attr.data-target]="'#'+product.tab_modal">{{product.Name}}
                             </span>
-                            <h6 data-toggle="collapse" [attr.href]="'#'+product.sales_tab" aria-expanded="true"
-                                aria-controls="collapseOne">
+                            <h6 data-toggle="collapse" [attr.href]="'#'+product.sales_tab" aria-expanded="true" aria-controls="collapseOne">
                                 <i class="fa fa-angle-down sub-icon"></i>
                             </h6>
                         </a>
-                        <ul class="nav nav-group-sub" id="{{product.sales_tab}}" class="collapse" role="tabpanel"
-                            aria-labelledby="headingOne">
+                        <ul class="nav nav-group-sub" id="{{product.sales_tab}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
                             <li class="nav-item sub-sidebar-nav" *ngFor="let data of product.tab_content;">
-                                <i class="fa fa-square"></i> <span
-                                    (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal"
-                                    data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">
+                                <i class="fa fa-square"></i> <span (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal" data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">
                                     {{data.name}}</span>
                                 <!-- <span *ngIf="data.sub.length > 0" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne" >
                                 <i class="fa fa-angle-down side-sub-icon"></i>
@@ -66,58 +55,44 @@
             </div>
         </div>
         <!-- /sidebar content -->
-
     </div>
     <!-- /secondary sidebar -->
 
 
-    
+
     <div class="content">
         <span *ngIf="Pihloader">
             <i class="loader-class fa fa-spinner fa-spin"></i>
             <span class="loader-text">Loading data....</span>
         </span>
-    
-            <div class="row" *ngIf="!Pihloader" >
-                <div class="col-xl-6" *ngFor="let product of intialDataDetails|keyvalue:intialSort; let i = index">
-                    <div class="card-home">
-                        <div class="media flex-column flex-sm-row mt-0">
-                            <div class="mr-sm-3 mb-2 mb-sm-0">
-                                <div class="card-img-actions" *ngFor="let each of product.value">
-                                    <a>
-                                        <img src="{{each.image}}" class="img-fluid img-preview rounded" alt="">
-
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="media-body intro-cont">
-                                <h6 class="media-title" (click)="MouseModalBox(i,product)"><b>{{product.key}}</b></h6>
-                                <ul class="list-inline list-inline-dotted text-muted mb-2"
-                                    *ngFor="let each of product.value">
-                                    <li class="list-inline-item" *ngFor="let data of each | keyvalue"
-                                        [hidden]="data.key =='image'|| data.key=='tab_modal'"><b>{{data.key}}:</b>
-                                        {{data.value}}</li>
-                                </ul>
-
+        <div class="row" *ngIf="!Pihloader">
+            <div class="col-xl-6" *ngFor="let product of intialDataDetails|keyvalue:intialSort; let i = index">
+                <div class="card-home">
+                    <div class="media flex-column flex-sm-row mt-0">
+                        <div class="mr-sm-3 mb-2 mb-sm-0">
+                            <div class="card-img-actions" *ngFor="let each of product.value">
+                                <a>
+                                    <img src="{{each.image}}" class="img-fluid img-preview rounded" alt="">
+                                </a>
                             </div>
                         </div>
 
+                        <div class="media-body intro-cont">
+                            <h6 class="media-title" (click)="MouseModalBox(i,product)"><b>{{product.key}}</b></h6>
+                            <ul class="list-inline list-inline-dotted text-muted mb-2" *ngFor="let each of product.value">
+                                <li class="list-inline-item" *ngFor="let data of each | keyvalue" [hidden]="data.key =='image'|| data.key=='tab_modal'"><b>{{data.key}}:</b> {{data.value}}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
-
+    </div>
 </div>
 
-
-
-
-
+<!--Home Page Modal Box View-->
 <div class="modal fade right" id="{{modalValue}}" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-
     <div class="modal-dialog momodel modal-fluid" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -139,11 +114,8 @@
                     </div>
                     <div class="slide-center">
                         <div class="list-cat" [ngStyle]="setMyStyles()">
-                            <div class="box-cat" *ngFor="let product of sidebarData; let i = index"
-                                [ngClass]="{'active': selectedId == i}">
-                                <a [attr.href]="'#' + product.modal_id" aria-controls="dustin"
-                                    (click)="selectItem(i,product.tab_modal,product.tab_content[0].name)" role="tab"
-                                    data-toggle="tab" title="{{product.Name}}">
+                            <div class="box-cat" *ngFor="let product of sidebarData; let i = index" [ngClass]="{'active': selectedId == i}">
+                                <a [attr.href]="'#' + product.modal_id" aria-controls="dustin" (click)="selectItem(i,product.tab_modal,product.tab_content[0].name)" role="tab" data-toggle="tab" title="{{product.Name}}">
                                     <img class="img-circle" src="{{product.image}}" /></a>
                             </div>
                         </div>
@@ -191,52 +163,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-<!-- <li class="col-md-3 dropdown-item" *ngFor="let product of sidebarCategoriesData ;let i = index">
-                        <ul>                
-                            <li class="" role="button">
-                                <div class="row">
-                                        <div class="col-md-10">
-                                                <div class="form-group"><input type="checkbox" [(ngModel)]="product.checkValue" (change)="topCheckBox(product.checkValue,product)"  id="{{product.Name}}">
-                                                    <label  for="{{product.Name}}">{{product.Name}} </label><h5  (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)" data-toggle="modal" data-title="Edit" 
-                                                        [attr.data-target]="'#'+product.tab_modal"><small  title="{{product.Name}}"></small></h5> </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                    <div  data-toggle="collapse" [attr.href]="'#'+product.sales_tab"  aria-expanded="true" aria-controls="collapseOne"> <span><i class="fa fa-angle-down new-icon"></i></span> </div>
-                                            </div>
-                                </div>
-                                   
-                                    <div id="{{product.sales_tab}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-                                        <ul>
-                                            <li  style="cursor:pointer" *ngFor="let data of product.tab_content;">
-                                                <div class="row">
-                                                    <div class="col-md-10">
-                                                            <div class="form-group">
-                                                                    <input type="checkbox" [(ngModel)]="data.checkValue" (change)="subCheckBox(data.checkValue,data,i)"  id="{{data.name}}">
-                                                                        <label for="{{data.name}}"> <small class="truncate" (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal" data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">{{data.name}}</small> </label>
-                                                                      </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                            <span *ngIf="data.sub.length > 0" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne"><i class="fa fa-angle-down sub-icon"></i></span>
-                                                    </div>
-                                                </div>
-                                                 
-                                                
-                                                    <div id="{{data.id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-                                                            <ul>
-                                                                <li  style="cursor:pointer" *ngFor="let subdata of data.sub;let index = i"> <div class="form-group">
-                                                                        <input type="checkbox" [(ngModel)]="subdata.checkValue" (change)="nextsubCheckBox(subdata.checkValue,data.sub,i)"  id="{{subdata.name}}">
-                                                                        <label for="{{subdata.name}}"> <small  title="{{subdata.name}}">{{subdata.name}}</small> </label>
-                                                                      </div></li> </ul></div>
-                                                
-                                                
-                                                </li>
-                                            
-                                        </ul>
-                                    </div>                                
-                            </li> 
-                        </ul>
-                    </li> -->

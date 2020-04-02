@@ -19,13 +19,13 @@ headers.set('Access-Control-Allow-Origin', '*')
 export class MomentiveService {
   invokeEvent: Subject<any> = new Subject();
   homeEvent: Subject<any> = new Subject();
-  CategoryEvent:Subject<any> =new Subject();
+  CategoryEvent: Subject<any> = new Subject();
   itemsNew: any = [];
   searchkey: any = [];
 
-  selectedProduct:any;
-  categorySelectedSPECList:any;
-  ProductCategoryData:any;
+  selectedProduct: any;
+  categorySelectedSPECList: any;
+  ProductCategoryData: any;
 
   notifyObservable$ = this.invokeEvent.asObservable();
 
@@ -35,32 +35,32 @@ export class MomentiveService {
 
   }
 
- //sideBar category and Subcategory Method call
- callMethodOfSecondComponent(data) {
-   console.log(data);
+  //sideBar category and Subcategory Method call
+  callMethodOfSecondComponent(data) {
+    console.log(data);
     this.invokeEvent.next(data);
   }
 
-//Intial Search List
+  //Intial Search List
   getAllEvents(data) {
     return this.http.post<any[]>(Constants.SERVICES_DOMAIN + "postAllProducts", data);
   }
 
-//Selcted Search List
+  //Selcted Search List
   getSelectedProducts(data) {
     return this.http.post(Constants.SERVICES_DOMAIN + "postselectedProducts", data);
   }
 
-//Spec List 
+  //Spec List 
   getSpecList(data): Observable<any[]> {
     console.log(data);
-    return this.http.post<any[]>(Constants.SERVICES_DOMAIN + "postSelectedSpecList",data);
+    return this.http.post<any[]>(Constants.SERVICES_DOMAIN + "postSelectedSpecList", data);
   }
 
   //Homepage Data
   getHomePageData(data): Observable<any[]> {
     console.log(data);
-    return this.http.post<any[]>(Constants.SERVICES_DOMAIN + "postHomePageData",data);
+    return this.http.post<any[]>(Constants.SERVICES_DOMAIN + "postHomePageData", data);
   }
 
 
@@ -72,48 +72,48 @@ export class MomentiveService {
 
   //Basic Properties Details
   getBasicProperties(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "PostBasicProperties",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "PostBasicProperties", data);
   }
 
   //Seven Categories Details
 
- //ProductAttributes
+  //ProductAttributes
   getProductAttributes(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postProductAttributes",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postProductAttributes", data);
   }
 
   //ProductCompliance
   getProductCompliance(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postProductCompliance",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postProductCompliance", data);
   }
 
   //CustomerCommunication
   getCustomerCommunication(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postCustomerCommunication",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postCustomerCommunication", data);
   }
 
   //Toxicology
   getToxicology(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postToxicology",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postToxicology", data);
   }
 
   //Restricted Substance
   getRestrictedSubstance(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postRestrictedSubstance",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postRestrictedSubstance", data);
   }
 
   //Sales Information
   getSalesInformation(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postSalesInformation",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postSalesInformation", data);
   }
 
   //Release Documents
   getReportDocuments(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postReportData",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postReportData", data);
   }
 
   getOntologyDocumentss(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postOntologyDocument",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postOntologyDocument", data);
   }
   getOntologyManagement() {
     return this.http.get(Constants.SERVICES_DOMAIN + "getOntologyManagement");
@@ -121,37 +121,37 @@ export class MomentiveService {
 
   //self Service Report
   getSelfServiceReport(data) {
-    return this.http.post(Constants.SERVICES_DOMAIN + "postSelfServiceReport",data);
+    return this.http.post(Constants.SERVICES_DOMAIN + "postSelfServiceReport", data);
   }
 
 
-  setSelectedProductData(value){
+  setSelectedProductData(value) {
     this.selectedProduct = value;
     console.log(this.selectedProduct);
   }
 
-  getSelectedProductData(){
+  getSelectedProductData() {
     return this.selectedProduct;
   }
 
   //Category Click Data
-  setCategoryData(value){
+  setCategoryData(value) {
     this.ProductCategoryData = value;
     console.log(this.ProductCategoryData);
   }
 
-  getCategoryData(){
+  getCategoryData() {
     return this.ProductCategoryData;
   }
 
-//Category SpecList Data
+  //Category SpecList Data
   setCategorySpecList(value) {
     this.categorySelectedSPECList = value;
     console.log(this.categorySelectedSPECList);
   }
 
   getCategorySpecList() {
-    return  this.categorySelectedSPECList;
+    return this.categorySelectedSPECList;
   }
 
   getSearchData() {

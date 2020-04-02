@@ -10,26 +10,24 @@ import { ProductAttributesComponent } from './product-attributes/product-attribu
 import { ProductComplianceComponent } from './product-compliance/product-compliance.component';
 import { CustomerCommunicationComponent } from './customer-communication/customer-communication.component'
 import { ToxicologyComponent } from './toxicology/toxicology.component';
-import { RestrictedSubstanceComponent} from './restricted-substance/restricted-substance.component';
+import { RestrictedSubstanceComponent } from './restricted-substance/restricted-substance.component';
 import { SalesVolumeComponent } from './sales-volume/sales-volume.component';
 import { ReportDataComponent } from './report-data/report-data.component';
 
 const routes: Routes = [
-  {path: '', component: PageindexComponent},
-  {path: 'app-pageindex', component: PageindexComponent},
-  {path: 'app-home', component: HomeComponent},
-  {path: 'app-header', component: HeaderComponent},
-  {path: 'app-footer', component: FooterComponent},
-  {path: 'app-view-report', component: ViewReportComponent},
-  {path: 'app-product-attributes', component: ProductAttributesComponent},
-  {path: 'app-product-compliance', component: ProductComplianceComponent},
-  {path: 'app-customer-communication', component: CustomerCommunicationComponent},
-  {path: 'app-toxicology', component: ToxicologyComponent},
-  {path: 'app-restricted-substance', component: RestrictedSubstanceComponent},
-  {path: 'app-sales-volume', component: SalesVolumeComponent},
-  {path: 'app-report-data', component: ReportDataComponent},
-
-
+  { path: '', component: PageindexComponent },
+  { path: 'app-pageindex', component: PageindexComponent },
+  { path: 'app-home', component: HomeComponent },
+  { path: 'app-header', component: HeaderComponent },
+  { path: 'app-footer', component: FooterComponent },
+  { path: 'app-view-report', component: ViewReportComponent },
+  { path: 'app-product-attributes', component: ProductAttributesComponent },
+  { path: 'app-product-compliance', component: ProductComplianceComponent },
+  { path: 'app-customer-communication', component: CustomerCommunicationComponent },
+  { path: 'app-toxicology', component: ToxicologyComponent },
+  { path: 'app-restricted-substance', component: RestrictedSubstanceComponent },
+  { path: 'app-sales-volume', component: SalesVolumeComponent },
+  { path: 'app-report-data', component: ReportDataComponent },
   {
     path: 'ontology',
     loadChildren: 'src/app/ontology/ontology.module#OntologyModule'
@@ -43,7 +41,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),
-             CommonModule],
+    CommonModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -3,83 +3,66 @@
     <div class="row">
         <div class="col-md-6 col-xs-6">
             <label class="text-default font-weight-semibold"><h6><b>Unassigned File Name</b> - {{filename}}</h6></label>
+            <!--PDF Dispaly Section-->
             <div>
-
                 <!-- <iframe id="iframepdf" src="https://clditdevstorpih.blob.core.windows.net/momentive-sources-pih/sharepoint-pih/customer-communications-pih/mpm-2019-pih/Processed/LSR2050 - FDA Compliance Letter to Nordmann, Rassmann GmbH.pdf" type="application/pdf" style="width:650px; height:600px;"></iframe> -->
-             <!-- <embed class="food-document" alt="Thumbnail [200x250]" src="PIHpdfURL" type="application/pdf" style="width:650px; height:600px;">  -->
-           
-                <iframe src="https://clditdevstorpih.blob.core.windows.net/momentive-sources-pih/sharepoint-pih/customer-communications-pih/mpm-2018-pih/Processed/2018-11-7 Habasit AG EU food contact statement LSR2540 and Addisil 1060E WH1_FS.pdf?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-03-27T18:08:33Z&st=2020-03-17T10:08:33Z&spr=https&sig=aSpIHsulTElmoehIDeC%2FBq57KD3ipzzzN9vOPM%2BHuEI%3D" 
+                <!-- <embed class="food-document" alt="Thumbnail [200x250]" src="PIHpdfURL" type="application/pdf" style="width:650px; height:600px;">  -->
+
+                <iframe src="https://clditdevstorpih.blob.core.windows.net/momentive-sources-pih/sharepoint-pih/customer-communications-pih/mpm-2018-pih/Processed/2018-11-7 Habasit AG EU food contact statement LSR2540 and Addisil 1060E WH1_FS.pdf?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-03-27T18:08:33Z&st=2020-03-17T10:08:33Z&spr=https&sig=aSpIHsulTElmoehIDeC%2FBq57KD3ipzzzN9vOPM%2BHuEI%3D"
                     frameborder="no" style="width:100%;height:500px"></iframe>
             </div>
         </div>
 
-    <div class="col-md-6 col-xs-6">
+        <div class="col-md-6 col-xs-6">
             <div class="row">
                 <div class="col-md-6">
                     <label class="text-default font-weight-semibold"><h4><b>Search Parameter : {{productName}}</b></h4></label>
                 </div>
-                  <div class="col-md-6 docs-dir">
-                    <button class="docs-btn" ><i class="fa fa-edit" (click)="editOntology(extarctPDFData)" title="Edit"> Edit</i> </button> &nbsp; 
-                    <button class="docs-btn" > <i class="fa fa-share" title="Update" (click)="updateOntology(extarctPDFData)"> Update</i></button> &nbsp; 
+                <div class="col-md-6 docs-dir">
+                    <button class="docs-btn"><i class="fa fa-edit" (click)="editOntology(extarctPDFData)" title="Edit"> Edit</i> </button> &nbsp;
+                    <button class="docs-btn"> <i class="fa fa-share" title="Update" (click)="updateOntology(extarctPDFData)"> Update</i></button> &nbsp;
                     <!-- <button class="docs-btn" > <i class="fa fa-eye" (click)="ReadOntology(extarctPDFData)" title="Delete"> ReadIT</i> </button> -->
-                  </div>
-                  </div>
-            
-
-<table class="table table-bordered table-bc">
-    <thead>
-        <th>Keys </th>
-        <th>Values</th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-               <b>Key</b>
-            <td>
-            <div class="forms">
-                <div class="reactive-form">   
-                    <form autocomplete="off" novalidate [formGroup]="reactiveForm" (ngSubmit)="submitProduct(Searchname)">
-                       <div class="row">
-                            <div class="col-md-12">
-                            <div class="new-search">
-                            <ng-select #code class="custom" [items]="ontology_Lsr_key"
-                            bindLabel="name"
-                            [readonly]="disabledkey"
-                            formControlName="Searchname"
-                            [closeOnSelect]="true"
-                            placeholder="Select key"
-                            [markFirst]="true"
-                            [hideSelected]="false"
-                            appendTo="body"
-                            groupBy="product"
-                            [searchable]="true"
-                            [dropdownPosition]="'bottom'"
-                             multiple="true"
-                            (change)="onChangeData($event)"
-                            (remove)="clearCheck($event)"
-                            [(ngModel)]="ontologyExtractKey">
-                          </ng-select> 
-
-                        </div>  
-                     </div>
-                       
-                       </div>
-                    </form>
                 </div>
-            </div></td>
-        
-        </tr>
-        <tr *ngFor="let data of extarctPDFData | keyvalue : intialSort; let i = index">
-            <td width="20%"><b>{{data.key}}</b></td>
-            <td width="65%">
-                <textarea class="form-control" [disabled]="disabledCondition"  type="text" [(ngModel)]="data.value" name=value-{{i}} (keyup)="documentKey(data)"></textarea></td>
-            <!-- <td>{{data.value}}</td><input class="form-control" type="text" formControlName="extractNamedetails" name="extractNamedetails"> -->
-        </tr>
-    
-    </tbody>
-</table>
+            </div>
 
+            <!--Key-Value pair Section-->
+            <table class="table table-bordered table-bc">
+                <thead>
+                    <th>Keys </th>
+                    <th>Values</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <b>Key</b>
+                            <td>
+                                <div class="forms">
+                                    <div class="reactive-form">
+                                        <form autocomplete="off" novalidate [formGroup]="reactiveForm" (ngSubmit)="submitProduct(Searchname)">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="new-search">
+                                                        <ng-select #code class="custom" [items]="ontology_Lsr_key" bindLabel="name" [readonly]="disabledkey" formControlName="Searchname" [closeOnSelect]="true" placeholder="Select key" [markFirst]="true" [hideSelected]="false" appendTo="body" groupBy="product"
+                                                            [searchable]="true" [dropdownPosition]="'bottom'" multiple="true" (change)="onChangeData($event)" (remove)="clearCheck($event)" [(ngModel)]="ontologyExtractKey">
+                                                        </ng-select>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                    </tr>
+                    <tr *ngFor="let data of extarctPDFData | keyvalue : intialSort; let i = index">
+                        <td width="20%"><b>{{data.key}}</b></td>
+                        <td width="65%">
+                            <textarea class="form-control" [disabled]="disabledCondition" type="text" [(ngModel)]="data.value" name=value-{{i}} (keyup)="documentKey(data)"></textarea></td>
+                        <!-- <td>{{data.value}}</td><input class="form-control" type="text" formControlName="extractNamedetails" name="extractNamedetails"> -->
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-

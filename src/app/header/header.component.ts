@@ -6,7 +6,6 @@ import { TableModule } from 'primeng/table';
 import * as frLocale from 'date-fns/locale/fr';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { HomeService } from '../service/home-service.service';
 import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption, NgSelectComponent } from '@ng-select/ng-select';
@@ -16,29 +15,20 @@ import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import * as xlsx from 'xlsx';
-
-
-
 declare var $: any;
 interface product {
   name: string;
 }
-
-interface Bank {
+interface SPECList {
   id: string;
   name: string;
 }
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
-
 })
-
-
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
-
   sideSearchData: any;
   name = '';
   selectednav: 'active';
@@ -133,15 +123,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   objectKeys = Object.keys;
   public items$: Observable<product[]>;
   public input$ = new Subject<string | null>();
-
   /**SPECID dropdown List */
-
   SPECdropdownList: any = [];
   selectedSPECItems: any = [];
   dropdownSettings = {};
   firstSpecData = [];
   selectedSpecList: any = [];
-  banks: any = [];
+  SpecLists: any = [];
   specDataListDetails: any;
   sideSpecList: any;
   userSelectedSPECDetails: any = [];
@@ -149,76 +137,56 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   public loading;
   notifier: any;
   userSelectedProducts: any;
-
   userCASFilter: any = { cas_Number: '' };
   userMaterialFilter: any = { material_Number: '' };
   userProductFilter: any = { prodIdentifiers: '' };
 
-  /** control for the selected bank for multi-selection */
-  public bankMultiCtrl: FormControl = new FormControl();
-
+  /** control for the selected SPEC_List for multi-selection */
+  public specMultiCtrl: FormControl = new FormControl();
   /** control for the MatSelect filter keyword multi-selection */
-  public bankMultiFilterCtrl: FormControl = new FormControl();
-
-  /** list of banks filtered by search keyword */
-  public filteredBanksMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
-
+  public specMultiFilterCtrl: FormControl = new FormControl();
+  /** list of SPEC_Lists filtered by search keyword */
+  public filteredSpecMulti: ReplaySubject<SPECList[]> = new ReplaySubject<SPECList[]>(1);
   @ViewChild('multiSelect', { static: false }) multiSelect: MatSelect;
-
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
 
-  @ViewChild('code', {
-    static: false
-  }) private codeRef?: ElementRef<HTMLElement>;
-
-  @ViewChild('code', {
-    static: true
-  }) myselect: ElementRef;
-
+  @ViewChild('code', { static: false }) private codeRef?: ElementRef<HTMLElement>;
+  @ViewChild('code', { static: true}) myselect: ElementRef;
   @ViewChild('basicProduct', { static: false }) basicProduct: ElementRef;
-
   @ViewChild('basicMaterial', { static: false }) basicMaterial: ElementRef;
-
   @ViewChild('basicCas', { static: false }) basicCas: ElementRef;
 
-  constructor(private fb: FormBuilder, public toastr: ToastrManager, vcr: ViewContainerRef, private route: ActivatedRoute, private router: Router, private homeService: HomeService, private momentiveService: MomentiveService) {
-
-
-
+  constructor(private fb: FormBuilder, public toastr: ToastrManager, vcr: ViewContainerRef, private route: ActivatedRoute, private router: Router, private momentiveService: MomentiveService) {
     this.momentiveService.homeEvent.subscribe(data => {
       this.ngOnInit()
-
-
-
     })
-
-
-
+    // Search Bar Formgroup
     this.reactiveForm = fb.group({
       selectedSearchNew: ['', Validators.required],
     });
-    console.log(this.reactiveForm.value);
-
+ 
+   // SPEC List Reactive Form 
     this.SpecreactiveForm = fb.group({
       selectedSPECItems: ['', Validators.required],
     })
     this.input$.subscribe(
       (term) => this.searchProduct(term, this.product_Name, this.Isfirst));
-  }
+    }
+
   ngOnInit() {
-    this.categoryType = 'NAM Product'
     this.url = window.location.href.includes('home');
     console.log(this.url);
+    this.basicPropertiesEvent(event);
 
-    this.fireEvent(event);
-    // intialData_Details
+    // Index Page Details 
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
       this.intialData_Details = this.productdata.intialData_Details;
     }, err => {
       console.error(err);
     });
+
     // product_type
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
@@ -226,23 +194,22 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }, err => {
       console.error(err);
     });
+
+    //Search Key Dropdown function 
     $(document).on('click', function (event) {
       if (!$(event.target).closest('.dropdown-select').length) {
         $('.option-list, .search-box').hide();
       }
     });
     $('.select').click(function (event) {
-      //$('.option-list, .search-box').hide();
       $(this).closest('.dropdown-select').find('.option-list, .search-box').toggle();
     });
-    //Search
 
+
+    //Main Search Bar Placeholder & Other Details
     this.placeholder = 'Enter the Details';
     this.keyword = 'name';
     this.historyHeading = 'Recently selected';
-
-
-
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -255,6 +222,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     };
   }
 
+  //GroupBY function In Search Bar
   groupByFn = (item) => item.product;
   public selectionItemForFilter(e) {
     const colsTempor = e.value;
@@ -267,10 +235,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       e.value.pop();
     }
   }
-  selectEvent(item) {
-    // do something with selected item
-    console.log(item);
-  }
   onChangeSearch(data) {
     if (data.length > 2) {
       console.log(data);
@@ -281,7 +245,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   onFocused(data) {
     this.onChangeSearch(data);
   }
- 
+
+  //Multiselect Dropdown Related Functions
+  selectEvent(item) {
+    console.log(item);
+  }
   onItemSelect(item: any) {
     console.log(item);
   }
@@ -294,6 +262,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   onDeSelectAll(items: any) {
     console.log(items);
   }
+
+  //Main Search Field Functinoality
   private searchProduct(term: string | null, arr, Isfirst) {
     this.suggestionDrop = true;
     this.searchTerm = term ? term : '';
@@ -303,7 +273,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     console.log(this.SearchProducts);
     this.searchDataLength = this.SearchProducts.SearchData.length;
-    if(this.searchTerm.length < 1) {
+    if (this.searchTerm.length < 1) {
       this.product_Name = [];
     }
     if (this.searchDataLength > 2 && Isfirst) {
@@ -320,13 +290,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           });
           console.log(this.searchTerm);
-       
+
           if (this.searchTerm.includes("*")) {
             const searchTermNew = this.searchTerm.split('*');
             this.searchTextTerms = searchTermNew[1];
             console.log(this.searchTextTerms);
           } else {
-             this.searchTextTerms = this.searchTerm;
+            this.searchTextTerms = this.searchTerm;
           }
 
           this.items$ = this.product_Name.filter((product_Name) => {
@@ -386,6 +356,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return false;
   };
+
+  //Second Level Search Functinality
   onChangeData(data) {
     this.selectedProducts = true;
     this.selectedSearchText = data;
@@ -429,37 +401,22 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       this.getIntialSpecList(this.selectedSearchText);
     }
-
   }
+
+  //Clear Function for Search Data:
   clearCheck() {
-    if(this.searchTerm.length < 1) {
+    if (this.searchTerm.length < 1) {
       this.product_Name = [];
       this.suggestionDrop = false;
       this.Isfirst = true;
       this.ProductDrop = [];
     }
   }
-  // fileter the Standard Composition-CAS Number
-  casNumberFileter() {
-    // tslint:disable-next-line: variable-name
-    const CAS_data = '68083-19-2';
-    this.standardCompositionData = this.copystandardCompositionData.filter((casNumber) => (casNumber.CAS_Number === CAS_data));
-    console.log(this.standardCompositionData);
-    this.hunderedCompositionData = this.copyhunderedCompositionData.filter((casNumber) => (casNumber.CAS_Number === CAS_data));
-    console.log(this.hunderedCompositionData);
-    this.legalCompositionData = this.copylegalCompositionData.filter((casNumber) => (casNumber.CAS_Number === CAS_data));
-    console.log(this.legalCompositionData);
-  }
-  customerNameFilter() {
-    const CustomerNameData = 'OU EUROBIO LAB';
-    this.CommunicationHistoryData = this.CopycommunicationHistoryData.filter((customer) => (customer.customer_name == CustomerNameData));
-    console.log(this.CommunicationHistoryData);
-  }
 
-  fireEvent(event) {
+//BAsic Properties API Call
+  basicPropertiesEvent(event) {
     if (event === 'productDetails') {
       $('#basicDetails').modal('show');
-
       this.productLevel = [];
       this.MaterialLevel = [];
       this.casLevel = [];
@@ -478,16 +435,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             this.basicPropertiesLoader = true;
           }
-
         }, err => {
           console.error(err);
         });
       });
     }
   }
+  //Ontology Page Redirect
   Ongtology() {
     this.router.navigate(['/app-ontology-home']);
   }
+  //Page Routing in PIH
   changePage(url, data) {
     if (data) {
       this.sidebarIcon = true;
@@ -512,30 +470,28 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.momentiveService.getSpecList(SpecListedData).subscribe(data => {
       console.log(data)
       this.SPECdropdownList = data;
-      this.banks = this.SPECdropdownList;
-      if (this.banks.length === 1) {
+      this.SpecLists = this.SPECdropdownList;
+      if (this.SpecLists.length === 1) {
         this.specDataListDetails = false;
       } else {
         this.specDataListDetails = true;
       }
       // set initial selection
-      this.bankMultiCtrl.setValue([this.banks[0]]);
-      this.momentiveService.setCategorySpecList([this.banks[0]]);
-      // load the initial bank list
-      this.filteredBanksMulti.next(this.banks.slice());
+      this.specMultiCtrl.setValue([this.SpecLists[0]]);
+      this.momentiveService.setCategorySpecList([this.SpecLists[0]]);
+      // load the initial SPEC_List list
+      this.filteredSpecMulti.next(this.SpecLists.slice());
       // listen for search field value changes
-      this.bankMultiFilterCtrl.valueChanges
+      this.specMultiFilterCtrl.valueChanges
         .pipe(takeUntil(this._onDestroy))
         .subscribe(() => {
-          this.filterBanksMulti();
+          this.filteredSpecListMulti();
         });
       console.log(this.SPECdropdownList);
     }, err => {
       console.log(err);
     })
   }
-
-
   selectAll(checkAll, select, values) {
     //this.toCheck = !this.toCheck;
     if (checkAll) {
@@ -545,71 +501,66 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       select.update.emit([]);
     }
   }
-
+  //Set Selected SPEC Details
   selectedTopSpecList() {
-    console.log(this.bankMultiCtrl.value);
-    this.sideSpecList = this.bankMultiCtrl.value[0];
+    console.log(this.specMultiCtrl.value);
+    this.sideSpecList = this.specMultiCtrl.value[0];
     console.log(this.sideSpecList);
     this.momentiveService.setSelectedProductData(this.sideSpecList);
-    this.momentiveService.setCategorySpecList(this.bankMultiCtrl.value);
+    this.momentiveService.setCategorySpecList(this.specMultiCtrl.value);
     this.momentiveService.homeEvent.next();
     this.toastr.successToastr('Specification ID Selected.', 'Success!');
   }
-
-
   ngAfterViewInit() {
     this.setInitialValue();
   }
 
+  //Destroy the API Call
   ngOnDestroy() {
     this._onDestroy.next();
     this._onDestroy.complete();
   }
-
+  //Filter Option In SPEC ID
   toggleSelection(change): void {
-    this.filteredBanksMulti.pipe(take(1), takeUntil(this._onDestroy))
+    this.filteredSpecMulti.pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(val => {
         if (change.checked) {
-          this.bankMultiCtrl.patchValue(val);
+          this.specMultiCtrl.patchValue(val);
         } else {
-          this.bankMultiCtrl.patchValue([]);
+          this.specMultiCtrl.patchValue([]);
         }
       })
-
   }
-
-
-  /**
-   * Sets the initial value after the filteredBanks are loaded initially
-   */
+  //Sets the initial value after the filteredSPEC_Lists are loaded initially
   protected setInitialValue() {
-    this.filteredBanksMulti
+    this.filteredSpecMulti
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {
-        // this.multiSelect.compareWith = (a: Bank, b: Bank) => a && b && a.id === b.id;
+        // this.multiSelect.compareWith = (a: SPEC_List, b: SPEC_List) => a && b && a.id === b.id;
       });
   }
 
-  protected filterBanksMulti() {
-    if (!this.banks) {
+  //Multiple Select In Spec ID
+  protected filteredSpecListMulti() {
+    if (!this.SpecLists) {
       return;
     }
     // get the search keyword
-    let search = this.bankMultiFilterCtrl.value;
+    let search = this.specMultiFilterCtrl.value;
     console.log(search)
     if (!search) {
-      this.filteredBanksMulti.next(this.banks.slice());
+      this.filteredSpecMulti.next(this.SpecLists.slice());
       return;
     } else {
       search = search.toLowerCase();
     }
-    // filter the banks
-    this.filteredBanksMulti.next(
-      this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
+    // filter the SPEC_Lists
+    this.filteredSpecMulti.next(
+      this.SpecLists.filter(SPEC_List => SPEC_List.name.toLowerCase().indexOf(search) > -1)
     );
   }
 
-
+//Export Excel in Product Level Details
   exportToBasicProductTable() {
     const ws: xlsx.WorkSheet =
       xlsx.utils.table_to_sheet(this.basicProduct.nativeElement);
@@ -617,6 +568,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Product-Level.xlsx');
   }
+  //Export Excel in Material Level Details
   exportToBasicMaterialLevel() {
     const ws: xlsx.WorkSheet =
       xlsx.utils.table_to_sheet(this.basicMaterial.nativeElement);
@@ -624,7 +576,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Material-Level.xlsx');
   }
-
+//Export Excel in CAS Level Details
   exportToBasicCasLevel() {
     const ws: xlsx.WorkSheet =
       xlsx.utils.table_to_sheet(this.basicCas.nativeElement);
