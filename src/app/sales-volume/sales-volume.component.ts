@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { element } from 'protractor';
 declare var $: any;
 
 @Component({
@@ -27,6 +28,7 @@ export class SalesVolumeComponent implements OnInit {
   // Sales Volume
   saleDataHead: any[];
   saleDataProducts: any[];
+  saleVolumeProducts:any=[];
   selectedSalesVolumeDataProducts: any[];
   selectedSalesVolumeDataColumns: any[];
   salesDatapaginator = false;
@@ -39,6 +41,7 @@ export class SalesVolumeComponent implements OnInit {
   salesDataproducts: any = [];
   salesInformationLoader: boolean = true;
   pihAlertMessage: boolean;
+  saleVolumeDataHeader:any=[];
 
   constructor(private route: ActivatedRoute,private router: Router,private momentiveService: MomentiveService
   ) {
@@ -73,7 +76,7 @@ export class SalesVolumeComponent implements OnInit {
 
 
 //Sales Volume Header 
-    this.saleDataHead = [
+    this.saleVolumeDataHeader = [
       { "field": "basic_data", "header": "Basic Data" },
       { "field": "spec_id", "header": "Specification ID" },
       { "field": "material_description", "header": "Material Description" },
@@ -95,15 +98,26 @@ export class SalesVolumeComponent implements OnInit {
     this.salesInformationDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.salesInformationDetails)
     this.momentiveService.getSalesInformation(this.salesInformationDetails).subscribe(data => {
       console.log(data);
+      this.salesInformationLoader = false;
       this.productdata = data;
-      if (this.productdata.length > 0) {
+      this.saleVolumeProducts =  this.productdata[0].saleDataProducts;
+      console.log(this.saleVolumeProducts.length);
+      if (this.saleVolumeProducts.length > 0) {
         this.salesInformationLoader = false;
         this.pihAlertMessage = false;
-        this.salesDataproducts = this.productdata[0].saleDataProducts;
+        this.salesDataproducts =  this.saleVolumeProducts
+        this.saleDataHead = this.saleVolumeDataHeader
+          this.salesDataproducts.forEach(element =>{
+          element.material_number = parseInt(element.material_number);
+        })
+        
         console.log(this.salesDataproducts);
       } else {
         this.pihAlertMessage = true;

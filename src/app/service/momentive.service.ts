@@ -24,8 +24,18 @@ export class MomentiveService {
   searchkey: any = [];
 
   selectedProduct: any;
-  categorySelectedSPECList: any;
+  categorySelectedSPECList: any = [];
   ProductCategoryData: any;
+  basicMaterialList: any = [];
+  basicCASList: any = [];
+  basicLevelList: any = [];
+  selectedSpecList: any = [];
+  productLevelAPIData: any = [];
+  materialLevelData: any = [];
+  casLevelData: any = [];
+  intialAllSpecList:any =[];
+
+
 
   notifyObservable$ = this.invokeEvent.asObservable();
 
@@ -118,7 +128,6 @@ export class MomentiveService {
   getOntologyManagement() {
     return this.http.get(Constants.SERVICES_DOMAIN + "getOntologyManagement");
   }
-
   //self Service Report
   getSelfServiceReport(data) {
     return this.http.post(Constants.SERVICES_DOMAIN + "postSelfServiceReport", data);
@@ -132,6 +141,7 @@ export class MomentiveService {
 
   getSelectedProductData() {
     return this.selectedProduct;
+
   }
 
   //Category Click Data
@@ -145,13 +155,58 @@ export class MomentiveService {
   }
 
   //Category SpecList Data
+
   setCategorySpecList(value) {
     this.categorySelectedSPECList = value;
     console.log(this.categorySelectedSPECList);
   }
 
   getCategorySpecList() {
+    console.log(this.categorySelectedSPECList);
     return this.categorySelectedSPECList;
+  }
+
+  //Intial All Spec List
+  setAllSpecList(value) {
+    this.intialAllSpecList = value;
+    console.log(this.intialAllSpecList)
+  }
+
+  getAllSpecList() {
+    return this.intialAllSpecList;
+  }
+  
+  setBasicLevelDetails(value) {
+    this.basicLevelList = value;
+    console.log(this.basicLevelList);
+  }
+  getbasicLevelDetails() {
+    return this.basicLevelList
+  }
+
+  setProductLevelDetails(value) {
+    this.productLevelAPIData = value;
+    console.log(this.productLevelAPIData)
+  }
+
+  getProductLevelDetails() {
+    return this.productLevelAPIData;
+  }
+
+  setMaterialLevelDetails(value) {
+    this.materialLevelData = value;
+    console.log(this.materialLevelData);
+  }
+  getMaterialLevelDetails() {
+    return this.materialLevelData;
+  }
+
+  setCasLevelDetails(value) {
+    this.casLevelData = value;
+    console.log(this.casLevelData);
+  }
+  getCasLevelDetails() {
+    return this.casLevelData
   }
 
   getSearchData() {

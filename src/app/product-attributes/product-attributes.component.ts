@@ -14,6 +14,9 @@ import { take, takeUntil } from 'rxjs/operators';
 import { MatSelect } from '@angular/material/select';
 import * as xlsx from 'xlsx';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { DomSanitizer } from '@angular/platform-browser';
+import { GhsLabelingPipe } from '../pipes/ghs-labeling.pipe';
+import { element } from 'protractor';
 
 interface speclist {
   id: string;
@@ -67,6 +70,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   legalpaginator = false;
   private colsTempor: any[] = [];
   public columnOptions: any[];
+  searchGHSText:any;
 
   // Composition Data
   legalCompositionData: any[];
@@ -97,6 +101,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   compositionSpecID = false;
   SPECdropdownList: any = [];
   sideSpecList: any = [];
+  specCompData:any=[];
   SpecListDetails: any = [];
   sales: any = [];
   SVT_table: any = [];
@@ -125,14 +130,60 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   PotentialApplicationDetails: any = [];
   potentialAPPData: boolean;
   productLevelDetails: any = [];
+  CompProductLevel:any=[];
   allMaterialLevel: any = [];
   activeMaterial: any = [];
   firstSpecData: any;
+  compositionRating:any;
+  notFoundComposition:any;
   compositionlocations: any = [];
   compositionDataLevel: boolean
   compositionStandardData: any = [];
+  compistionSpecArray:any=[];
+  selectedValue: string;
+  imgaePreviewUrl:any;
+  moleclularWeightDetailDataPage:any;
+  filename:any;
+  Extract_Result:any;
+  searchGhsLabelText:any;
+  pdfUrl:any;
+  Url:any;
+  isDesc: boolean = false;
+  columnName:any;
+  usagePart: any;
+  selectedUsage: string = "Public";
+  usageTypes:any;
+  usageBaseData:any;
+  sortDir = 1;//1= 'ASE' -1= DSC
+  molecularweightDetailsPage:any;
+  categorizeArrayData:any=[];
+  productLevelCategoy:any=[];
+  materialLevelCategoy:any =[];
+  casLevelCategoy:any =[];
+    productAttributeChemicalStructures:any=[];
+    productAttributemolecular_Formula:any=[];
+    productAttributemolecular_Weight:any=[];
+
+    chemicalStructureproductLevel:any=[];
+    chemicalStructurematerialLevel:any=[];
+    chemicalStructurecasLevel:any=[];
+
+    molecularFormulaProductLevel:any=[];
+    molecularFormulaMaterialLevel:any=[];
+    molecularFormulaCasLevel:any=[];
+    molecularWeightProductLevel:any=[];
+    molecularWeightMaterialLevel:any=[];
+    molecularWeightCasLevel:any=[];
+
+
+    ManufractureDiagramProductLevel:any=[];
+    ManufractureDiagramMaterialLevel:any=[];
+    ManufractureDiagramCasLevel:any=[];
+    SynthesisDiagramProductLevel:any=[];
+    SynthesisDiagramMaterialLevel:any=[];
+    SynthesisDiagramCasLevel:any=[];
   /** control for the selected speclist */
-  public specList: FormControl = new FormControl();
+  public specListData: FormControl = new FormControl();
   /** control for the MatSelect filter keyword */
   public specFilterCtrl: FormControl = new FormControl();
   /** list of speclists filtered by search keyword */
@@ -155,13 +206,15 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       value: "legal"
     }
   ]
+
+ 
   selectedlocation: any;
   selectedComposition: any;
   selectedLocationControl = new FormControl();
   selectedCompositionControl = new FormControl();
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private momentiveService: MomentiveService,
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private momentiveService: MomentiveService,
     public toastr: ToastrManager, vcr: ViewContainerRef, ) {
 
     this.momentiveService.notifyObservable$.subscribe(value => {
@@ -178,7 +231,15 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
 
-    // ProductAttribute Radio Box API Call
+  //Collapse script
+  $('.collapse').on('show.bs.collapse', function () {
+    $('.collapse').each(function(){
+        $(this).collapse('hide');
+    });
+  });
+
+
+      // ProductAttribute Radio Box API Call
     this.momentiveService.getSearchData().subscribe(data => {
       this.productData = data;
       console.log(this.productData);
@@ -196,16 +257,26 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       console.error(err);
     });
 
+  
+  
+    
+    this.usagePart = [{
+      "type": "Public",
+      "value": "Public"
+    }, {
+      "type": "All Usage",
+      "value": "All Usage"
+    }],
     //GHS Labeling Table header
     this.ghsLabelingDataHeader = [
-      { "field": "spec_Id", "header": "Specification Id" },
-      { "field": "regulatory_Basis", "header": "Regulatory Basis" },
-      { "field": "usage", "header": "Usage" },
-      { "field": "symbols", "header": "Symbols" },
-      { "field": "signal_Word", "header": "Signal Word" },
-      { "field": "hazard_Statements", "header": "Hazard Statements" },
-      { "field": "prec_Statements", "header": "Prec Statements" },
-      { "field": "additional_Information", "header": "Additional Information / Remarks", "width": "20%", "white-space": "pre-wrap" }
+      { "field": "spec_Id", "header": "Specification Id-NAM Prod" },
+      { "field": "regulatory_Basis", "header": "Regulatory Basis"},
+      { "field": "usage", "header": "Usage"},
+      { "field": "symbols", "header": "Symbols"},
+      { "field": "signal_Word", "header": "Signal Word"},
+      { "field": "hazard_Statements", "header": "Hazard Statements"},
+      { "field": "prec_Statements", "header": "Prec Statements"},
+      { "field": "additional_Information", "header": "Additional Information / Remarks", "width": "20%"}
     ]
     this.compositionDataLevel = false;
   }
@@ -222,6 +293,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
@@ -237,10 +311,11 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
         console.log(this.primaryBasicDetails);
         this.primaryProductApplication = this.basicDetailsproducts[1].product_Application;
         if (this.primaryProductApplication.length > 0) {
-          this.PotentialApplicationDetails = this.primaryProductApplication;
-          this.potentialAPPData = true;
-        } else {
           this.potentialAPPData = false;
+          this.PotentialApplicationDetails = this.primaryProductApplication;
+          this.categorizeProductType(this.PotentialApplicationDetails);
+        } else {
+          this.potentialAPPData = true;
         }
         console.log(this.primaryProductApplication);
       }
@@ -255,7 +330,8 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
 
   //GHS Labeling API Call
-  productAttributeGHSLabeling() {
+  productAttributeGHSLabeling(labeldata) {
+    let usageValue = labeldata;
     this.ProductAttributeLoader = true;
     this.productAttributeAPIData = [];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
@@ -264,6 +340,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
@@ -273,9 +352,18 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       if (this.productdata.length > 0) {
         this.ProductAttributeLoader = false;
         this.pihAlertMessage = false;
-        this.ghsLabelingHeader = this.ghsLabelingDataHeader;
-        this.ghsLabelingData = this.productdata[0].ghs_Labeling;
-        console.log(this.ghsLabelingData);
+        if(usageValue == 'Public') {
+          this.ghsLabelingHeader = this.ghsLabelingDataHeader;
+          this.usageBaseData = this.productdata[0].ghs_Labeling
+          this.ghsLabelingData = this.usageBaseData.filter(element => 
+            element.usage.includes('PUBLIC'));
+
+          console.log(this.ghsLabelingData);
+        }
+        else if(usageValue == 'All') {
+          this.ghsLabelingHeader = this.ghsLabelingDataHeader;
+          this.ghsLabelingData = this.productdata[0].ghs_Labeling;
+        }
       }
       else {
         this.pihAlertMessage = true;
@@ -286,27 +374,46 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     });
   }
 
+
+    //Dropdown select Function
+    selectUsageType(value) {
+      console.log(value);
+      this.usageTypes = value;
+      if (this.usageTypes === 'Public') {
+        this.productAttributeGHSLabeling('Public');
+      } else if (this.usageTypes === 'All Usage') {
+        this.productAttributeGHSLabeling('All');
+      }
+    }
   //Composition Product and material Level Details
   productAttributeComposition() {
     this.ProductAttributeLoader = true;
     this.pihAlertMessage = false;
     this.productAttributeAPIData = [];
-    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
-    console.log(this.selectedSpecList);
     this.CategoryDetails = { index: 3, Category: "Product Attributes", Subcategory: "Composition" }
     console.log(this.CategoryDetails);
     this.productAttributeAPIData.push({
-      'Spec_id': this.selectedSpecList,
+      'Spec_id': this.specCompData,
       'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
       console.log(data);
       this.productData = data;
-      this.productLevelDetails = this.productData[0].product_Level;
-      console.log(this.productLevelDetails);
+      this.CompProductLevel = this.productData[0].product_Level;
+     this.productLevelDetails = this.CompProductLevel[0];
+
       this.allMaterialLevel = this.productData[0].all_material;
+      this.allMaterialLevel.forEach(element => {
+        element.material_Number = parseInt(element.material_Number);
+      });
       this.activeMaterial = this.productData[0].active_material
+      this.activeMaterial.forEach(element => {
+        element.material_Number = parseInt(element.material_Number);
+      });
     });
 
   }
@@ -322,20 +429,63 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
       console.log(data);
       this.productdata = data;
-      console.log(this.productdata);
-      if (this.productdata.length > 0) {
+      this.productAttributeStructures = this.productdata;
+        console.log(this.productAttributeStructures);
+        this.productAttributeChemicalStructures = this.productAttributeStructures[0].chemical_Structure;
+        this.productAttributemolecular_Formula = this.productAttributeStructures[1].molecular_Formula;
+        this.productAttributemolecular_Weight = this.productAttributeStructures[2].molecular_Weight;
+      if ((this.productAttributeChemicalStructures.length > 0) || (this.productAttributemolecular_Formula.length > 0) || (this.productAttributemolecular_Weight.length > 0 )) {
         this.ProductAttributeLoader = false;
         this.pihAlertMessage = false;
         this.productAttributeStructures = this.productdata;
         console.log(this.productAttributeStructures);
-        this.chemicalStructureTable = this.productAttributeStructures[0].chemical_Structure;
-        this.molecularFormulaTable = this.productAttributeStructures[1].molecular_Formula;
-        this.molecularWeightTable = this.productAttributeStructures[2].molecular_Weight;
+        this.chemicalStructureTable = this.productAttributeChemicalStructures;
+
+    
+        this.chemicalStructureTable.forEach(element => {
+          if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+            this.chemicalStructurematerialLevel.push(element);
+          }
+          else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+            this.chemicalStructureproductLevel.push(element);
+          }
+          else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+            this.chemicalStructurecasLevel.push(element);
+          }
+        })
+    
+        this.molecularFormulaTable = this.productAttributemolecular_Formula;
+        this.molecularFormulaTable.forEach(element => {
+          if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+            this.molecularFormulaMaterialLevel.push(element);
+          }
+          else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+            this.molecularFormulaProductLevel.push(element);
+          }
+          else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+            this.molecularFormulaCasLevel.push(element);
+          }
+        })
+        this.molecularWeightTable = this.productAttributemolecular_Weight;
+        this.molecularWeightTable.forEach(element => {
+          if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+            this.molecularWeightMaterialLevel.push(element);
+          }
+          else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+            this.molecularWeightProductLevel.push(element);
+          }
+          else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+            this.molecularWeightCasLevel.push(element);
+          }
+        })
       }
       else {
         this.pihAlertMessage = true;
@@ -348,6 +498,21 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
   }
 
+  molecularWeightDocumentPage(data) {
+    this.moleclularWeightDetailDataPage = true;
+    console.log(data);
+    this.molecularweightDetailsPage = data;
+    console.log(this.molecularweightDetailsPage);
+    this.filename = this.molecularweightDetailsPage.fileName;
+    this.Extract_Result = this.molecularweightDetailsPage.moelcular_Weight;
+    this.pdfUrl = this.molecularweightDetailsPage.file_Path;
+    console.log(this.pdfUrl);
+    this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
+    console.log(this.Url);
+  }
+  backTostructurePage() {
+     this.moleclularWeightDetailDataPage = false;
+  }
   //Flow Diagram Function Call
   productAttributeFlowdiagram() {
     this.ProductAttributeLoader = true;
@@ -360,31 +525,58 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
       console.log(data);
       this.productdata = data;
       console.log(this.productdata);
-      if (this.productdata.length > 0) {
-        this.ProductAttributeLoader = false;
-        this.pihAlertMessage = false;
         this.basicDetailsproducts = this.productdata;
         this.ManufractureDiagramCheck = this.basicDetailsproducts[0].manufacture_Flow;
-        if (this.ManufractureDiagramCheck.length > 0) {
-          this.ManufractureDiagramPart = true;
-          this.ManufractureDiagram = this.ManufractureDiagramCheck;
-        } else {
-          this.ManufractureDiagramPart = false;
-        }
         this.SynthesisDiagramCheck = this.basicDetailsproducts[1].synthesis_Diagram;
-        if (this.SynthesisDiagramCheck.length > 0) {
-          this.SynthesisDiagramPart = true;
-          this.SynthesisDiagram = this.SynthesisDiagramCheck;
-        } else {
-          this.SynthesisDiagramPart = false;
+        if(this.ManufractureDiagramCheck.length > 0 || this.SynthesisDiagramCheck.length > 0 ) {
+          this.ProductAttributeLoader = false;
+          this.pihAlertMessage = false;
+          if (this.ManufractureDiagramCheck.length > 0) {
+            this.ManufractureDiagramPart = true;
+            this.ManufractureDiagram = this.ManufractureDiagramCheck;
+            this.ManufractureDiagram.forEach(element => {
+              if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+                this.ManufractureDiagramMaterialLevel.push(element);
+              }
+              else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+                this.ManufractureDiagramProductLevel.push(element);
+              }
+              else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+                this.ManufractureDiagramCasLevel.push(element);
+              }
+            })
+
+          } else {
+            this.ManufractureDiagramPart = false;
+          }
+          this.SynthesisDiagramCheck = this.basicDetailsproducts[1].synthesis_Diagram;
+          if (this.SynthesisDiagramCheck.length > 0) {
+            this.SynthesisDiagramPart = true;
+            this.SynthesisDiagram = this.SynthesisDiagramCheck;
+            this.SynthesisDiagram.forEach(element => {
+              if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+                this.SynthesisDiagramMaterialLevel.push(element);
+              }
+              else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+                this.SynthesisDiagramProductLevel.push(element);
+              }
+              else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+                this.SynthesisDiagramCasLevel.push(element);
+              }
+            })
+          } else {
+            this.SynthesisDiagramPart = false;
+          }
         }
-      }
       else {
         this.pihAlertMessage = true;
         this.ProductAttributeLoader = false;
@@ -413,6 +605,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
   //Top radio button change Function
   onChangeProductAttribute(item) {
+
     this.productAttributesCheck = item;
     if (this.productAttributesCheck === 'Basic Information') {
       this.primaryInformtionTypes = true;
@@ -427,7 +620,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.structureAndFormulaTypes = false;
       this.compositionTypes = false;
       this.flowDiagrams = false;
-      this.productAttributeGHSLabeling();
+      this.productAttributeGHSLabeling('Public');
     } else if (this.productAttributesCheck === 'Structures and Formulas') {
       this.primaryInformtionTypes = false;
       this.ghsLabeling = false;
@@ -441,8 +634,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.structureAndFormulaTypes = false;
       this.compositionTypes = true;
       this.flowDiagrams = false;
-      this.userSelectedProducts = this.momentiveService.selectedProduct
-      this.getIntialSpecList(this.userSelectedProducts);
+      this.getIntialSpecList();
       this.productAttributeComposition();
 
     } else if (this.productAttributesCheck === 'Flow Diagrams') {
@@ -463,37 +655,56 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.compositionLegalTypes = true;
       this.compositionSHI = false;
       this.productAttributeAPIData = [];
-      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
-      console.log(this.selectedSpecList);
+        // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
       this.CategoryDetails = { index: 0, Category: "Composition", Subcategory: "Legal Composition" }
       this.productAttributeAPIData.push({
-        'Spec_id': this.selectedSpecList,
+        'Spec_id': this.specCompData,
         'Category_details': this.CategoryDetails,
+        'product_Level':this.momentiveService.getProductLevelDetails(),
+        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level':this.momentiveService.getCasLevelDetails(),
       });
       console.log(this.productAttributeAPIData)
       this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
         console.log(data);
         this.productdata = data;
-        this.compositionlocations = this.productdata;
-        console.log(this.compositionlocations);
+        if(this.productdata != 0){
+          this.compositionRating = true;
+          this.notFoundComposition = false;
+          this.compositionlocations = this.productdata;
+          console.log(this.compositionlocations);
+        } else {
+           this.compositionRating = false;
+           this.notFoundComposition = true;
+        }
       });
 
     } else if (this.compostionCheck === 'Standard, 100 % & INCI Composition') {
       this.compositionLegalTypes = false;
       this.compositionSHI = true;
       this.productAttributeAPIData = [];
-      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+        // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
       this.CategoryDetails = { index: 0, Category: "Composition", Subcategory: "Standard, 100 % & INCI Composition" }
       this.productAttributeAPIData.push({
-        'Spec_id': this.selectedSpecList,
+        'Spec_id': this.specCompData,
         'Category_details': this.CategoryDetails,
+        'product_Level':this.momentiveService.getProductLevelDetails(),
+        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level':this.momentiveService.getCasLevelDetails(),
       });
       console.log(this.productAttributeAPIData)
       this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
         console.log(data);
         this.productdata = data;
-        this.compositionlocations = this.productdata;
-        console.log(this.compositionlocations);
+        if(this.productdata != 0){
+          this.compositionRating = true;
+          this.notFoundComposition = false;
+          this.compositionlocations = this.productdata;
+          console.log(this.compositionlocations);
+        } else {
+           this.compositionRating = false;
+           this.notFoundComposition = true;
+        }
       });
     }
 
@@ -505,12 +716,15 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.compositionDataLevel = true;
     console.log(value);
     this.subLevelData = value;
-    this.selectedSpecList = this.firstSpecData;
-    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+    // this.selectedSpecList = this.firstSpecData;
+    // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     this.CategoryDetails = { Subcategory: this.compostionCheck, validity: this.subLevelData }
     this.productAttributeAPIData.push({
-      'Spec_id': this.selectedSpecList,
-      'Category_details': this.CategoryDetails
+      'Spec_id': this.specCompData,
+      'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData);
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
@@ -549,8 +763,41 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       return (event.order * result);
     });
   }
+  onSortClick(event,data) {
+    let columndata = data;
+    console.log(columndata);
+    console.log(event);
+    let target = event.currentTarget,
+      classList = target.classList;
 
+    if (classList.contains('fa-caret-up')) {
+      classList.remove('fa-caret-up');
+      classList.add('fa-caret-down');
+      this.sortDir=-1;
+    } else {
+      classList.add('fa-caret-up');
+      classList.remove('fa-caret-down');
+      this.sortDir=1;
+    }
+    this.GhsLabelsort(columndata);
+  }
+  GhsLabelsort(property) {
+    this.isDesc = !this.isDesc; //change the direction    
+    this.columnName = property;
+    let direction = this.isDesc ? 1 : -1;
 
+    this.ghsLabelingData.sort(function (a, b) {
+      if (a[property] < b[property]) {
+        return -1 * direction;
+      }
+      else if (a[property] > b[property]) {
+        return 1 * direction;
+      }
+      else {
+        return 0;
+      }
+    });
+  };
 
   onItemSelect(item: any) {
     console.log(item);
@@ -575,45 +822,29 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
 
 
-  //SVT table Export Excel
-  exportToSVTTableExcel() {
-    const ws: xlsx.WorkSheet =
-      xlsx.utils.table_to_sheet(this.SVTtable.nativeElement);
-    const wb: xlsx.WorkBook = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-    xlsx.writeFile(wb, 'SVTtable.xlsx');
-  }
-  // Standard Table Export Excel
-  exportToStandardCompostionExcel() {
-    const ws: xlsx.WorkSheet =
-      xlsx.utils.table_to_sheet(this.StandardCompositiontable.nativeElement);
-    const wb: xlsx.WorkBook = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-    xlsx.writeFile(wb, 'StandardCompositiontable.xlsx');
-  }
 
-  //Legal Table Export Excel
-  exportToLegalCompostionExcel() {
-    const ws: xlsx.WorkSheet =
-      xlsx.utils.table_to_sheet(this.LegalCompositiontable.nativeElement);
-    const wb: xlsx.WorkBook = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-    xlsx.writeFile(wb, 'LegalCompositiontable.xlsx');
-  }
 
+  exportToCompostionExcel(table, name) {
+    var uri = 'data:application/vnd.ms-excel;base64,'
+      , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+      , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+      , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+      if (!table.nodeType) table = document.getElementById(table)
+      var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+      window.location.href = uri + base64(format(template, ctx))
+
+  }
+ 
 
   //SpecID Intial Droopdownlist
-  getIntialSpecList(data) {
-    const SpecListedData = data;
-    console.log(SpecListedData);
-    this.momentiveService.getSpecList(SpecListedData).subscribe(data => {
-      console.log(data)
-      this.SPECdropdownList = data;
+  getIntialSpecList() {
+
+      this.SPECdropdownList = this.momentiveService.getCategorySpecList()
       this.SpecListDetails = this.SPECdropdownList;
       // set initial selection
-      this.specList.setValue(this.SpecListDetails[0]);
+      this.specListData.setValue(this.SpecListDetails[0]);
 
-      this.firstSpecData = this.specList.setValue(this.SpecListDetails[0]);
+      this.firstSpecData = this.specListData.setValue(this.SpecListDetails[0]);
       // load the initial speclist list
       this.filteredspecList.next(this.SpecListDetails.slice());
       // listen for search field value changes
@@ -622,20 +853,19 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.filterSPECListMulti();
         });
-      console.log(this.SPECdropdownList);
-    }, err => {
-      console.log(err);
-    })
+        console.log(this.SPECdropdownList);
+ 
+        this.specCompData.push(this.specListData.value);
+        console.log(this.specCompData);
   }
 
-
-  selectedTopSpecList() {
-    console.log(this.specList.value);
-    this.sideSpecList = this.specList.value;
-    console.log(this.sideSpecList);
-    this.toastr.successToastr('Specification ID Selected.', 'Success!');
+  CompositionSpecChange(data) {
+    console.log(data)
+    this.specCompData =[]
+    this.specCompData.push(data);
+    console.log(this.specCompData);
+    this.productAttributeComposition();
   }
-
 
   ngAfterViewInit() {
     this.setInitialValue();
@@ -668,4 +898,32 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.SpecListDetails.filter(speclist => speclist.name.toLowerCase().indexOf(search) > -1)
     );
   }
+  imagePreview(data) { 
+    console.log(data);
+    this.imgaePreviewUrl = data;
+  }
+
+  categorizeProductType(productData){
+    this.materialLevelCategoy =[];
+    this.productLevelCategoy =[];
+    this.casLevelCategoy =[];
+
+    this.categorizeArrayData = productData;
+    this.categorizeArrayData.forEach(element => {
+      if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+        this.materialLevelCategoy.push(element);
+      }
+      else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+        this.productLevelCategoy.push(element);
+      }
+      else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+        this.casLevelCategoy.push(element);
+      }
+    })
+  console.log(this.productLevelCategoy);
+  console.log(this.materialLevelCategoy);
+  console.log(this.casLevelCategoy);
+
+  }
 }
+

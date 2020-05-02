@@ -39,12 +39,22 @@ export class OntologyHomeComponent implements OnInit {
 
   ngOnInit() {
 
+
+      //Collapse script
+  $('.collapsed').on('show.bs.collapse', function () {
+    $('.collapsed').each(function(){
+        $(this).collapse('hide');
+    });
+  });
 //ontology Documents list API Call
     this.ontologyServiceDetails = [];
     this.selectedSpecList = this.momentiveService.getCategorySpecList();
     this.ontologyServiceDetails.push({
       'Spec_id': this.selectedSpecList,
-      'Category_details': { Category: "ontology", Subcategory: "assigned" }
+      'Category_details': { Category: "ontology", Subcategory: "assigned" },
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     this.ontologyassignedDocument = true;
     this.momentiveService.getOntologyDocumentss(this.ontologyServiceDetails).subscribe(data => {

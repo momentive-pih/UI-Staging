@@ -111,12 +111,16 @@ export class RestrictedSubstanceComponent implements OnInit {
     this.RestrictedInformationDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.RestrictedInformationDetails)
     this.momentiveService.getRestrictedSubstance(this.RestrictedInformationDetails).subscribe(data => {
       console.log(data);
       this.restrictedLoader = true;
       this.productdata = data;
+      this.productdata.restrictedGASDLData = this.productdata;
       if (this.productdata.restrictedGASDLData.length > 0) {
         this.restrictedLoader = false;
         this.pihAlertMessage = false;
@@ -151,6 +155,9 @@ export class RestrictedSubstanceComponent implements OnInit {
       this.RestrictedInformationDetails.push({
         'Spec_id': this.selectedSpecList,
         'Category_details': this.CategoryDetails,
+        'product_Level':this.momentiveService.getProductLevelDetails(),
+        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level':this.momentiveService.getCasLevelDetails(),
       });
       console.log(this.RestrictedInformationDetails)
       this.momentiveService.getRestrictedSubstance(this.RestrictedInformationDetails).subscribe(data => {

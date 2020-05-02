@@ -45,26 +45,26 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>Created Date</th>
+                                       <th>Specification Id</th>
                                         <th>Product Name</th>
+                                        <th>Product key</th>
+                                        <th>File Source</th>
                                         <th>Documents Name</th>
 
-                                        <th class="td-actions">Actions</th>
+                                
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let each of data[data.category] ;let i = index">
                                         <td>{{i+1}}</td>
                                         <td>{{each.createdDate}}</td>
+                                        <td>{{each.spec_Id}}</td>
                                         <td>{{each.productName}}</td>
+                                        <td>{{each.product_Key}}</td>
+                                        <td>{{each.file_source}}</td>
                                         <td (click)="ontologyDocuments(each.id,data.category,each.productName)"> <img class="pdf-img" src="https://www.techadvisor.co.uk/cmsdata/features/3679232/how-to-extract-pages-from-a-pdf-thumb_thumb1200_4-3.jpg"><a class="doc-link"> {{each.fileName}}</a></td>
 
-                                        <td class="td-actions">
-                                            <button class="btn sm-btn" (click)="ontologyDocuments(each.id,data.category,each.productName)">
-                                      <i class="fa fa-eye"></i> Preview</button> &nbsp;
-                                            <button class="btn sm-btn">
-                                  <i class="icon-download"></i> Download</button>
-
-                                        </td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>

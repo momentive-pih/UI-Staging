@@ -28,7 +28,7 @@
                                 <div class="col-md-6">
                                     <form class="syn-search" action="#">
                                         <div class="form-group-feedback form-group-feedback-right">
-                                            <input type="search" class="form-control" name="search" [(ngModel)]="userFilter.key" autocomplete="off" placeholder="Search">
+                                            <input type="search" class="form-control" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search">
                                             <div class="form-control-feedback">
                                                 <i class="fa fa-search font-size-base text-muted"></i>
                                             </div>
@@ -56,7 +56,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let data of Ontologysynonyms|filterBy: userFilter; let i = index">
+                                                <tr *ngFor="let data of Ontologysynonyms| synonymsFilter: searchText; let i = index">
                                                     <td>{{i+1}}</td>
                                                     <td>{{data.key}}</td>
                                                     <td>{{data.synonyms}}</td>

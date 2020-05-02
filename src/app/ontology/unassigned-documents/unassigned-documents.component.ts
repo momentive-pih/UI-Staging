@@ -39,6 +39,13 @@ export class UnassignedDocumentsComponent implements OnInit {
 
   ngOnInit() {
 
+      //Collapse script
+  $('.collapsed').on('show.bs.collapse', function () {
+    $('.collapsed').each(function(){
+        $(this).collapse('hide');
+    });
+  });
+
     //Unassignment Document List API
     this.ontologyServiceDetails = [];
     this.ontologyServiceDetails.push({

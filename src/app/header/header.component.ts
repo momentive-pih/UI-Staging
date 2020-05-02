@@ -12,14 +12,19 @@ import { NgSelectModule, NgOption, NgSelectComponent } from '@ng-select/ng-selec
 import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute, NavigationStart, NavigationExtras } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
-import { MatSelect } from '@angular/material';
+import { MatSelect, MatOption } from '@angular/material';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { PihFilterPipe } from '../pipes/pih-filter.pipe';
+import { CasLevelFilterPipe } from '../pipes/cas-level-filter.pipe';
+import { ProductLevelPipe } from '../pipes/product-level.pipe';
+
 import * as xlsx from 'xlsx';
+import { element } from 'protractor';
 declare var $: any;
 interface product {
   name: string;
 }
-interface SPECList {
+interface SPECListData {
   id: string;
   name: string;
 }
@@ -77,14 +82,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   ExcelCommunicationHistoryData = [];
   product_NameData: any[];
   sidebarData: any;
-  copysidebarData: any = [];
   productLsr_Name: any = [];
   productSilsoft_Name: any = [];
   Searchname: any;
   productCAS_Number: any;
   basicDetails = true;
   submitDetails = false;
-  intialData_Details: any = [];
   productLevel: any = [];
   MaterialLevel: any = [];
   casLevel: any = [];
@@ -128,9 +131,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSPECItems: any = [];
   dropdownSettings = {};
   firstSpecData = [];
-  selectedSpecList: any = [];
+  SpecListsselectedSpecList: any = [];
   SpecLists: any = [];
   specDataListDetails: any;
+  specDataSelectListDetails:any;
   sideSpecList: any;
   userSelectedSPECDetails: any = [];
   basicPropertiesLoader: any;
@@ -141,18 +145,53 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   userMaterialFilter: any = { material_Number: '' };
   userProductFilter: any = { prodIdentifiers: '' };
 
+  SpecSplitNewTerm: any;
+  NewSpecList: any = [];
+  NewCheckedSpecList: any = [];
+  secondLevelSearch: any = [];
+  basicProperitiesAPIDetails: any = [];
+  limitedSPec: any = [];
+
+
+  //Get Material and CAS Level Details:
+
+  CASLevelAPIData: any = [];
+  basicCASPropertiesDetails: any = [];
+  CASRealSpecList: any = [];
+  selectedAPISpecList: any = [];
+  myCASArrayFilteredData: any = [];
+  casAPILevel: any = [];
+  tempMyCAS: any = [];
+
+  MATAPILevel: any = [];
+  myMATArrayFilteredData: any = [];
+  MATLevelAPIData: any = [];
+  basicMATPropertiesDetails: any = [];
+  tempMyMAT: any = [];
+
+  ProductLevelAPIData: any = [];
+  ProductAPILevel: any = [];
+  ProductFileterdData: any = [];
+  basicProductPropertiesDetails: any = []
+
+  searchProductText:any;
+  searchMaterialText:any;
+  searchCASText:any;
+
   /** control for the selected SPEC_List for multi-selection */
   public specMultiCtrl: FormControl = new FormControl();
   /** control for the MatSelect filter keyword multi-selection */
   public specMultiFilterCtrl: FormControl = new FormControl();
   /** list of SPEC_Lists filtered by search keyword */
-  public filteredSpecMulti: ReplaySubject<SPECList[]> = new ReplaySubject<SPECList[]>(1);
+  public filteredSpecMulti: ReplaySubject<SPECListData[]> = new ReplaySubject<SPECListData[]>(1);
+
   @ViewChild('multiSelect', { static: false }) multiSelect: MatSelect;
+  @ViewChild('allSelected', { static: false }) private allSelected: MatOption;
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
 
   @ViewChild('code', { static: false }) private codeRef?: ElementRef<HTMLElement>;
-  @ViewChild('code', { static: true}) myselect: ElementRef;
+  @ViewChild('code', { static: true }) myselect: ElementRef;
   @ViewChild('basicProduct', { static: false }) basicProduct: ElementRef;
   @ViewChild('basicMaterial', { static: false }) basicMaterial: ElementRef;
   @ViewChild('basicCas', { static: false }) basicCas: ElementRef;
@@ -165,27 +204,27 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.reactiveForm = fb.group({
       selectedSearchNew: ['', Validators.required],
     });
- 
-   // SPEC List Reactive Form 
+
+    // SPEC List Reactive Form 
     this.SpecreactiveForm = fb.group({
       selectedSPECItems: ['', Validators.required],
     })
     this.input$.subscribe(
       (term) => this.searchProduct(term, this.product_Name, this.Isfirst));
-    }
+  }
 
   ngOnInit() {
+
+$('.collapse').on('show.bs.collapse', function () {
+  $('.collapse').each(function(){
+      $(this).collapse('hide');
+  });
+});
+
     this.url = window.location.href.includes('home');
     console.log(this.url);
     this.basicPropertiesEvent(event);
 
-    // Index Page Details 
-    this.momentiveService.getSearchData().subscribe(data => {
-      this.productdata = data;
-      this.intialData_Details = this.productdata.intialData_Details;
-    }, err => {
-      console.error(err);
-    });
 
     // product_type
     this.momentiveService.getSearchData().subscribe(data => {
@@ -204,7 +243,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     $('.select').click(function (event) {
       $(this).closest('.dropdown-select').find('.option-list, .search-box').toggle();
     });
-
+   
 
     //Main Search Bar Placeholder & Other Details
     this.placeholder = 'Enter the Details';
@@ -273,9 +312,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     console.log(this.SearchProducts);
     this.searchDataLength = this.SearchProducts.SearchData.length;
-    if (this.searchTerm.length < 1) {
-      this.product_Name = [];
-    }
+    // if (this.searchTerm.length < 1) {
+    //   this.product_Name = [];
+    // }
     if (this.searchDataLength > 2 && Isfirst) {
       this.loading = true
       this.momentiveService.getAllEvents(this.SearchProducts).subscribe(data => {
@@ -303,6 +342,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+              product_Name.name.toLowerCase().includes(this.searchTextTerms.toLowerCase()) ||
               product_Name.name.toLowerCase().startsWith(this.searchTextTerms.toLowerCase())
           });
         } else {
@@ -359,10 +399,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //Second Level Search Functinality
   onChangeData(data) {
+    console.log(data)
     this.selectedProducts = true;
     this.selectedSearchText = data;
     this.secondaryNavBar = true;
-    this.momentiveService.homeEvent.next();
     this.momentiveService.setSelectedProductData(this.selectedSearchText);
     this.router.navigate(['/app-home']);
     localStorage.setItem('SearchBarData', JSON.stringify(data));
@@ -382,7 +422,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.momentiveService.getSelectedProducts(data).subscribe((res) => {
         this.Isfirst = false;
         console.log(res);
-        this.product_Name = res;
+        const SearchArrayData = res;
+        this.secondLevelSearch = SearchArrayData[0].search_List;
+        this.momentiveService.setBasicLevelDetails(SearchArrayData[0].basic_properties);
+        this.getIntialSpecList(this.selectedSearchText);
+        this.product_Name = this.secondLevelSearch;
         this.product_Name.forEach(element => {
           if (this.ProductDrop.indexOf(element.type) == -1) {
             this.ProductDrop.push(element.type);
@@ -390,6 +434,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         });
         if (this.product_Name.length > 0) {
           this.searchProduct('', this.product_Name, this.Isfirst);
+          this.relatedProducts = true;
         } else {
           alert('NO More Related Products Available');
           this.relatedProducts = false;
@@ -399,7 +444,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       }, err => {
         console.log(err);
       })
-      this.getIntialSpecList(this.selectedSearchText);
     }
   }
 
@@ -413,32 +457,27 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-//BAsic Properties API Call
+  //BAsic Properties API Call
   basicPropertiesEvent(event) {
     if (event === 'productDetails') {
       $('#basicDetails').modal('show');
       this.productLevel = [];
       this.MaterialLevel = [];
       this.casLevel = [];
-      this.basicPropertiesLoader = [];
-      this.userSelectedProducts = this.momentiveService.selectedProduct
-      this.momentiveService.getSpecList(this.userSelectedProducts).subscribe(data => {
-        console.log(data)
-        this.userSelectedSPECDetails = data;
-        this.momentiveService.getBasicProperties(this.userSelectedSPECDetails).subscribe(data => {
-          this.basicProperties = data;
-          if (this.basicProperties.length > 0) {
-            this.basicPropertiesLoader = false;
-            this.productLevel = this.basicProperties[0].productLevel;
-            this.MaterialLevel = this.basicProperties[0].materialLevel;
-            this.casLevel = this.basicProperties[0].CASLevel;
-          } else {
-            this.basicPropertiesLoader = true;
-          }
-        }, err => {
-          console.error(err);
+      this.basicPropertiesLoader = true;
+      this.basicProperties = this.momentiveService.basicLevelList;
+      console.log(this.basicProperties);
+      if (this.basicProperties) {
+        this.basicPropertiesLoader = false;
+        this.productLevel = this.basicProperties[0].product_Level;
+        this.MaterialLevel = this.basicProperties[0].material_Level;
+        this.MaterialLevel.forEach(element => {
+          element.material_Number = parseInt(element.material_Number);
         });
-      });
+        this.casLevel = this.basicProperties[0].cas_Level;
+      } else {
+        this.basicPropertiesLoader = true;
+      }
     }
   }
   //Ontology Page Redirect
@@ -463,22 +502,47 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   home() {
     this.router.navigate(['/app-pageindex']);
   }
+  OntologyTest() {
+    this.router.navigate(['/ontology/ontology-test']);
+  }
 
   //SpecID Droopdownlist
   getIntialSpecList(data) {
+    this.NewSpecList = [];
+    console.log(this.NewSpecList);
     const SpecListedData = data;
-    this.momentiveService.getSpecList(SpecListedData).subscribe(data => {
+    this.momentiveService.getSelectedProducts(SpecListedData).subscribe(data => {
       console.log(data)
       this.SPECdropdownList = data;
-      this.SpecLists = this.SPECdropdownList;
+      this.SpecLists = this.SPECdropdownList[0].selected_spec_list;
+      this.momentiveService.setAllSpecList(this.SpecLists);
+
       if (this.SpecLists.length === 1) {
         this.specDataListDetails = false;
       } else {
         this.specDataListDetails = true;
       }
+      console.log(this.SpecLists[0]);
+      const specNewData = this.SpecLists[0].name.split('|');
+      this.SpecSplitNewTerm = specNewData[0];
+      console.log(this.SpecSplitNewTerm);
+      console.log(this.SpecLists);
+      this.SpecLists.forEach(element => {
+        const NewDataSpec = element.name.split('|');
+        let SplitedSpecTerm = NewDataSpec[0];
+        if (SplitedSpecTerm === this.SpecSplitNewTerm) {
+          console.log(this.NewSpecList);
+          this.NewSpecList.push(element);
+          console.log(this.NewSpecList);
+        }
+      });
       // set initial selection
-      this.specMultiCtrl.setValue([this.SpecLists[0]]);
-      this.momentiveService.setCategorySpecList([this.SpecLists[0]]);
+      this.specMultiCtrl.setValue(this.NewSpecList);
+      this.momentiveService.setCategorySpecList(this.NewSpecList);
+      this.getAPICallCASDetails();
+      this.getAPICallMATDetails();
+      this.getAPICallProductDetails();
+      this.momentiveService.homeEvent.next();
       // load the initial SPEC_List list
       this.filteredSpecMulti.next(this.SpecLists.slice());
       // listen for search field value changes
@@ -492,22 +556,59 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(err);
     })
   }
-  selectAll(checkAll, select, values) {
-    //this.toCheck = !this.toCheck;
-    if (checkAll) {
-      select.update.emit(values);
+  selectCheckBoxMethod(selected: boolean, checkedValue) {
+    console.log(this.specMultiCtrl.value.length);
+    console.log(this.specMultiCtrl.value)
+    this.NewSpecList = this.specMultiCtrl.value;
+    console.log(this.NewSpecList);
+    console.log(selected);
+    let temp = [];
+    this.filteredSpecMulti.pipe(takeUntil(this._onDestroy))
+    .subscribe((val) => {
+    const specNewData = checkedValue.name.split('|');
+    this.SpecSplitNewTerm = specNewData[0];
+    console.log(this.SpecSplitNewTerm);
+    console.log(this.SpecLists);
+    val.forEach(element => {
+      const NewDataSpec = element.name.split('|');
+      let SplitedSpecTerm = NewDataSpec[0];
+      if (SplitedSpecTerm === this.SpecSplitNewTerm) {
+        temp.push(element);
+        console.log(temp);
+      }
+    });
+    console.log(temp);
+    temp.forEach(element => {
+      const index = this.NewSpecList.indexOf(element);
+      if (index > -1) {
+        this.NewSpecList.splice(index, 1);
+      }
+    });
+    console.log(this.NewSpecList);
+    console.log(temp);
+    if (selected == true) {
+      console.log(this.NewSpecList)
+      this.NewSpecList = this.NewSpecList.concat(temp);
+    } else if (selected == false) {
+      this.NewSpecList = this.NewSpecList.concat([]);
     }
-    else {
-      select.update.emit([]);
-    }
+  });
+  console.log(this.NewSpecList)
+    this.specMultiCtrl.patchValue(this.NewSpecList);
   }
-  //Set Selected SPEC Details
+
+  //Submit Selected SPEC Details
   selectedTopSpecList() {
     console.log(this.specMultiCtrl.value);
-    this.sideSpecList = this.specMultiCtrl.value[0];
+    this.sideSpecList = this.specMultiCtrl.value;
     console.log(this.sideSpecList);
-    this.momentiveService.setSelectedProductData(this.sideSpecList);
+    //Home page API Call chaning the SPEc-Id;
+    // this.momentiveService.setSelectedProductData(this.sideSpecList);
     this.momentiveService.setCategorySpecList(this.specMultiCtrl.value);
+    console.log(this.specMultiCtrl.value)
+    this.getAPICallCASDetails();
+    this.getAPICallMATDetails();
+    this.getAPICallProductDetails();
     this.momentiveService.homeEvent.next();
     this.toastr.successToastr('Specification ID Selected.', 'Success!');
   }
@@ -522,14 +623,26 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //Filter Option In SPEC ID
   toggleSelection(change): void {
-    this.filteredSpecMulti.pipe(take(1), takeUntil(this._onDestroy))
-      .subscribe(val => {
+    alert('Allow To Select Only 20 SPEC List')
+    console.log(this.SpecLists);
+    let newLimitedData = [];
+    this.filteredSpecMulti.pipe(takeUntil(this._onDestroy))
+      .subscribe((val) => {
         if (change.checked) {
-          this.specMultiCtrl.patchValue(val);
+          this.limitedSPec = [];
+          console.log(val);
+          this.limitedSPec = val;
+          newLimitedData = this.limitedSPec.slice(0, 20);
+          console.log(newLimitedData);
+          this.specMultiCtrl.setValue(newLimitedData);
+          console.log(this.specMultiCtrl);
         } else {
-          this.specMultiCtrl.patchValue([]);
+          this.limitedSPec = val;
+          newLimitedData = this.limitedSPec.slice(0, 1);
+          console.log(newLimitedData);
+          this.specMultiCtrl.setValue(newLimitedData);
         }
-      })
+      });
   }
   //Sets the initial value after the filteredSPEC_Lists are loaded initially
   protected setInitialValue() {
@@ -560,7 +673,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-//Export Excel in Product Level Details
+  //Export Excel in Product Level Details
   exportToBasicProductTable() {
     const ws: xlsx.WorkSheet =
       xlsx.utils.table_to_sheet(this.basicProduct.nativeElement);
@@ -576,7 +689,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Material-Level.xlsx');
   }
-//Export Excel in CAS Level Details
+  //Export Excel in CAS Level Details
   exportToBasicCasLevel() {
     const ws: xlsx.WorkSheet =
       xlsx.utils.table_to_sheet(this.basicCas.nativeElement);
@@ -584,4 +697,183 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'CAS-Level.xlsx');
   }
+
+
+  //API Parameter sending Call Details:
+  getAPICallCASDetails() {
+    this.myCASArrayFilteredData = [];
+    this.tempMyCAS = [];
+    this.casAPILevel = [];
+    this.CASLevelAPIData = this.momentiveService.basicLevelList;
+    console.log(this.CASLevelAPIData);
+    console.log(this.CASLevelAPIData[0].cas_Level);
+    if (this.CASLevelAPIData[0].cas_Level.length > 1) {
+      this.CASLevelAPIData[0].cas_Level.forEach(element => {
+        this.basicCASPropertiesDetails = element.spec_Nam_List;
+        console.log(this.basicCASPropertiesDetails);
+        this.selectedAPISpecList = this.momentiveService.getCategorySpecList();
+        console.log(this.selectedAPISpecList);
+        this.tempMyCAS.push(this.basicCASPropertiesDetails.filter((el) => {
+          return this.selectedAPISpecList.some((f) => {
+            return f.name === el.real_Spec_Id;
+          });
+        }));
+      });
+
+      this.tempMyCAS.forEach(element => {
+        element.forEach(innerElement => {
+          this.myCASArrayFilteredData.push(innerElement);
+        })
+      })
+
+
+      let combArr = [];
+      console.log(this.myCASArrayFilteredData);
+      let clone = JSON.parse(JSON.stringify(this.myCASArrayFilteredData));
+      clone.forEach(element => {
+        let comb = element.pure_Spec_Id + '-' + element.cas_Number + '-' + element.chemical_Name;
+        if (combArr.indexOf(comb) != -1) {
+          this.casAPILevel.forEach(innerElement => {
+            let pure_Spec = innerElement.pure_Spec_Id;
+            let cas_Num = innerElement.cas_Number;
+            let chem_Name = innerElement.chemical_Name;
+
+            if (pure_Spec == element.pure_Spec_Id && cas_Num == element.cas_Number && chem_Name == element.chemical_Name)
+              innerElement.real_Spec_Id.push(element.real_Spec_Id)
+          });
+        } else {
+          combArr.push(comb);
+          let real_spec = element.real_Spec_Id;
+          element.real_Spec_Id = [];
+          element.real_Spec_Id.push(real_spec);
+          this.casAPILevel.push(element);
+        }
+      });
+    } else {
+      let SingleCASDetails = [];
+      let singleRealSpec = [];
+      this.casAPILevel = [];
+      let singleCASData = this.CASLevelAPIData[0].cas_Level[0];
+      let singleRealspectemp = this.CASLevelAPIData[0].cas_Level[0].spec_Nam_List
+      singleRealspectemp.forEach(element => {
+        singleRealSpec.push(element.real_Spec_Id);
+      });
+
+      SingleCASDetails.push({
+        "pure_Spec_Id": singleCASData.pure_Spec_Id,
+        "cas_Number": singleCASData.cas_Number,
+        "chemical_Name": singleCASData.chemical_Name,
+        "real_Spec_Id": singleRealSpec
+      });
+      console.log(SingleCASDetails);
+      this.casAPILevel = SingleCASDetails;
+    }
+    console.log('****CAS****');
+    console.log(this.casAPILevel);
+
+    this.momentiveService.setCasLevelDetails(this.casAPILevel);
+  }
+
+  getAPICallMATDetails() {
+    this.getAPICallProductDetails();
+    this.myMATArrayFilteredData = [];
+    this.tempMyMAT = [];
+    this.MATAPILevel = [];
+    this.MATLevelAPIData = this.momentiveService.basicLevelList;
+    console.log(this.MATLevelAPIData);
+    console.log(this.MATLevelAPIData[0].material_Level.length);
+    if (this.MATLevelAPIData[0].material_Level.length > 1) {
+      this.MATLevelAPIData[0].material_Level.forEach(element => {
+        this.basicMATPropertiesDetails = element.spec_Nam_List;
+        console.log(this.basicMATPropertiesDetails);
+        this.selectedAPISpecList = this.momentiveService.getCategorySpecList();
+        this.tempMyMAT.push(this.basicMATPropertiesDetails.filter((el) => {
+          return this.selectedAPISpecList.some((f) => {
+            return f.name === el.real_Spec_Id;
+          });
+        }));
+      });
+      console.log(this.tempMyMAT);
+      this.tempMyMAT.forEach(element => {
+        element.forEach(innerElement => {
+          this.myMATArrayFilteredData.push(innerElement);
+        })
+      })
+
+
+      this.MATAPILevel = [];
+      let combArr = [];
+      console.log(this.myMATArrayFilteredData);
+      let clone = JSON.parse(JSON.stringify(this.myMATArrayFilteredData));
+      clone.forEach(element => {
+        let comb = element.bdt + '-' + element.material_Number + '-' + element.description;
+        if (combArr.indexOf(comb) != -1) {
+          this.MATAPILevel.forEach(innerElement => {
+            let mat_bdt = innerElement.bdt;
+            let mat_Num = innerElement.material_Number;
+            let mat_desc = innerElement.description;
+
+            if (mat_bdt == element.bdt && mat_Num == element.material_Number && mat_desc == element.description)
+              innerElement.real_Spec_Id.push(element.real_Spec_Id)
+          });
+        } else {
+          combArr.push(comb);
+          let real_spec = element.real_Spec_Id;
+          element.real_Spec_Id = [];
+          element.real_Spec_Id.push(real_spec);
+          this.MATAPILevel.push(element);
+        }
+      });
+    } else {
+      let SingleMATDetails = [];
+      let singleRealSpec = [];
+      this.MATAPILevel = [];
+      let singleMATData = this.MATLevelAPIData[0].material_Level[0];
+      let singleRealspectemp = this.MATLevelAPIData[0].material_Level[0].spec_Nam_List
+      singleRealspectemp.forEach(element => {
+        singleRealSpec.push(element.real_Spec_Id);
+      });
+
+      SingleMATDetails.push({
+        "bdt": singleMATData.bdt,
+        "material_Number": singleMATData.material_Number,
+        "description": singleMATData.description,
+        "real_Spec_Id": singleRealSpec
+      });
+      console.log(SingleMATDetails);
+      this.MATAPILevel = SingleMATDetails;
+    }
+    console.log('****MAT****');
+    console.log(this.MATAPILevel);
+    this.momentiveService.setMaterialLevelDetails(this.MATAPILevel);
+  }
+
+  getAPICallProductDetails() {
+    this.ProductAPILevel = [];
+    this.ProductLevelAPIData = this.momentiveService.basicLevelList;
+    console.log(this.ProductLevelAPIData)
+    this.basicProductPropertiesDetails = this.ProductLevelAPIData[0].product_Level;
+    console.log(this.basicProductPropertiesDetails)
+    this.selectedAPISpecList = this.momentiveService.getCategorySpecList();
+    console.log(this.selectedAPISpecList);
+    let SplitedSpecTerm = [];
+    this.selectedAPISpecList.forEach(element => {
+      let NewDataSpec = element.name.split(' | ');
+      SplitedSpecTerm.push({ 'name': NewDataSpec[0] });
+    });
+    console.log('***SPECList***')
+    console.log(SplitedSpecTerm);
+    this.ProductAPILevel = this.basicProductPropertiesDetails.filter((el) => {
+      return SplitedSpecTerm.some((f) => {
+        return f.name === el.real_Spec_Id;
+      });
+    });
+    console.log('****Product****');
+    console.log(this.ProductAPILevel);
+    this.momentiveService.setProductLevelDetails(this.ProductAPILevel);
+  }
+  keySearch(){
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
 }

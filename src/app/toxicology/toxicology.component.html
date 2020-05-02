@@ -18,63 +18,276 @@
                 <span class="loader-text">Loading data....</span>
             </span>
             <span *ngIf="pihAlertMessage">
-                <h5 class="loader-text">No Data Found..</h5>
+                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
             </span>
-            <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
+            <div *ngIf="!toxicolgyLoader && !pihAlertMessage && !toxicologyStudyDataPage">
                 <h6 class="text-default font-weight-semibold">Study Title and Date:<i class="fa fa-info-circle" role="button" title="This data is from Sharepoint"></i></h6>
-                <p-table #dt [columns]="toxicologyStudyHead" [value]="toxicologyStudyData" (sortFunction)="customSort($event)" [customSort]="true">
-                    <ng-template pTemplate="caption">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div style="text-align: left">
-                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="ui-helper-clearfix" style="text-align: right">
-                                    <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+              
+              
+                <div class="panel-group accordion" id="accordionExample">
+                        <div class="panel panel-primary">
+                           <div class="panel-heading" role="tab" id="headingOne">
+                              <h6 class="panel-title">
+                                 <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true" aria-controls="collapseOne">
+                                 Product Level 
+                                 </a>
+                              </h6>
+                           </div>
+                           <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                              <div class="panel-body">
+                                    <span  *ngIf="!productLevelCategoy.length">No Data Found</span>
+                                    <div  *ngIf="productLevelCategoy.length > 0" class="row">
+                                        <div class="col-md-12 table-responsive">
+                                              
+                                                <p-table #dt [columns]="toxicologyStudyHead" [value]="productLevelCategoy" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                                [responsive]="true">
+                                                    <ng-template pTemplate="caption">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div style="text-align: left">
+                                                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="ui-helper-clearfix" style="text-align: right">
+                                                                    <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                    <br>
+                                                    <ng-template pTemplate="header" let-columns>
+                                                        <tr>
+                                                            <th class="ptable-sno">S.No</th>
+                                                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
+                                                                {{col.header}}
+                                                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                            </th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                        <tr class="ui-resizable-column">
+                                                            <td>
+                                                                {{index+1}}
+                                                            </td>
+                                                            <td class="ptable-size">
+                                                                {{rowData.spec_Id}}
+                                                            </td>
+                                                            <td class="ptable-size">
+                                                                {{rowData.product_Name}}
+                                                            </td>
+                                                            <td class="ptable-size">
+                                                                {{rowData.product_Type}}
+                                                            </td>
+                                                            <td class="ptable-size">
+                                                                {{rowData.file_Source}}
+                                                            </td>
+                                                         
+                                                            <td class="ptable-size">
+                                                                {{rowData.test_Description}}
+                                                            </td>
+                                                            <td class="ptable-file" (click)="documentStudyDetail(rowData)"><a href="javascript:void(0)">{{rowData.filename}}</a></td>
+                                                        
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                             </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div></div>
+                        
+                        <div class="panel-group accordion" id="accordionExample">
+                           <div class="panel panel-primary">
+                              <div class="panel-heading" role="tab" id="headingTwo">
+                                 <h6 class="panel-title">
+                                    <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false" aria-controls="collapseTwo">
+                                    Material Level 
+                                    </a>
+                                 </h6>
+                              </div>
+                              <div id="materialLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                 <div class="panel-body">
+                                        <span  *ngIf="!materialLevelCategoy.length">No Data Found</span>
+                                        <div  *ngIf="materialLevelCategoy.length > 0" class="row">
+                                            <div class="col-md-12 table-responsive">
+                                                    <p-table #dt [columns]="toxicologyStudyHead" [value]="materialLevelCategoy" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                                    [responsive]="true">
+                                                        <ng-template pTemplate="caption">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div style="text-align: left">
+                                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="ui-helper-clearfix" style="text-align: right">
+                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <br>
+                                                        <ng-template pTemplate="header" let-columns>
+                                                            <tr>
+                                                                <th class="ptable-sno">S.No</th>
+                                                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
+                                                                    {{col.header}}
+                                                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                                </th>
+                                                            </tr>
+                                                        </ng-template>
+                                                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                            <tr class="ui-resizable-column">
+                                                                <td>
+                                                                    {{index+1}}
+                                                                </td>
+                                                                <td class="ptable-size">
+                                                                    {{rowData.spec_Id}}
+                                                                </td>
+                                                                <td class="ptable-size">
+                                                                    {{rowData.product_Name}}
+                                                                </td>
+                                                                <td class="ptable-size">
+                                                                    {{rowData.product_Type}}
+                                                                </td>
+                                                                <td class="ptable-size">
+                                                                    {{rowData.file_Source}}
+                                                                </td>
+                                                             
+                                                                <td class="ptable-size">
+                                                                    {{rowData.test_Description}}
+                                                                </td>
+                                                                <td class="ptable-file" (click)="documentStudyDetail(rowData)"><a href="javascript:void(0)">{{rowData.filename}}</a></td>
+                                                            
+                                                            </tr>
+                                                        </ng-template>
+                                                    </p-table>
+                                                 </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div></div>
+                          
+                           <div class="panel-group accordion" id="accordionExample">
+                              <div class="panel panel-primary">
+                                 <div class="panel-heading" role="tab" id="headingThree">
+                                    <h6 class="panel-title">
+                                       <a  data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false" aria-controls="collapseThree">
+                                            Component Level 
+                                       </a>
+                                    </h6>
+                                 </div>
+                                 <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="panel-body">
+                                            <span  *ngIf="!casLevelCategoy.length">No Data Found</span>
+                                            <div  *ngIf="casLevelCategoy.length > 0" class="row">
+                                            <div class="col-md-12 table-responsive">
+                                               
+                                                    <p-table #dt [columns]="toxicologyStudyHead" [value]="casLevelCategoy" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                                    [responsive]="true">
+                                                        <ng-template pTemplate="caption">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div style="text-align: left">
+                                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="ui-helper-clearfix" style="text-align: right">
+                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <br>
+                                                        <ng-template pTemplate="header" let-columns>
+                                                            <tr>
+                                                                <th class="ptable-sno">S.No</th>
+                                                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
+                                                                    {{col.header}}
+                                                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                                </th>
+                                                            </tr>
+                                                        </ng-template>
+                                                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                            <tr class="ui-resizable-column">
+                                                                <td>
+                                                                    {{index+1}}
+                                                                </td>
+                                                                <td class="ptable-size">
+                                                                    {{rowData.spec_Id}}
+                                                                </td>
+                                                                <td class="ptable-size">
+                                                                    {{rowData.product_Name}}
+                                                                </td>
+                                                                <td class="ptable-size">
+                                                                    {{rowData.product_Type}}
+                                                                </td>
+                                                                <td class="ptable-size">
+                                                                    {{rowData.file_Source}}
+                                                                </td>
+                                                             
+                                                                <td class="ptable-size">
+                                                                    {{rowData.test_Description}}
+                                                                </td>
+                                                                <td class="ptable-file" (click)="documentStudyDetail(rowData)"><a href="javascript:void(0)">{{rowData.filename}}</a></td>
+                                                            
+                                                            </tr>
+                                                        </ng-template>
+                                                    </p-table>
+                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>  
+              
+                
+            </div>
 
+            <!--Study Titie Details Page-->
+            <div *ngIf="toxicologyStudyDataPage">
+                    <h6 class="text-default font-weight-semibold">Study Title and Date</h6>
+                    <p>{{filename}}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="text-default font-weight-semibold">Document Panel</label>
+                            <div>
+                                <!-- <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:550px; height:600px;"> -->
+                                    <iframe type="application/pdf" [attr.src]="Url"
+                                    frameborder="no" style="width:100%;height:500px"></iframe> 
                                 </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="back-btn"><button class="btn btn-back" (click)="backToStudyPage()"><i class="fa fa-reply"></i> Back</button></span>
+                            <label class="text-default font-weight-semibold">Result Panel</label>
+                            <div class="box">
+                                    <div class=" result-box text-center">
+                                            <div class="box">
+                                                <div class="box-title">
+                                                    <h3 class="link-data">{{filename}}</h3>
+                                                </div>
+                                                <div class="box-text">
+                                                    <span class="result-text">{{Extract_Result}}
+                                                    </span>
+                                                    <br>
+                                                    <span class="result-text">{{Extract_Result_one}}
+                                                        </span>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+    
                             </div>
                         </div>
-                    </ng-template>
-                    <br>
-                    <ng-template pTemplate="header" let-columns>
-                        <tr>
-                            <th style="width:2.5em">S.No</th>
-                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                {{col.header}}
-                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                            </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                        <tr [pReorderableRow]="index">
-                            <td>
-                                {{index+1}}
-                            </td>
-                            <td class="ptable-size">
-                                {{rowData.product_Name}}
-                            </td>
-                            <td class="ptable-size">
-                                {{rowData.ELA}}
-                            </td>
-                            <td class="ptable-size">
-                                {{rowData.spec_Id}}
-                            </td>
-                            <td class="ptable-size">
-                                {{rowData.test_Description}}
-                            </td>
-                            <td class="ptable-size">
-                                {{rowData.study_Title}}
-                            </td>
-                            <td class="ptable-size">
-                                {{rowData.final_Report}}
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
+                    </div>
             </div>
         </div>
         <!--Monthly Toxicology Section-->
@@ -107,12 +320,14 @@
             </span>
 
             <span *ngIf="pihAlertMessage">
-                    <h5 class="loader-text">No Data Found..</h5>
+                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
                 </span>
 
             <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
                 <div class="row" *ngIf="toxicology_silane">
-                    <p-table #dt [columns]="monthlySilaneHeader" [value]="toxicologyMonthlyData" (sortFunction)="customSort($event)" [customSort]="true">
+                    <div class="col-md-12">
+                    <p-table #dt [columns]="monthlySilaneHeader" [value]="toxicologyMonthlyData" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                    [responsive]="true">
                         <ng-template pTemplate="caption">
                             <div class="row">
                                 <div class="col-md-6">
@@ -132,15 +347,15 @@
                         <br>
                         <ng-template pTemplate="header" let-columns>
                             <tr>
-                                <th style="width:3.5em">S.No</th>
-                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+                                <th class="ptable-sno">S.No</th>
+                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
                                     {{col.header}}
                                     <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                 </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                            <tr>
+                            <tr class="ui-resizable-column">
                                 <td>{{index+1}}</td>
                                 <td class="ptable-size" *ngFor="let col of columns">
                                     {{rowData[col.field]}}
@@ -149,8 +364,11 @@
                         </ng-template>
                     </p-table>
                 </div>
+                </div>
                 <div class="row" *ngIf="toxicology_sealant">
-                    <p-table #dt [columns]="monthlySelantHeader" [value]="toxicologyMonthlyData" (sortFunction)="customSort($event)" [customSort]="true">
+                        <div class="col-md-12">
+                    <p-table #dt [columns]="monthlySelantHeader" [value]="toxicologyMonthlyData" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                    [responsive]="true">
                         <ng-template pTemplate="caption">
                             <div class="row">
                                 <div class="col-md-6">
@@ -170,15 +388,15 @@
                         <br>
                         <ng-template pTemplate="header" let-columns>
                             <tr>
-                                <th style="width:3.5em">S.No</th>
-                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+                                <th>S.No</th>
+                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
                                     {{col.header}}
                                     <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                 </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                            <tr>
+                            <tr class="ui-resizable-column">
                                 <td>{{index+1}}</td>
                                 <td class="ptable-size" *ngFor="let col of columns">
                                     {{rowData[col.field]}}
@@ -186,6 +404,7 @@
                             </tr>
                         </ng-template>
                     </p-table>
+                </div>
                 </div>
             </div>
         </div>
@@ -196,35 +415,236 @@
                 <span class="loader-text">Loading data....</span>
             </span>
             <span *ngIf="pihAlertMessage">
-                <h5 class="loader-text">No Data Found..</h5>
+                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
             </span>
-            <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
+            <div *ngIf="!toxicolgyLoader && !pihAlertMessage && !toxicologySummaryDataPage">
                 <h6 class="text-default font-weight-semibold">Toxicology Summary:<i class="fa fa-info-circle" role="button" title="This data is from Sharepoint"></i></h6>
-                <div class="card-body">
+              
+              
+                <div class="panel-group accordion" id="accordionExample">
+                        <div class="panel panel-primary">
+                           <div class="panel-heading" role="tab" id="headingOne">
+                              <h6 class="panel-title">
+                                 <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true" aria-controls="collapseOne">
+                                 Product Level 
+                                 </a>
+                              </h6>
+                           </div>
+                           <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                              <div class="panel-body">
+                                    <span  *ngIf="!productLevelCategoy.length">No Data Found</span>
+                                    <div  *ngIf="productLevelCategoy.length > 0" class="row">
+                                        <div class="col-md-12 table-responsive">
+                                              
+                                                <p-table #dt [columns]="SummaryHeader" [value]="productLevelCategoy" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                                [responsive]="true">
+                                                    <ng-template pTemplate="caption">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div style="text-align: left">
+                                                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="ui-helper-clearfix" style="text-align: right">
+                                                                    <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                    <br>
+                                                    <ng-template pTemplate="header" let-columns>
+                                                        <tr>
+                                                            <th class="ptable-sno">S.No</th>
+                                                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                                {{col.header}}
+                                                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                            </th>
+                                                            <!-- <th>Action</th> -->
+                                                        </tr>
+                                                    </ng-template>
+                                                   
+                                                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                                    <tr class="ui-resizable-column">
+                                                                        <td>{{index+1}}</td>
+                                                                        <td class="ptable-size">{{rowData.spec_Id}}</td>
+                                                                        <td class="ptable-size">{{rowData.product_Name}}</td>
+                                                                        <td class="ptable-size">{{rowData.product_Type}}</td>
+                                                                        <td class="ptable-size">{{rowData.file_Source}}</td>
+                                                                        <td class="ptable-file" (click)="documentSummaryDetail(rowData)"><a href="javascript:void(0)">{{rowData.filename}}</a></td>
+                                                                        <!-- <td><button class="btn btn-primary"><a href="{{rowData.file_Path}}" download>Download</a></button></td> -->
+                                                                    </tr>
+                                                                </ng-template>
+                                                </p-table>
+                                             </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div></div>
+                        
+                        <div class="panel-group accordion" id="accordionExample">
+                           <div class="panel panel-primary">
+                              <div class="panel-heading" role="tab" id="headingTwo">
+                                 <h6 class="panel-title">
+                                    <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false" aria-controls="collapseTwo">
+                                    Material Level 
+                                    </a>
+                                 </h6>
+                              </div>
+                              <div id="materialLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                 <div class="panel-body">
+                                        <span  *ngIf="!materialLevelCategoy.length">No Data Found</span>
+                                        <div  *ngIf="materialLevelCategoy.length > 0" class="row">
+                                            <div class="col-md-12 table-responsive">
+                                                
+                                                    <p-table #dt [columns]="SummaryHeader" [value]="materialLevelCategoy" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                                    [responsive]="true">
+                                                        <ng-template pTemplate="caption">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div style="text-align: left">
+                                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="ui-helper-clearfix" style="text-align: right">
+                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <br>
+                                                        <ng-template pTemplate="header" let-columns>
+                                                            <tr>
+                                                                <th class="ptable-sno">S.No</th>
+                                                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                                    {{col.header}}
+                                                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                                </th>
+                                                                <!-- <th>Action</th> -->
+                                                            </tr>
+                                                        </ng-template>
+                                                       
+                                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                                        <tr class="ui-resizable-column">
+                                                                            <td>{{index+1}}</td>
+                                                                            <td class="ptable-size">{{rowData.spec_Id}}</td>
+                                                                            <td class="ptable-size">{{rowData.product_Name}}</td>
+                                                                            <td class="ptable-size">{{rowData.product_Type}}</td>
+                                                                            <td class="ptable-size">{{rowData.file_Source}}</td>
+                                                                            <td class="ptable-file" (click)="documentSummaryDetail(rowData)"><a href="javascript:void(0)">{{rowData.filename}}</a></td>
+                                                                            <!-- <td><button class="btn btn-primary"><a href="{{rowData.file_Path}}" download>Download</a></button></td> -->
+                                                                        </tr>
+                                                                    </ng-template>
+                                                    </p-table>
+                                                 </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div></div>
+                          
+                           <div class="panel-group accordion" id="accordionExample">
+                              <div class="panel panel-primary">
+                                 <div class="panel-heading" role="tab" id="headingThree">
+                                    <h6 class="panel-title">
+                                       <a  data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false" aria-controls="collapseThree">
+                                            Component Level 
+                                       </a>
+                                    </h6>
+                                 </div>
+                                 <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="panel-body">
+                                            <span  *ngIf="!casLevelCategoy.length">No Data Found</span>
+                                            <div  *ngIf="casLevelCategoy.length > 0" class="row">
+                                            <div class="col-md-12 table-responsive">
+                                               
+                                                    <p-table #dt [columns]="SummaryHeader" [value]="casLevelCategoy" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                                    [responsive]="true">
+                                                        <ng-template pTemplate="caption">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div style="text-align: left">
+                                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="ui-helper-clearfix" style="text-align: right">
+                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <br>
+                                                        <ng-template pTemplate="header" let-columns>
+                                                            <tr>
+                                                                <th class="ptable-sno">S.No</th>
+                                                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                                    {{col.header}}
+                                                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                                </th>
+                                                                <!-- <th>Action</th> -->
+                                                            </tr>
+                                                        </ng-template>
+                                                       
+                                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                                                        <tr class="ui-resizable-column">
+                                                                            <td>{{index+1}}</td>
+                                                                            <td class="ptable-size">{{rowData.spec_Id}}</td>
+                                                                            <td class="ptable-size">{{rowData.product_Name}}</td>
+                                                                            <td class="ptable-size">{{rowData.product_Type}}</td>
+                                                                            <td class="ptable-size">{{rowData.file_Source}}</td>
+                                                                            <td class="ptable-file" (click)="documentSummaryDetail(rowData)"><a href="javascript:void(0)">{{rowData.filename}}</a></td>
+                                                                            <!-- <td><button class="btn btn-primary"><a href="{{rowData.file_Path}}" download>Download</a></button></td> -->
+                                                                        </tr>
+                                                                    </ng-template>
+                                                    </p-table>
+                                                 </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>  
+              
+        
+            </div>
+            <!--Toxicology Summary Detail Page-->
+            <div *ngIf="toxicologySummaryDataPage">
+                    <h6 class="text-default font-weight-semibold">Toxicology Summary</h6>
+                    <p>{{filename}}</p>
                     <div class="row">
-                        <!-- <h4>Toxicology Summary Details</h4> -->
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <label class="text-default font-weight-semibold">Document Panel</label>
+                            <div>
+                                <!-- <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:550px; height:600px;"> -->
+                                    <iframe type="application/pdf" [attr.src]="Url"
+                                    frameborder="no" style="width:100%;height:500px"></iframe> 
+                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="back-btn"><button class="btn btn-back" (click)="backToSummaryPage()"><i class="fa fa-reply"></i> Back</button></span>
+                            <label class="text-default font-weight-semibold">Result Panel</label>
                             <div class="box">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th><b>Specification Id</b></th>
-                                            <th><b>Date of Issue</b></th>
-                                            <th><b>Document Name</b></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let data of toxicologySummaryData">
-                                            <td>{{data.spec_Id}}</td>
-                                            <td>{{data.date_Of_Issue}}</td>
-                                            <td><a href="{{data.filename}}" target="_self">{{data.filename}}</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <div class=" result-box text-center">
+                                            <div class="box">
+                                                <div class="box-title">
+                                                    <h3 class="link-data">{{filename}}</h3>
+                                                </div>
+                                                <div class="box-text">
+                                                    <span class="result-text">{{Extract_Result}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+    
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
         <!--Toxicology Registration Tracker-->
@@ -235,34 +655,52 @@
             </span>
 
             <span *ngIf="pihAlertMessage">
-                <h5 class="loader-text">No Data Found..</h5>
+                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
             </span>
             <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
                 <h6 class="text-default font-weight-semibold">Toxicology Registration Tracker:<i class="fa fa-info-circle" role="button" title="This data is from SQL DB"></i></h6>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="box">
-                                <table class="table table-bordered">
-                                    <thead>
+                    
+                                <p-table #dt [columns]="registrationHeader" [value]="registartion_Tracker_Data" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                [responsive]="true">
+                                    <ng-template pTemplate="caption">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div style="text-align: left">
+                                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="ui-helper-clearfix" style="text-align: right">
+                                                    <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <br>
+                                    <ng-template pTemplate="header" let-columns>
                                         <tr>
-                                            <th><b>Specification Id</b></th>
-                                            <th><b>Date of Issue</b></th>
-                                            <th><b>Document Name</b></th>
+                                            <th>S.No</th>
+                                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                {{col.header}}
+                                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                            </th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let data of registartion_Tracker_Data">
-                                            <td>{{data.spec_Id}}</td>
-                                            <td>{{data.date_Of_Issue}}</td>
-                                            <td><a href="{{data.filename}}" target="_self">{{data.filename}}</a></td>
-                                            <!-- <td> <embed src="{{data.filename}}" type="application/pdf"   height="300px" width="100%" class="responsive">
-                                                        <a href="{{data.filename}}">download</a></td> -->
-                                            <!-- <td><a data-fancybox   src="{{data.filename}}" data-fancybox-close  class="thumbnail fancybox"  rel="ligthbox" href="{{data.filename}}">{{data.filename}}</a> </td> -->
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                        <tr class="ui-resizable-column">
+                                            <td>{{index+1}}</td>
+                                            <td class="ptable-size" *ngFor="let col of columns">
+                                                {{rowData[col.field]}}
+                                            </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </ng-template>
+                                </p-table>
+                            
                         </div>
                     </div>
                 </div>

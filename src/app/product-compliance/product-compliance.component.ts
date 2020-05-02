@@ -124,7 +124,7 @@ export class ProductComplianceComponent implements OnInit {
 
     //Notification Header
     this.pc_NotificationDataHeader = [
-      { "field": "spec_id", "header": "Specification ID", "width": "10%" },
+      { "field": "spec_id", "header": "Specification ID - NAM Prod", "width": "10%" },
       { "field": "regulatory_List", "header": "Regulatory List", "width": "10%" },
       { "field": "notification", "header": "Notification", "width": "10%" },
       { "field": "additional_Info", "header": "Additional Info/ Remarks", "width": "10%" },
@@ -181,7 +181,11 @@ export class ProductComplianceComponent implements OnInit {
     this.ProductComlianceDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
+    console.log(this.ProductComlianceDetails);
     this.momentiveService.getProductCompliance(this.ProductComlianceDetails).subscribe(data => {
       console.log(data);
       this.ProductComplianceTabLoader = true;
@@ -214,6 +218,9 @@ export class ProductComplianceComponent implements OnInit {
     this.ProductComlianceDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.ProductComlianceDetails)
     if (this.locationBasedRegistration === 'EU') {

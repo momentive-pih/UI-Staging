@@ -20,13 +20,14 @@
                         <span class="loader-text">Loading data....</span>
             </span>
             <span *ngIf="pihAlertMessage">
-                        <h5 class="loader-text">No Data Found..</h5>
+                        <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
                     </span>
 
             <!--Notification Status-->
             <div *ngIf="!ProductComplianceTabLoader && !pihAlertMessage">
                 <h6 class="text-default font-weight-semibold">Notification Status: <i class="fa fa-info-circle" role="button" title="This data is from SAP"></i></h6>
-                <p-table #dt [columns]="pc_NotificationHeader" [value]="pc_NotificationData" (sortFunction)="customSort($event)" [customSort]="true">
+                <p-table #dt [columns]="pc_NotificationHeader" [value]="pc_NotificationData" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                [responsive]="true">
                     <ng-template pTemplate="caption">
                         <div class="row">
                             <div class="col-md-6">
@@ -46,8 +47,8 @@
                     <br>
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th style="width:3.5em">S.No</th>
-                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                            <th style="width:5%">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
                                 {{col.header}}
                                 <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                             </th>
@@ -114,12 +115,13 @@
                     </span>
 
                     <span *ngIf="pihAlertMessage">
-                        <h5 class="loader-text">No Data Found..</h5>
+                        <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
                     </span>
 
                     <div *ngIf="!pihAlertMessage && !ProductComplianceTabLoader">
                         <!-- EU Composition -->
-                        <p-table #dt [columns]="complianceRegistrationEUHeader" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true">
+                        <p-table #dt [columns]="complianceRegistrationEUHeader" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                        [responsive]="true">
                             <ng-template pTemplate="caption">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -140,8 +142,8 @@
 
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
-                                    <th style="width:2.5em">S.No</th>
-                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
+                                    <th>S.No</th>
+                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn pResizableColumn>
                                         {{col.header}}
                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                     </th>
@@ -149,7 +151,7 @@
                             </ng-template>
 
                             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                <tr>
+                                <tr class="ui-resizable-column">
                                     <td>
                                         {{index+1}}
                                     </td>
@@ -180,11 +182,12 @@
                     </span>
 
                     <span *ngIf="pihAlertMessage">
-                            <h5 class="loader-text">No Data Found..</h5>
+                            <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
                         </span>
 
                     <div *ngIf="!pihAlertMessage && !ProductComplianceTabLoader">
-                        <p-table #dt [columns]="complianceRegistrationCanada_Header" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true">
+                        <p-table #dt [columns]="complianceRegistrationCanada_Header" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                        [responsive]="true">
                             <ng-template pTemplate="caption">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -205,8 +208,8 @@
 
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
-                                    <th style="width:3.5em">S.No</th>
-                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+                                    <th>S.No</th>
+                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
                                         {{col.header}}
                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                     </th>
@@ -214,7 +217,7 @@
                             </ng-template>
 
                             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                <tr>
+                                <tr class="ui-resizable-column">
                                     <td>
                                         {{index+1}}
                                     </td>
@@ -247,11 +250,12 @@
 
                     <span *ngIf="pihAlertMessage">
                             <!-- <span class="loader-text"><img src="./assets/images/momentive/nodataAlert.png"/></span> -->
-                    <h5 class="loader-text">No Data Found..</h5>
+                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
                     </span>
 
                     <div *ngIf="!pihAlertMessage && !ProductComplianceTabLoader">
-                        <p-table #dt [columns]="complianceRegistrationLatin_Header" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true">
+                        <p-table #dt [columns]="complianceRegistrationLatin_Header" [value]="complianceLocationRegistrationData" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                        [responsive]="true">
                             <ng-template pTemplate="caption">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -272,8 +276,8 @@
 
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
-                                    <th style="width:3.5em">S.No</th>
-                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+                                    <th>S.No</th>
+                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
                                         {{col.header}}
                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                     </th>
@@ -282,7 +286,7 @@
 
 
                             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                <tr>
+                                <tr class="ui-resizable-column">
                                     <td>
                                         {{index+1}}
                                     </td>

@@ -113,7 +113,11 @@ export class OntologyDocumentsComponent implements OnInit {
     this.selectedSpecList = this.momentiveService.getCategorySpecList();
     this.ontologyServiceDetails.push({
       'Spec_id': this.selectedSpecList,
-      'Category_details': { Category: "ontology", Subcategory: "assigned" }
+      'Category_details': { Category: "ontology", Subcategory: "assigned" },
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+
     });
 
     this.momentiveService.getOntologyDocumentss(this.ontologyServiceDetails).subscribe(data => {
@@ -135,13 +139,11 @@ export class OntologyDocumentsComponent implements OnInit {
       this.filename = this.PDfOntology[0].fileName;
       this.productName = this.PDfOntology[0].productName;
       this.pdfUrl = this.PDfOntology[0].url;
-      // this.pdfSrc = 'https://clditdevstorpih.blob.core.windows.net/momentive-sources-pih/sharepoint-pih/toxicology-pih/studies-tox-team-pih/raw/-Y-12900' + this.pdfUrl;
-      //  this.Url = this.sanitizer.bypassSecurityTrustUrl(this.pdfSrc);
-
-      this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
-      this.file = new Blob([this.Url], { type: 'application/pdf' });
-      this.fileURL = URL.createObjectURL(this.file);
-      console.log(this.fileURL);
+      console.log(this.pdfUrl);
+      let SAS_token ='?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-05-29T20:19:29Z&st=2020-04-02T12:19:29Z&spr=https&sig=aodIg0rDPVsNEJY7d8AerhD79%2FfBO9LZGJdx2j9tsCM%3D';
+      let urlPDF = this.pdfUrl + SAS_token;
+      console.log(urlPDF);
+      this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(urlPDF);
       console.log(this.Url);
     });
 

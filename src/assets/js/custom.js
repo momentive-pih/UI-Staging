@@ -183,9 +183,11 @@ $(document).ready(function(){
                 $('.panel-group').on('hidden.bs.collapse', toggleIcon);
                 $('.panel-group').on('shown.bs.collapse', toggleIcon);
     
-                $('.accordion2').on('hidden.bs.collapse', toggleIcon);
-                $('.accordion2').on('shown.bs.collapse', toggleIcon);
+                $('.accordion').on('hidden.bs.collapse', toggleIcon);
+                $('.accordion').on('shown.bs.collapse', toggleIcon);
     });
+
+
 scrollNav();
 
 $(document).ready(function () {
@@ -194,6 +196,9 @@ $(document).ready(function () {
         $(this).toggleClass('active');
     });
 });
+
+  
+
 
 $(document).ready(function() {
     $(function () {
@@ -230,46 +235,33 @@ $(document).ready(function() {
         }
     }
     
-    // $('.fancybox').fancybox({
- 
-    //     closeBtn    : false, // hide close button
-    //     closeClick  : false, // prevents closing when clicking INSIDE fancybox
-    //     helpers     : { 
-    //         // prevents closing when clicking OUTSIDE fancybox
-    //         overlay : {closeClick: false} 
-    //     },
-    //     keys : {
-    //         // prevents closing when press ESC button
-    //         close  : null
-    //     }
-    //    });
+//Fancy Box Image preview
+    //    $("a.myselector").fancybox({
+    //     'overlayShow'   :   flase,
+    //     'autoScale': true,
+    //     'autoDimensions': false,
+    //     'modal': true,
+    //     'type': 'iframe',
+    //     'autoSize' : false,
+    //     'width' : '50%',
+    //     'showCloseButton' : true,
+    //     afterShow : function() {
+    //         $('.fancybox-skin').append('<a title="Close" class="fancybox-item fancybox-close" href="javascript:jQuery.fancybox.close();"></a>');
+    //     } 
+    // });
 
 
-
-       $("a.myselector").fancybox({
-        'overlayShow'   :   true,
-        'autoScale': true,
-        'autoDimensions': false,
-        'modal': true,
-        'type': 'iframe',
-        'autoSize' : false,
-        'width' : '90%',
-        'showCloseButton' : true,
-        afterShow : function() {
-            $('.fancybox-skin').append('<a title="Close" class="fancybox-item fancybox-close" href="javascript:jQuery.fancybox.close();"></a>');
-        }
-         
-    });
     $('[data-toggle="offcanvas"]').click(function () {
           $('#wrapper').toggleClass('toggled');
     });  
 
-    
+ 
     // $(".modal-wide").on("show.bs.modal", function() {
     //     var height = $(window).height() - 200;
     //     $(this).find(".modal-body").css("max-height", height);
     //   });
  
+
 
   });
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MomentiveService } from './../../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SynonymsFilterPipe } from './../pipes/synonyms-filter.pipe';
+
 declare var $: any;
 
 @Component({
@@ -26,6 +28,7 @@ export class SynonymsComponent implements OnInit {
   OntologySearchKeysynonyms: any = [];
   keySynonysms: any = [];
   globalSynonyms: any;
+  searchText:any;
   SelectedKey: String;
   documentCategorySection = false;
   ontologySynonymsLoader: boolean = true;

@@ -5,8 +5,10 @@
         <div class="col-md-6 col-xs-6">
             <label class="text-default font-weight-semibold"><h6><b>File Name</b> - {{filename}}</h6></label>
             <div>
-                <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:650px; height:600px;">
-            </div>
+                <!-- <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:650px; height:600px;"> -->
+                    <iframe type="application/pdf" [attr.src]="Url"
+                    frameborder="no" style="width:100%;height:500px"></iframe> 
+                </div>
         </div>
         <!--Key_value pair Table-->
         <div class="col-md-6 col-xs-6">

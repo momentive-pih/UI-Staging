@@ -1,0 +1,184 @@
+.m-rt {
+    float: right;
+}
+
+
+/**ontology Page**/
+
+.pdf-img {
+    width: 25px;
+    height: 25px;
+}
+
+.pdf-name {
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    word-break: break-all;
+}
+
+.pdf-name:hover {
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #3B5998;
+}
+
+.table-striped {
+    background: #fff;
+}
+
+.sm-btn {
+    background-color: #3B5998;
+    color: #fff;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.doc-link {
+    cursor: pointer;
+    color: #007ad9!important;
+}
+
+.panel {
+    margin-bottom: 24px;
+    background-color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.panel-heading>.dropdown .dropdown-toggle {
+    color: inherit;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: inherit;
+}
+
+.panel-group {
+    margin-bottom: 24px;
+}
+
+.panel-group .panel {
+    margin-bottom: 0;
+    border-radius: 4px;
+}
+
+.panel-group .panel+.panel {
+    margin-top: 5px;
+}
+
+.panel-group .panel-heading {
+    border-bottom: 0;
+}
+
+.panel-group .panel-heading+.panel-collapse>.panel-body,
+.panel-group .panel-heading+.panel-collapse>.list-group {
+    border-top: 1px solid #dddddd;
+}
+
+.panel-group .panel-footer {
+    border-top: 0;
+}
+
+.panel-group .panel-footer+.panel-collapse .panel-body {
+    border-bottom: 1px solid #dddddd;
+}
+
+.panel-primary {
+    border-color: #cccccc;
+}
+
+.panel-primary>.panel-heading {
+    color: #ffffff;
+    background-color: #1a355e;
+    border-color: #cccccc;
+}
+
+.panel-primary>.panel-heading+.panel-collapse>.panel-body {
+    border-top-color: #cccccc;
+}
+
+.panel-primary>.panel-heading .badge {
+    color: #ffffff;
+    background-color: #ffffff;
+}
+
+.panel-primary>.panel-footer+.panel-collapse>.panel-body {
+    border-bottom-color: #cccccc;
+}
+
+.panel-primary h1,
+.panel-primary h2,
+.panel-primary h3,
+.panel-primary h4,
+.panel-primary h5,
+.panel-primary h6,
+.panel-primary .h1,
+.panel-primary .h2,
+.panel-primary .h3,
+.panel-primary .h4,
+.panel-primary .h5,
+.panel-primary .h6 {
+    color: #ffffff;
+}
+
+.panel-title>a:before {
+    content: "\f068";
+    float: right !important;
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+}
+
+.panel-title>a.collapsed:before {
+    content: "\f067";
+}
+
+.panel-title>a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.msg-data {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.docs-btn {
+    margin: 0px 0px -5px 0px;
+    color: #fff;
+    background-color: #1a355e;
+    border: 0px;
+    padding: 5px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.docs-dir {
+    float: right
+}
+
+.mr-r {
+    text-align: right;
+}

@@ -16,6 +16,9 @@ import { OntologyRoutingModule } from './ontology-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { UnassignedDocumentsComponent } from './unassigned-documents/unassigned-documents.component';
 import { UnassignedDetailsDocumentsComponent } from './unassigned-details-documents/unassigned-details-documents.component';
+import { OntologyTestComponent } from './ontology-test/ontology-test.component';
+import { OntologyTestDetailsComponent } from './ontology-test-details/ontology-test-details.component';
+
 
 
 

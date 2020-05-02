@@ -15,23 +15,24 @@ import { OntologyComponent } from './ontology.component';
 import { OntologyHomeComponent } from '../ontology/ontology-home/ontology-home.component';
 import { OntologyDocumentsComponent } from '../ontology/ontology-documents/ontology-documents.component';
 import { SynonymsComponent } from '../ontology/synonyms/synonyms.component';
-import { WholeOntologyManagementComponent } from './whole-ontology-management/whole-ontology-management.component';
 import { UnassignedDocumentsComponent } from './unassigned-documents/unassigned-documents.component';
 import { UnassignedDetailsDocumentsComponent } from './unassigned-details-documents/unassigned-details-documents.component';
-
-
+import { OntologyTestComponent} from './ontology-test/ontology-test.component'
+import { OntologyTestDetailsComponent} from './ontology-test-details/ontology-test-details.component'
+import { SynonymsFilterPipe } from './pipes/synonyms-filter.pipe';
 const routes: Routes = [
       { path: '', component: OntologyHomeComponent},
       { path: 'ontology-documents', component: OntologyDocumentsComponent },
       { path: 'synonyms', component: SynonymsComponent },
-      { path: 'whole-ontology-management', component: WholeOntologyManagementComponent },
+      { path: 'ontology-test', component: OntologyTestComponent },
       { path: 'unassigned-documents', component: UnassignedDocumentsComponent },
-      { path: 'unassigned-details-documents', component: UnassignedDetailsDocumentsComponent }
+      { path: 'unassigned-details-documents', component: UnassignedDetailsDocumentsComponent },
+      { path: 'test-details-documents', component: OntologyTestDetailsComponent },
 
 ];
 
 @NgModule({
-  declarations: [OntologyHomeComponent, OntologyComponent, SynonymsComponent, OntologyDocumentsComponent, WholeOntologyManagementComponent,UnassignedDocumentsComponent, UnassignedDetailsDocumentsComponent],
+  declarations: [OntologyHomeComponent, OntologyComponent, SynonymsComponent, SynonymsFilterPipe,OntologyDocumentsComponent, OntologyTestComponent,UnassignedDocumentsComponent, UnassignedDetailsDocumentsComponent,OntologyTestDetailsComponent],
   imports: [FormsModule, ReactiveFormsModule,
     NgbDatepickerModule,
     NgbTimepickerModule,

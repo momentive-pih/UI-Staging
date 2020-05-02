@@ -27,15 +27,21 @@
                     <li class="nav-item sidebar-nav" *ngFor="let product of sidebarCategoriesData ;let i = index">
                         <a class="nav-link">
                             <img class="media-object img-circle profile-img img-side" src="{{product.image}}">
-                            <span (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)" data-toggle="modal" data-title="Edit" [attr.data-target]="'#'+product.tab_modal">{{product.Name}}
+                            <span (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)"
+                                data-toggle="modal" data-title="Edit"
+                                [attr.data-target]="'#'+product.tab_modal">{{product.Name}}
                             </span>
-                            <h6 data-toggle="collapse" [attr.href]="'#'+product.sales_tab" aria-expanded="true" aria-controls="collapseOne">
+                            <h6 data-toggle="collapse" [attr.href]="'#'+product.sales_tab" aria-expanded="true"
+                                aria-controls="collapseOne">
                                 <i class="fa fa-angle-down sub-icon"></i>
                             </h6>
                         </a>
-                        <ul class="nav nav-group-sub" id="{{product.sales_tab}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <ul class="nav nav-group-sub" id="{{product.sales_tab}}" class="collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
                             <li class="nav-item sub-sidebar-nav" *ngFor="let data of product.tab_content;">
-                                <i class="fa fa-square"></i> <span (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal" data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">
+                                <i class="fa fa-square"></i> <span
+                                    (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal"
+                                    data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">
                                     {{data.name}}</span>
                                 <!-- <span *ngIf="data.sub.length > 0" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne" >
                                 <i class="fa fa-angle-down side-sub-icon"></i>
@@ -79,8 +85,11 @@
 
                         <div class="media-body intro-cont">
                             <h6 class="media-title" (click)="MouseModalBox(i,product)"><b>{{product.key}}</b></h6>
-                            <ul class="list-inline list-inline-dotted text-muted mb-2" *ngFor="let each of product.value">
-                                <li class="list-inline-item" *ngFor="let data of each | keyvalue" [hidden]="data.key =='image'|| data.key=='tab_modal'"><b>{{data.key}}:</b> {{data.value}}
+                            <ul class="list-inline list-inline-dotted text-muted mb-2"
+                                *ngFor="let each of product.value">
+                                <li class="list-inline-item" *ngFor="let data of each | keyvalue"
+                                    [hidden]="data.key =='image'|| data.key=='tab_modal'"><b>{{data.key}}:</b>
+                                    {{data.value}}
                                 </li>
                             </ul>
                         </div>
@@ -96,15 +105,47 @@
     <div class="modal-dialog momodel modal-fluid" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <b class="selected-sug">{{productTitle}}</b>
-                <span class="property-btn" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i
-                        class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <b class="selected-sug">{{productTitle}} &nbsp; <span class="spec-btn" data-toggle="collapse"
+                        data-target="#filter-panel"><i class="fa fa-caret-down" title="Selected Products and Specification" aria-hidden="true"></i></span></b>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
                         class="fa fa-times"></i></button>
 
+
             </div>
 
-            <div class="board-inner" id="collapseOne">
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div id="filter-panel" class="collapse filter-panel">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="selcted-crt">
+
+                                            <b class="selected-sug">Selected Product -</b> &nbsp;<span
+                                                class="selected-sug" *ngFor="let data of globalSearchData;let i=index">
+                                                <small>{{data.name}}</small> {{i== globalSearchData.length-1 ? '': ','}}
+                                            </span>
+                                            <br>
+
+                                            <b class="selected-sug">Selected Specification Lists -</b> &nbsp;<span
+                                                class="selected-sug" *ngFor="let data of selectedSpecList;let i=index">
+                                                <small>{{data.name}}</small> {{i== selectedSpecList.length-1 ? '': ','}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="board-inner">
                 <div class="slide-nav">
                     <div class="slide-left-outsize" *ngIf="sidebarTopIcon">
                         <span class="fa fa-backward"></span>
@@ -114,8 +155,11 @@
                     </div>
                     <div class="slide-center">
                         <div class="list-cat" [ngStyle]="setMyStyles()">
-                            <div class="box-cat" *ngFor="let product of sidebarData; let i = index" [ngClass]="{'active': selectedId == i}">
-                                <a [attr.href]="'#' + product.modal_id" aria-controls="dustin" (click)="selectItem(i,product.tab_modal,product.tab_content[0].name)" role="tab" data-toggle="tab" title="{{product.Name}}">
+                            <div class="box-cat" *ngFor="let product of sidebarData; let i = index"
+                                [ngClass]="{'active': selectedId == i}">
+                                <a [attr.href]="'#' + product.modal_id" aria-controls="dustin"
+                                    (click)="selectItem(i,product.tab_modal,product.tab_content[0].name)" role="tab"
+                                    data-toggle="tab" title="{{product.Name}}">
                                     <img class="img-circle" src="{{product.image}}" /></a>
                             </div>
                         </div>

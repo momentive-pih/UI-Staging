@@ -32,6 +32,7 @@ export class ReportDataComponent implements OnInit {
   selectedSpecList: any = [];
   CategoryDetails: any = [];
   reportDataDetails: any = [];
+  reportDetailDataproducts:any = [];
   reportLoader: boolean = true;
   pihAlertMessage: boolean;
   documentTypes: any;
@@ -65,7 +66,7 @@ export class ReportDataComponent implements OnInit {
     //Report Data Header
       this.reportDataHead = [
         { "field": "category", "header": "Category" },
-        { "field": "spec_id", "header": "Specification ID" },
+        { "field": "spec_id", "header": "Real Spec & NAM Prod" },
         { "field": "generation_Variant", "header": "Generation Variant" },
         { "field": "language", "header": "Language" },
         { "field": "version", "header": "Version" },
@@ -84,6 +85,9 @@ export class ReportDataComponent implements OnInit {
     this.reportDataDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.reportDataDetails)
     this.momentiveService.getReportDocuments(this.reportDataDetails).subscribe(data => {
@@ -95,7 +99,10 @@ export class ReportDataComponent implements OnInit {
         this.pihAlertMessage = false;
         this.reportHistoryDataDataproducts = this.productdata;
         console.log(this.reportHistoryDataDataproducts);
-        this.reportDataproducts = this.reportHistoryDataDataproducts.filter((element) => (element.status === 'Released'))
+        this.reportDetailDataproducts = this.reportHistoryDataDataproducts.filter((element) => (element.status === 'Released'))
+        this.reportDataproducts = this.reportDetailDataproducts.sort((a, b) => {
+          return <any>new Date(b.released_on) - <any>new Date(a.released_on);
+        });
         console.log(this.reportDataproducts);
       }
       else {
@@ -120,6 +127,9 @@ export class ReportDataComponent implements OnInit {
     this.reportDataDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.reportDataDetails)
     this.momentiveService.getReportDocuments(this.reportDataDetails).subscribe(data => {
@@ -129,7 +139,10 @@ export class ReportDataComponent implements OnInit {
         this.reportLoader = false;
         this.pihAlertMessage = false;
         this.reportHistoryDataDataproducts = this.productdata;
-        this.reportDataproducts = this.reportHistoryDataDataproducts.filter((report) => (report.status === 'Historical'))
+        this.reportDetailDataproducts = this.reportHistoryDataDataproducts.filter((report) => (report.status === 'Historical'))
+        this.reportDataproducts = this.reportDetailDataproducts.sort((a, b) => {
+            return <any>new Date(b.released_on) - <any>new Date(a.released_on);
+          });
         console.log(this.reportDataproducts);
       }
       else {

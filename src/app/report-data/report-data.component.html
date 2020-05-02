@@ -28,11 +28,12 @@
     </span>
 
     <span *ngIf="pihAlertMessage">
-        <h5 class="loader-text">No Data Found..</h5>
+        <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
     </span>
     <!--Release Document Details-->
     <div *ngIf="!reportLoader && !pihAlertMessage">
-        <p-table #dt [columns]="reportDataHead" [value]="reportDataproducts" (sortFunction)="customSort($event)" [customSort]="true">
+        <p-table #dt [columns]="reportDataHead" [value]="reportDataproducts" (sortFunction)="customSort($event)" [customSort]="true"  [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+        [responsive]="true">
             <ng-template pTemplate="caption">
                 <div class="row">
                     <div class="col-md-6">
@@ -52,8 +53,8 @@
 
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th style="width:3.5em">S.No</th>
-                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+                    <th>S.No</th>
+                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
                         {{col.header}}
                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                     </th>
@@ -61,7 +62,7 @@
             </ng-template>
 
             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                <tr>
+                <tr class="ui-resizable-column">
                     <td>{{index+1}}</td>
                     <td class="ptable-size"><span *ngIf="rowData.category === 'MSDS'"><a href="http://sds.momentive.com/ehswww/servlet/MultiFileServlet?msdsstr={{rowData.material_details}}&region=USA&lang=English" download>{{rowData.category}}</a></span>
                         <span *ngIf="rowData.category !== 'MSDS'">{{rowData.category}}</span>

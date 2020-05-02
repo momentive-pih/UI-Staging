@@ -12,6 +12,7 @@ import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductAttributesComponent } from '../product-attributes/product-attributes.component';
+import { timingSafeEqual } from 'crypto';
 declare var $: any;
 
 @Component({
@@ -45,10 +46,11 @@ export class HomeComponent implements OnInit {
   seventhModal = false;
   eightModal = false;
   cols: any[];
+  basicProperties:any =[];
   sidebarData: any;
   sidebarCategoriesData: any = [];
+  selectedSpecList:any = [];
   basicDetails = true;
-  intialData_Details: any = [];
   HomeDataDetails: any = [];
   intialDataDetails: any;
   modalAPICall: any = [];
@@ -56,9 +58,12 @@ export class HomeComponent implements OnInit {
   radiovalue: any;
   sidebarTopIcon = false;
   Pihloader = true;
+  selectedValue: string;
   openId: any;
   productdata: any = [];
+  intialSelctedData:any =[];
   UserSelectedProducts: any;
+  globalSearchData:any=[];
   objectKeys = Object.keys;
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private router: Router,
@@ -71,9 +76,29 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // Home Page API CALL
-    this.UserSelectedProducts = [];
-    this.UserSelectedProducts = this.momentiveService.selectedProduct;
+    this.intialSelctedData = localStorage.getItem('SearchBarData');
+    console.log(this.intialSelctedData);
+    this.globalSearchData = JSON.parse(this.intialSelctedData);
+    console.log('**userData**')
+    console.log(this.globalSearchData);
+    
+    this.basicProperties = this.momentiveService.basicLevelList;
+    console.log(this.basicProperties);
+    if(this.basicProperties.length > 0) {
+      this.UserSelectedProducts = [];
+      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+      this.UserSelectedProducts =[{
+        'Spec_id': this.selectedSpecList,
+        'product_Level':this.momentiveService.getProductLevelDetails(),
+        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      }]
+    } else {
+      this.UserSelectedProducts = [];
+      this.UserSelectedProducts = this.momentiveService.selectedProduct;
+    }
     console.log(this.UserSelectedProducts);
+    this.intialDataDetails =[];
     this.momentiveService.getHomePageData(this.UserSelectedProducts).subscribe(data => {
       if (Object.keys(data).length > 0) {
         this.Pihloader = false;

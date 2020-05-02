@@ -1,427 +1,345 @@
 {
-  "product_Name" : [
-      { "name":"LSR 2680FC A", "product":"Nam Prod"},
-      { "name":"LSR 2680FC B",  "product":"Nam Prod"},
-      { "name": "LSR 2680-BC C2",  "product":"Nam Prod"},
-      { "name": "LSR 2680FC B-C3", "product":"Nam Prod"},
-      { "name":  "LSR 2680FC A-C3", "product":"Nam Prod"},
-      { "name":  "LSR2680FC-A-BLK",  "product":"Nam Prod"},
-      { "name": "LSR2680FC-W A " ,  "product":"Nam Prod"},
-      { "name":"LSR2050", "product":"Nam Prod"},
-      { "name":"LSR2650",  "product":"Nam Prod"},
-      { "name": "Silsoft* ETS", "product":"Nam Prod"},
-      { "name":"Silsoft* A-843 conditioning agent", "product":"Nam Prod"},
-      { "name":"Silsoft* 034 organosilicone", "product":"Nam Prod"},
-      { "name": "17861-60-8", "product":"Nam Prod"},
-      { "name":"556-67-2", "product":"CAS Number"},
-      { "name":"541-02-6", "product":"CAS Number"},
-      { "name":"68083-19-2", "product":"CAS Number"},
-      { "name":"68909-20-6", "product":"CAS Number"},
-      { "name":"68083-18-1",  "product":"CAS Number"},
-      { "name":"554-06-5",  "product":"CAS Number"},
-      { "name":"Y-14877",  "product": "Y Number"},
-       { "name":"121856 LSR2680 TH/Drum kit/400Kg", "product":"Material Id"},
-       { "name":"131438 NLR160-80/PAILKIT/88LB-40KG", "product":"Material Id"},
-       { "name":"131439 NLR160-80-DRUMKIT(882LB-400KG)", "product":"Material Id"},
-       { "name":"135599 T6227/PAIL/40KG", "product":"Material Id"},
-       { "name":"85195 Remix LSR2680(A)", "product":"Material Id"},
-       { "name":"73835 SILSOFT ETS/0.907KG/SAMPLE", "product":"Material Id"},
-      { "name":"94193 SILSOFT ETS/5SPL/15KG JA", "product":"Material Id"},
-      { "name":"139983 INDUSIL ESS 010/SDR/167KG", "product":"Material Id"},
-        { "name":"LSR2680", "product":"BDT"},
-       { "name":"NLR160-80", "product":"BDT"},
-       { "name":"NLR160-80", "product":"BDT"},
-       { "name":"T6227", "product":"BDT"},
-       { "name":"RemixLSR2680(A)", "product":"BDT"},
-       { "name":"Silsoft* ETS fluid", "product":"BDT"},
-      { "name":"Silsoft* ETS fluid", "product":"BDT"},
-      { "name":"INDUSIL ESS 010", "product":"BDT"},
-      { "name":"000000034441", "product":"Specification Id"},
-      { "name":"000000029332", "product":"Specification Id"},
-      { "name":"Heptamethyl ethyl trisiloxane", "product":"Chemical Name"},
-      { "name":"Octamethylcyclotetrasiloxane", "product":"Chemical Name"},
-      { "name":"Decamethylcyclopentasiloxane", "product":"Chemical Name"},
-      { "name":"Tetravinylcyclotetrasiloxane", "product":"Chemical Name"},
-      { "name":"Octamethylcyclotetrasiloxane", "product":"Chemical Name"},
-      { "name":"Siloxanes and Silicones, di-Me, Me vinyl, vinyl group", "product":"Chemical Name"},
-      { "name":"OU EUROBIO LAB", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer LLC Moscow", "product":"Customer Name"},
-      { "name":"ART COSMETICS SRL VIA E", "product":"Customer Name"},
-      { "name":"Azelis Australia Pty LTd.", "product":"Customer Name"},
-      { "name":"AZELIS CANADA INC", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer PJC", "product":"Customer Name"},
-      { "name":"Michael", "product":"Customer Name"},
-      { "name":"AZELIS CANADA INC", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer PJC", "product":"Customer Name"},
-      { "name":"AZELIS CANADA INC", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer PJC", "product":"Customer Name"},
-      { "name":"United States", "product":"Country"},
-      { "name":"Colombia", "product":"Country"},
-      { "name":"China", "product":"Country"},
-      { "name":"France", "product":"Country"},
-      { "name":"India  ", "product":"Country"},
-      { "name":"Japan", "product":"Country"},
-      { "name":"Chinese", "product":"Language"},
-      { "name":"Spanish", "product":"Language"},
-      { "name":"English", "product":"Language"},
-      { "name":"Arabic", "product":"Language"},
-      { "name":"Russian", "product":"Language"},
-      { "name":"Hindi", "product":"Language"}
-     ],
 
-  "productSilsoft_Name" : [
-      { "name":"Y-14877",  "product": "Y Number"},
-      { "name": "17861-60-8",  "product":"CAS Number"},
-      { "name":"556-67-2",  "product":"CAS Number"},
-      { "name":"541-02-6",  "product":"CAS Number"},
-      { "name":"Heptamethyl ethyl trisiloxane", "product":"Chemical Name"},
-      { "name":"Octamethylcyclotetrasiloxane", "product":"Chemical Name"},
-      { "name":"Decamethylcyclopentasiloxane", "product":"Chemical Name"},
-      { "name":"73835 SILSOFT ETS/0.907KG/SAMPLE", "product":"Material Id"},
-      { "name":"94193 SILSOFT ETS/5SPL/15KG JA", "product":"Material Id"},
-      { "name":"139983 INDUSIL ESS 010/SDR/167KG", "product":"Material Id"},
-      { "name":"Silsoft* ETS fluid", "product":"BDT"},
-      { "name":"INDUSIL ESS 010", "product":"BDT"},
-      { "name":"000000029332", "product":"Specification Id"},
-      { "name":"OU EUROBIO LAB", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer LLC Moscow", "product":"Customer Name"},
-      { "name":"ART COSMETICS SRL VIA E", "product":"Customer Name"},
-      { "name":"Azelis Australia Pty LTd.", "product":"Customer Name"},
-      { "name":"AZELIS CANADA INC", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer PJC", "product":"Customer Name"},
-      { "name":"Michael", "product":"Customer Name"},
-      { "name":"AZELIS CANADA INC", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer PJC", "product":"Customer Name"}
-    ],
-
-  "productLsr_Name" : [
-       { "name": "68083-19-2",  "product":"CAS Number"},
-       { "name":"68909-20-6",  "product":"CAS Number"},
-       { "name":"68083-18-1",  "product":"CAS Number"},
-       { "name":"554-06-5",  "product":"CAS Number"},
-       { "name":"556-67-2",  "product":"CAS Number"},
-       { "name": "Vinylpolydimethylsiloxane", "product":"Chemical Name"},
-       { "name":"Silylated Silica", "product":"Chemical Name"},
-       { "name":"Tetravinylcyclotetrasiloxane", "product":"Chemical Name"},
-       { "name":"Octamethylcyclotetrasiloxane", "product":"Chemical Name"},
-       { "name":"Siloxanes and Silicones, di-Me, Me vinyl, vinyl group", "product":"Chemical Name"},
-       { "name":"121856 LSR2680 TH/Drum kit/400Kg", "product":"Material Id"},
-       { "name":"131438 NLR160-80/PAILKIT/88LB-40KG", "product":"Material Id"},
-       { "name":"131439 NLR160-80-DRUMKIT(882LB-400KG)", "product":"Material Id"},
-       { "name":"135599 T6227/PAIL/40KG", "product":"Material Id"},
-       { "name":"85195 Remix LSR2680(A)", "product":"Material Id"},
-       { "name":"LSR2680", "product":"BDT"},
-       { "name":"NLR160-80", "product":"BDT"},
-       { "name":"NLR160-80", "product":"BDT"},
-       { "name":"T6227", "product":"BDT"},
-       { "name":"RemixLSR2680(A)", "product":"BDT"},
-       { "name":"000000034441", "product":"Specification Id"},
-       { "name":"OU EUROBIO LAB", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer LLC Moscow", "product":"Customer Name"},
-      { "name":"ART COSMETICS SRL VIA E", "product":"Customer Name"},
-      { "name":"Azelis Australia Pty LTd.", "product":"Customer Name"},
-      { "name":"AZELIS CANADA INC", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer PJC", "product":"Customer Name"},
-      { "name":"Michael", "product":"Customer Name"},
-      { "name":"AZELIS CANADA INC", "product":"Customer Name"},
-      { "name":"Bang & Bonsomer PJC", "product":"Customer Name"}
-   ],
-   
-  "productCAS_Number" : [
-         { "name": "LSR 2680FC A",  "product": "product Name"},
-         { "name": "Silsoft* ETS", "product":"product Name"},
-         { "name": "17861-60-8",  "product":"product Name"},
-         { "name": "Y-14877",  "product": "Y Number"},
-         { "name": "17861-60-8",  "product":"CAS Number"},
-         { "name":"541-02-6",  "product":"CAS Number"},
-         { "name":"Heptamethyl ethyl trisiloxane", "product":"Chemical Name"},
-         { "name":"Octamethylcyclotetrasiloxane", "product":"Chemical Name"},
-         { "name":"Decamethylcyclopentasiloxane", "product":"Chemical Name"},
-         { "name":"73835 SILSOFT ETS/0.907KG/SAMPLE", "product":"Material Id"},
-         { "name":"94193 SILSOFT ETS/5SPL/15KG JA", "product":"Material Id"},
-         { "name":"139983 INDUSIL ESS 010/SDR/167KG", "product":"Material Id"},
-         { "name":"Silsoft* ETS fluid", "product":"BDT"},
-         { "name":"INDUSIL ESS 010", "product":"BDT"},
-         { "name":"000000029332", "product":"Specification Id"},
-         { "name": "68083-19-2",  "product":"CAS Number"},
-         { "name":"68909-20-6",  "product":"CAS Number"},
-         { "name":"68083-18-1",  "product":"CAS Number"},
-         { "name":"554-06-5",  "product":"CAS Number"},
-         { "name": "Vinylpolydimethylsiloxane", "product":"Chemical Name"},
-         { "name":"Silylated Silica", "product":"Chemical Name"},
-         { "name":"Tetravinylcyclotetrasiloxane", "product":"Chemical Name"},
-         { "name":"Octamethylcyclotetrasiloxane", "product":"Chemical Name"},
-         { "name":"Siloxanes and Silicones, di-Me, Me vinyl, vinyl group", "product":"Chemical Name"},
-         { "name":"121856 LSR2680 TH/Drum kit/400Kg", "product":"Material Id"},
-         { "name":"131438 NLR160-80/PAILKIT/88LB-40KG", "product":"Material Id"},
-         { "name":"131439 NLR160-80-DRUMKIT(882LB-400KG)", "product":"Material Id"},
-         { "name":"135599 T6227/PAIL/40KG", "product":"Material Id"},
-         { "name":"85195 Remix LSR2680(A)", "product":"Material Id"},
-         { "name":"LSR2680", "product":"BDT"},
-         { "name":"NLR160-80", "product":"BDT"},
-         { "name":"NLR160-80", "product":"BDT"},
-         { "name":"T6227", "product":"BDT"},
-         { "name":"RemixLSR2680(A)", "product":"BDT"},
-         { "name":"000000034441", "product":"Specification Id"}
-   ],
-    
-  "intialData_Details" :[
-           {
-             "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-              "Name" : "Product Attributes",
-              "image" : "https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg",
-              "product Identification": ["LSR 2680FC A","NLR160-80","NLR160-80","T6227"],
-              "product Application:": ["Dental / surgical devices",
-              "Diagnostics / imaging",
-              "Fluid and drug delivery devices",
-               "Orthopedics / prosthetics",
-               "Advanced Wound Care & Scar Management",
-               "Septa / stoppers / laboratory accessories"
-              ]
-          
-           },
-           {
-             "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-              "id":"LSR 2680FC A",
-              "Name" : "Product compliance",
-              "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
-              "US FDA Compliance" :"No", 
-              "EU Food Contact Compliance": "Yes",
-              "AG Registration Status":[
-                {
-               "Active": ["USA Canada", "Latin America "]
-              },
-              {
-               "Not Active": "EU region"
-              }]
-   
-           },
-           {
-             "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-              "id":"LSR 2680FC A",
-              "Name" : "Customer Communication",
-              "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL",
-              "Heavy Metals Composition Available":"Yes",
-              "Top 3 compositions present in the product":["Calcium 1.36 PPM","Aluminum: 0.2 PPM", "Cadmium: 0.12 PPM"],
-              "Top Topics":["Customer product Quality Questionnaires", "REACH CLP"," Regulatory Information - Animal Testing"  
-             ]
-   
-             },
-       
-           
-           {
-             "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-              "id":"LSR 2680FC A",
-              "Name" : "Toxicology",
-              "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnge4Y9lv59WO3hYGJRSerUUSTG1FUWE4MNlFPaLu2CFOc0rsR",
-              "Study Titles":["USP class VI and ISO10993(Parts 6,10,11)" ," FDA Extractives(Per 21 CFR 177.2600)"],
-              "Toxicology Summary Report Available": "Yes",
-              "Pending Monthly Tox Studies": "Acute Oral Tox"
-           },
-           {
-            "product_name":  "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-             "id":"LSR 2680FC A",
-             "Name" : "Restricted Substance",
-             "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-",
-             "Components Present in GADSL": "Yes",                                   
-             "Components Present in Cal Prop 65": "Yes"
-             
-          },
-       
-           {
-             "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-              "id":"LSR 2680FC A",
-              "Name" : "Sales Information",
-              "image" : "https://flaptics.io/images/yu.png",
-              "Total Sales": "5000 Kg"
-           },
-           {
-             "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-              "id":"LSR 2680FC A",
-              "Name" : "Report Data",
-              "image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt"
-           }
-    ],
-   
-   "productLevel" :[
-   {
-        "productName":"LSR 2680FC A",
-         "spec_id" : "000000034441",
-         "ProdIdentifiers" : "LSR 2680FC A",
-         "Synonyms":" Silicone Elastomer",
-         "No_Active_Materials":"5",
-         "Sales_Volume" : " Year 2018 12 TO",                              
-         "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-         "tab_modal": "compositionModal"
-   }
-    ],
-
-    
-   "MaterialLevel" :[
+  
+ "sidebarData" : [
+              
     {
-      "Material_id":"121856 LSR2680 TH/Drum kit/400Kg",
-      "Material_Number":"121856",
-      "spec_id":"000000034441",
-      "Description": "LSR2680 TH/Drum kit/400Kg",
-      "BDT":"LSR2680",
-      "Sales_Vol":"4.4 TO",
-      "spec_table": [{
-              "productName":"LSR 2680FC A",
-              "spec_id" : "000000034441",
-              "ProdIdentifiers" : "LSR 2680FC A",
-              "Synonyms":" Silicone Elastomer",
-              "No_Active_Materials":"5",
-              "Sales_Volume" : " Year 2018 12 TO",                              
-              "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-              "tab_modal": "compositionModal"
-     }]
-   }],
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+  "id":"LSR 2680FC A",
+  "Name" : "Product Attributes",
+  "image" : "../../../assets/images/momentive/category/productAttributes.jpg",
+  "sales_tab": "product_attribute",
+  "modal_id": "composition",
+  "tab_modal": "compositionModal",
 
-   "CASLevel" :[
+  "tab_content":[
+  {
+    "name": "Basic Information","id":"1"
+  }, 
     {
-      "Material_id":"121856 LSR2680 TH/Drum kit/400Kg",
-      "Material_Number":"121856",
-      "spec_id":"000000034441",
-      "Description": "LSR2680 TH/Drum kit/400Kg",
-      "BDT":"LSR2680",
-      "Sales_Vol":"4.4 TO",
-      "spec_table": [{
-              "productName":"LSR 2680FC A",
-              "spec_id" : "000000034441",
-              "ProdIdentifiers" : "LSR 2680FC A",
-              "Synonyms":" Silicone Elastomer",
-              "No_Active_Materials":"5",
-              "Sales_Volume" : " Year 2018 12 TO",                              
-              "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-              "tab_modal": "compositionModal"
-     }]
-   }],
-
-   
-   
-   "componentLevel" : [
-     {
-       "CAS_NUmber":"68083-19-2",
-       "Type of Component": "Catalyst, Active, Impurity",
-       "Presence in GADSL":  "",
-       "Presence in Cal Prop 65":  "",
-       "spec_id":"000000002718",
-       "component_Type":"(Active ingredient)",
-       "chemical_name":"Vinylpolydimethylsiloxane",
-       "CAS":"68083-19-2",
-       "Percentage":"64.43",
-       "Mat_table":[
-         {  
-        "productName":"LSR 2680FC A",
-        "Material_Id" : "121856 LSR2680 TH/Drum kit/400Kg",
-        "ProdIdentifiers" : "LSR 2680FC A",
-        "Synonyms":" Silicone Elastomer",
-        "No_Active_Materials":"5",
-        "Sales_Volume" : " Year 2018 12 TO",                              
-        "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-        "tab_modal": "compositionModal"
-      },
-        {  
-          "productName":"LSR 2680FC A",
-          "Material_Id" : "121857 LSR2680 TH/Drum kit/400Kg",
-          "ProdIdentifiers" : "LSR 2680FC A",
-          "Synonyms":" Silicone Elastomer",
-          "No_Active_Materials":"5",
-          "Sales_Volume" : " Year 2018 12 TO",                              
-          "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-          "tab_modal": "compositionModal"
-        },
-          {  
-            "productName":"LSR 2680FC A",
-            "Material_Id" : "121858 LSR2680 TH/Drum kit/400Kg",
-            "ProdIdentifiers" : "LSR 2680FC A",
-            "Synonyms":" Silicone Elastomer",
-            "No_Active_Materials":"5",
-            "Sales_Volume" : " Year 2018 12 TO",                              
-            "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-            "tab_modal": "compositionModal"}]
-     },
-     {
-      "CAS_NUmber":"68083-19-2",
-      "Type of Component": "Catalyst, Active, Impurity",
-      "Presence in GADSL":  "",
-      "Presence in Cal Prop 65":  "",
-      "spec_id": "000000003107",
-      "component_Type":"(Active ingredient)",
-      "chemical_name": "Silylated Silica",
-       "CAS":"68909-20-6",
-       "Percentage": "34.88",
-      "Mat_table":[{  
-       "productName":"LSR 2680FC A",
-       "Material_Id" : "121856 LSR2680 TH/Drum kit/400Kg",
-       "ProdIdentifiers" : "LSR 2680FC A",
-       "Synonyms":" Silicone Elastomer",
-       "No_Active_Materials":"5",
-       "Sales_Volume" : " Year 2018 12 TO",                              
-       "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-       "tab_modal": "compositionModal"}]
+      "name": "GHS Labeling","id":"2"
+    }, 
+    {
+      "name": "Structures and Formulas","id":"3"
     },
     {
-      "CAS_NUmber":"68083-19-2",
-      "Type of Component": "Catalyst, Active, Impurity",
-      "Presence in GADSL":  "",
-      "Presence in Cal Prop 65":  "",
-      "spec_id":"000000002923",
-      "component_Type":"(Active ingredient)",
-      "chemical_name":"Siloxanes and Silicones, di-Me, Me vinyl, vinyl group",
-      "CAS":"68083-18-1",
-      "Percentage":"0.58",
-      "Mat_table":[{  
-       "productName":"LSR 2680FC A",
-       "Material_Id" : "121856 LSR2680 TH/Drum kit/400Kg",
-       "ProdIdentifiers" : "LSR 2680FC A",
-       "Synonyms":" Silicone Elastomer",
-       "No_Active_Materials":"5",
-       "Sales_Volume" : " Year 2018 12 TO",                              
-       "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-       "tab_modal": "compositionModal"}]
+      "name": "Composition","id":"4"
     },
     {
-      "CAS_NUmber":"68083-19-2",
-      "Type of Component": "Catalyst, Active, Impurity",
-      "Presence in GADSL":  "",
-      "Presence in Cal Prop 65":  "",
-      "spec_id":"000000002678",
-      "component_Type":"(Active ingredient)",
-      "chemical_name":"Tetravinylcyclotetrasiloxane",
-      "CAS":"554-06-5",
-      "Percentage": "0.09",
-      "Mat_table":[{  
-       "productName":"LSR 2680FC A",
-       "Material_Id" : "121856 LSR2680 TH/Drum kit/400Kg",
-       "ProdIdentifiers" : "LSR 2680FC A",
-       "Synonyms":" Silicone Elastomer",
-       "No_Active_Materials":"5",
-       "Sales_Volume" : " Year 2018 12 TO",                              
-       "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-       "tab_modal": "compositionModal"}]
-    },
-    {
-      "CAS_NUmber":"68083-19-2",
-      "Type of Component": "Catalyst, Active, Impurity",
-      "Presence in GADSL":  "",
-      "Presence in Cal Prop 65":  "",
-      "spec_id":"000000002670",
-      "component_Type": "(Impurity)",
-      "chemical_name":"Vinylpolydimethylsiloxane",
-      "CAS":"556-67-2",
-      "Percentage":"0.03",
-      "Mat_table":[{  
-       "productName":"LSR 2680FC A",
-       "Material_Id" : "121856 LSR2680 TH/Drum kit/400Kg",
-       "ProdIdentifiers" : "LSR 2680FC A",
-       "Synonyms":" Silicone Elastomer",
-       "No_Active_Materials":"5",
-       "Sales_Volume" : " Year 2018 12 TO",                              
-       "GHS_Information": "Signal Word, Pictogram, H Statement-N/A",
-       "tab_modal": "compositionModal"}]
-    }],
-    
+    "name":"Flow Diagrams","id":"5"
+    }]
+},
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+  "id":"LSR 2680FC A",
+  "Name" : "Product compliance",
+  "image":"../../../assets/images/momentive/category/ProductCompliance.jpg",
+  "sales_tab": "product_Compliance",
+  "modal_id": "product_Compliance",
+  "tab_modal": "complianceModal",
+
+  "tab_content":[
+  {
+    "name": "Notification Status","id":"1"
+  }, 
+  {
+    "name": "AG Registration Status","id":"2"
+  }]
+
+},
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+  "id":"LSR 2680FC A",
+  "Name" : "Customer Communication",
+  "image": "../../../assets/images/momentive/category/customerCommunication.png",
+  "sales_tab": "customerCommunication",
+  "modal_id": "customerCommunication",
+  "tab_modal": "communicationModal",
+  "customer_name":"OU EUROBIO LAB",
+
+"tab_content":[
+  {
+    "name": "US FDA Letter","id":"1"
+  },
+  {
+    "name": "EU Food Contact","id":"2"
+  },
+  {
+    "name": "Heavy Metals content","id":"3"
+  }, 
+  {
+    "name": "Communication History","id":"4"
+  }]
+
+},
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+  "id":"LSR 2680FC A",
+  "Name" : "Toxicology",
+  "image": "../../../assets/images/momentive/category/toxicology.jpg",
+  "sales_tab": "toxicology",
+  "modal_id": "toxicology",
+  "tab_modal": "toxicologyModal",
+
+  "tab_content":[
+  {
+    "name": "Study Title and Date","id":"1"
+  }, 
+  {
+    "name": "Monthly Toxicology Study List","id":"2"
+  },
+  {
+    "name": "Toxicology Summary","id":"2"
+  },
+  {
+    "name": "Toxicology Registration Tracker","id":"2"
+  }]
+
+
+},
+
+{
+"product_name":  "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+  "id":"LSR 2680FC A",
+  "Name" : "Restricted Substance",
+  "image": "../../../assets/images/momentive/category/restrictedsubstance.png",
+  "sales_tab": "restrictedSubstance",
+  "modal_id": "restrictedSubstance",
+  "tab_modal": "restrictedSubstanceModal" ,
+
+  "tab_content":[
+  {
+    "name": "GADSL","id":"1"
+  }, 
+  {
+    "name": "California Prop 65","id":"2"
+  }]
+
+
+},
+
+
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+  "id":"LSR 2680FC A",
+  "Name" : "Sales Information",
+  "image" : "../../../assets/images/momentive/category/salesInformation.jpg",
+  "sales_tab": "sales_Information",
+  "modal_id": "sales_Information",
+  "tab_modal": "salesModal", 
+
+  "tab_content":[
+  {
+    "name": "Sales Volume","id":"1"
+  }
+  ]
+
+
+},
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+  "id":"LSR 2680FC A",
+  "Name" : "Report Data",
+  "image":"../../../assets/images/momentive/category/report.png",
+  "sales_tab": "report_Data",
+  "modal_id": "report_Data",
+  "tab_modal": "reportModal",
+
+  "tab_content":[
+  {
+    "name": "Released Documents","id":"1"
+  }]
+
+}
+],
+ 
+
+"sidebarCategoriesData": [
+  {
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+"id":"LSR 2680FC A",
+"Name" : "Product Attributes",
+"image" : "../../../assets/images/momentive/category/productAttributes.jpg",
+"sales_tab": "product_attribute",
+"modal_id": "composition",
+"tab_modal": "compositionModal",
+
+"tab_content":[
+  {
+  "name": "Basic Information","id":"basic",
+  "sub": [{"name":"Product Identification","id":"1"},
+    {"name":"Relabels","id":"2"},  
+    {"name":"Chemical Name","id":"3"},
+    {"name":"Product Application","id":"4"},
+    {"name":"Registered Quantity","id":"5"}
+    ]
+  }, 
+  {
+    "name": "GHS Labeling","id":"ghs",
+    "sub": []
+  }, 
+  {
+    "name": "Structures and Formulas","id":"structure",
+    "sub": [{"name":"Chemical Structure","id":"1"},
+      {"name":"Molecular Formula","id":"2"},  
+      {"name":"Molecular Weight","id":"3"}
+      ]
+  },
+  {
+    "name": "Composition","id":"composition",
+    "sub": [
+      {"name":"Standard","id":"1"},  
+      {"name":"Legal","id":"2"},
+      {"name":"Hundered Percentage","id":"3"}]
+  },
+  {
+  "name":"Flow Diagrams","id":"diagram",
+  "sub": []
+  }]
+},
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+"id":"LSR 2680FC A",
+"Name" : "Product compliance",
+"image": "../../../assets/images/momentive/category/ProductCompliance.jpg",
+"sales_tab": "product_Compliance",
+"modal_id": "product_Compliance",
+"tab_modal": "complianceModal",
+
+"tab_content":[
+{
+  "name": "Notification Status","id":"1",
+  "sub": []
+}, 
+{
+  "name": "AG Registration Status","id":"2",
+  "sub": []
+}]
+
+},
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+"id":"LSR 2680FC A",
+"Name" : "Customer Communication",
+"image": "../../../assets/images/momentive/category/customerCommunication.png",
+"sales_tab": "customerCommunication",
+"modal_id": "customerCommunication",
+"tab_modal": "communicationModal",
+"customer_name":"OU EUROBIO LAB",
+
+"tab_content":[
+{
+  "name": "US FDA Letter","id":"1",
+  "sub": []
+},
+{
+  "name": "EU Food Contact","id":"2",
+  "sub": []
+},
+{
+  "name": "Heavy Metals content","id":"3",
+  "sub": []
+}, 
+{
+  "name": "Communication History","id":"4",
+  "sub": []
+}]
+
+},
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+"id":"LSR 2680FC A",
+"Name" : "Toxicology",
+"image": "../../../assets/images/momentive/category/toxicology.jpg",
+"sales_tab": "toxicology",
+"modal_id": "toxicology",
+"tab_modal": "toxicologyModal",
+
+"tab_content":[
+{
+  "name": "Study Title and Date","id":"1",
+  "sub": []
+}, 
+{
+  "name": "Monthly Toxicology Study List","id":"2",
+  "sub": [{"name":"Sealant","id":"1"},
+         {"name":"silane","id":"2"}
+    ]
+  },
+{
+  "name": "Toxicology Summary","id":"2",
+  "sub": []
+},
+{
+  "name": "Toxicology Registration Tracker","id":"2",
+  "sub": []
+}]
+
+
+},
+
+{
+"product_name":  "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+"id":"LSR 2680FC A",
+"Name" : "Restricted Substance",
+"image": "../../../assets/images/momentive/category/restrictedsubstance.png",
+"sales_tab": "restrictedSubstance",
+"modal_id": "restrictedSubstance",
+"tab_modal": "restrictedSubstanceModal" ,
+
+"tab_content":[
+{
+  "name": "GADSL","id":"1",
+  "sub": []
+}, 
+{
+  "name": "California Prop 65","id":"2",
+  "sub": []
+}]
+
+
+},
+
+
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+"id":"LSR 2680FC A",
+"Name" : "Sales Information",
+"image" : "../../../assets/images/momentive/category/salesInformation.jpg",
+"sales_tab": "sales_Information",
+"modal_id": "sales_Information",
+"tab_modal": "salesModal", 
+
+"tab_content":[
+{
+  "name": "Sales Volume","id":"1",
+  "sub": []
+}
+]
+
+
+},
+{
+"product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+"id":"LSR 2680FC A",
+"Name" : "Report Data",
+"image":"../../../assets/images/momentive/category/report.png",
+"sales_tab": "report_Data",
+"modal_id": "report_Data",
+"tab_modal": "reportModal",
+
+"tab_content":[
+{
+  "name": "Released Documents","id":"1",
+  "sub": []
+}]
+
+}
+  ],
+
+
+
+
   "product_type" : [
              {
                "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
@@ -470,7 +388,7 @@
                "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                 "id":"LSR 2680FC A",
                 "Name" : "Sales Information",
-                "image" : "https://flaptics.io/images/yu.png",
+                "image" : "https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt",
                 "modal_id": "sales_Information",
                 "tab_modal": "salesModal" 
                 
@@ -479,7 +397,7 @@
                "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                 "id":"LSR 2680FC A",
                 "Name" : "Report Data",
-                "image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt",
+                "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSReXGibHOlD7Z5nNqD4d4V52CVMmi-fGUEKMH2HE7srV_SzNn_g",
                 "modal_id": "report_Data",
                 "tab_modal": "reportModal" 
                 
@@ -550,7 +468,7 @@
                "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                 "id":"LSR 2680FC A",
                 "Name" : "Report Data",
-                "image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt",
+                "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSReXGibHOlD7Z5nNqD4d4V52CVMmi-fGUEKMH2HE7srV_SzNn_g",
                 "modal_id": "report_Data",
                 "tab_modal": "reportModal" 
              },
@@ -683,7 +601,7 @@
                    }],
    
                    "table_column":[{
-                     "1":["product Name","ELA #","Test Article Describtion","Study title","Final Report"],
+                     "1":["product Name","ELA #","Test Article Description","Study title","Final Report"],
                      "2":["product-Commerical Name","Studies","Status","Comments"]
                    }]
                },
@@ -692,7 +610,7 @@
                  "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                   "id":"LSR 2680FC A",
                   "Name" : "Sales Information",
-                  "image" : "https://flaptics.io/images/yu.png",
+                  "image" : "https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt",
                   "sales_tab": "sales_Information",
                   "modal_id": "sales_Information",
                   "tab_modal": "salesModal", 
@@ -703,7 +621,7 @@
                    }],
    
                    "table_column":[{
-                    "1":["Material Number","Material Describtion","Basic Data Text","Sales Org","3 Year Past sale"]
+                    "1":["Material Number","Material Description","Basic Data Text","Sales Org","3 Year Past sale"]
                
                    }]
                },
@@ -711,7 +629,7 @@
                  "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                   "id":"LSR 2680FC A",
                   "Name" : "Report Data",
-                  "image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt",
+                  "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSReXGibHOlD7Z5nNqD4d4V52CVMmi-fGUEKMH2HE7srV_SzNn_g",
                   "sales_tab": "report_Data",
                   "modal_id": "report_Data",
                   "tab_modal": "reportModal",
@@ -727,508 +645,10 @@
                }
     ],
 
-              "sidebarData" : [
-              
-                                {
-                            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                              "id":"LSR 2680FC A",
-                              "Name" : "Product Attributes",
-                              "image" : "https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg",
-                              "sales_tab": "product_attribute",
-                              "modal_id": "composition",
-                              "tab_modal": "compositionModal",
-              
-                              "tab_content":[
-                              {
-                                "name": "Basic Information","id":"1"
-                              }, 
-                                {
-                                  "name": "GHS Labeling","id":"2"
-                                }, 
-                                {
-                                  "name": "Structures and Formulas","id":"3"
-                                },
-                                {
-                                  "name": "Composition","id":"4"
-                                },
-                                {
-                                "name":"Flow Diagrams","id":"5"
-                                }]
-                          },
-                          {
-                            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                              "id":"LSR 2680FC A",
-                              "Name" : "Product compliance",
-                              "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
-                              "sales_tab": "product_Compliance",
-                              "modal_id": "product_Compliance",
-                              "tab_modal": "complianceModal",
+ 
+          
 
-                              "tab_content":[
-                              {
-                                "name": "Notification Status","id":"1"
-                              }, 
-                              {
-                                "name": "AG Registration Status","id":"2"
-                              }]
-              
-                          },
-                          {
-                            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                              "id":"LSR 2680FC A",
-                              "Name" : "Customer Communication",
-                              "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL",
-                              "sales_tab": "customerCommunication",
-                              "modal_id": "customerCommunication",
-                              "tab_modal": "communicationModal",
-                              "customer_name":"OU EUROBIO LAB",
-
-                            "tab_content":[
-                              {
-                                "name": "US FDA Letter","id":"1"
-                              },
-                              {
-                                "name": "EU Food Contact","id":"2"
-                              },
-                              {
-                                "name": "Heavy Metals content","id":"3"
-                              }, 
-                              {
-                                "name": "Communication History","id":"4"
-                              }]
-
-                          },
-                          {
-                            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                              "id":"LSR 2680FC A",
-                              "Name" : "Toxicology",
-                              "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnge4Y9lv59WO3hYGJRSerUUSTG1FUWE4MNlFPaLu2CFOc0rsR",
-                              "sales_tab": "toxicology",
-                              "modal_id": "toxicology",
-                              "tab_modal": "toxicologyModal",
-
-                              "tab_content":[
-                              {
-                                "name": "Study Title and Date","id":"1"
-                              }, 
-                              {
-                                "name": "Monthly Toxicology Study List","id":"2"
-                              },
-                              {
-                                "name": "Toxicology Summary","id":"2"
-                              },
-                              {
-                                "name": "Toxicology Registration Tracker","id":"2"
-                              }]
-              
-                            
-                          },
-                      
-                          {
-                            "product_name":  "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                              "id":"LSR 2680FC A",
-                              "Name" : "Restricted Substance",
-                              "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-",
-                              "sales_tab": "restrictedSubstance",
-                              "modal_id": "restrictedSubstance",
-                              "tab_modal": "restrictedSubstanceModal" ,
-
-                              "tab_content":[
-                              {
-                                "name": "GADSL","id":"1"
-                              }, 
-                              {
-                                "name": "California Prop 65","id":"2"
-                              }]
-              
-                          
-                          },
-                      
-                      
-                          {
-                            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                              "id":"LSR 2680FC A",
-                              "Name" : "Sales Information",
-                              "image" : "https://flaptics.io/images/yu.png",
-                              "sales_tab": "sales_Information",
-                              "modal_id": "sales_Information",
-                              "tab_modal": "salesModal", 
-              
-                              "tab_content":[
-                              {
-                                "name": "Sales Volume","id":"1"
-                              }
-                              ]
-              
-                          
-                          },
-                          {
-                            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                              "id":"LSR 2680FC A",
-                              "Name" : "Report Data",
-                              "image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt",
-                              "sales_tab": "report_Data",
-                              "modal_id": "report_Data",
-                              "tab_modal": "reportModal",
-
-                              "tab_content":[
-                              {
-                                "name": "Released Documents","id":"1"
-                              }]
-
-                          }
-                ],
-  "sidebarCategoriesData": [
-                {
-            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-            "id":"LSR 2680FC A",
-            "Name" : "Product Attributes",
-            "image" : "https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg",
-            "sales_tab": "product_attribute",
-            "modal_id": "composition",
-            "tab_modal": "compositionModal",
-
-            "tab_content":[
-                {
-                "name": "Basic Information","id":"basic",
-                "sub": [{"name":"Product Identification","id":"1"},
-                  {"name":"Relabels","id":"2"},  
-                  {"name":"Chemical Name","id":"3"},
-                  {"name":"Product Application","id":"4"},
-                  {"name":"Registered Quantity","id":"5"}
-                  ]
-                }, 
-                {
-                  "name": "GHS Labeling","id":"ghs",
-                  "sub": []
-                }, 
-                {
-                  "name": "Structures and Formulas","id":"structure",
-                  "sub": [{"name":"Chemical Structure","id":"1"},
-                    {"name":"Molecular Formula","id":"2"},  
-                    {"name":"Molecular Weight","id":"3"}
-                    ]
-                },
-                {
-                  "name": "Composition","id":"composition",
-                  "sub": [
-                    {"name":"Standard","id":"1"},  
-                    {"name":"Legal","id":"2"},
-                    {"name":"Hundered Percentage","id":"3"}]
-                },
-                {
-                "name":"Flow Diagrams","id":"diagram",
-                "sub": []
-                }]
-          },
-          {
-            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-            "id":"LSR 2680FC A",
-            "Name" : "Product compliance",
-            "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
-            "sales_tab": "product_Compliance",
-            "modal_id": "product_Compliance",
-            "tab_modal": "complianceModal",
-
-            "tab_content":[
-              {
-                "name": "Notification Status","id":"1",
-                "sub": []
-              }, 
-              {
-                "name": "AG Registration Status","id":"2",
-                "sub": []
-              }]
-
-          },
-          {
-            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-            "id":"LSR 2680FC A",
-            "Name" : "Customer Communication",
-            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL",
-            "sales_tab": "customerCommunication",
-            "modal_id": "customerCommunication",
-            "tab_modal": "communicationModal",
-            "customer_name":"OU EUROBIO LAB",
-
-            "tab_content":[
-              {
-                "name": "US FDA Letter","id":"1",
-                "sub": []
-              },
-              {
-                "name": "EU Food Contact","id":"2",
-                "sub": []
-              },
-              {
-                "name": "Heavy Metals content","id":"3",
-                "sub": []
-              }, 
-              {
-                "name": "Communication History","id":"4",
-                "sub": []
-              }]
-
-          },
-          {
-            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-            "id":"LSR 2680FC A",
-            "Name" : "Toxicology",
-            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnge4Y9lv59WO3hYGJRSerUUSTG1FUWE4MNlFPaLu2CFOc0rsR",
-            "sales_tab": "toxicology",
-            "modal_id": "toxicology",
-            "tab_modal": "toxicologyModal",
-
-            "tab_content":[
-              {
-                "name": "Study Title and Date","id":"1",
-                "sub": []
-              }, 
-              {
-                "name": "Monthly Toxicology Study List","id":"2",
-                "sub": [{"name":"Sealant","id":"1"},
-                       {"name":"silane","id":"2"}
-                  ]
-                },
-              {
-                "name": "Toxicology Summary","id":"2",
-                "sub": []
-              },
-              {
-                "name": "Toxicology Registration Tracker","id":"2",
-                "sub": []
-              }]
-
-            
-          },
-
-          {
-            "product_name":  "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-            "id":"LSR 2680FC A",
-            "Name" : "Restricted Substance",
-            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-",
-            "sales_tab": "restrictedSubstance",
-            "modal_id": "restrictedSubstance",
-            "tab_modal": "restrictedSubstanceModal" ,
-
-            "tab_content":[
-              {
-                "name": "GADSL","id":"1",
-                "sub": []
-              }, 
-              {
-                "name": "California Prop 65","id":"2",
-                "sub": []
-              }]
-
-
-          },
-
-
-          {
-            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-            "id":"LSR 2680FC A",
-            "Name" : "Sales Information",
-            "image" : "https://flaptics.io/images/yu.png",
-            "sales_tab": "sales_Information",
-            "modal_id": "sales_Information",
-            "tab_modal": "salesModal", 
-
-            "tab_content":[
-              {
-                "name": "Sales Volume","id":"1",
-                "sub": []
-              }
-            ]
-
-
-          },
-          {
-            "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-            "id":"LSR 2680FC A",
-            "Name" : "Report Data",
-            "image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt",
-            "sales_tab": "report_Data",
-            "modal_id": "report_Data",
-            "tab_modal": "reportModal",
-
-            "tab_content":[
-              {
-                "name": "Released Documents","id":"1",
-                "sub": []
-              }]
-
-          }
-                ],
-               "copysidebarData" : [
-                 {
-                   "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                    "id":"LSR 2680FC A",
-                    "Name" : "Product Attributes",
-                    "image" : "https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg",
-                    "sales_tab": "product_attribute",
-                    "modal_id": "composition",
-                    "tab_modal": "compositionModal",
-     
-                    "tab_content":[
-                     {
-                       "name": "Basic Information","id":"1",
-                       "sub": []
-                     }, 
-                       {
-                         "name": "GHS Labeling","id":"2",
-                         "sub": []
-                       }, 
-                       {
-                         "name": "Structures and Formulas","id":"3",
-                         "sub": []
-                       },
-                       {
-                         "name": "Composition","id":"4",
-                         "sub": []
-                       },
-                       {
-                       "name":"Flow Diagrams","id":"5",
-                       "sub": []
-                       }]
-     
-                
-                 },
-                 {
-                   "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                    "id":"LSR 2680FC A",
-                    "Name" : "Product compliance",
-                    "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
-                    "sales_tab": "product_Compliance",
-                    "modal_id": "product_Compliance",
-                    "tab_modal": "complianceModal",
-                    "tab_content":[
-                
-                     {
-                       "name": "Notification Status","id":"1",
-                       "sub": []
-                     }, 
-                     {
-                       "name": "AG Registration Status","id":"2",
-                       "sub": []
-                     }]
-     
-                 },
-                 {
-                   "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                    "id":"LSR 2680FC A",
-                    "Name" : "Customer Communication",
-                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL",
-                    "sales_tab": "customerCommunication",
-                    "modal_id": "customerCommunication",
-                    "tab_modal": "communicationModal",
-                    "customer_name":"OU EUROBIO LAB",
-                    "tab_content":[
-                      {
-                        "name": "US FDA Letter","id":"1",
-                        "sub": []
-                      },
-                      {
-                        "name": "EU Food Contact","id":"2",
-                        "sub": []
-
-                      },
-                     {
-                       "name": "Heavy Metals content","id":"3",
-                       "sub": []
-                     }, 
-                     {
-                       "name": "Communication History","id":"4",
-                       "sub": []
-                     }]
-     
-               
-                 },
-                 {
-                   "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                    "id":"LSR 2680FC A",
-                    "Name" : "Toxicology",
-                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnge4Y9lv59WO3hYGJRSerUUSTG1FUWE4MNlFPaLu2CFOc0rsR",
-                    "sales_tab": "toxicology",
-                    "modal_id": "toxicology",
-                    "tab_modal": "toxicologyModal" ,
-                    "tab_content":[
-                     {
-                       "name": "Study Title and Date","id":"1",
-                       "sub": []
-                     }, 
-                     {
-                       "name": "Monthly Toxicology Study List","id":"2",
-                       "sub": []
-                     },
-                     {
-                       "name": "Toxicology Summary","id":"2",
-                       "sub": []
-                     },
-                     {
-                       "name": "Toxicology Registration Tracker","id":"2"
-                       , "sub": []
-                     }]
-     
-                   
-                 },
-             
-                 {
-                   "product_name":  "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                    "id":"LSR 2680FC A",
-                    "Name" : "Restricted Substance",
-                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-",
-                    "sales_tab": "restrictedSubstance",
-                    "modal_id": "restrictedSubstance",
-                    "tab_modal": "restrictedSubstanceModal" ,
-                    "tab_content":[
-                     {
-                       "name": "GADSL","id":"1",
-                       "sub": []
-                     }, 
-                     {
-                       "name": "California Prop 65","id":"2",
-                       "sub": []
-                     }]
-     
-                 
-                 },
-             
-             
-                 {
-                   "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                    "id":"LSR 2680FC A",
-                    "Name" : "Sales Information",
-                    "image" : "https://flaptics.io/images/yu.png",
-                    "sales_tab": "sales_Information",
-                    "modal_id": "sales_Information",
-                    "tab_modal": "salesModal", 
-     
-                    "tab_content":[
-                     {
-                       "name": "Sales Volume","id":"1",
-                       "sub": []
-                     }]
-     
-                
-                 },
-                 {
-                   "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
-                    "id":"LSR 2680FC A",
-                    "Name" : "Report Data",
-                    "image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt",
-                    "sales_tab": "report_Data",
-                    "modal_id": "report_Data",
-                    "tab_modal": "reportModal",
-                    "tab_content":[
-                     {
-                       "name": "Released Documents","id":"1",
-                       "sub": []
-                     }]
-                 }
-                 ],
-
-                 "compositionPart" : [
+  "compositionPart" : [
                   {
                     "id":1,
                    "type" : "Standard,Hundered & INCI Composition",
@@ -1239,8 +659,8 @@
                     "value": "legal"
                   }
                  ],
-        
-                "communicationPart" : [
+
+   "communicationPart" : [
                   {
                     "id":1,
                    "type" : "OU EUROBIO LAB",
@@ -1271,7 +691,7 @@
                   "value":"bangPJC"
                 }
                 ],
-                "communicationBU":[
+   "communicationBU":[
                   {
                     "id":1,
                    "type":"Specialty Fluids.",
@@ -1314,7 +734,7 @@
                   }
                   
                 ],
-                "productCommunication" : [
+   "productCommunication" : [
                   {
                     "id":1,
                    "type" :"LSR2050A - US Made",
@@ -1366,7 +786,7 @@
                     "value":"NXT Z45 "
                    }
                 ],
-                "topicCommunication" :[ 
+  "topicCommunication" :[ 
                   {
                   "id":1,
                  "type" :"Customer product Quality Questionnaires",
@@ -1383,7 +803,7 @@
                   "value":"Regulatory Information - Sustainability"
                  }],
         
-                "regionPart" : [
+   "regionPart" : [
                   {
                     "type" : "EU",
                     "value": "eu"
@@ -1398,7 +818,8 @@
                     "value": "latin america"
                   }
                   ],
-               "productAttributeCheck" : [
+
+  "productAttributeCheck" : [
              {
                 "name":"Basic Information",
                 "value":"item_1",
@@ -1425,7 +846,7 @@
                    "checked": false
                 }
                   ],
-        "ProductComplianceCheck" : [
+  "ProductComplianceCheck" : [
         {
             "name":"Notification Status",
             "value":"item_3",
@@ -1436,8 +857,7 @@
              "value":"item_4",
              "checked": false
         }],
-
-        "customerCommunicationChecks" : [
+  "customerCommunicationChecks" : [
           {
           "name":"US FDA Letter",
           "value":"item_1",
@@ -1456,7 +876,8 @@
             "value":"item_2",
             "checked": false
         }],
-        "restrictedSubstanceChecks" : [{
+   "restrictedSubstanceChecks" : [
+     {
           "name":"GADSL",
           "value":"item_1",
           "checked": true
@@ -1467,7 +888,8 @@
         }
       ],
         
-        "toxicologyChecks" : [{
+   "toxicologyChecks" : [
+          {
           "name":"Study Title and Date",
           "value":"item_1",
           "checked": true
@@ -1487,7 +909,8 @@
           "checked": false
         }],
         
-        "toxicologydropData" : [{
+   "toxicologydropData" : [
+     {
           "type" : "sealant",
           "value": "sealant"
         }, {
@@ -1495,7 +918,8 @@
           "value": "silane"
         }],
 
-        "salesCheckData" : [{
+   "salesCheckData" : [
+          {
           "name":"Sales Volume",
           "value":"item_2",
           "checked": true
@@ -1514,640 +938,10 @@
           { "field": "Component_Name", "header": "Component Name" },
           { "field":"Value", "header":"Value in %"}
         ],
-        
-         "legalProducts" : [
-          {
-            "ComponentType": "Active ingredient",
-            "Component_Id": "000000002746",
-            "CAS_Number": "7631-16-9",
-            "Component_Name": "SOLUM DIATOMEAEA",
-            "Value": "29.85%"
-          }, {
-            "ComponentType": "Active ingredient",
-            "Component_Id": "000000002736",
-            "CAS_Number": "7631-46-9",
-            "Component_Name": "SOLUM DIATOMEAEB",
-            "Value": "29.85%"
-          }, {
-            "ComponentType": "Active ingredient",
-            "Component_Id": "000000002266",
-            "CAS_Number": "7631-56-9",
-            "Component_Name": "SOLUM DIATOMEAEC",
-            "Value": "29.85%"
-          }, {
-            "ComponentType": "Active ingredient",
-            "Component_Id": "000000002746",
-            "CAS_Number": "7631-16-9",
-            "Component_Name": "SOLUM DIATOMEAEA",
-            "Value": "29.85%"
-          }, {
-            "ComponentType": "Active ingredient",
-            "Component_Id": "000000002736",
-            "CAS_Number": "7631-46-9",
-            "Component_Name": "SOLUM DIATOMEAEB",
-            "Value": "11%"
-          }
-         ],
-        
-         "ghsLabelingHeader" : [
-          { "field": "regulatory_Basis", "header": "Regulatory Basis","width": "20%"},
-          { "field": "symbols", "header": "Symbols","width": "10%"},
-          { "field": "signal_Word", "header": "Signal Word","width": "10%"},
-          { "field": "hazard_Statements", "header": "Hazard Statements","width": "10%" },
-          { "field":"prec_Statements", "header":"Prec Statements","width": "10%"}, 
-          {"field":"additional_Information","header":"Additional Information / Remarks","width": "20%","white-space": "pre-wrap"}
-        ],
-        
-        "ghsLabelingData" : [
-          {
-          "regulatory_Basis": "Korea. GHS Classifications of Regulated Chemicals",
-          "symbols": "pictogram",
-          "signal_Word": "none",
-          "hazard_Statements": "-",
-          "prec_Statements": "-",
-          "additional_Information": "Not applicable"
-         },
-          {
-          "regulatory_Basis": "Singapore. Standard on Hazard Communication for Hazardous Chemicals and Dangerous Goods (SS 586).",
-          "symbols": "pictogram",
-          "signal_Word": "none",
-          "hazard_Statements": "-",
-          "prec_Statements": "-",
-          "additional_Information": "Not applicable"
-         },
-          {
-          "regulatory_Basis": "Thailand GHS Classification",
-          "symbols": "pictogram",
-          "signal_Word": "none",
-          "hazard_Statements": "-",
-          "prec_Statements": "-",
-          "additional_Information": "Not applicable"
-         }],
-        
-
-        "reportDataHead" : [
-          { "field": "category", "header": "Category" },
-          { "field": "generation_Variant", "header": "Generation Variant" },
-          { "field": "language", "header": "Language" },
-          { "field": "version", "header": "Version" },
-          { "field":"released_on", "header":"Released on"}
-        ],
-        
-         "reportDataproducts" : [
-          {
-            "category":"ROHS Compliance ",
-            "generation_Variant":"ROHS - ROHS Regulatory Document without Data",
-            "language":"English",
-            "version":"V1.0",
-            "released_on":"10.01.2017"
-          },
-          {
-            "category":"Material safety data sheet",
-            "generation_Variant":"RMSDS KR - Gen Variant for MSDS Korea",
-            "language":"English",
-            "version":"V1.2",
-            "released_on":"10.01.2018"
-          },
-          {
-            "category":"Material safety data sheet",
-            "generation_Variant":"NLR160-80/PAILKIT/88LB-40KG",
-            "language":"NLR160-80",
-            "version":"China - NG01 Nantong Momentive, SH01 Momentive SH Trading",
-            "released_on":"17.07.2018"
-          },
-          {
-            "category":"Material safety data sheet",
-            "generation_Variant":"MSDS KR - Gen Variant for MSDS Korea",
-            "language":"Korean",
-            "version":"V1.2",
-            "released_on":"10.01.2018"
-          },
-          {
-            "category":"Material safety data sheet",
-            "generation_Variant":"MSDS SG - Gen Variant for MSDS Singapore",
-            "language":"English",
-            "version":"V1.0",
-            "released_on":"29.03.2017"
-          },
-          {
-            "category":"Material safety data sheet",
-            "generation_Variant":"MSDS TH - Gen Variant for MSDS Thailand",
-            "language":"Thai",
-            "version":"V1.0",
-            "released_on":"13.12.2016"
-          }],
-        
-        "saleDataHead" : [
-          { "field": "released_on", "header": "Material Number" },
-          { "field": "material_Description", "header": "Material Description" },
-          { "field": "basic_Data", "header": "Basic Data Text" },
-          { "field": "sales_Org", "header": "Sales Org" },
-          { "field":"past_Sales", "header":"3 years past Sales (BW Field 1)"}
-        ],
-        
-         "saleDataProducts" : [
-          {
-            "released_on":"114686",
-            "material_Description":"LSR2680FC/DRUM KIT/400KG",
-            "basic_Data":"LSR2680FC",
-            "sales_Org":"N/A",
-            "past_Sales":"1000 Kg"
-          },
-          {
-            "released_on":"121856",
-            "material_Description":"LSR2680 TH/Drum kit/400Kg",
-            "basic_Data":"LSR2680",
-            "sales_Org":"Hong Kong - HK01 Momentive Hong Kong China - NG01 Nantong Momentive, SH01 Momentive SH Trading Thailand - TH01 Momentive Thailand",
-            "past_Sales":"2000 Kg"
-          },
-          {
-            "released_on":"131438",
-            "material_Description":"NLR160-80/PAILKIT/88LB-40KG",
-            "basic_Data":"NLR160-80",
-            "sales_Org":"China - NG01 Nantong Momentive, SH01 Momentive SH Trading",
-            "past_Sales":"3000 Kg"
-          },
-          {
-            "released_on":"114686",
-            "material_Description":"LSR2680FC/DRUM KIT/400KG",
-            "basic_Data":"LSR2680FC",
-            "sales_Org":"N/A",
-            "past_Sales":"1000 Kg"
-          },
-          {
-            "released_on":"131439",
-            "material_Description":"NLR160-80-DRUMKIT(882LB-400KG)",
-            "basic_Data":"NLR160-80",
-            "sales_Org":"China - NG01 Nantong Momentive, SH01 Momentive SH Trading",
-            "past_Sales":"1200 Kg"
-          },
-          {
-            "released_on":"135599",
-            "material_Description":"T6227/PAIL/40KG",
-            "basic_Data":"T6227",
-            "sales_Org":"China - NG01 Nantong Momentive, SH01 Momentive SH Trading",
-            "past_Sales":"1700 Kg"
-          }],
-
-           
-   
-        
-        
-        "toxicologyStudyData" : [
-          {
-            "product_Name": "LSR 2680FC A",
-            "ELA": "ELA2680",
-            "test_description":"LSR 2680FC A(LSR 2680FC A - Medical Grade Name),(Pressure 10 min 170c,Post cure 4h 200),(Lot 09G002)",
-            "study_Title": "USP class VI and ISO10993(Parts 6,10,11)",
-            "final_Report": "Nov 2010"
-         },
-         {
-          "product_Name": "LSR 2680FC A",
-          "ELA": "ELA2680",
-          "test_description":"LSR 2680FC A(LSR 2680FC A - Medical Grade Name),(Pressure 10 min 170c.Postcure 4h 200c),(Lot 09G002)",
-          "study_Title": "FDA Extractives(Per 21 CFR 177.2600)",
-          "final_Report": "Nov 2010"
-        }],
       
-        
-         "toxicologyMonthlyHeader" : [
-          { "field": "product_commerical_Name", "header": "product-Commerical Name","width": "10%" },
-          { "field": "studies", "header": "Studies","width": "10%"},
-          { "field": "status", "header": "Status","width": "10%"},
-          { "field": "comments", "header": "Comments","width": "10%" }
-         
-        ],
-        
-        "toxicologyMonthlyData" : [
-          {
-            "product_commerical_Name": "AMTG",
-            "studies": "Melting Point",
-            "status": "Less than -20c",
-            "comments": "Final Report"
-         },
-         {
-          "product_commerical_Name": "",
-          "studies": "Boiling Point",
-          "status": "251+ 1c(525+ 1k) at 102 kpa",
-          "comments": "Final Report"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Density",
-          "status": "0.981 kg/m3 at 20.0 + 0.5",
-          "comments": "Final Report"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Surface Tension",
-          "status": "54.5 +2.0mN/m(1g/L solution) at 20.0+",
-          "comments": "Final Report- amendment"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Water Solubility",
-          "status": "Fully misciable in all propotions at 20.0",
-          "comments": "Final Report - amendment"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Partition coeff",
-          "status": "2.95 at 21.2 +0.5c",
-          "comments": "Final Report"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "vapour Pressure",
-          "status": "2.35 pa at 25c",
-          "comments": "Final Report"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Flash Point",
-          "status": "113+2c",
-          "comments": "Final Report"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Explosive Properties",
-          "status": "Predicted Negative TIR",
-          "comments": "Final Report"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Auto-ignition temp",
-          "status": "202",
-          "comments": "Final Report"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Oxidizing Properties",
-          "status": "Predicted Negative TIR",
-          "comments": "Final Report"
-        },
-        {
-          "product_commerical_Name": "",
-          "studies": "Acute Oral Tox",
-          "status": "Study Underway",
-          "comments": "-"
-        }],
-        
-        "restrictedGASDLHeader" : [
-          { "field": "substance", "header": "Substance","width": "10%" },
-          { "field": "cas_RN", "header": "CAS RN","width": "10%"},
-          { "field": "class_action", "header": "Class Sl FIC Action","width": "10%"},
-          { "field": "reason_Code", "header": "Reason Code","width": "10%" },
-          { "field": "source", "header": "Source(Legal Requirement Regulations)","width": "20%" },
-          { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)","width": "20%" },
-          { "field": "weight_Composition", "header": "% Weight in SAP std Composition","width": "20%" }
-         
-        ],
-        
-        "restrictedGASDLData" : [
-          {
-            "substance": "Acetaldehyde",
-            "cas_RN": "68083-19-2",
-            "class_action": "FI",
-            "reason_Code": "Final Report",
-            "source": "Reg(EC) No 12/21/2008",
-            "reporting_threshold": "-",
-            "weight_Composition": "30%"
-         }],
-
-        
-        "restrictedCaliforniaHeader" : [
-          { "field": "chemical", "header": "Chemical","width": "10%" },
-          { "field": "type_Toxicity", "header": "Type of Toxicity","width": "10%"},
-          { "field": "listing_Mechanism", "header": "Listing Mechanism","width": "10%"},
-          { "field": "cas_NO", "header": "CAS NO","width": "10%" },
-          { "field": "date_Listed", "header": "Date Listed","width": "20%" },
-          { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a","width": "20%" },
-          { "field": "weight_Composition", "header": "% Weight in SAP std Composition","width": "20%" }
-         
-        ],
-        
-        "restrictedCaliforniaData" : [
-          {
-            "chemical": "A-alpha-c(2-Amino-9H-pyrido[2,3-b]indole)",
-            "type_Toxicity": "Cancer",
-            "listing_Mechanism": "AB",
-            "cas_NO": "68083-19-2",
-            "date_Listed": "1-Jan-90",
-            "NSRL_Data": "2",
-            "weight_Composition": "10 %"
-          },
-          {
-            "chemical": "Abiratenone acetate",
-            "type_Toxicity": "Developmental, Female, Male",
-            "listing_Mechanism": "FR",
-            "cas_NO": "68083-19-2",
-            "date_Listed": "8-Apr-16",
-            "NSRL_Data": "-",
-            "weight_Composition": "20 %"
-          }],
-        
       
-        
        
-        
-        "pc_NotificationData" : [
-          {
-            "regulatory_List": "AICS - Australia AICS",
-            "notification": "y (Positive listing)",
-            "additional_Info": "-",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "EINECS - EU EINECS List",
-            "notification": "y (Positive listing)",
-            "additional_Info": "-",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "ENCS (JP) - Japan (ENCS) List",
-            "notification": "n (Negative listing)",
-            "additional_Info": "-",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "IECSC - China Inv. Existing Chemical Substances",
-            "notification":"y (Positive listing)",
-            "additional_Info": "-",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "KECI (KR) - Korea Existing Chemicals Inv. (KECI)",
-            "notification":"y (Positive listing)",
-            "additional_Info": "-",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "DSL - Canada DSL Inventory List",
-            "notification":"y (Positive listing)",
-            "additional_Info": "-",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "NDSL - Canada NDSL Inventory",
-            "notification":"n (Negative listing)",
-            "additional_Info": "-",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "PICCS (PH) - Philippines PICCS",
-            "notification":"y (Positive listing)",
-            "additional_Info": "-",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "TSCA - US TSCA Inventory",
-            "notification":"y (Positive listing)",
-            "additional_Info": "On TSCA Inventory",
-            "usage": "PUBLIC: REG_WORLD"
-          },
-          {
-            "regulatory_List": "TCSI - Taiwan Chemical Substance Inventory",
-            "notification":"y (Positive listing)",
-            "additional_Info": "On TSCA Inventory",
-            "usage": "PUBLIC: REG_WORLD"
-          }
-        ],
-
-              "complianceRegistrationEUHeader" : [
-                { "field": "product", "header": "product","width": "10%" },
-                { "field": "country", "header": "Country","width": "10%"},
-                { "field": "holder", "header": "Holder","width": "10%"},
-                { "field": "registration", "header": "Registration","width": "10%" },
-                { "field": "expiry", "header": "Expiry","width": "10%"},
-                { "field": "status", "header": "Status","width": "10%" },
-                { "field": "certificate", "header": "Certificate","width": "10%" }
-              ],
-              
-              "complianceRegistrationEUData" : [
-                {
-                  "product":"Silwet 806",
-                  "country":"Albania",
-                  "holder":"-",
-                  "registration":"-",
-                  "expiry":"-",
-                  "status":"Active",
-                  "certificate":"N/A"
-                },
-                {
-                  "product":"Silwet 806",
-                  "country":"Armenia",
-                  "holder":"N/A",
-                  "registration":"Not Required",
-                  "expiry":"N/A",
-                  "status":"Active",
-                  "certificate":"N/A"
-                },
-                {
-                  "product":"Silwet 806",
-                  "country":"Australia",
-                  "holder":"N/A",
-                  "registration":"Not Required but defer to Germany",
-                  "expiry":"N/A",
-                  "status":"Active",
-                  "certificate":"N/A"
-                }
-              ],    
-
-                  "complianceRegistrationCanada_Header" : [
-                    { "field": "product Name", "header": "Product Name","width": "10%" },
-                    { "field": "EPA Inert Product Listing", "header": "EPA Inert Product Listing","width": "10%"},
-                    { "field": "CA DPR", "header": "CA DPR","width": "10%"},
-                    { "field": "CP DA", "header": "CP DA","width": "10%" },
-                    { "field": "WSDA", "header": "WSDA","width": "10%"},
-                    { "field": "OMRI", "header": "OMRI","width": "10%" },
-                    { "field": "OMRI Reneval Date", "header": "OMRI Reneval Date","width": "10%" },
-                    { "field": "Canada OMRI", "header": "Canada OMRI","width": "10%" },
-                    { "field": "OMRI Reneval Dates", "header": "OMRI Reneval Date","width": "10%" },
-                    { "field": "PMRA", "header": "PMRA","width": "10%" }
-                  ],
-                  
-                  "complianceRegistrationCanada_Data" : [
-                    {
-                      "product Name":"AF9000",
-                      "EPA Inert Product Listing":"40CFR§180.960",
-                      "CA DPR":"-",
-                      "CP DA":"-",
-                      "WSDA":"-",
-                      "OMRI":"-",
-                      "OMRI Reneval Date":"-",
-                      "Canada OMRI":"-",
-                      "OMRI Reneval Dates":"-",
-                      "PMRA":"-"
-                    },
-                    {
-                      "product Name":"AF9000NE",
-                      "EPA Inert Product Listing":"40CFR§180.960",
-                      "CA DPR":"-",
-                      "CP DA":"-",
-                      "WSDA":"-",
-                      "OMRI":"-",
-                      "OMRI Reneval Date":"-",
-                      "Canada OMRI":"-",
-                      "OMRI Reneval Dates":"-",
-                      "PMRA":"-"
-                    },
-                    {
-                      "product Name":"AgroSpred* 100",
-                      "EPA Inert Product Listing":"40CFR§180.960",
-                      "CA DPR":"-",
-                      "CP DA":"-",
-                      "WSDA":"-",
-                      "OMRI":"-",
-                      "OMRI Reneval Date":"-",
-                      "Canada OMRI":"-",
-                      "OMRI Reneval Dates":"-",
-                      "PMRA":"-"
-                    }
-                  ],
-
-           
-           "complianceRegistrationLatin_Header" : [
-            { "field": "product", "header": "product","width": "10%" },
-            { "field": "country", "header": "Country","width": "10%"},
-            { "field": "Registered Name", "header": "Registered Name","width": "10%"},
-            { "field": "Date Granted", "header": "Date Granted","width": "10%" },
-            { "field": "Date of Expiry", "header": "Date of Expiry","width": "10%"},
-            { "field": "Registration Holder", "header": "Registration Holder","width": "10%" },
-            { "field": "Registration Certificate", "header": "Registration Certificate (Location)","width": "10%" }
-          ],
-          
-          "complianceRegistrationLatin_Data" : [
-            {
-              "product":"Silwet L-77",
-              "country":"Costa Rica",
-              "Registered Name":"Silwet L 77 100 SL",
-              "Date Granted":"10/13/2006",
-              "Date of Expiry":"N/A",
-              "Registration Holder":"Momentive",
-              "Registration Certificate":"x (P Drive - Costa Rica)"
-            },
-            {
-              "product":"Silwet 806",
-              "country":"Ecuador",
-              "Registered Name":"Silwet 806",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"UPL",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet L-77",
-              "country":"Colombia",
-              "Registered Name":"Silwet L-77",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"Segitis",
-              "Registration Certificate":"-"
-            },  
-            {
-              "product":"Silwet L-77",
-              "country":"Colombia",
-              "Registered Name":"Silwet L-77",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"Segitis",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet 408",
-              "country":"Chile",
-              "Registered Name":"",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"DIGAR",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet TX (Clone of Silwet 408)",
-              "country":"Chile",
-              "Registered Name":"",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"DIGAR",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet L-77",
-              "country":"Chile",
-              "Registered Name":"",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"-",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet L AG",
-              "country":"Chile",
-              "Registered Name":"-",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"-",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet 408",
-              "country":"Argentina",
-              "Registered Name":"-",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"Momentive",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet 408",
-              "country":"Uruguay",
-              "Registered Name":"-",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"Agromill",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet 408",
-              "country":"Parguay",
-              "Registered Name":"-",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"Momentive (Roberto Diaz is contact)",
-              "Registration Certificate":"-"
-            },
-            {
-              "product":"Silwet 408",
-              "country":"Bolivia",
-              "Registered Name":"-",
-              "Date Granted":"-",
-              "Date of Expiry":"-",
-              "Registration Holder":"Rizobacter",
-              "Registration Certificate":"-"
-            }
-          
-            ],    
-            
-       "ccHeavyMetals_Data" : [
-            {
-                "product":"LSR 2680FC A",
-                "aKA":"-",
-                "batch":"-",
-                "sample":"-",
-                "system":"-",
-                "date":"-",
-                "aluminum":"0.02PPM",
-                "antimony":"-",
-                "arsenic":"< 0.12 PPM",
-                "barium":"< 0.12 PPM",
-                "beryillum":"< 0.12 PPM",
-                "boron":"-",
-                "cadmium":"< 0.12 PPM",
-                "calcium":"1.36 PPM",
-                "carbon":"-"
-        }
-        ],
-        
+       
         "legalCompositionHead" : [
           { "field": "Specificnation", "header": "Specificnation" },
           { "field": "CAS_Number", "header": "CAS Number" },
@@ -2157,259 +951,9 @@
           { "field":"Unit", "header":"Unit of Measurement"}
           ],
         
-          "legalCompositionData" : [
-            {
-              "Specification": "000000002805",
-              "CAS_Number": "75-21-8",
-              "Ingredient_Name": "Ethylene Oxide",
-              "Component_Type": "Active ingredient",
-              "Legal_Composition":"65.03",
-              "Unit":"%"
-            }, 
-            {
-              "Specification": "000000021594",
-              "CAS_Number": "107-18-6",
-              "Ingredient_Name": "Octamethylcyclotetrasiloxane",
-              "Component_Type": "Active ingredient",
-              "Legal_Composition":"7.17",
-              "Unit":"%"
-            }, 
-            {
-              "Specification": "000000002670",
-              "CAS_Number": "556-67-2",
-              "Ingredient_Name": "Hexamethyldisiloxane",
-              "Component_Type": "Active ingredient",
-              "Legal_Composition":"18.61",
-              "Unit":"%"
-            }, 
-            {
-              "Specification": "000000003387",
-              "CAS_Number": "107-46-0",
-              "Ingredient_Name": "Hexamethyldisiloxane",
-              "Component_Type": "Active ingredient",
-              "Legal_Composition":"3.7",
-              "Unit":"%"
-            }, 
-            {
-              "Specification": "000000002661",
-              "CAS_Number": "75-54-7",
-              "Ingredient_Name": "Methylhydrogendichlorosilane",
-              "Component_Type": "Active ingredient",
-              "Legal_Composition":"10.5",
-              "Unit":"%"
-            }
-           ],
         
-           "copylegalCompositionData" : [
-            {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000002925",
-              "CAS_Number": "68083-19-2",
-              "Component_Name":[
-                {"cas_name" : "Decamethylcyclopentasiloxane",
-                "iupac_name":"Cyclopentasiloxane, decamethyl-",
-                "INCI_Name":["CYCLOPENTASILOXANE"]
-              }],
-                "Value": "86%"
-            },
-            {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000002670",
-              "CAS_Number": "556-67-2",
-              "Component_Name":[
-                {"cas_name" : "Octamethylcyclotetrasiloxane",
-                "iupac_name":"Cyclotetrasiloxane, octamethyl-",
-                "INCI_Name":["CYCLOTETRASILOXANE","CYCLOMETHICONE"]
-              }],
-                "Value": "14%"
-            }
-            
-         ],
-           "hunderedCompositionHead" : [
-            { "field": "ComponentType", "header": "Component Type","width": "10%" },
-            { "field": "Component_Id", "header": "Component Id","width": "10%"},
-            { "field": "CAS_Number", "header": "CAS Number","width": "10%" },
-            { "field": "Component_Name", "header": "Component Name","width": "30%"},
-            { "field": "value", "header": "Value in % ","width": "10%" }
-          ],
         
-          "hunderedCompositionData" : [
-              {
-                "ComponentType": "Active ingredient",
-                "Component_Id": "000000002766",
-                "CAS_Number": "68083-19-2",
-                "Component_Name":[
-                  {"cas_name" : "Slica",
-                  "iupac_name":"Slica",
-                  "INCI_Name":["slica","SOLUM DIATOMEAE"]
-                }],
-                  "Value": "29.85%"
-              },
-              {
-                "ComponentType": "Active ingredient",
-                "Component_Id": "000000002652",
-                "CAS_Number": "999-97-3",
-                "Component_Name":[
-                  {"cas_name" : "Hexamethyldisilazane",
-                  "iupac_name":"Silanamine 1,1,1-trimethyl-N-(trimethylsilyl)-"
-                }],
-                  "Value": "6.62%"
-              }, {
-                "ComponentType": "Active ingredient",
-                "Component_Id": "000000002932",
-                "CAS_Number": "7691-02-3",
-                "Component_Name":[
-                  {"cas_name" : "Divinyltetramethyldisilazane",
-                  "iupac_name":"1,3-Divinyltetramethyldisilazane"
-                }],
-                "Value": "1.24%"
-              }, {
-                "ComponentType": "Active ingredient",
-                "Component_Id": "000000002670",
-                "CAS_Number": "556-67-2",
-                "Component_Name":[
-                  {"cas_name" : "Octamethylcyclotetrasiloxane",
-                  "iupac_name":"Cyclotetrasiloxane, octamethyl-",
-                  "INCI_Name":["CYCLOTETRASILOXANE","CYCLOMETHICONE"]
-                }],
-                "Value": "0.12%"
-              }, {
-                "ComponentType": "Active ingredient",
-                "Component_Id": "000000003091",
-                "CAS_Number": "2627-95-4",
-                "Component_Name":[
-                  {"cas_name" : "Divinyltetramethyldisiloxane",
-                  "iupac_name":"DISILOXANE, 1,3-DIETHINYL-1,1,3,3-TETRAMETHYL-"
-                 
-                }],
-                "Value": "0.12%"
-              }, {
-                "ComponentType": "Active ingredient",
-                "Component_Id": "000000002678",
-                "CAS_Number": "2554-06-5",
-                "Component_Name":[
-                  {"cas_name" : "Cyclotetrasiloxane, 2,4,6,8-tetraethenyl-2,4,6,8-tetramethyl-",
-                  "iupac_name":"CYCLOTETRASILOXANE, 2,4,6,8-TETRAETHYLENE-2,4,6,8-TETRAMETHYL-"
-                }],
-                "Value": "0.53%"
-              }
-           ],
-           "copyhunderedCompositionData" : [
-            {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000002766",
-              "CAS_Number": "68083-19-2",
-              "Component_Name":[
-                {"cas_name" : "Slica",
-                "iupac_name":"Slica",
-                "INCI_Name":["slica","SOLUM DIATOMEAE"]
-              }],
-                "Value": "29.85%"
-            },
-            {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000002652",
-              "CAS_Number": "999-97-3",
-              "Component_Name":[
-                {"cas_name" : "Hexamethyldisilazane",
-                "iupac_name":"Silanamine 1,1,1-trimethyl-N-(trimethylsilyl)-"
-              }],
-                "Value": "6.62%"
-            }, {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000002932",
-              "CAS_Number": "7691-02-3",
-              "Component_Name":[
-                {"cas_name" : "Divinyltetramethyldisilazane",
-                "iupac_name":"1,3-Divinyltetramethyldisilazane"
-              }],
-              "Value": "1.24%"
-            }, {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000002670",
-              "CAS_Number": "556-67-2",
-              "Component_Name":[
-                {"cas_name" : "Octamethylcyclotetrasiloxane",
-                "iupac_name":"Cyclotetrasiloxane, octamethyl-",
-                "INCI_Name":["CYCLOTETRASILOXANE","CYCLOMETHICONE"]
-              }],
-              "Value": "0.12%"
-            }, {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000003091",
-              "CAS_Number": "2627-95-4",
-              "Component_Name":[
-                {"cas_name" : "Divinyltetramethyldisiloxane",
-                "iupac_name":"DISILOXANE, 1,3-DIETHINYL-1,1,3,3-TETRAMETHYL-"
-               
-              }],
-              "Value": "0.12%"
-            }, {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000002678",
-              "CAS_Number": "2554-06-5",
-              "Component_Name":[
-                {"cas_name" : "Cyclotetrasiloxane, 2,4,6,8-tetraethenyl-2,4,6,8-tetramethyl-",
-                "iupac_name":"CYCLOTETRASILOXANE, 2,4,6,8-TETRAETHYLENE-2,4,6,8-TETRAMETHYL-"
-              }],
-              "Value": "0.53%"
-            }
-         ],
-        
-           "standardCompositionHead" : [
-            { "field": "ComponentType", "header": "Component Type","width": "10%" },
-            { "field": "Component_Id", "header": "Component Id","width": "10%"},
-            { "field": "CAS_Number", "header": "CAS Number","width": "10%" },
-            { "field": "Component_Name", "header": "Component Name","width": "30%"},
-            { "field": "value", "header": "Value in % ","width": "10%" }
-          ],
-        
-          "standardCompositionData" :[
-            {
-              "ComponentType": "Active ingredient",
-              "Component_Id": "000000002925",
-              "CAS_Number": "68083-19-2",
-              "Component_Name":[
-                {"cas_name" : "Decamethylcyclopentasiloxane",
-                "iupac_name":"Cyclopentasiloxane decamethyl-",
-                "INCI_Name":["CYCLOPENTASILOXANE"]
-              }],
-                "Value": "84.06%"
-            },
-            {
-              "ComponentType": "Impurity",
-              "Component_Id": "000000002681",
-              "CAS_Number": "70131-67-8",
-              "Component_Name":[
-                {"cas_name" : "Siloxanes and Silicones, di-Me hydroxy terminated",
-                "iupac_name":"Dimethylpolysiloxane"
-              }],
-                "Value": "15%"
-            }, {
-              "ComponentType": "Impurity",
-              "Component_Id": "000000003060",
-              "CAS_Number": "540-97-6",
-              "Component_Name":[
-                {"cas_name" : "Dodecamethylcyclohexasiloxane",
-                "iupac_name":"Cyclohexasiloxane Dodecamethyl-",
-                "INCI_Name":["CYCLOHEXASILOXANE"]
-              }],
-              "Value": "2.1%"
-            }, {
-              "ComponentType": "Impurity",
-              "Component_Id": "000000002932",
-              "CAS_Number": "556-67-2",
-              "Component_Name":[
-                {"cas_name" : "Octamethylcyclotetrasiloxane",
-                "iupac_name":"Cyclotetrasiloxane, octamethyl-",
-                "INCI_Name":["CYCLOTETRASILOXANE","CYCLOMETHICONE"]
-              }],
-              "Value": "0.704 %"
-            }
-           ],
-        
-
-          "CommunicationHistoryHead" :[
+  "CommunicationHistoryHead" :[
 
             { "field": "case_number", "header": "Case Number","width": "10%"  },
             { "field": "first_level", "header": "1st Level Case Classification","width": "40%" },
@@ -2420,465 +964,7 @@
             { "field": "material_number", "header": "Material Number","width": "20%"},
             { "field": "tier_owner", "header": "Tier 2 Owner","width": "20%"}
          
-          ],
- "CommunicationHistoryData" : [
-  {
-    "case_number": "68083-19-2",
-    "first_level": "product/Material Information",
-    "second_level": "Customer product Quality Questionnaires",
-    "manufacturing_plant":"-",
-    "material_Description":"-",
-    "released_on":"-",
-    "tier_owner":"-",
-    "customer_name":"OU EUROBIO LAB",
-    "bu":"Specialty Fluids.",
-    "product_Name":"LSR2050A - US Made",
-    "topic":"Customer product Quality Questionnaires",
-    "email_Content":[
-      {
-        "contact_email":"dmitri.zagorski@eurobiolab.ee",        
-         "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-       "iupac_name":"Slica8",
-       "attached_docs":"LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH",
-       "text_body":"Dear Sender, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials."
-      },
-    {
-      "contact_email":"dmitri.zagorski@eurobiolab.ee",
-      "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-      "attached_docs":"05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885",
-      "text_body":"Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials."
-  },
-  {
-  "contact_email":"dmitri.zagorski@eurobiolab.ee",
-  "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-  "attached_docs":"05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885",
-  "text_body":"Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves."
-   }]
-  },
-  {
-    "case_number": "140641",
-    "first_level": "product/Material Information",
-    "second_level": "Customer product Quality Questionnaires",
-    "manufacturing_plant":"-",
-    "material_Description":"-",
-    "released_on":"-",
-    "tier_owner":"-",
-    "customer_name":"Bang & Bonsomer LLC Moscow",
-    "bu":"Elastomers",
-    "product_Name":"LSR2003A",
-    "topic":"Regulatory Information - National or Regional Inventories",
-    "email_Content":[{
-      "contact_email":"dmitri.zagorski@eurobiolab.ee",
-      "attached_docs":"05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885",
-      "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-      "text_body":"Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials."
-    }]
-  },
-  {
-    "case_number": "140643",
-    "first_level": "product/Material Information",
-    "second_level": "Customer product Quality Questionnaires",
-    "manufacturing_plant":"-",
-    "material_Description":"-",
-    "released_on":"-",
-    "tier_owner":"-",
-    "customer_name":"ART COSMETICS SRL VIA E.",
-    "bu":"Electronic Materials.",
-    "product_Name":"LSR2003B",
-    "topic":"Regulatory Information - Sustainability",
-    "email_Content":[{
-      "contact_email":"dmitri.zagorski@eurobiolab.ee",
-      "attached_docs":"Silsoft 840 Manufacturing flow diagram",
-      "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-      "text_body":"This is perfect newtexts. Please fill Vegan declaration that was attached in previous email Lugupidamisega / Best regards / С уважением, Dmitri Zagorski Head of Purchasing Department Tel: +3726120121 Mob:+372 58 181807 Skype ost.eurobiolab"
-    }]
-  },
-  {
-    "case_number": "140644",
-    "first_level": "product/Material Information",
-    "second_level": "Customer product Quality Questionnaires",
-    "manufacturing_plant":"-",
-    "material_Description":"-",
-    "released_on":"-",
-    "tier_owner":"-",
-    "customer_name":"Azelis Australia Pty LTd.",
-    "bu":"Basics.",
-    "product_Name":"LSR2050B - US Made",
-    "topic":"Regulatory Information - Sustainability",
-    "email_Content":[{
-      "contact_email":"dmitri.zagorski@eurobiolab.ee",
-      "attached_docs":"LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH",
-      "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-      "text_body":"striving to improve service to its customers. In order to do this, we would like to ask you to always contact the Commercial Services Center first in case of a request/inquiry."
-    }]
-  },
-  {
-    "case_number": "140645",
-    "first_level": "product/Material Information",
-    "second_level": "Customer product Quality Questionnaires",
-    "manufacturing_plant":"-",
-    "material_Description":"-",
-    "released_on":"-",
-    "tier_owner":"-",
-    "customer_name":"AZELIS CANADA INC.",
-    "bu":"Urethane Additives.",
-    "product_Name":"LSR2060A - US Made",
-    "topic":"Regulatory Information - National or Regional Inventories",
-    "email_Content":[{
-      "contact_email":"dmitri.zagorski@eurobiolab.ee",
-      "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-      "attached_docs":"05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885",
-      "text_body":"Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves."
-    }]
-  },
-  {
-    "case_number": "00116026",
-    "first_level": "Regulatory Information - Animal Testing",
-    "second_level": "Customer product Quality Questionnaires",
-    "manufacturing_plant":"-",
-    "material_Description":"-",
-    "released_on":"-",
-    "tier_owner":"-",
-    "customer_name":"Bang & Bonsomer PJC.",
-    "bu":"Sealants.",
-    "product_Name":"Silsoft* ETS",
-    "topic":"Regulatory Information - National or Regional Inventories",
-    "email_Content":[{
-      "contact_email":"dmitri.zagorski@eurobiolab.ee",
-      "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-      "text_body":"Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.",
-      "attached_docs":"TIR Silwet 408 lot 17ESVX180"
-    }]
-  },
-  {
-    "case_number": "00116027",
-    "first_level": "Regulatory Information - Animal Testing",
-    "second_level": "Customer product Quality Questionnaires",
-    "manufacturing_plant":"-",
-    "material_Description":"-",
-    "released_on":"-",
-    "tier_owner":"-",
-    "customer_name":"Bang & Bonsomer PJC.",
-    "bu":"Sealants.",
-    "product_Name":"Silsoft* A-843 conditioning agent",
-    "topic":"Regulatory Information - National or Regional Inventories",
-    "email_Content":[{
-      "contact_email":"dmitri.zagorski@eurobiolab.ee",
-      "attached_docs":"TIR Silwet 408 lot 17ESVX180",
-      "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-      "text_body":"Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),."
-    }]
-  }
-],
-
-
-"intialDataDetails" :
- {
-  "Product Attributes":[
-      {"image" : "https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg"},
-      {"Product Identification": "LSR 2680FC A,NLR160-80,NLR160-80,T6227" },
-      {"Product Application":"Dental / surgical devices, Diagnostics / imaging, Fluid and drug delivery devices, Orthopedics / prosthetics, Advanced Wound Care & Scar Management, Septa / stoppers / laboratory accessories"},
-      {"tab_modal": "compositionModal"}
-    ],
-  "Product compliance":[ 
-     {"image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT"},
-     {"Negative Regulatory Notification Lists":"ENCS (JP) - Japan (ENCS) List , NDSL - Canada NDSL Inventory "},
-     {"AG Registration Status":"Active: USA Canada, Latin America ; Not Active: EU region"},
-     {"tab_modal": "complianceModal"}
-    ],      
-  "Customer Communication":[
-    {"image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL"},
-    {"US FDA Compliance" : "No"},
-    {"EU Food Contact ": "Compliance: Yes"},
-    {"Top 3 Heavy Metal compositions":"Calcium 1.36 PPM; Aluminum: 0.2 PPM; Cadmium: 0.12 PPM"},
-    {"tab_modal": "communicationModal"}
-   ],
-   "Toxicology":[
-    { "image" : "https://flaptics.io/images/yu.png"},
-    {"Study Titles" : "USP class VI and ISO10993(Parts 6,10,11) , FDA Extractives(Per 21 CFR 177.2600)"},
-    {"Toxicology Summary Report Available" : "Yes"},
-    {"Pending Monthly Tox Studies": "Acute Oral Tox"},
-    { "tab_modal": "toxicologyModal"}  
-   ],
-   "Restricted Substance":[
-     {"image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-"},
-    {"Components Present in GADSL": "Yes"},
-    {"Components Present in Cal Prop 65": "Yes"},
-    {"tab_modal": "restrictedSubstanceModal" }
-   ],
- 
-   "Sales Information":[
-    {"image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt"
-    },
-    {"Total sales in 2019" :"5000 Kg"},
-    {"Regions where sold" :"USA , HongKong"},
-    {"tab_modal": "salesModal"}
-   ],   
-   "Report Data":[
-     { "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSReXGibHOlD7Z5nNqD4d4V52CVMmi-fGUEKMH2HE7srV_SzNn_g"},
-    {"Report Status" :"Active"},
-    {"tab_modal": "reportModal" }
-   ]  
- },
- 
- "HomeDataDetails" :
- {
-  "product Attributes":[
-      {"image" : "https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg"},
-      {"product Identification": "LSR 2680FC A,NLR160-80,NLR160-80,T6227" },
-      {"product Application":"Dental / surgical devices, Diagnostics / imaging, Fluid and drug delivery devices, Orthopedics / prosthetics, Advanced Wound Care & Scar Management, Septa / stoppers / laboratory accessories"}
-     ],
-  "product compliance":[ 
-     {"image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT"},
-     {"US FDA Compliance" : "No"},
-     {"EU Food Contact ": "Compliance: Yes"},
-     {"AG Registration Status":"Active: USA Canada, Latin America ; Not Active: EU region"}
-    ],      
-  "Customer Communication":[
-    {"image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL"},
-    {"Heavy Metals content Available": "Yes"},
-    {"Top 3 compositions present in the product" :"Calcium 1.36 PPM; Aluminum: 0.2 PPM; Cadmium: 0.12 PPM"},
-    {"Top Topics":"Customer product Quality Questionnaires, REACH CLP, Regulatory Information - Animal Testing"}
-
-   ],
-   "Restricted Substance":[
-     {"image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-"},
-    {"Components Present in GADSL": "Yes"},
-    {"Components Present in Cal Prop 65": "Yes"}
-
-   ],
-   "Toxicology":[
-    { "image" : "https://flaptics.io/images/yu.png"},
-    {"Study Titles" : "USP class VI and ISO10993(Parts 6,10,11) , FDA Extractives(Per 21 CFR 177.2600)"},
-    {"Toxicology Summary Report Available" : "Yes"},
-    {"Pending Monthly Tox Studies": "Acute Oral Tox"}
-
-   ],
-   "Sales Information":[
-    {"image":"https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt"
-    },
-    {"Total Sales in 2019" :"5000 Kg"}
-   ],   
-   "Report Data":[
-     { "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSReXGibHOlD7Z5nNqD4d4V52CVMmi-fGUEKMH2HE7srV_SzNn_g"},
-    {"Report Status" :"Active"}
-   ]  
- },
-    
-"copyCommunicationHistoryData": [
-{
-  "case_number": "68083-19-2",
-  "first_level": "product/Material Information",
-  "second_level": "Customer product Quality Questionnaires",
-  "manufacturing_plant":"-",
-  "material_Description":"-",
-  "released_on":"-",
-  "tier_owner":"-",
-  "customer_name":"OU EUROBIO LAB",
-  "bu":"Specialty Fluids.",
-  "product_Name":"LSR2050A - US Made",
-  "topic":"Customer product Quality Questionnaires",
-  "email_Content":[
-    {
-      "contact_email":"dmitri.zagorski@eurobiolab.ee",
-      "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-     "iupac_name":"Slica8",
-     "attached_docs":"LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH",
-     "text_body":"Dear Sender, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials."
-    },
-  {
-    "contact_email":"dmitri.zagorski@eurobiolab.ee",
-    "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-    "attached_docs":"05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885",
-    "text_body":"Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials."
-},
-{
-"contact_email":"dmitri.zagorski@eurobiolab.ee",
-"case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-"attached_docs":"05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885",
-"text_body":"Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves."
- }]
-},
-{
-  "case_number": "140641",
-  "first_level": "product/Material Information",
-  "second_level": "Customer product Quality Questionnaires",
-  "manufacturing_plant":"-",
-  "material_Description":"-",
-  "released_on":"-",
-  "tier_owner":"-",
-  "customer_name":"Bang & Bonsomer LLC Moscow",
-  "bu":"Elastomers",
-  "product_Name":"LSR2003A",
-  "topic":"Regulatory Information - National or Regional Inventories",
-  "email_Content":[{
-    "contact_email":"dmitri.zagorski@eurobiolab.ee",
-    "attached_docs":"05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885",
-    "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-    "text_body":"Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials."
-  }]
-},
-{
-  "case_number": "140643",
-  "first_level": "product/Material Information",
-  "second_level": "Customer product Quality Questionnaires",
-  "manufacturing_plant":"-",
-  "material_Description":"-",
-  "released_on":"-",
-  "tier_owner":"-",
-  "customer_name":"ART COSMETICS SRL VIA E.",
-  "bu":"Electronic Materials.",
-  "product_Name":"LSR2003B",
-  "topic":"Regulatory Information - Sustainability",
-  "email_Content":[{
-    "contact_email":"dmitri.zagorski@eurobiolab.ee",
-    "attached_docs":"Silsoft 840 Manufacturing flow diagram",
-    "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-    "text_body":"This is perfect newtexts. Please fill Vegan declaration that was attached in previous email Lugupidamisega / Best regards / С уважением, Dmitri Zagorski Head of Purchasing Department Tel: +3726120121 Mob:+372 58 181807 Skype ost.eurobiolab"
-  }]
-},
-{
-  "case_number": "140644",
-  "first_level": "product Material Information",
-  "second_level": "Customer product Quality Questionnaires",
-  "manufacturing_plant":"-",
-  "material_Description":"-",
-  "released_on":"-",
-  "tier_owner":"-",
-  "customer_name":"Azelis Australia Pty LTd.",
-  "bu":"Basics.",
-  "product_Name":"LSR2050B - US Made",
-  "topic":"Regulatory Information - Sustainability",
-  "email_Content":[{
-    "contact_email":"dmitri.zagorski@eurobiolab.ee",
-    "attached_docs":"LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH",
-    "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-    "text_body":"striving to improve service to its customers. In order to do this, we would like to ask you to always contact the Commercial Services Center first in case of a request/inquiry."
-  }]
-},
-{
-  "case_number": "140645",
-  "first_level": "product/Material Information",
-  "second_level": "Customer product Quality Questionnaires",
-  "manufacturing_plant":"-",
-  "material_Description":"-",
-  "released_on":"-",
-  "tier_owner":"-",
-  "customer_name":"AZELIS CANADA INC.",
-  "bu":"Urethane Additives.",
-  "product_Name":"LSR2060A - US Made",
-  "topic":"Regulatory Information - National or Regional Inventories",
-  "email_Content":[{
-    "contact_email":"dmitri.zagorski@eurobiolab.ee",
-    "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-    "attached_docs":"05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885",
-    "text_body":"Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves."
-  }]
-},
-{
-  "case_number": "00116026",
-  "first_level": "Regulatory Information - Animal Testing",
-  "second_level": "Customer product Quality Questionnaires",
-  "manufacturing_plant":"-",
-  "material_Description":"-",
-  "released_on":"-",
-  "tier_owner":"-",
-  "customer_name":"Bang & Bonsomer PJC.",
-  "bu":"Sealants.",
-  "product_Name":"Silsoft* ETS",
-  "topic":"Regulatory Information - National or Regional Inventories",
-  "email_Content":[{
-    "contact_email":"dmitri.zagorski@eurobiolab.ee",
-    "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-    "text_body":"Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.",
-    "attached_docs":"TIR Silwet 408 lot 17ESVX180"
-  }]
-},
-{
-  "case_number": "00116027",
-  "first_level": "Regulatory Information - Animal Testing",
-  "second_level": "Customer product Quality Questionnaires",
-  "manufacturing_plant":"-",
-  "material_Description":"-",
-  "released_on":"-",
-  "tier_owner":"-",
-  "customer_name":"Bang & Bonsomer PJC.",
-  "bu":"Sealants.",
-  "product_Name":"Silsoft* A-843 conditioning agent",
-  "topic":"Regulatory Information - National or Regional Inventories",
-  "email_Content":[{
-    "contact_email":"dmitri.zagorski@eurobiolab.ee",
-    "attached_docs":"TIR Silwet 408 lot 17ESVX180",
-    "case_subject":"RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]",
-    "text_body":"Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),."
-  }]
-}
-],
- 
-"generateReport" :{
-"Product Attributes" :[{
-  "Basic Information":[{   
-    "product Identification": ["LSR 2680FC A","NLR160-80","NLR160-80","T6227"],
-    "product Application:": ["Dental / surgical devices",
-    "Diagnostics / imaging",
-    "Fluid and drug delivery devices",
-     "Orthopedics / prosthetics",
-     "Advanced Wound Care & Scar Management",
-     "Septa / stoppers / laboratory accessories"
-      ],
-      "Relabels":"N/A",
-      "Chemical Name": "N/A",
-      "Registered Quantity Per Legal Entity":"N/A"
-    }],
-  "GHS Labeling":[
-    {
-    "regulatory_Basis": "Korea. GHS Classifications of Regulated Chemicals",
-    "symbols": "pictogram",
-    "signal_Word": "none",
-    "hazard_Statements": "-",
-    "prec_Statements": "-",
-    "additional_Information": "Not applicable"
-   },
-    {
-    "regulatory_Basis": "Singapore. Standard on Hazard Communication for Hazardous Chemicals and Dangerous Goods (SS 586).",
-    "symbols": "pictogram",
-    "signal_Word": "none",
-    "hazard_Statements": "-",
-    "prec_Statements": "-",
-    "additional_Information": "Not applicable"
-   },
-    {
-    "regulatory_Basis": "Thailand GHS Classification",
-    "symbols": "pictogram",
-    "signal_Word": "none",
-    "hazard_Statements": "-",
-    "prec_Statements": "-",
-    "additional_Information": "Not applicable"
-   }],
-  "Structure And Formulas": [{
-    
-  }],
-  "Compositions" :[{}],
-  "Flow Diagrams":[{}]
-
-  }],
-  "Product Compliance" :[{
-    "US FDA Letter":[{}],
-    "EU Food Contact":[{}],
-    "Notification Status": [{}],
-    "AG Registration Status" :[{}]
-    }]
-
-},
-"Ontology_product_Name" : [
-      { "name":"LSR 2680FC A", "product":"Nam Prod"},
-      { "name":"LSR 2680FC B",  "product":"Nam Prod"},
-      { "name": "LSR 2680-BC C2",  "product":"Nam Prod"},
-      { "name": "LSR 2680FC B-C3", "product":"Nam Prod"},
-      { "name":  "LSR 2680FC A-C3", "product":"Nam Prod"},
-      { "name":  "LSR2680FC-A-BLK",  "product":"Nam Prod"},
-      { "name": "LSR2680FC-W A " ,  "product":"Nam Prod"}
-  ]
+          ]
 
 } 
 

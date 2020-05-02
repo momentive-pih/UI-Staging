@@ -1,697 +1,1547 @@
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
+        <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
         <div class="board-inner radio-check-mbv">
-            <div class="slide-nav">
-                <div class="slide-center">
-                    <div class="list-check">
-                        <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button *ngFor="let item of productAttributeCheck ;let i = index" [value]="i" [checked]="item.name === productAttributesCheck" (change)="onChangeProductAttribute(item.name)"> {{item.name}}</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-            </div>
-
+           <div class="slide-nav">
+              <div class="slide-center">
+                 <div class="list-check">
+                    <mat-radio-group aria-label="Select an option">
+                       <mat-radio-button *ngFor="let item of productAttributeCheck ;let i = index" [value]="i" [checked]="item.name === productAttributesCheck" (change)="onChangeProductAttribute(item.name)"> {{item.name}}</mat-radio-button>
+                    </mat-radio-group>
+                 </div>
+              </div>
+           </div>
         </div>
         <div class="modal-body">
-            <!--Alert Meaasge and Loading Section-->
-            <div *ngIf="primaryInformtionTypes">
-                <span *ngIf="ProductAttributeLoader">
-                    <i class="loader-class fa fa-spinner fa-spin"></i>
-                    <span class="loader-text">Loading data....</span>
-                </span>
-                <span *ngIf="pihAlertMessage">
-                    <h5 class="loader-text">No Data Found..</h5>
-                </span>
-
-                <!--Basic Information and Product Application-->
-                <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
-                    <div class="row card-innerProduct-body">
-                        <div class="col-md-12">
-                            <h6 class="card-subtitle mb-2 text-default font-weight-semibold ">Product Identification: <i class="fa fa-info-circle" title="This data is from SAP"></i></h6>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table>
-                                        <thead>
-                                            <th style="width:5%">S.No</th>
-                                            <th style="width:20%">Specifiction Id</th>
-                                            <th style="width:20%">Product Name</th>
-                                            <th style="width:20%">Relabels</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let data of primaryBasicDetails; let i = index">
-                                                <td>{{i+1}}</td>
-                                                <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Identification}}</td>
-                                                <td>{{data.relables}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card-innerProduct-body" *ngIf="potentialAPPData">
-                        <h5>Product Application</h5>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>S.No</th>
-                                            <th>Product Name</th>
-                                            <th>Product Application</th>
-
-                                            <th class="td-actions">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let each of PotentialApplicationDetails ;let i = index">
-                                            <td>{{i+1}}</td>
-                                            <td>{{each.product}}</td>
-                                            <td style="width:70%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{each.prod_App}}">{{each.prod_App}}</a></td>
-                                            <td class="td-actions">
-                                                <span class="docs-btn"><a href="{{each.prod_App}}"
-                                                        download><i class="fa fa-share">
-                                                            </i> Download</a></span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--GHS Labeling Section-->
-            <div *ngIf="ghsLabeling">
-                <span *ngIf="ProductAttributeLoader">
-                <i class="loader-class fa fa-spinner fa-spin"></i>
-                <span class="loader-text">Loading data....</span>
-                </span>
-
-                <span *ngIf="pihAlertMessage">
-                <h5 class="loader-text">No Data Found..</h5>
-            </span>
-                <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
-                    <h6 class="text-default font-weight-semibold">GHS Labeling: <i class="fa fa-info-circle" role="button" title="This data is from SAP"></i></h6>
-                    <p-table #dt [columns]="ghsLabelingHeader" [value]="ghsLabelingData" (sortFunction)="customSort($event)" [customSort]="true">
-                        <ng-template pTemplate="caption">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div style="text-align: left">
-
-                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <br>
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th style="width:3.5em">S.No</th>
-                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                    {{col.header}}
-                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                </th>
-                            </tr>
-                        </ng-template>
-
-                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                            <tr>
-                                <td>
-                                    {{index+1}}
-                                </td>
-                                <td>
-                                    {{rowData.spec_Id}}
-                                </td>
-                                <td>
-                                    {{rowData.regulatory_Basis}}
-                                </td>
-                                <td>
-                                    {{rowData.usage}}
-                                </td>
-                                <td>
-                                    <span *ngIf="rowData.symbols != null"><img src ="{{rowData.symbols}}" width="50px" height="50px"></span>
-                                    <span *ngIf="rowData.symbols === null">None</span>
-
-                                </td>
-                                <td>
-                                    {{rowData.signal_Word}}
-                                </td>
-                                <td>
-                                    {{rowData.hazard_Statements}}
-                                </td>
-                                <td>
-                                    {{rowData.prec_Statements}}
-                                </td>
-                                <td>
-                                    {{rowData.additional_Information}}
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
-            <!--Structure and Formulas-->
-            <div *ngIf="structureAndFormulaTypes">
-                <span *ngIf="ProductAttributeLoader">
-                <i class="loader-class fa fa-spinner fa-spin"></i>
-                <span class="loader-text">Loading data....</span>
-                </span>
-
-                <span *ngIf="pihAlertMessage">
-                <h5 class="loader-text">No Data Found..</h5>
-              </span>
-                <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
-                    <div class="row" *ngIf="chemicalStructureTable.length > 0">
-                        <div class="col-md-12">
-                            <h6 class="text-default font-weight-semibold mb-2 mh-2">Chemical Structure: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Specification ID</th>
-                                        <th>Product Type</th>
-                                        <th>Product</th>
-                                        <th>CAS Diagram</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of chemicalStructureTable ;let i = index">
-                                        <td>{{i+1}}</td>
-                                        <td>{{data.spec_Id}}</td>
-                                        <td>{{data.product_Type}}</td>
-                                        <td>{{data.product}}</td>
-                                        <td style="width:40%">
-                                            <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">
-                                           {{data.file_Path}}
-                                        </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row" *ngIf="molecularFormulaTable.length > 0">
-                        <div class="col-md-12">
-                            <h6 class="text-default font-weight-semibold mb-2 mh-2">Molecular Formula: <i class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i></h6>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Specification ID</th>
-                                        <th>Product Type</th>
-                                        <th>Product</th>
-                                        <th>CAS Diagram</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of molecularFormulaTable;let i = index">
-                                        <td>{{i+1}}</td>
-                                        <td>{{data.spec_Id}}</td>
-                                        <td>{{data.product_Type}}</td>
-                                        <td>{{data.product}}</td>
-                                        <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row" *ngIf="molecularWeightTable.length > 0">
-                        <div class="col-md-12">
-                            <h6 class="text-default font-weight-semibold mb-2 mh-2 ">Molecular Weight:<i class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i>
-                            </h6>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Specification ID</th>
-                                        <th>Product</th>
-                                        <th>Product Type</th>
-                                        <th>Moelcular Weight</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of molecularWeightTable ;let i = index">
-                                        <td>{{i+1}}</td>
-                                        <td>{{data.spec_Id}}</td>
-                                        <td>{{data.product}}</td>
-                                        <td>{{data.product_Type}}</td>
-                                        <td>{{data.moelcular_Weight}}</td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <span *ngIf="molecularWeightTable.length < 0">No Data Found</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Composition section-->
-            <div *ngIf="compositionTypes">
-                <div class="row">
+        <!--Alert Meaasge and Loading Section-->
+        <div *ngIf="primaryInformtionTypes">
+        <span *ngIf="ProductAttributeLoader">
+        <i class="loader-class fa fa-spinner fa-spin"></i>
+        <span class="loader-text">Loading data....</span>
+        </span>
+        <span *ngIf="pihAlertMessage">
+           <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+        </span>
+        <!--Basic Information and Product Application-->
+        <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
+           <div class="row card-innerProduct-body">
+              <div class="col-md-12">
+                 <h6 class="card-subtitle mb-2 text-default font-weight-semibold">Product Identification: <i class="fa fa-info-circle" title="This data is from SAP"></i></h6>
+                 <div class="row">
                     <div class="col-md-12">
-                        <div id="accordion" class="">
-                            <div class="panel ">
-                                <div class="productLevel" role="tab" id="headingOne">
-                                    <div class="row">
-                                        <div class="col-3 col-lg-3">
-                                            <h4 class="checkout-step-title"> <a role="button"> Product Level &
-                                                Material Level Details</a> &nbsp; &nbsp;<i data-toggle="collapse" data-parent="#accordion" href="#productLevel" class="fa fa-angle-down" aria-hidden="true"></i></h4>
-                                        </div>
-                                        <!-- <div class="col-1 col-lg-1 text-right d-none d-sm-block d-md-block d-lg-block d-xl-block"
-                                        data-toggle="collapse" data-parent="#accordion" href="#productLevel">
-                                        <button id="nextBtn" name="nextBtn" class="btn btn-default imc-jfeditbtn"><i
-                                                class="fa fa-angle-down" aria-hidden="true"></i></button>
-                                    </div>
-
-                                    <div class="col-1 col-lg-1 text-right d-md-none d-lg-none" data-toggle="collapse"
-                                        data-parent="#accordion" href="#productLevel">
-                                        <button id="nextBtn" name="nextBtn" class="btn btn-default imc-jfeditbtn"><i
-                                                class="fa fa-angle-down" aria-hidden="true"></i></button>
-                                    </div> -->
-                                    </div>
-                                </div>
-                                <div id="productLevel" class="collapse show">
-                                    <!-- Start collapse body -->
-                                    <div class="checkout-step-body">
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-12">
-                                                <div class="card-comp" *ngIf="productLevelDetails">
-                                                    <span>
-                                                    <p><b>REAL SUB Number </b> {{productLevelDetails.real_Sub_Number}} </p>
-                                                    <p><b>Product Name</b> : {{productLevelDetails.product_Name}}
-                                                    </p>
-                                                    <p><b>Relabel Name(s)</b> : {{productLevelDetails.relabels}}</p>
-                                                    <p><b>INCI Name</b> : {{productLevelDetails.INCI_name}}</p>
-                                                </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8 col-sm-12 custyle">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <nav>
-                                                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#allMaterial" role="tab" aria-controls="nav-home" aria-selected="true">All
-                                                                Material</a>
-                                                                <a class="nav-item nav-link" id="nav-tab" data-toggle="tab" href="#activeMaterial" role="tab" aria-controls="nav-profile" aria-selected="false">Active
-                                                                Material</a>
-                                                            </div>
-                                                        </nav>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <mat-form-field class="composition-specDrop">
-                                                            <mat-select [formControl]="specList" name="specList" placeholder="Select SPEC ID" disableOptionCentering panelClass="myPanelClass" #singleSelect>
-                                                                <mat-select-filter [formControl]="specFilterCtrl" ngDefaultControl></mat-select-filter>
-                                                                <mat-option *ngFor="let specDetails of filteredspecList | async" [value]="specDetails">
-                                                                    {{specDetails.name}}
-                                                                </mat-option>
-                                                            </mat-select>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="tab-content mat-act" id="nav-tabContent">
-                                                            <div class="tab-pane fade show active" id="allMaterial" role="tabpanel" aria-labelledby="nav-home-tab">
-                                                                <table class="table" id="rtable">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>S.No</th>
-                                                                            <th>Material Number</th>
-                                                                            <th>Material Description</th>
-                                                                            <th>Basic Data Text</th>
-
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr *ngFor="let data of allMaterialLevel; let i = index">
-                                                                            <td>{{i+1}}</td>
-                                                                            <td>{{data.material_Number}}
-                                                                            </td>
-                                                                            <td>{{data.description}}
-                                                                            </td>
-                                                                            <td>{{data.bdt}}
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="tab-pane fade" id="activeMaterial" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                                                <table class="table" id="rtable">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>S.No</th>
-                                                                            <th>Material Number</th>
-                                                                            <th>Material Description</th>
-                                                                            <th>Basic Data Text</th>
-
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr *ngFor="let data of activeMaterial;let i = index">
-                                                                            <td>{{i+1}}</td>
-                                                                            <td>{{data.material_Number}}
-                                                                            </td>
-                                                                            <td>{{data.description}}
-                                                                            </td>
-                                                                            <td>{{data.bdt}}
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       <table>
+                          <thead>
+                             <th style="width:5%">S.No</th>
+                             <th style="width:20%">Specification Id</th>
+                             <th style="width:20%">Product Name</th>
+                             <th style="width:20%">Relabels</th>
+                          </thead>
+                          <tbody>
+                             <tr *ngFor="let data of primaryBasicDetails; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.spec_id}}</td>
+                                <td>{{data.product_Identification}}</td>
+                                <td>{{data.relabels}}</td>
+                             </tr>
+                          </tbody>
+                       </table>
                     </div>
-                </div>
+                 </div>
+              </div>
+           </div>
+           <br>
+           <div class="card-innerProduct-body">
+              <h5>Product Application</h5>
+              <span *ngIf="potentialAPPData">  <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5></span>
 
-                <h5>Composition Level Details</h5>
-                <div class="row">
-
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <mat-select name="compositionVaraible" [(value)]="selectedComposition" placeholder="Select Composition Type" (selectionChange)="compositionProcess($event.value)">
-                                <mat-option *ngFor="let data of compositionsTypes" [value]="data.name">
-                                    {{data.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+              <div class="panel-group accordion" id="accordionExample">
+                 <div class="panel panel-primary">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                       <h6 class="panel-title">
+                          <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Product Level 
+                          </a>
+                       </h6>
                     </div>
-
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <mat-select name="locationVaraible" [(value)]="selectedlocation" placeholder="Rating and Validity Area" (selectionChange)="SubLevelComposition($event.value)">
-                                <mat-option *ngFor="let region of compositionlocations" [value]="region.name">
-                                    {{region.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                    </div>
-
-
-                </div>
-                <!--Standard Composition-->
-                <span *ngIf="compositionDataLevel">
-            <div class="row" *ngIf="compositionSHI">
-                <div class="col-md-12">
-                    <div class="table-responsive" #StandardCompositiontable>
-                        <div class="table-responsive">
-                            <h5>Standard, 100% & INCI Composition    <button (click)="exportToStandardCompostionExcel()" class="btn spec-btn pull-right">Export To
-                                Excel</button></h5>
-                            <table  class="table table-striped table-bordered" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th colspan="3" style="background-color:  #a0a3e0;color:#fff !important;">
-                                            Component
-                                            Details</th>
-                                        <th colspan="3" style="background-color: #ebc3db;color:#fff !important;">
-                                            Standard
-                                            Composition</th>
-                                        <th colspan="3" style="background-color: #c7e2bb;color:#fff !important;">100 %
-                                            Composition</th>
-                                        <th colspan="3"
-                                            style="background-color: rgb(235, 195, 65);color:#fff !important;">
-                                            INCI Composition</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Pure Spec ID</th>
-                                        <th>CAS Number</th>
-                                        <th style="width:15%">Ingredient Name</th>
-                                        <th>Component Type</th>
-                                        <th>Value</th>
-                                        <th style="width:5%">Unit</th>
-                                        <th>Component Type</th>
-                                        <th>Value</th>
-                                        <th style="width:5%">Unit</th>
-                                        <th>Component Type</th>
-                                        <th>Value & Unit</th>
-                                       
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-  
-                                    <tr *ngFor="let sale of compositionStandardData">
-                                        <td>{{sale.pure_spec_Id}}</td>
-                                        <td>{{sale.cas_Number}}</td>
-                                        <td style="word-break:break-word;">{{sale.ingredient_Name}}</td>
-                                        <td>{{sale.std_Componant_Type}}</td>
-                                        <td>{{sale.std_value}}</td>
-                                        <td style="width:5%">{{sale.std_unit}}</td>
-                                        <td>{{sale.hundrd_Componant_Type}}</td>
-                                        <td>{{sale.hundrd_value}}</td>
-                                        <td style="width:5%">{{sale.hundrd_unit}}</td>
-                                        <td>{{sale.inci_Componant_Type}}</td>
-                                        <td>{{sale.inci_value_unit}}</td>
-                                       
-                                    </tr>
-
-                                   <!-- <tr>
-                                        <td colspan="3">Total</td>
-                                        <td colspan="3">
-                                            <p class="spec-toggle">18.00 %</p>
-                                        </td>
-                                        <td colspan="3">
-                                            <p class="spec-toggle">22.80 %</p>
-                                        </td>
-                                        <td colspan="3">
-                                            <p class="spec-toggle">44.80 %</p>
-                                        </td>
-                                    </tr> -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-<!--Legal Composition-->
-
-            <div class="row" *ngIf="compositionLegalTypes">
-                <!-- Legal Composition -->
-                <div class="col-md-12">
-                    <div class="table-responsive" #LegalCompositiontable>
-                        <div class="table-responsive">
-                    <h5>Legal Composition  <button (click)="exportToLegalCompostionExcel()" class="btn spec-btn pull-right">Export To
-                        Excel</button></h5>
-
-                    <table class="table table-striped table-bordered" width="100%">
-                        <thead>
-                            <tr>
-                            <th>
-                                 S.No
-                            </th>
-                            <th>
-                                Specification Id
-                            </th>
-                            <th>
-                                CAS Number
-                            </th>
-                            <th>
-                                Ingredient Name
-                            </th>
-                            <th>
-                                Component Type
-                            </th>
-                            <th>
-                                Legal Unit
-                            </th>
-                            <th>
-                                Legal Value
-                            </th></tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let data of legalCompositionData; let i = index">
-                                <td>
-                                  {{i+1}}
-                                </td>
-
-                                <td>
-                                    {{data.pure_spec_Id}}
-                                </td>
-                                <td>
-                                    {{data.cas_Number}}
-                                </td>
-                                <td>
-                                    {{data.ingredient_Name}}
-                                </td>
-
-                                <td>
-                                    {{data.legal_Componant_Type}}
-                                </td>
-
-                                <td>
-                                    {{data.legal_unit}}
-                                </td>
-
-                                <td>
-                                    {{data.legal_value}}
-                                </td>
-                            
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div></div></div>
-            <br>
-            <!-- SVT Legal Composition -->
-            <div class="row">
-                <div class="col-md-12" *ngIf="svtCompositionLevel">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5><b>SVT Substance Details</b></h5>
-                        </div>
-                        <div class="col-md-6">
-                            <button (click)="exportToSVTTableExcel()" class="btn spec-btn pull-right">Export
-                                To Excel</button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="table-responsive" #SVTtable>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th colspan="1" style="background-color:  #a0a3e0;color:#fff !important;">
-                                            Scenario</th>
-                                        <th colspan="4" style="background-color: #ebc3db;color:#fff !important;">SVT LV
-                                        </th>
-                                        <th colspan="4" style="background-color: #c7e2bb;color:#fff !important;">SVT TE
-                                        </th>
-                                        <th colspan="4"
-                                            style="background-color: rgb(235, 195, 65);color:#fff !important;">
-                                            SVT AN</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Pure Spec ID</th>
-                                        <th>2018</th>
-                                        <th>2019</th>
-                                        <th>2020</th>
-                                        <th>Amount Limit in tons</th>
-                                        <th>2018</th>
-                                        <th>2019</th>
-                                        <th>2020</th>
-                                        <th>Amount Limit in tons</th>
-                                        <th>2018</th>
-                                        <th>2019</th>
-                                        <th>2020</th>
-                                        <th>Amount Limit in tons</th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody>
-                                    <tr *ngFor="let legalData of SVT_table">
-                                        <td>{{legalData.pure_spec_Id}}</td>
-                                        <td>{{legalData.SVT_LV_eight}}</td>
-                                        <td>{{legalData.SVT_LV_nine}}</td>
-                                        <td>{{legalData.SVT_LV_twenty}}</td>
-                                        <td>{{legalData.amount_limit_SVT_LV}}</td>
-                                        <td>{{legalData.SVT_TE_eight}}</td>
-                                        <td>{{legalData.SVT_TE_nine}}</td>
-                                        <td>{{legalData.SVT_TE_Twenty}}</td>
-                                        <td>{{legalData.amount_limit_SVT_TE}}</td>
-                                        <td>{{legalData.SVT_AN_eight}}</td>
-                                        <td>{{legalData.SVT_AN_nine}}</td>
-                                        <td>{{legalData.SVT_AN_twenty}}</td>
-                                        <td>{{legalData.amount_limit_SVT_AN}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-</span>
-            </div>
-
-            <!--Flow Diagram Section-->
-            <div *ngIf="flowDiagrams">
-                <span *ngIf="ProductAttributeLoader">
-                <i class="loader-class fa fa-spinner fa-spin"></i>
-                <span class="loader-text">Loading data....</span>
-                </span>
-                <span *ngIf="pihAlertMessage">
-                <h5 class="loader-text">No Data Found..</h5>
-            </span>
-
-                <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
-                    <div class="row" *ngIf="ManufractureDiagramPart">
-                        <div class="col-md-12">
-                            <h6 class="text-default font-weight-semibold mb-2 ">Manufacturing Flow Diagram: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
-                            <table>
-                                <thead>
-                                    <th style="width:5%">S.No</th>
-                                    <th>Specification Id</th>
-                                    <th>Product Key</th>
-                                    <th style="width:50%">File Name</th>
-                                    <th>Action</th>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of ManufractureDiagram;let i =index">
-                                        <td>{{i+1}}</td>
-                                        <td>{{data.spec_Id}}</td>
-                                        <td>{{data.product}}</td>
-
-
-                                        <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
-                                        <td class="potential-btn">
-
-                                            <span class="docs-btn"><a href="{{data.file_Path}}"
-                                        download><i class="fa fa-share">
+                    <div id="collapseOne" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                       <div class="panel-body">
+                           <span  *ngIf="!productLevelCategoy.length">No Data Found</span>
+                          <div  *ngIf="productLevelCategoy.length > 0" class="row">
+                             <div class="col-md-12">
+                                <table class="table">
+                                   <thead>
+                                      <tr>
+                                         <th>S.No</th>
+                                         <th>Specification Id</th>
+                                         <th>Product Name</th>
+                                         <th>product Type</th>
+                                         <th>File Source</th>
+                                         <th>Product Application</th>
+                                         <th class="td-actions">Actions</th>
+                                      </tr>
+                                   </thead>
+                                   <tbody>
+                                      <tr *ngFor="let each of productLevelCategoy ;let i = index">
+                                         <td>{{i+1}}</td>
+                                         <td>{{each.spec_Id}}</td>
+                                         <td>{{each.product}}</td>
+                                         <td>{{each.product_Type}}</td>
+                                         <td>{{each.file_source}}</td>
+                                         <td style="width:40%"> <a href="#" (click)="imagePreview(each.prod_App)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                            {{each.filename}}
+                                            </a>
+                                         </td>
+                                         <td class="td-actions">
+                                            <span class="docs-btn"><a href="{{each.prod_App}}"
+                                               download><i class="fa fa-share">
                                             </i> Download</a></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                         </td>
+                                      </tr>
+                                   </tbody>
+                                </table>
+                             </div>
+                          </div>
+                       </div>
                     </div>
-                    <br>
-                    <!--Synthesis Diagram-->
-                    <div class="row" *ngIf="SynthesisDiagramPart">
-                        <div class="col-md-12">
-                            <h6 class="text-default font-weight-semibold mb-2 ">Synthesis Diagram: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
-                            <table>
+                 </div></div>
+                 <br>
+                 <div class="panel-group accordion" id="accordionExample">
+                    <div class="panel panel-primary">
+                       <div class="panel-heading" role="tab" id="headingTwo">
+                          <h6 class="panel-title">
+                             <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                             Material Level 
+                             </a>
+                          </h6>
+                       </div>
+                       <div id="collapseTwo" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                          <div class="panel-body">
+                                <span  *ngIf="!materialLevelCategoy.length">No Data Found</span>
+                                <div  *ngIf="materialLevelCategoy.length > 0" class="row">
+                                <div class="col-md-12">
+                                   <table class="table">
+                                      <thead>
+                                         <tr>
+                                            <th>S.No</th>
+                                            <th>Specification Id</th>
+                                            <th>Product Name</th>
+                                            <th>product Type</th>
+                                            <th>File Source</th>
+                                            <th>Product Application</th>
+                                            <th class="td-actions">Actions</th>
+                                         </tr>
+                                      </thead>
+                                      <tbody>
+                                         <tr *ngFor="let each of materialLevelCategoy ;let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{each.spec_Id}}</td>
+                                            <td>{{each.product}}</td>
+                                            <td>{{each.product_Type}}</td>
+                                            <td>{{each.file_source}}</td>
+                                            <td style="width:40%"> <a href="#" (click)="imagePreview(each.prod_App)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                               {{each.filename}}
+                                               </a>
+                                            </td>
+                                            <td class="td-actions">
+                                               <span class="docs-btn"><a href="{{each.prod_App}}"
+                                                  download><i class="fa fa-share">
+                                               </i> Download</a></span>
+                                            </td>
+                                         </tr>
+                                      </tbody>
+                                   </table>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div></div>
+                
+                    <div class="panel-group accordion" id="accordionExample">
+                       <div class="panel panel-primary">
+                          <div class="panel-heading" role="tab" id="headingThree">
+                             <h6 class="panel-title">
+                                <a  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Component Level 
+                                </a>
+                             </h6>
+                          </div>
+                          <div id="collapseThree" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                             <div class="panel-body">
+                                    <span  *ngIf="!casLevelCategoy.length">No Data Found</span>
+                                    <div  *ngIf="casLevelCategoy.length > 0" class="row">
+                                   <div class="col-md-12">
+                                      <table class="table">
+                                         <thead>
+                                            <tr>
+                                               <th>S.No</th>
+                                               <th>Specification Id</th>
+                                               <th>Product Name</th>
+                                               <th>product Type</th>
+                                               <th>File Source</th>
+                                               <th>Product Application</th>
+                                               <th class="td-actions">Actions</th>
+                                            </tr>
+                                         </thead>
+                                         <tbody>
+                                            <tr *ngFor="let each of casLevelCategoy ;let i = index">
+                                               <td>{{i+1}}</td>
+                                               <td>{{each.spec_Id}}</td>
+                                               <td>{{each.product}}</td>
+                                               <td>{{each.product_Type}}</td>
+                                               <td>{{each.file_source}}</td>
+                                               <td style="width:40%"> <a href="#" (click)="imagePreview(each.prod_App)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                  {{each.filename}}
+                                                  </a>
+                                               </td>
+                                               <td class="td-actions">
+                                                  <span class="docs-btn"><a href="{{each.prod_App}}"
+                                                     download><i class="fa fa-share">
+                                                  </i> Download</a></span>
+                                               </td>
+                                            </tr>
+                                         </tbody>
+                                      </table>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+            
+             
+         
+           </div></div></div>
+           <!--GHS Labeling Section-->
+           <div *ngIf="ghsLabeling">
+              <span *ngIf="ProductAttributeLoader">
+              <i class="loader-class fa fa-spinner fa-spin"></i>
+              <span class="loader-text">Loading data....</span>
+              </span>
+              <span *ngIf="pihAlertMessage">
+                 <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+              </span>
+              <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
+                 <div class="row">
+                    <div class="col-md-6">
+                       <h6 class="text-default font-weight-semibold">GHS Labeling: <i class="fa fa-info-circle" role="button" title="This data is from SAP"></i></h6>
+                    </div>
+                    <div class="col-md-6">
+                       <mat-form-field class="usage-part">
+                          <mat-label>Usage</mat-label>
+                          <mat-select name="releseDocuments" [(value)]="selectedUsage" placeholder="Select usage Type" (selectionChange)="selectUsageType($event.value)">
+                          <mat-option *ngFor="let data of usagePart" [value]="data.type">
+                          {{data.type}}
+                          </mat-option>
+                          </mat-select>
+                       </mat-form-field>
+                    </div>
+                 </div>
+                 <div class="row filter-basic-part">
+                    <div class="col-md-4">
+                       <form class="syn-search" action="#">
+                          <div class="form-group-feedback form-group-feedback-right">
+                             <input type="search" class="form-control" name="product" [(ngModel)]="searchGHSText" autocomplete="off" placeholder="Search Data">
+                             <div class="form-control-feedback">
+                                <i class="fa fa-search font-size-base text-muted"></i>
+                             </div>
+                          </div>
+                       </form>
+                    </div>
+                    <div class="col-md-8">
+                       <button (click)="exportToCompostionExcel('ghsTable' ,'GHS Labeling Data')" class="btn spec-btn pull-right">Export
+                       To Excel</button> 
+                    </div>
+                 </div>
+                 <br>
+                 <div class="row">
+                    <div class="col-md-12">
+                       <table class="table" id="ghsTable">
+                          <thead>
+                             <tr>
+                                <th>S.No</th>
+                                <th>Specification Id 
+                                   <i (click)="onSortClick($event,'spec_Id')" class="my-icon fa fa-caret-up"></i>
+                                </th>
+                                <th>Regulatory Basis
+                                   <i (click)="onSortClick($event,'regulatory_Basis')" class="my-icon fa fa-caret-up"></i>
+                                </th>
+                                <th>Usage
+                                   <i (click)="onSortClick($event,'usage')" class="my-icon fa fa-caret-up"></i>
+                                </th>
+                                <th>Symbols
+                                   <i (click)="onSortClick($event,'symbols')" class="my-icon fa fa-caret-up"></i>
+                                </th>
+                                <th>Signal Word <i (click)="onSortClick($event,'signal_Word')" class="my-icon fa fa-caret-up"></i></th>
+                                <th>Hazard Statements
+                                   <i (click)="onSortClick($event,'hazard_Statements')" class="my-icon fa fa-caret-up"></i>
+                                </th>
+                                <th>Prec Statements
+                                   <i (click)="onSortClick($event,'prec_Statements')" class="my-icon fa fa-caret-up"></i>
+                                </th>
+                                <th>Additional Information / Remarks
+                                   <i (click)="onSortClick($event,'additional_Information')" class="my-icon fa fa-caret-up"></i> 
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <tr *ngFor="let each of ghsLabelingData | ghsLabeling:searchGHSText;let i = index">
+                                <td class="ptable-size">
+                                   {{i+1}}
+                                </td>
+                                <td class="ptable-size">
+                                   {{each.spec_Id}}
+                                </td>
+                                <td  class="ptable-size">
+                                   {{each.regulatory_Basis}}
+                                </td>
+                                <td class="ptable-size">
+                                   {{each.usage}}
+                                </td>
+                                <td  class="ptable-sybl-size">
+                                   <span *ngFor="let symbl of each.symbols">
+                                   <span><img src ="{{symbl.name}}" width="30px" height="30px"></span>&nbsp;
+                                   </span>
+                                   <span *ngIf="!each.symbols.length">None</span>
+                                </td>
+                                <td  class="ptable-size">
+                                   {{each.signal_Word}}
+                                </td>
+                                <td  class="ptable-size">
+                                   {{each.hazard_Statements}}
+                                </td>
+                                <td  class="ptable-size">
+                                   {{each.prec_Statements}}
+                                </td>
+                                <td  class="ptable-size">
+                                   {{each.additional_Information}}
+                                </td>
+                             </tr>
+                          </tbody>
+                       </table>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <!--Structure and Formulas-->
+           <div *ngIf="structureAndFormulaTypes">
+              <span *ngIf="ProductAttributeLoader">
+              <i class="loader-class fa fa-spinner fa-spin"></i>
+              <span class="loader-text">Loading data....</span>
+              </span>
+              <span *ngIf="pihAlertMessage">
+                 <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+              </span>
+              <div *ngIf="!ProductAttributeLoader && !pihAlertMessage && !moleclularWeightDetailDataPage">
+                <!---Chemical Structure-->
+                <div class="row" *ngIf="chemicalStructureTable.length > 0">
+<div class="col-md-12">
+                        <h6 class="text-default font-weight-semibold mb-2 mh-2">Chemical Structure: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                        <div class="panel-group accordion" id="accordionExample">
+                                <div class="panel panel-primary">
+                                   <div class="panel-heading" role="tab" id="headingOne">
+                                      <h6 class="panel-title">
+                                         <a data-toggle="collapse" data-target="#chemicalStructureproductLevel" aria-expanded="true" aria-controls="collapseOne">
+                                         Product Level 
+                                         </a>
+                                      </h6>
+                                   </div>
+                                   <div id="chemicalStructureproductLevel" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                      <div class="panel-body">
+                                            <span  *ngIf="!chemicalStructureproductLevel.length">No Data Found</span>
+                                            <div  *ngIf="chemicalStructureproductLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                      
+                                                        <table>
+                                                           <thead>
+                                                              <tr>
+                                                                 <th>S.No</th>
+                                                                 <th>Specification ID</th>
+                                                                 <th>Product Type</th>
+                                                                 <th>Product Name</th>
+                                                                 <th>File Source</th>
+                                                                 <th>CAS Diagram</th>
+                                                                 <th>Actions</th>
+                                                              </tr>
+                                                           </thead>
+                                                           <tbody>
+                                                              <tr *ngFor="let data of chemicalStructureproductLevel ;let i = index">
+                                                                 <td>{{i+1}}</td>
+                                                                 <td>{{data.spec_Id}}</td>
+                                                                 <td>{{data.product_Type}}</td>
+                                                                 <td>{{data.productName}}</td>
+                                                                 <td>{{data.file_Source}}</td>
+                                                                 <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                    {{data.fileName}}
+                                                                    </a>
+                                                                 </td>
+                                                                 <td class="potential-btn">
+                                                                    <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                       download><i class="fa fa-share">
+                                                                    </i> Download</a></span>
+                                                                 </td>
+                                                                 <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                              </tr>
+                                                           </tbody>
+                                                        </table>
+                                                     </div>
+                                         </div>
+                                      </div>
+                                   </div>
+                                </div></div>
+                                
+                                <div class="panel-group accordion" id="accordionExample">
+                                   <div class="panel panel-primary">
+                                      <div class="panel-heading" role="tab" id="headingTwo">
+                                         <h6 class="panel-title">
+                                            <a data-toggle="collapse" data-target="#chemicalStructurematerialLevel" aria-expanded="false" aria-controls="collapseTwo">
+                                            Material Level 
+                                            </a>
+                                         </h6>
+                                      </div>
+                                      <div id="chemicalStructurematerialLevel" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                         <div class="panel-body">
+                                                <span  *ngIf="!chemicalStructurematerialLevel.length">No Data Found</span>
+                                                <div  *ngIf="chemicalStructurematerialLevel.length > 0" class="row">
+                                                    <div class="col-md-12 table-responsive">
+                                                        
+                                                            <table>
+                                                               <thead>
+                                                                  <tr>
+                                                                     <th>S.No</th>
+                                                                     <th>Specification ID</th>
+                                                                     <th>Product Type</th>
+                                                                     <th>Product Name</th>
+                                                                     <th>File Source</th>
+                                                                     <th>CAS Diagram</th>
+                                                                     <th>Actions</th>
+                                                                  </tr>
+                                                               </thead>
+                                                               <tbody>
+                                                                  <tr *ngFor="let data of chemicalStructurematerialLevel ;let i = index">
+                                                                     <td>{{i+1}}</td>
+                                                                     <td>{{data.spec_Id}}</td>
+                                                                     <td>{{data.product_Type}}</td>
+                                                                     <td>{{data.productName}}</td>
+                                                                     <td>{{data.file_Source}}</td>
+                                                                     <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                        {{data.fileName}}
+                                                                        </a>
+                                                                     </td>
+                                                                     <td class="potential-btn">
+                                                                        <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                           download><i class="fa fa-share">
+                                                                        </i> Download</a></span>
+                                                                     </td>
+                                                                     <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                  </tr>
+                                                               </tbody>
+                                                            </table>
+                                                         </div>
+                                            </div>
+                                         </div>
+                                      </div>
+                                   </div></div>
+                                  
+                                   <div class="panel-group accordion" id="accordionExample">
+                                      <div class="panel panel-primary">
+                                         <div class="panel-heading" role="tab" id="headingThree">
+                                            <h6 class="panel-title">
+                                               <a  data-toggle="collapse" data-target="#chemicalStructurecasLevel" aria-expanded="false" aria-controls="collapseThree">
+                                                    Component Level 
+                                               </a>
+                                            </h6>
+                                         </div>
+                                         <div id="chemicalStructurecasLevel" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                            <div class="panel-body">
+                                                    <span  *ngIf="!chemicalStructurecasLevel.length">No Data Found</span>
+                                                    <div  *ngIf="chemicalStructurecasLevel.length > 0" class="row">
+                                                    <div class="col-md-12 table-responsive">
+                                                       
+                                                            <table>
+                                                               <thead>
+                                                                  <tr>
+                                                                     <th>S.No</th>
+                                                                     <th>Specification ID</th>
+                                                                     <th>Product Type</th>
+                                                                     <th>Product Name</th>
+                                                                     <th>File Source</th>
+                                                                     <th>CAS Diagram</th>
+                                                                     <th>Actions</th>
+                                                                  </tr>
+                                                               </thead>
+                                                               <tbody>
+                                                                  <tr *ngFor="let data of chemicalStructurecasLevel ;let i = index">
+                                                                     <td>{{i+1}}</td>
+                                                                     <td>{{data.spec_Id}}</td>
+                                                                     <td>{{data.product_Type}}</td>
+                                                                     <td>{{data.productName}}</td>
+                                                                     <td>{{data.file_Source}}</td>
+                                                                     <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                        {{data.fileName}}
+                                                                        </a>
+                                                                     </td>
+                                                                     <td class="potential-btn">
+                                                                        <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                           download><i class="fa fa-share">
+                                                                        </i> Download</a></span>
+                                                                     </td>
+                                                                     <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                  </tr>
+                                                               </tbody>
+                                                            </table>
+                                                         </div>
+                                               </div>
+                                            </div>
+                                         </div>
+                                      </div>
+                                   </div>
+                
+                 </div></div>
+           
+                 <!--Molecular Formula-->
+                 <div class="row" *ngIf="molecularFormulaTable.length > 0">
+                    <div class="col-md-12 table-responsive">
+                       <h6 class="text-default font-weight-semibold mb-2 mh-2">Molecular Formula: <i class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i></h6>
+                      
+
+                       <div class="panel-group accordion" id="accordionExample">
+                            <div class="panel panel-primary">
+                               <div class="panel-heading" role="tab" id="headingOne">
+                                  <h6 class="panel-title">
+                                     <a data-toggle="collapse" data-target="#molecularFormulaProductLevel" aria-expanded="true" aria-controls="collapseOne">
+                                     Product Level 
+                                     </a>
+                                  </h6>
+                               </div>
+                               <div id="molecularFormulaProductLevel" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                  <div class="panel-body">
+                                      
+                                        <span  *ngIf="!molecularFormulaProductLevel.length">No Data Found</span>
+                                        <div  *ngIf="molecularFormulaProductLevel.length > 0" class="row">
+                                            <div class="col-md-12 table-responsive">
+                                                    <table>
+                                                            <thead>
+                                                               <tr>
+                                                                  <th>S.No</th>
+                                                                  <th>Specification ID</th>
+                                                                  <th>Product Type</th>
+                                                                  <th>Product Name</th>
+                                                                  <th>File Source</th>
+                                                                  <th>CAS Diagram</th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr *ngFor="let data of molecularFormulaProductLevel;let i = index">
+                                                                  <td>{{i+1}}</td>
+                                                                  <td>{{data.spec_Id}}</td>
+                                                                  <td>{{data.product_Type}}</td>
+                                                                  <td>{{data.productName}}</td>
+                                                                  <td>{{data.file_Source}}</td>
+                                                                  <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                     {{data.filename}}
+                                                                     </a>
+                                                                  </td>
+                                                                  <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                  <td class="potential-btn">
+                                                                     <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                        download><i class="fa fa-share">
+                                                                     </i> Download</a></span>
+                                                                  </td>
+                                                               </tr>
+                                                            </tbody>
+                                                         </table>
+                                                 </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div></div>
+                            
+                            <div class="panel-group accordion" id="accordionExample">
+                               <div class="panel panel-primary">
+                                  <div class="panel-heading" role="tab" id="headingTwo">
+                                     <h6 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#molecularFormulaMaterialLevel" aria-expanded="false" aria-controls="collapseTwo">
+                                        Material Level 
+                                        </a>
+                                     </h6>
+                                  </div>
+                                  <div id="molecularFormulaMaterialLevel" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                     <div class="panel-body">
+                                            <span  *ngIf="!molecularFormulaMaterialLevel.length">No Data Found</span>
+                                            <div  *ngIf="molecularFormulaMaterialLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                        <table>
+                                                                <thead>
+                                                                   <tr>
+                                                                      <th>S.No</th>
+                                                                      <th>Specification ID</th>
+                                                                      <th>Product Type</th>
+                                                                      <th>Product Name</th>
+                                                                      <th>File Source</th>
+                                                                      <th>CAS Diagram</th>
+                                                                   </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr *ngFor="let data of molecularFormulaMaterialLevel;let i = index">
+                                                                      <td>{{i+1}}</td>
+                                                                      <td>{{data.spec_Id}}</td>
+                                                                      <td>{{data.product_Type}}</td>
+                                                                      <td>{{data.productName}}</td>
+                                                                      <td>{{data.file_Source}}</td>
+                                                                      <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                         {{data.filename}}
+                                                                         </a>
+                                                                      </td>
+                                                                      <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                      <td class="potential-btn">
+                                                                         <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                            download><i class="fa fa-share">
+                                                                         </i> Download</a></span>
+                                                                      </td>
+                                                                   </tr>
+                                                                </tbody>
+                                                             </table>
+                                                     </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div></div>
+                              
+                               <div class="panel-group accordion" id="accordionExample" *ngIf="molecularFormulaCasLevel.length">
+                                  <div class="panel panel-primary">
+                                     <div class="panel-heading" role="tab" id="headingThree">
+                                        <h6 class="panel-title">
+                                           <a  data-toggle="collapse" data-target="#molecularFormulaCasLevel" aria-expanded="false" aria-controls="collapseThree">
+                                                Component Level 
+                                           </a>
+                                        </h6>
+                                     </div>
+                                     <div id="molecularFormulaCasLevel" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="panel-body">
+                                                <span  *ngIf="!molecularFormulaCasLevel.length">No Data Found</span>
+                                                <div  *ngIf="molecularFormulaCasLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                        <table>
+                                                                <thead>
+                                                                   <tr>
+                                                                      <th>S.No</th>
+                                                                      <th>Specification ID</th>
+                                                                      <th>Product Type</th>
+                                                                      <th>Product Name</th>
+                                                                      <th>File Source</th>
+                                                                      <th>CAS Diagram</th>
+                                                                   </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr *ngFor="let data of molecularFormulaCasLevel;let i = index">
+                                                                      <td>{{i+1}}</td>
+                                                                      <td>{{data.spec_Id}}</td>
+                                                                      <td>{{data.product_Type}}</td>
+                                                                      <td>{{data.productName}}</td>
+                                                                      <td>{{data.file_Source}}</td>
+                                                                      <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                         {{data.filename}}
+                                                                         </a>
+                                                                      </td>
+                                                                      <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                      <td class="potential-btn">
+                                                                         <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                            download><i class="fa fa-share">
+                                                                         </i> Download</a></span>
+                                                                      </td>
+                                                                   </tr>
+                                                                </tbody>
+                                                             </table>
+                                                     </div>
+                                           </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+
+
+
+                    </div>
+                 </div>
+  
+                 <!--Molecular weight-->
+                 <div class="row" *ngIf="molecularWeightTable.length > 0">
+                    <div class="col-md-12 table-responsive">
+                       <h6 class="text-default font-weight-semibold mb-2 mh-2 ">Molecular Weight:<i class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i>
+                       </h6>
+
+                       <div class="panel-group accordion" id="accordionExample">
+                            <div class="panel panel-primary">
+                               <div class="panel-heading" role="tab" id="headingOne">
+                                  <h6 class="panel-title">
+                                     <a data-toggle="collapse" data-target="#molecularWeightProductLevel" aria-expanded="true" aria-controls="collapseOne">
+                                     Product Level 
+                                     </a>
+                                  </h6>
+                               </div>
+                               <div id="molecularWeightProductLevel" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                  <div class="panel-body">
+                                        <span  *ngIf="!molecularWeightProductLevel.length">No Data Found</span>
+                                        <div  *ngIf="molecularWeightProductLevel.length > 0" class="row">
+                                            <div class="col-md-12 table-responsive">
+                                                    <table>
+                                                            <thead>
+                                                               <tr>
+                                                                  <th>S.No</th>
+                                                                  <th>Specification ID</th>
+                                                                  <th>Product Type</th>
+                                                                  <th>Product Name</th>
+                                                                  <th>File Source</th>
+                                                                  <th>File Name</th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr *ngFor="let data of molecularWeightProductLevel ;let i = index">
+                                                                  <td>{{i+1}}</td>
+                                                                  <td>{{data.spec_Id}}</td>
+                                                                  <td>{{data.product_Type}}</td>
+                                                                  <td>{{data.productName}}</td>
+                                                                  <td>{{data.file_Source}}</td>
+                                                                  <td style="width:30%"><a  href="javascript:void(0);"
+                                                                     (click)="molecularWeightDocumentPage(data)">{{data.fileName}}</a></td>
+                                                               </tr>
+                                                            </tbody>
+                                                         </table>
+                                                 </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div></div>
+                            
+                            <div class="panel-group accordion" id="accordionExample">
+                               <div class="panel panel-primary">
+                                  <div class="panel-heading" role="tab" id="headingTwo">
+                                     <h6 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#molecularWeightMaterialLevel" aria-expanded="false" aria-controls="collapseTwo">
+                                        Material Level 
+                                        </a>
+                                     </h6>
+                                  </div>
+                                  <div id="molecularWeightMaterialLevel" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                     <div class="panel-body">
+                                            <span  *ngIf="!molecularWeightMaterialLevel.length">No Data Found</span>
+                                            <div  *ngIf="molecularWeightMaterialLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                        <table>
+                                                                <thead>
+                                                                   <tr>
+                                                                      <th>S.No</th>
+                                                                      <th>Specification ID</th>
+                                                                      <th>Product Type</th>
+                                                                      <th>Product Name</th>
+                                                                      <th>File Source</th>
+                                                                      <th>File Name</th>
+                                                                   </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr *ngFor="let data of molecularWeightMaterialLevel ;let i = index">
+                                                                      <td>{{i+1}}</td>
+                                                                      <td>{{data.spec_Id}}</td>
+                                                                      <td>{{data.product_Type}}</td>
+                                                                      <td>{{data.productName}}</td>
+                                                                      <td>{{data.file_Source}}</td>
+                                                                      <td style="width:30%"><a  href="javascript:void(0);"
+                                                                         (click)="molecularWeightDocumentPage(data)">{{data.fileName}}</a></td>
+                                                                   </tr>
+                                                                </tbody>
+                                                             </table>
+                                                     </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div></div>
+                              
+                               <div class="panel-group accordion" id="accordionExample">
+                                  <div class="panel panel-primary">
+                                     <div class="panel-heading" role="tab" id="headingThree">
+                                        <h6 class="panel-title">
+                                           <a  data-toggle="collapse" data-target="#molecularWeightCasLevel" aria-expanded="false" aria-controls="collapseThree">
+                                                Component Level 
+                                           </a>
+                                        </h6>
+                                     </div>
+                                     <div id="molecularWeightCasLevel" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="panel-body">
+                                                <span  *ngIf="!molecularWeightCasLevel.length">No Data Found</span>
+                                                <div  *ngIf="molecularWeightCasLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                        <table>
+                                                                <thead>
+                                                                   <tr>
+                                                                      <th>S.No</th>
+                                                                      <th>Specification ID</th>
+                                                                      <th>Product Type</th>
+                                                                      <th>Product Name</th>
+                                                                      <th>File Source</th>
+                                                                      <th>File Name</th>
+                                                                   </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr *ngFor="let data of molecularWeightCasLevel ;let i = index">
+                                                                      <td>{{i+1}}</td>
+                                                                      <td>{{data.spec_Id}}</td>
+                                                                      <td>{{data.product_Type}}</td>
+                                                                      <td>{{data.productName}}</td>
+                                                                      <td>{{data.file_Source}}</td>
+                                                                      <td style="width:30%"><a  href="javascript:void(0);"
+                                                                         (click)="molecularWeightDocumentPage(data)">{{data.fileName}}</a></td>
+                                                                   </tr>
+                                                                </tbody>
+                                                             </table>
+                                                     </div>
+                                           </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+                  
+                    </div>
+                 </div>
+              </div>
+              <!--Molecular Weight Details Section-->
+              <div *ngIf="moleclularWeightDetailDataPage">
+                 <h6 class="text-default font-weight-semibold">Molecular Weight -<span>{{filename}}</span></h6>
+                 <div class="row">
+                    <div class="col-md-6">
+                       <label class="text-default font-weight-semibold">Document Panel</label>
+                       <div>
+                          <!-- <embed class="food-document" alt="Thumbnail [200x250]" style="width:550px; height:700px;" [src]="Url" type="application/pdf"> -->
+                          <iframe type="application/pdf" [attr.src]="Url"
+                             frameborder="no" style="width:100%;height:500px"></iframe> 
+                       </div>
+                    </div>
+                    <div class="col-md-6">
+                       <span class="back-btn"><button class="btn btn-back" (click)="backTostructurePage()"><i class="fa fa-reply"></i> Back</button></span>
+                       <label class="text-default font-weight-semibold">
+                          <h3>Result Panel</h3>
+                       </label>
+                       <div class=" result-box text-center">
+                          <div class="box">
+                             <div class="box-title">
+                                <h3 class="link-data">{{filename}}</h3>
+                             </div>
+                             <div class="box-text">
+                                <span class="result-text">{{Extract_Result}}
+                                </span>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <!--Composition section-->
+           <div *ngIf="compositionTypes">
+              <div class="row">
+                 <div class="col-md-12">
+                    <div id="accordion" class="">
+                       <div class="panel ">
+                          <div class="productLevel" role="tab" id="headingOne">
+                             <div class="row">
+                                <div class="col-3 col-lg-3">
+                                   <h4 class="checkout-step-title"> <a role="button"> Product Level &
+                                      Material Level Details</a> &nbsp; &nbsp;<i data-toggle="collapse" data-parent="#accordion" href="#productLevel" class="fa fa-angle-down" aria-hidden="true"></i>
+                                   </h4>
+                                </div>
+                                <!-- <div class="col-1 col-lg-1 text-right d-none d-sm-block d-md-block d-lg-block d-xl-block"
+                                   data-toggle="collapse" data-parent="#accordion" href="#productLevel">
+                                   <button id="nextBtn" name="nextBtn" class="btn btn-default imc-jfeditbtn"><i
+                                           class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                   </div>
+                                   
+                                   <div class="col-1 col-lg-1 text-right d-md-none d-lg-none" data-toggle="collapse"
+                                   data-parent="#accordion" href="#productLevel">
+                                   <button id="nextBtn" name="nextBtn" class="btn btn-default imc-jfeditbtn"><i
+                                           class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                   </div> -->
+                             </div>
+                          </div>
+                          <div id="productLevel" class="collapse show">
+                             <!-- Start collapse body -->
+                             <div class="checkout-step-body">
+                                <div class="row">
+                                   <div class="col-md-4 col-sm-12">
+                                      <div class="card-comp">
+                                         <span  *ngIf="productLevelDetails">
+                                            <p><b>REAL SUB Number </b> {{productLevelDetails.spec_id}} </p>
+                                            <p><b>Product Name</b> : {{productLevelDetails.product_Identification}}
+                                            </p>
+                                            <p><b>Relabel Name(s)</b> : {{productLevelDetails.relabels}}</p>
+                                            <p><b>INCI Name</b> : {{productLevelDetails.INCI_name}}</p>
+                                         </span>
+                                      </div>
+                                   </div>
+                                   <div class="col-md-8 col-sm-12 custyle">
+                                      <div class="row">
+                                         <div class="col-md-4">
+                                            <nav>
+                                               <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                                  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#allMaterial" role="tab" aria-controls="nav-home" aria-selected="true">All
+                                                  Material</a>
+                                                  <a class="nav-item nav-link" id="nav-tab" data-toggle="tab" href="#activeMaterial" role="tab" aria-controls="nav-profile" aria-selected="false">Active
+                                                  Material</a>
+                                               </div>
+                                            </nav>
+                                         </div>
+                                         <div class="col-md-8">
+                                            <mat-form-field class="composition-specDrop">
+                                               <mat-select [formControl]="specListData" name="specList" placeholder="Select SPEC ID" disableOptionCentering panelClass="myPanelClass" #singleSelect (selectionChange)="CompositionSpecChange($event.value)">
+                                               <mat-select-filter [formControl]="specFilterCtrl" ngDefaultControl></mat-select-filter>
+                                               <mat-option *ngFor="let specDetails of filteredspecList | async" [value]="specDetails">
+                                               {{specDetails.name}}
+                                               </mat-option>
+                                               </mat-select>
+                                            </mat-form-field>
+                                         </div>
+                                         <div class="col-md-12">
+                                            <div class="tab-content mat-act" id="nav-tabContent">
+                                               <div class="tab-pane fade show active" id="allMaterial" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                  <table class="table" id="rtable">
+                                                     <thead>
+                                                        <tr>
+                                                           <th>S.No</th>
+                                                           <th>Material Number</th>
+                                                           <th>Material Description</th>
+                                                           <th>Basic Data Text</th>
+                                                        </tr>
+                                                     </thead>
+                                                     <tbody>
+                                                        <tr *ngFor="let data of allMaterialLevel; let i = index">
+                                                           <td>{{i+1}}</td>
+                                                           <td>{{data.material_Number}}
+                                                           </td>
+                                                           <td>{{data.description}}
+                                                           </td>
+                                                           <td>{{data.bdt}}
+                                                           </td>
+                                                        </tr>
+                                                     </tbody>
+                                                  </table>
+                                               </div>
+                                               <div class="tab-pane fade" id="activeMaterial" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                  <table class="table" id="rtable">
+                                                     <thead>
+                                                        <tr>
+                                                           <th>S.No</th>
+                                                           <th>Material Number</th>
+                                                           <th>Material Description</th>
+                                                           <th>Basic Data Text</th>
+                                                        </tr>
+                                                     </thead>
+                                                     <tbody>
+                                                        <tr *ngFor="let data of activeMaterial;let i = index">
+                                                           <td>{{i+1}}</td>
+                                                           <td>{{data.material_Number}}
+                                                           </td>
+                                                           <td>{{data.description}}
+                                                           </td>
+                                                           <td>{{data.bdt}}
+                                                           </td>
+                                                        </tr>
+                                                     </tbody>
+                                                  </table>
+                                               </div>
+                                            </div>
+                                         </div>
+                                      </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <h5>Composition Level Details</h5>
+              <div class="row">
+                 <div class="col-md-3">
+                    <mat-form-field>
+                       <mat-select name="compositionVaraible" [(value)]="selectedComposition" placeholder="Select Composition Type" (selectionChange)="compositionProcess($event.value)">
+                       <mat-option *ngFor="let data of compositionsTypes" [value]="data.name">
+                       {{data.name}}
+                       </mat-option>
+                       </mat-select>
+                    </mat-form-field>
+                 </div>
+                 <div class="col-md-3" *ngIf="compositionRating">
+                    <mat-form-field>
+                       <mat-select name="locationVaraible" [(value)]="selectedlocation" placeholder="Rating and Validity Area" (selectionChange)="SubLevelComposition($event.value)">
+                       <mat-option *ngFor="let region of compositionlocations" [value]="region.name">
+                       {{region.name}}
+                       </mat-option>
+                       </mat-select>
+                    </mat-form-field>
+                 </div>
+              </div>
+              <!--Standard Composition-->
+              <span *ngIf="compositionDataLevel">
+                 <span class="comp-center" *ngIf="notFoundComposition">
+                    <div class="row">
+                       <div class="col-md-12">
+                          <br>
+                          <b>No Data Found</b> 
+                       </div>
+                    </div>
+                 </span>
+                 <div class="row" *ngIf="compositionSHI && !notFoundComposition">
+                    <div class="col-md-12">
+                       <div class="table-responsive" >
+                          <div class="table-responsive">
+                             <h5>Standard, 100% & INCI Composition    <button (click)="exportToCompostionExcel('standardTable' ,'standardCompositionTable')" class="btn spec-btn pull-right">Export To
+                                Excel</button>
+                             </h5>
+                             <table  class="table table-striped table-bordered" width="100%" id="standardTable">
                                 <thead>
-                                    <th style="width:5%">S.No</th>
-                                    <th>Specification Id</th>
-                                    <th>Product Key</th>
-                                    <th style="width:50%">File Name</th>
-                                    <th>Action</th>
+                                   <tr>
+                                      <th colspan="3" style="background-color:  #a0a3e0;color:#fff !important;">
+                                         Component
+                                         Details
+                                      </th>
+                                      <th colspan="3" style="background-color: #ebc3db;color:#fff !important;">
+                                         Standard
+                                         Composition
+                                      </th>
+                                      <th colspan="3" style="background-color: #c7e2bb;color:#fff !important;">100 %
+                                         Composition
+                                      </th>
+                                      <th colspan="3"
+                                         style="background-color: rgb(235, 195, 65);color:#fff !important;">
+                                         INCI Composition
+                                      </th>
+                                   </tr>
+                                   <tr>
+                                      <th>Pure Spec ID</th>
+                                      <th>CAS Number</th>
+                                      <th style="width:15%">Ingredient Name</th>
+                                      <th>Component Type</th>
+                                      <th>Value</th>
+                                      <th style="width:5%">Unit</th>
+                                      <th>Component Type</th>
+                                      <th>Value</th>
+                                      <th style="width:5%">Unit</th>
+                                      <th>Component Type</th>
+                                      <th>Value & Unit</th>
+                                   </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let data of SynthesisDiagram;let i = index">
-                                        <td>{{i+1}}</td>
-                                        <td>{{data.spec_Id}}</td>
-                                        <td>{{data.product}}</td>
-                                        <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.file_Path}}</a></td>
-                                        <td class="potential-btn">
-                                            <span class="docs-btn"><a href="{{data.file_Path}}"
-                                        download><i class="fa fa-share">
-                                            </i> Download</a></span> &nbsp;
-                                        </td>
-                                    </tr>
+                                   <tr *ngFor="let sale of compositionStandardData">
+                                      <td>{{sale.pure_spec_Id}}</td>
+                                      <td>{{sale.cas_Number}}</td>
+                                      <td style="word-break:break-word;">{{sale.ingredient_Name}}</td>
+                                      <td>{{sale.std_Componant_Type}}</td>
+                                      <td>{{sale.std_value}}</td>
+                                      <td style="width:5%">{{sale.std_unit}}</td>
+                                      <td>{{sale.hundrd_Componant_Type}}</td>
+                                      <td>{{sale.hundrd_value}}</td>
+                                      <!-- <td style="width:5%">{{sale.hundrd_unit}}</td> -->
+                                      <td style="width:5%">%</td>
+                                      <td>{{sale.inci_Componant_Type}}</td>
+                                      <td>{{sale.inci_value_unit}}</td>
+                                   </tr>
+                                   <!-- <tr>
+                                      <td colspan="3">Total</td>
+                                      <td colspan="3">
+                                          <p class="spec-toggle">18.00 %</p>
+                                      </td>
+                                      <td colspan="3">
+                                          <p class="spec-toggle">22.80 %</p>
+                                      </td>
+                                      <td colspan="3">
+                                          <p class="spec-toggle">44.80 %</p>
+                                      </td>
+                                      </tr> -->
                                 </tbody>
-                            </table>
-                        </div>
+                             </table>
+                          </div>
+                       </div>
                     </div>
-                </div>
-            </div>
+                 </div>
+                 <!--Legal Composition-->
+                 <div class="row" *ngIf="compositionLegalTypes && !notFoundComposition">
+                    <!-- Legal Composition -->
+                    <div class="col-md-12">
+                       <div class="table-responsive">
+                          <div class="table-responsive">
+                             <h5>Legal Composition  <button (click)="exportToCompostionExcel('legalTable','LegalTableComposition')" class="btn spec-btn pull-right">Export To
+                                Excel</button>
+                             </h5>
+                             <table class="table table-striped table-bordered" width="100%" id="legalTable">
+                                <thead>
+                                   <tr>
+                                      <th>
+                                         S.No
+                                      </th>
+                                      <th>
+                                         Specification Id
+                                      </th>
+                                      <th>
+                                         CAS Number
+                                      </th>
+                                      <th>
+                                         Ingredient Name
+                                      </th>
+                                      <th>
+                                         Component Type
+                                      </th>
+                                      <th>
+                                         Legal Unit
+                                      </th>
+                                      <th>
+                                         Legal Value
+                                      </th>
+                                   </tr>
+                                </thead>
+                                <tbody>
+                                   <tr *ngFor="let data of legalCompositionData; let i = index">
+                                      <td>
+                                         {{i+1}}
+                                      </td>
+                                      <td>
+                                         {{data.pure_spec_Id}}
+                                      </td>
+                                      <td>
+                                         {{data.cas_Number}}
+                                      </td>
+                                      <td>
+                                         {{data.ingredient_Name}}
+                                      </td>
+                                      <td>
+                                         {{data.legal_Componant_Type}}
+                                      </td>
+                                      <td>
+                                         {{data.legal_unit}}
+                                      </td>
+                                      <td>
+                                         {{data.legal_value}}
+                                      </td>
+                                   </tr>
+                                </tbody>
+                             </table>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                 <br>
+                 <!-- SVT Legal Composition -->
+                 <div class="row">
+                    <div class="col-md-12" *ngIf="svtCompositionLevel">
+                       <div class="row">
+                          <div class="col-md-6">
+                             <h5><b>SVT Substance Details</b></h5>
+                          </div>
+                          <div class="col-md-6">
+                             <button (click)="exportToCompostionExcel('SVTtable' ,'SVTTableComposition')" class="btn spec-btn pull-right">Export
+                             To Excel</button>
+                          </div>
+                       </div>
+                       <br>
+                       <div class="table-responsive" id ="SVTtable">
+                          <div class="table-responsive">
+                             <table class="table table-striped table-bordered" width="100%">
+                                <thead>
+                                   <tr>
+                                      <th colspan="1" style="background-color:  #a0a3e0;color:#fff !important;">
+                                         Scenario
+                                      </th>
+                                      <th colspan="4" style="background-color: #ebc3db;color:#fff !important;">SVT LV
+                                      </th>
+                                      <th colspan="4" style="background-color: #c7e2bb;color:#fff !important;">SVT TE
+                                      </th>
+                                      <th colspan="4"
+                                         style="background-color: rgb(235, 195, 65);color:#fff !important;">
+                                         SVT AN
+                                      </th>
+                                   </tr>
+                                   <tr>
+                                      <th>Pure Spec ID</th>
+                                      <th>2018</th>
+                                      <th>2019</th>
+                                      <th>2020</th>
+                                      <th>Amount Limit in tonnes</th>
+                                      <th>2018</th>
+                                      <th>2019</th>
+                                      <th>2020</th>
+                                      <th>Amount Limit in tonnes</th>
+                                      <th>2018</th>
+                                      <th>2019</th>
+                                      <th>2020</th>
+                                      <th>Amount Limit in tonnes</th>
+                                   </tr>
+                                </thead>
+                                <tbody>
+                                   <tr *ngFor="let legalData of SVT_table">
+                                      <td>{{legalData.pure_spec_Id}}</td>
+                                      <td>{{legalData.SVT_LV_eight}}</td>
+                                      <td>{{legalData.SVT_LV_nine}}</td>
+                                      <td>{{legalData.SVT_LV_twenty}}</td>
+                                      <td>{{legalData.amount_limit_SVT_LV}}</td>
+                                      <td>{{legalData.SVT_TE_eight}}</td>
+                                      <td>{{legalData.SVT_TE_nine}}</td>
+                                      <td>{{legalData.SVT_TE_Twenty}}</td>
+                                      <td>{{legalData.amount_limit_SVT_TE}}</td>
+                                      <td>{{legalData.SVT_AN_eight}}</td>
+                                      <td>{{legalData.SVT_AN_nine}}</td>
+                                      <td>{{legalData.SVT_AN_twenty}}</td>
+                                      <td>{{legalData.amount_limit_SVT_AN}}</td>
+                                   </tr>
+                                </tbody>
+                             </table>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </span>
+           </div>
+           <!--Flow Diagram Section-->
+           <div *ngIf="flowDiagrams">
+              <span *ngIf="ProductAttributeLoader">
+              <i class="loader-class fa fa-spinner fa-spin"></i>
+              <span class="loader-text">Loading data....</span>
+              </span>
+              <span *ngIf="pihAlertMessage">
+                 <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+              </span>
+              <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
+                 <div class="row" *ngIf="ManufractureDiagramPart">
+                    <div class="col-md-12">
+                       <h6 class="text-default font-weight-semibold mb-2 ">Manufacturing Flow Diagram: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                     
+                     
+                     
+                     
+                       <div class="panel-group accordion" id="accordionExample">
+                            <div class="panel panel-primary">
+                               <div class="panel-heading" role="tab" id="headingOne">
+                                  <h6 class="panel-title">
+                                     <a data-toggle="collapse" data-target="#ManufractureDiagramProductLevel" aria-expanded="true" aria-controls="collapseOne">
+                                     Product Level 
+                                     </a>
+                                  </h6>
+                               </div>
+                               <div id="ManufractureDiagramProductLevel" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                  <div class="panel-body">
+                                        <span  *ngIf="!ManufractureDiagramProductLevel.length">No Data Found</span>
+                                        <div  *ngIf="ManufractureDiagramProductLevel.length > 0" class="row">
+                                            <div class="col-md-12 table-responsive">
+                                                  
+                                                    <table>
+                                                            <thead>
+                                                               <th style="width:5%">S.No</th>
+                                                               <th>Specification Id</th>
+                                                               <th>Product Name</th>
+                                                               <th>Product Type</th>
+                                                               <th>File Soure</th>
+                                                               <th style="width:50%">File Name</th>
+                                                               <th>Action</th>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr *ngFor="let data of ManufractureDiagramProductLevel;let i =index">
+                                                                  <td>{{i+1}}</td>
+                                                                  <td>{{data.spec_Id}}</td>
+                                                                  <td>{{data.productName}}</td>
+                                                                  <td>{{data.product_Type}}</td>
+                                                                  <td>{{data.file_Source}}</td>
+                                                                  <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                     {{data.fileName}}
+                                                                     </a>
+                                                                  </td>
+                                                                  <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                  <td class="potential-btn">
+                                                                     <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                        download><i class="fa fa-share">
+                                                                     </i> Download</a></span>
+                                                                  </td>
+                                                               </tr>
+                                                            </tbody>
+                                                         </table>
+                                                 </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div></div>
+                            
+                            <div class="panel-group accordion" id="accordionExample">
+                               <div class="panel panel-primary">
+                                  <div class="panel-heading" role="tab" id="headingTwo">
+                                     <h6 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#ManufractureDiagramMaterialLevel" aria-expanded="false" aria-controls="collapseTwo">
+                                        Material Level 
+                                        </a>
+                                     </h6>
+                                  </div>
+                                  <div id="ManufractureDiagramMaterialLevel" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                     <div class="panel-body">
+                                            <span  *ngIf="!ManufractureDiagramMaterialLevel.length">No Data Found</span>
+                                            <div  *ngIf="ManufractureDiagramMaterialLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                    
+                                                        <table>
+                                                                <thead>
+                                                                   <th style="width:5%">S.No</th>
+                                                                   <th>Specification Id</th>
+                                                                   <th>Product Name</th>
+                                                                   <th>Product Type</th>
+                                                                   <th>File Soure</th>
+                                                                   <th style="width:50%">File Name</th>
+                                                                   <th>Action</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr *ngFor="let data of ManufractureDiagramMaterialLevel;let i =index">
+                                                                      <td>{{i+1}}</td>
+                                                                      <td>{{data.spec_Id}}</td>
+                                                                      <td>{{data.productName}}</td>
+                                                                      <td>{{data.product_Type}}</td>
+                                                                      <td>{{data.file_Source}}</td>
+                                                                      <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                         {{data.fileName}}
+                                                                         </a>
+                                                                      </td>
+                                                                      <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                      <td class="potential-btn">
+                                                                         <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                            download><i class="fa fa-share">
+                                                                         </i> Download</a></span>
+                                                                      </td>
+                                                                   </tr>
+                                                                </tbody>
+                                                             </table>
+                                                     </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div></div>
+                              
+                               <div class="panel-group accordion" id="accordionExample">
+                                  <div class="panel panel-primary">
+                                     <div class="panel-heading" role="tab" id="headingThree">
+                                        <h6 class="panel-title">
+                                           <a  data-toggle="collapse" data-target="#ManufractureDiagramCasLevel" aria-expanded="false" aria-controls="collapseThree">
+                                                Component Level 
+                                           </a>
+                                        </h6>
+                                     </div>
+                                     <div id="ManufractureDiagramCasLevel" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="panel-body">
+                                                <span  *ngIf="!ManufractureDiagramCasLevel.length">No Data Found</span>
+                                                <div  *ngIf="ManufractureDiagramCasLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                        <table>
+                                                                <thead>
+                                                                   <th style="width:5%">S.No</th>
+                                                                   <th>Specification Id</th>
+                                                                   <th>Product Name</th>
+                                                                   <th>Product Type</th>
+                                                                   <th>File Soure</th>
+                                                                   <th style="width:50%">File Name</th>
+                                                                   <th>Action</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr *ngFor="let data of ManufractureDiagramCasLevel;let i =index">
+                                                                      <td>{{i+1}}</td>
+                                                                      <td>{{data.spec_Id}}</td>
+                                                                      <td>{{data.productName}}</td>
+                                                                      <td>{{data.product_Type}}</td>
+                                                                      <td>{{data.file_Source}}</td>
+                                                                      <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                         {{data.fileName}}
+                                                                         </a>
+                                                                      </td>
+                                                                      <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                      <td class="potential-btn">
+                                                                         <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                            download><i class="fa fa-share">
+                                                                         </i> Download</a></span>
+                                                                      </td>
+                                                                   </tr>
+                                                                </tbody>
+                                                             </table>
+                                                     </div>
+                                           </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>  
+                    </div>
+                 </div>
+                 <br>
+                 <!--Synthesis Diagram-->
+                 <div class="row" *ngIf="SynthesisDiagramPart">
+                    <div class="col-md-12">
+                       <h6 class="text-default font-weight-semibold mb-2 ">Synthesis Diagram: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                     
+                     
+                     
+                       <div class="panel-group accordion" id="accordionExample">
+                            <div class="panel panel-primary">
+                               <div class="panel-heading" role="tab" id="headingOne">
+                                  <h6 class="panel-title">
+                                     <a data-toggle="collapse" data-target="#SynthesisDiagramProductLevel" aria-expanded="true" aria-controls="collapseOne">
+                                     Product Level 
+                                     </a>
+                                  </h6>
+                               </div>
+                               <div id="SynthesisDiagramProductLevel" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                  <div class="panel-body">
+                                        <span  *ngIf="!SynthesisDiagramProductLevel.length">No Data Found</span>
+                                        <div  *ngIf="SynthesisDiagramProductLevel.length > 0" class="row">
+                                            <div class="col-md-12 table-responsive">
+                                                  
+                                                    <table>
+                                                            <thead>
+                                                               <th style="width:5%">S.No</th>
+                                                               <th>Specification Id</th>
+                                                               <th>Product Name</th>
+                                                               <th>Product Type</th>
+                                                               <th>File Soure</th>
+                                                               <th style="width:50%">File Name</th>
+                                                               <th>Action</th>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr *ngFor="let data of SynthesisDiagramProductLevel;let i = index">
+                                                                  <td>{{i+1}}</td>
+                                                                  <td>{{data.spec_Id}}</td>
+                                                                  <td>{{data.productName}}</td>
+                                                                  <td>{{data.product_Type}}</td>
+                                                                  <td>{{data.file_Source}}</td>
+                                                                  <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                     {{data.fileName}}
+                                                                     </a>
+                                                                  </td>
+                                                                  <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                  <td class="potential-btn">
+                                                                     <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                        download><i class="fa fa-share">
+                                                                     </i> Download</a></span>
+                                                                  </td>
+                                                               </tr>
+                                                            </tbody>
+                                                         </table>
+                                                 </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div></div>
+                            
+                            <div class="panel-group accordion" id="accordionExample" >
+                               <div class="panel panel-primary">
+                                  <div class="panel-heading" role="tab" id="headingTwo">
+                                     <h6 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#SynthesisDiagramMaterialLevel" aria-expanded="false" aria-controls="collapseTwo">
+                                        Material Level 
+                                        </a>
+                                     </h6>
+                                  </div>
+                                  <div id="SynthesisDiagramMaterialLevel" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                     <div class="panel-body">
+                                            <span  *ngIf="!SynthesisDiagramMaterialLevel.length">No Data Found</span>
+                                            <div  *ngIf="SynthesisDiagramMaterialLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                    
+                                                        <table>
+                                                                <thead>
+                                                                   <th style="width:5%">S.No</th>
+                                                                   <th>Specification Id</th>
+                                                                   <th>Product Name</th>
+                                                                   <th>Product Type</th>
+                                                                   <th>File Soure</th>
+                                                                   <th style="width:50%">File Name</th>
+                                                                   <th>Action</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr *ngFor="let data of SynthesisDiagramMaterialLevel;let i = index">
+                                                                      <td>{{i+1}}</td>
+                                                                      <td>{{data.spec_Id}}</td>
+                                                                      <td>{{data.productName}}</td>
+                                                                      <td>{{data.product_Type}}</td>
+                                                                      <td>{{data.file_Source}}</td>
+                                                                      <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                         {{data.fileName}}
+                                                                         </a>
+                                                                      </td>
+                                                                      <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                      <td class="potential-btn">
+                                                                         <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                            download><i class="fa fa-share">
+                                                                         </i> Download</a></span>
+                                                                      </td>
+                                                                   </tr>
+                                                                </tbody>
+                                                             </table>
+                                                     </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div></div>
+                              
+                               <div class="panel-group accordion" id="accordionExample">
+                                  <div class="panel panel-primary">
+                                     <div class="panel-heading" role="tab" id="headingThree">
+                                        <h6 class="panel-title">
+                                           <a  data-toggle="collapse" data-target="#SynthesisDiagramCasLevel" aria-expanded="false" aria-controls="collapseThree">
+                                                Component Level 
+                                           </a>
+                                        </h6>
+                                     </div>
+                                     <div id="SynthesisDiagramCasLevel" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="panel-body">
+                                                <span  *ngIf="!SynthesisDiagramCasLevel.length">No Data Found</span>
+                                                <div  *ngIf="SynthesisDiagramCasLevel.length > 0" class="row">
+                                                <div class="col-md-12 table-responsive">
+                                                   
+                                                        <table>
+                                                                <thead>
+                                                                   <th style="width:5%">S.No</th>
+                                                                   <th>Specification Id</th>
+                                                                   <th>Product Name</th>
+                                                                   <th>Product Type</th>
+                                                                   <th>File Soure</th>
+                                                                   <th style="width:50%">File Name</th>
+                                                                   <th>Action</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                   <tr *ngFor="let data of SynthesisDiagramCasLevel;let i = index">
+                                                                      <td>{{i+1}}</td>
+                                                                      <td>{{data.spec_Id}}</td>
+                                                                      <td>{{data.productName}}</td>
+                                                                      <td>{{data.product_Type}}</td>
+                                                                      <td>{{data.file_Source}}</td>
+                                                                      <td style="width:40%"> <a href="#" (click)="imagePreview(data.file_Path)" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                                                                         {{data.fileName}}
+                                                                         </a>
+                                                                      </td>
+                                                                      <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
+                                                                      <td class="potential-btn">
+                                                                         <span class="docs-btn"><a href="{{data.file_Path}}"
+                                                                            download><i class="fa fa-share">
+                                                                         </i> Download</a></span>
+                                                                      </td>
+                                                                   </tr>
+                                                                </tbody>
+                                                             </table>
+                                                     </div>
+                                           </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>  
+                    
+                    </div>
+                 </div>
+              </div>
+           </div>
         </div>
         <div class="clearfix"></div>
+        <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+           <div class="modal-dialog momodel modal-fluid">
+              <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
+              <div class="modal-content">
+                 <div class="modal-bodys">
+                    <img src="{{imgaePreviewUrl}}" alt="" width="500px" height="400px" />
+                 </div>
+              </div>
+           </div>
+        </div>

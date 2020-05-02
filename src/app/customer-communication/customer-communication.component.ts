@@ -89,6 +89,14 @@ export class CustomerCommunicationComponent implements OnInit {
   EUFOODdetailDataPage: boolean = false;
   CommunicationHistoryDataHead: any = [];
   HeavyMetalsData: any;
+  communicationHistoryEmailSection:boolean = false;
+  emailCasNumber:any;
+  emailDetailsContent:any;
+  categorizeArrayData:any=[];
+  productLevelCategoy:any=[];
+  materialLevelCategoy:any =[];
+  casLevelCategoy:any=[];
+  categoryLevelData:any;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private router: Router, private sanitizer: DomSanitizer,
@@ -115,6 +123,17 @@ export class CustomerCommunicationComponent implements OnInit {
       }
     });
 
+  
+ //Collapse script
+ $('.collapse').on('show.bs.collapse', function () {
+  $('.collapse').each(function(){
+      $(this).collapse('hide');
+  });
+});
+
+    
+   
+
     //customerCommunication options array
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
@@ -125,15 +144,14 @@ export class CustomerCommunicationComponent implements OnInit {
 
    //Communication History Table Header
     this.CommunicationHistoryDataHead = [
-      { "field": "case_Number", "header": "Case Number", "width": "10%" },
-      { "field": "topic", "header": "Topic", "width": "20%" },
-      { "field": "customer_Name", "header": "Customer Name", "width": "40%" },
-      { "field": "manufacturing_Plant", "header": "Manufacturing Plant", "width": "20%" },
-      { "field": "key", "header": "key", "width": "20%" },
-      { "field": "key_Type", "header": "key Type", "width": "20%" },
-      { "field": "tier_owner", "header": "Tier 2 Owner", "width": "20%" }
+      { "field": "case_Number", "header": "Case Number"},
+      { "field": "topic", "header": "Topic"},
+      { "field": "customer_Name", "header": "Customer Name" },
+      { "field": "manufacturing_Plant", "header": "Manufacturing Plant"},
+      { "field": "key", "header": "key" },
+      { "field": "product_Type", "header": "key Type"},
+      { "field": "tier_2_Owner", "header": "Tier 2 Owner"}
     ]
-
   }
 
 //USFDA API call function:
@@ -146,6 +164,9 @@ export class CustomerCommunicationComponent implements OnInit {
     this.CustomerCommunicationDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.CustomerCommunicationDetails)
     this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
@@ -157,6 +178,7 @@ export class CustomerCommunicationComponent implements OnInit {
         this.pihAlertMessage = false;
         this.USFDAData = this.productdata;
         console.log(this.USFDAData);
+        this.categorizeProductType(this.USFDAData);
       } else {
         this.pihAlertMessage = true;
         this.customerCommunicationLoader = false;
@@ -176,6 +198,9 @@ export class CustomerCommunicationComponent implements OnInit {
     this.CustomerCommunicationDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.CustomerCommunicationDetails)
     this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
@@ -187,6 +212,7 @@ export class CustomerCommunicationComponent implements OnInit {
         this.pihAlertMessage = false;
         this.EUFoodData = this.productdata;
         console.log(this.EUFoodData);
+        this.categorizeProductType(this.EUFoodData);
       } else {
         this.pihAlertMessage = true;
         this.customerCommunicationLoader = false;
@@ -208,6 +234,9 @@ export class CustomerCommunicationComponent implements OnInit {
     this.CustomerCommunicationDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.CustomerCommunicationDetails)
     this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
@@ -229,7 +258,7 @@ export class CustomerCommunicationComponent implements OnInit {
   }
 
   //Customer Communication API call function:
-  customerCommunicationHistory() {
+  customerCommunicationHistory(value) {
     this.customerCommunicationLoader = true;
     this.pihAlertMessage = false;
     this.CustomerCommunicationDetails = [];
@@ -240,11 +269,14 @@ export class CustomerCommunicationComponent implements OnInit {
     this.CustomerCommunicationDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.CustomerCommunicationDetails)
     this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
       console.log(data);
-      this.customerCommunicationLoader = true;
+       this.customerCommunicationLoader = true;
       this.productdata = data;
       if (this.productdata.length > 0) {
         this.customerCommunicationLoader = false;
@@ -252,6 +284,7 @@ export class CustomerCommunicationComponent implements OnInit {
         this.CommunicationHistoryHead = this.CommunicationHistoryDataHead
         this.CommunicationHistoryData = this.productdata;
         console.log(this.CommunicationHistoryData);
+        this.categorizeProductType(this.CommunicationHistoryData);
       } else {
         this.pihAlertMessage = true;
         this.customerCommunicationLoader = false;
@@ -270,9 +303,9 @@ export class CustomerCommunicationComponent implements OnInit {
     this.filename = this.USFDADetailsPage.fileName;
     this.documentResult = this.USFDADetailsPage.Extract_Field.data;
     this.pdfUrl = this.USFDADetailsPage.url;
-    console.log(this.filename);
-    console.log(this.productName);
     console.log(this.pdfUrl);
+    // let SAS_token = '?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-05-29T20:19:29Z&st=2020-04-02T12:19:29Z&spr=https&sig=aodIg0rDPVsNEJY7d8AerhD79%2FfBO9LZGJdx2j9tsCM%3D';
+    // let urlPDF = this.pdfUrl + SAS_token;
     this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
     console.log(this.Url);
   }
@@ -286,11 +319,42 @@ export class CustomerCommunicationComponent implements OnInit {
     this.filename = this.EUFoodDetailsPage.fileName;
     this.Extract_Result = this.EUFoodDetailsPage.Extract_Field;
     this.pdfUrl = this.EUFoodDetailsPage.url;
-    console.log(this.filename);
-    console.log(this.Extract_Result);
     console.log(this.pdfUrl);
+    // let SAS_token = '?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-05-29T20:19:29Z&st=2020-04-02T12:19:29Z&spr=https&sig=aodIg0rDPVsNEJY7d8AerhD79%2FfBO9LZGJdx2j9tsCM%3D';
+    // let urlPDF = this.pdfUrl + SAS_token;
+    console.log( this.pdfUrl);
     this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
     console.log(this.Url);
+  }
+  //EmailHistoryPage
+  emailHistoryPage(data) {
+    this.communicationHistoryEmailSection = true;
+    this.customerCommunicationLoader = true;
+    this.emailCasNumber = data;
+    this.CustomerCommunicationDetails = [];
+    this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+    console.log(this.selectedSpecList);
+    this.CategoryDetails = { index: 3, Category: "Customer Communication", Subcategory: "Communication History" }
+    console.log(this.CategoryDetails);
+    this.CustomerCommunicationDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details': this.CategoryDetails,
+      'case_Number': this.emailCasNumber,
+      'product_Level':this.momentiveService.getProductLevelDetails(),
+      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+    });
+    console.log(this.CustomerCommunicationDetails)
+    this.momentiveService.getCustomerCommunication(this.CustomerCommunicationDetails).subscribe(data => {
+      console.log(data);
+      this.productdata = data;
+      if(this.productdata.length > 0) {
+        this.customerCommunicationLoader = false;
+      this.emailDetailsContent = this.productdata;
+      } else {
+
+      }
+    });
   }
 
   //Radio Button Option change Functionality
@@ -301,12 +365,14 @@ export class CustomerCommunicationComponent implements OnInit {
       this.EuFoodContact = false;
       this.heavyMetals = false;
       this.communicationHistory = false;
+      this.USFDADetailDataPage = false;
       this.customerCommunicationUSFDAPage();
     } else if (this.customerCommunicationTab === 'EU Food Contact') {
       this.usFDA = false;
       this.EuFoodContact = true;
       this.heavyMetals = false;
       this.communicationHistory = false;
+      this.EUFOODdetailDataPage = false;
       this.customerCommunicationEUFOOD();
     } else if (this.customerCommunicationTab === 'Heavy Metals content') {
       this.heavyMetals = true;
@@ -319,7 +385,8 @@ export class CustomerCommunicationComponent implements OnInit {
       this.communicationHistory = true;
       this.usFDA = false;
       this.EuFoodContact = false;
-      this.customerCommunicationHistory();
+      this.communicationHistoryEmailSection = false;
+      this.customerCommunicationHistory('product_level');
     }
   }
 
@@ -330,30 +397,57 @@ export class CustomerCommunicationComponent implements OnInit {
   backToEUPage() {
     this.EUFOODdetailDataPage = false;
   }
-
+backToCommunication() {
+  this.communicationHistoryEmailSection = false;
+}
   //Table Sorting Functionality
   customSort(event) {
     event.data.sort((data1, data2) => {
-      const value1 = data1[event.field];
-      const value2 = data2[event.field];
-      const result = null;
+      let value1 = data1[event.field];
+      let value2 = data2[event.field];
+      let result = null;
 
-      if (value1 == null && value2 != null) {
-        const result = -1;
-      } else if (value1 != null && value2 == null) {
-        const result = 1;
-      } else if (value1 == null && value2 == null) {
-        const result = 0;
-      } else if (typeof value1 === 'string' && typeof value2 === 'string') {
-        const result = value1.localeCompare(value2);
-      } else {
-        const result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
-      }
+      if (value1 == null && value2 != null)
+        result = -1;
+      else if (value1 != null && value2 == null)
+        result = 1;
+      else if (value1 == null && value2 == null)
+        result = 0;
+      else if (typeof value1 === 'string' && typeof value2 === 'string')
+        result = value1.localeCompare(value2);
+      else
+        result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+
       return (event.order * result);
     });
   }
   intialSort() {
     return 0;
   }
+  documentKey(data) {
+    console.log(data);
+  }
 
+  categorizeProductType(productData){
+    this.materialLevelCategoy =[];
+    this.productLevelCategoy =[];
+    this.casLevelCategoy =[];
+
+    this.categorizeArrayData = productData;
+    this.categorizeArrayData.forEach(element => {
+      if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+        this.materialLevelCategoy.push(element);
+      }
+      else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+        this.productLevelCategoy.push(element);
+      }
+      else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+        this.casLevelCategoy.push(element);
+      }
+    })
+  console.log(this.productLevelCategoy);
+  console.log(this.materialLevelCategoy);
+  console.log(this.casLevelCategoy);
+
+  }
 }
