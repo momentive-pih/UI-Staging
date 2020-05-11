@@ -45,6 +45,7 @@ import { PihFilterPipe } from './pipes/pih-filter.pipe';
 import { CasLevelFilterPipe } from './pipes/cas-level-filter.pipe';
 import { ProductLevelPipe } from './pipes/product-level.pipe';
 import { GhsLabelingPipe } from './pipes/ghs-labeling.pipe';
+import { OtherTablesComponent } from './other-tables/other-tables.component';
 
 
 
@@ -69,6 +70,7 @@ import { GhsLabelingPipe } from './pipes/ghs-labeling.pipe';
     CasLevelFilterPipe,
     ProductLevelPipe,
     GhsLabelingPipe,
+    OtherTablesComponent,
    
   ],
   imports: [

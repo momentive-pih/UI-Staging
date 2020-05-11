@@ -82,7 +82,7 @@
 
         <!--Compliance Registration-->
         <div class="modal-body" *ngIf="complianceRegistration">
-            <div class="row">
+            <div class="row" *ngIf="complianceLocationRegistrationData.length">
                 <div class="col-md-9">
                     <h6 class="text-default font-weight-semibold mb-2 "><span *ngIf="complaint_EU">EU: <i
                                         class="fa fa-info-circle" role="button"
@@ -103,7 +103,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-            </div>
+              </div>
 
             <!--EU Location-->
             <div class="row" *ngIf="complaint_EU">

@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
   basicProperties:any =[];
   sidebarData: any;
   sidebarCategoriesData: any = [];
+  sidebarCategoriesHomeData:any=[];
   selectedSpecList:any = [];
   basicDetails = true;
   HomeDataDetails: any = [];
@@ -115,8 +116,8 @@ export class HomeComponent implements OnInit {
     // sidebarCategories Details MOmentive-JSON API CALL
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
-      this.sidebarCategoriesData = this.productdata.sidebarCategoriesData
-      console.log(this.sidebarCategoriesData);
+      this.sidebarCategoriesHomeData = this.productdata.sidebarCategoriesHomeData
+      console.log(this.sidebarCategoriesHomeData);
     }, err => {
       console.error(err);
     });

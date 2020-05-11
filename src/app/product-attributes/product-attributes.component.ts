@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, ViewContainerRef } from '@angular/core';
-import { Attribute } from '@angular/compiler';
+import { Attribute, IfStmt } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material';
 import { TableModule } from 'primeng/table';
 import * as frLocale from 'date-fns/locale/fr';
@@ -57,34 +57,35 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   structureAndFormulaTypes = false;
   compositionTypes = false;
   flowDiagrams = false;
-  cols: any[];
-  legalProducts: any[];
-  selectedlegalProducts: any[];
-  selectedColumns: any[];
+  cols: any=[];
+  legalProducts: any=[];
+  selectedlegalProducts: any=[];
+  selectedColumns: any=[];
 
   // GHS Labeling
-  ghsLabelingData: any[];
-  ghsLabelingHeader: any[];
-  selectedLabelingProducts: any[];
-  selectedLabelingColumns: any[];
+  ghsLabelingData: any=[];
+  copyghsLabelingData:any=[];
+  ghsLabelingHeader: any=[];
+  selectedLabelingProducts: any=[];
+  selectedLabelingColumns: any=[];
   legalpaginator = false;
-  private colsTempor: any[] = [];
-  public columnOptions: any[];
-  searchGHSText:any;
+  private colsTempor: any=[];
+  public columnOptions: any=[];
+  searchGHSText: any;
 
   // Composition Data
-  legalCompositionData: any[];
-  legalCompositionHead: any[];
-  selectedlegalCompositionProducts: any[];
-  hunderedCompositionHead: any[];
-  hunderedCompositionData: any[];
-  copyhunderedCompositionData: any[];
-  selectedhunderedCompositionProducts: any[];
-  standardCompositionHead: any[];
-  standardCompositionData: any[];
-  copystandardCompositionData: any[];
-  copylegalCompositionData: any[];
-  selectedStandardCompositionProducts: any[];
+  legalCompositionData: any=[];
+  legalCompositionHead: any=[];
+  selectedlegalCompositionProducts: any=[];
+  hunderedCompositionHead: any=[];
+  hunderedCompositionData: any=[];
+  copyhunderedCompositionData: any=[];
+  selectedhunderedCompositionProducts: any=[];
+  standardCompositionHead: any=[];
+  standardCompositionData: any=[];
+  copystandardCompositionData: any=[];
+  copylegalCompositionData: any=[];
+  selectedStandardCompositionProducts: any= [];
   ExcelStandardData = [];
   ExcelStandardSubData = [];
   newStandardData = [];
@@ -101,7 +102,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   compositionSpecID = false;
   SPECdropdownList: any = [];
   sideSpecList: any = [];
-  specCompData:any=[];
+  specCompData: any = [];
   SpecListDetails: any = [];
   sales: any = [];
   SVT_table: any = [];
@@ -130,58 +131,72 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   PotentialApplicationDetails: any = [];
   potentialAPPData: boolean;
   productLevelDetails: any = [];
-  CompProductLevel:any=[];
+  CompProductLevel: any = [];
   allMaterialLevel: any = [];
   activeMaterial: any = [];
   firstSpecData: any;
-  compositionRating:any;
-  notFoundComposition:any;
+  compositionRating: any;
+  notFoundComposition: any;
   compositionlocations: any = [];
   compositionDataLevel: boolean
   compositionStandardData: any = [];
-  compistionSpecArray:any=[];
+  compistionSpecArray: any = [];
   selectedValue: string;
-  imgaePreviewUrl:any;
-  moleclularWeightDetailDataPage:any;
-  filename:any;
-  Extract_Result:any;
-  searchGhsLabelText:any;
-  pdfUrl:any;
-  Url:any;
+  imgaePreviewUrl: any;
+  moleclularWeightDetailDataPage: any;
+  filename: any;
+  Extract_Result: any;
+  searchGhsLabelText: any;
+  pdfUrl: any;
+  Url: any;
   isDesc: boolean = false;
-  columnName:any;
+  columnName: any;
   usagePart: any;
   selectedUsage: string = "Public";
-  usageTypes:any;
-  usageBaseData:any;
+  usageTypes: any;
+  usageBaseData: any;
   sortDir = 1;//1= 'ASE' -1= DSC
-  molecularweightDetailsPage:any;
-  categorizeArrayData:any=[];
-  productLevelCategoy:any=[];
-  materialLevelCategoy:any =[];
-  casLevelCategoy:any =[];
-    productAttributeChemicalStructures:any=[];
-    productAttributemolecular_Formula:any=[];
-    productAttributemolecular_Weight:any=[];
+  molecularweightDetailsPage: any;
+  categorizeArrayData: any = [];
+  productLevelCategoy: any = [];
+  materialLevelCategoy: any = [];
+  casLevelCategoy: any = [];
+  productAttributeChemicalStructures: any = [];
+  productAttributemolecular_Formula: any = [];
+  productAttributemolecular_Weight: any = [];
+  structureFormulaCheck:any =[];
+  chemiaclSection:boolean= true;
+  formulaSection:boolean = false;
+  weightSection:boolean = false;
 
-    chemicalStructureproductLevel:any=[];
-    chemicalStructurematerialLevel:any=[];
-    chemicalStructurecasLevel:any=[];
+  chemicalStructureproductLevel: any = [];
+  chemicalStructurematerialLevel: any = [];
+  chemicalStructurecasLevel: any = [];
 
-    molecularFormulaProductLevel:any=[];
-    molecularFormulaMaterialLevel:any=[];
-    molecularFormulaCasLevel:any=[];
-    molecularWeightProductLevel:any=[];
-    molecularWeightMaterialLevel:any=[];
-    molecularWeightCasLevel:any=[];
+  molecularFormulaProductLevel: any = [];
+  molecularFormulaMaterialLevel: any = [];
+  molecularFormulaCasLevel: any = [];
+  molecularWeightProductLevel: any = [];
+  molecularWeightMaterialLevel: any = [];
+  molecularWeightCasLevel: any = [];
 
 
-    ManufractureDiagramProductLevel:any=[];
-    ManufractureDiagramMaterialLevel:any=[];
-    ManufractureDiagramCasLevel:any=[];
-    SynthesisDiagramProductLevel:any=[];
-    SynthesisDiagramMaterialLevel:any=[];
-    SynthesisDiagramCasLevel:any=[];
+  ManufractureDiagramProductLevel: any = [];
+  ManufractureDiagramMaterialLevel: any = [];
+  ManufractureDiagramCasLevel: any = [];
+  SynthesisDiagramProductLevel: any = [];
+  SynthesisDiagramMaterialLevel: any = [];
+  SynthesisDiagramCasLevel: any = [];
+  compositionMaterialDataHead:any =[];
+  exportGhsLabelingDatas:any=[];
+  structureFormulaCheckData = "Chemical Structure"
+  flowDiagramCheck:any=[];
+  flowDiagramCheckData = "Manufacturing Flow Diagram";
+  showImage:boolean;
+  showPdf:boolean
+
+  ManufractureSection:boolean =true
+  synthesisSection:boolean = false;
   /** control for the selected speclist */
   public specListData: FormControl = new FormControl();
   /** control for the MatSelect filter keyword */
@@ -194,6 +209,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   @ViewChild('SVTtable', { static: false }) SVTtable: ElementRef;
   @ViewChild('StandardCompositiontable', { static: false }) StandardCompositiontable: ElementRef;
   @ViewChild('LegalCompositiontable', { static: false }) LegalCompositiontable: ElementRef;
+  @ViewChild('ghsTable', { static: false }) ghsTable: ElementRef;
 
   //Composition DropDown 
   compositionsTypes: any = [
@@ -207,7 +223,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     }
   ]
 
- 
+  
+
+
   selectedlocation: any;
   selectedComposition: any;
   selectedLocationControl = new FormControl();
@@ -231,15 +249,16 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
 
-  //Collapse script
-  $('.collapse').on('show.bs.collapse', function () {
-    $('.collapse').each(function(){
-        $(this).collapse('hide');
-    });
-  });
+    //Collapse script
+    
+   //Report Data Header
+   this.compositionMaterialDataHead = [
+    { "field": "material_Number", "header": "Material Number" },
+    { "field": "description", "header": "Material Description" },
+    { "field": "bdt", "header": "Basic Data Text" },
+  ]
 
-
-      // ProductAttribute Radio Box API Call
+    // ProductAttribute Radio Box API Call
     this.momentiveService.getSearchData().subscribe(data => {
       this.productData = data;
       console.log(this.productData);
@@ -257,9 +276,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       console.error(err);
     });
 
-  
-  
-    
+
+
+
     this.usagePart = [{
       "type": "Public",
       "value": "Public"
@@ -267,17 +286,39 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       "type": "All Usage",
       "value": "All Usage"
     }],
-    //GHS Labeling Table header
-    this.ghsLabelingDataHeader = [
-      { "field": "spec_Id", "header": "Specification Id-NAM Prod" },
-      { "field": "regulatory_Basis", "header": "Regulatory Basis"},
-      { "field": "usage", "header": "Usage"},
-      { "field": "symbols", "header": "Symbols"},
-      { "field": "signal_Word", "header": "Signal Word"},
-      { "field": "hazard_Statements", "header": "Hazard Statements"},
-      { "field": "prec_Statements", "header": "Prec Statements"},
-      { "field": "additional_Information", "header": "Additional Information / Remarks", "width": "20%"}
+
+    this.structureFormulaCheck = [
+      {
+      "name": "Chemical Structure",
+      "value": "chemical Structure"
+     }, 
+     {
+      "name": "Molecular Formula",
+      "value": "Molecular Formula"
+    },
+    {
+      "name": "Molecular weight",
+      "value": "Molecular Weight"
+    }]
+
+    this.flowDiagramCheck =[{
+      "name": "Manufacturing Flow Diagram",
+      "value": "Manufacturing Flow Diagram"
+    },
+     {"name": "Synthesis Diagram",
+      "value": "Synthesis Diagram"}
     ]
+      //GHS Labeling Table header
+      this.ghsLabelingDataHeader = [
+        { "field": "spec_Id", "header": "Specification Id-NAM Prod" },
+        { "field": "regulatory_Basis", "header": "Regulatory Basis" },
+        { "field": "usage", "header": "Usage" },
+        { "field": "symbols", "header": "Symbols" },
+        { "field": "signal_Word", "header": "Signal Word" },
+        { "field": "hazard_Statements", "header": "Hazard Statements" },
+        { "field": "prec_Statements", "header": "Prec Statements" },
+        { "field": "additional_Information", "header": "Additional Information / Remarks", "width": "20%" }
+      ]
     this.compositionDataLevel = false;
   }
 
@@ -293,9 +334,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
@@ -340,9 +381,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
@@ -352,17 +393,20 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       if (this.productdata.length > 0) {
         this.ProductAttributeLoader = false;
         this.pihAlertMessage = false;
-        if(usageValue == 'Public') {
+        if (usageValue == 'Public') {
           this.ghsLabelingHeader = this.ghsLabelingDataHeader;
           this.usageBaseData = this.productdata[0].ghs_Labeling
-          this.ghsLabelingData = this.usageBaseData.filter(element => 
+          this.ghsLabelingData = this.usageBaseData.filter(element =>
             element.usage.includes('PUBLIC'));
-
-          console.log(this.ghsLabelingData);
+            console.log(this.ghsLabelingData);
+            this.copyghsLabelingData = JSON.parse(JSON.stringify(this.ghsLabelingData));
+            console.log(this.copyghsLabelingData)
         }
-        else if(usageValue == 'All') {
+        else if (usageValue == 'All') {
           this.ghsLabelingHeader = this.ghsLabelingDataHeader;
           this.ghsLabelingData = this.productdata[0].ghs_Labeling;
+          this.copyghsLabelingData = JSON.parse(JSON.stringify(this.ghsLabelingData));
+          console.log(this.copyghsLabelingData)
         }
       }
       else {
@@ -375,16 +419,16 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
 
 
-    //Dropdown select Function
-    selectUsageType(value) {
-      console.log(value);
-      this.usageTypes = value;
-      if (this.usageTypes === 'Public') {
-        this.productAttributeGHSLabeling('Public');
-      } else if (this.usageTypes === 'All Usage') {
-        this.productAttributeGHSLabeling('All');
-      }
+  //Dropdown select Function
+  selectUsageType(value) {
+    console.log(value);
+    this.usageTypes = value;
+    if (this.usageTypes === 'Public') {
+      this.productAttributeGHSLabeling('Public');
+    } else if (this.usageTypes === 'All Usage') {
+      this.productAttributeGHSLabeling('All');
     }
+  }
   //Composition Product and material Level Details
   productAttributeComposition() {
     this.ProductAttributeLoader = true;
@@ -395,16 +439,16 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.specCompData,
       'Category_details': this.CategoryDetails,
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
       console.log(data);
       this.productData = data;
       this.CompProductLevel = this.productData[0].product_Level;
-     this.productLevelDetails = this.CompProductLevel[0];
+      this.productLevelDetails = this.CompProductLevel[0];
 
       this.allMaterialLevel = this.productData[0].all_material;
       this.allMaterialLevel.forEach(element => {
@@ -429,60 +473,71 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
       console.log(data);
       this.productdata = data;
       this.productAttributeStructures = this.productdata;
-        console.log(this.productAttributeStructures);
-        this.productAttributeChemicalStructures = this.productAttributeStructures[0].chemical_Structure;
-        this.productAttributemolecular_Formula = this.productAttributeStructures[1].molecular_Formula;
-        this.productAttributemolecular_Weight = this.productAttributeStructures[2].molecular_Weight;
-      if ((this.productAttributeChemicalStructures.length > 0) || (this.productAttributemolecular_Formula.length > 0) || (this.productAttributemolecular_Weight.length > 0 )) {
+      console.log(this.productAttributeStructures);
+      this.productAttributeChemicalStructures = this.productAttributeStructures[0].chemical_Structure;
+      this.productAttributemolecular_Formula = this.productAttributeStructures[1].molecular_Formula;
+      this.productAttributemolecular_Weight = this.productAttributeStructures[2].molecular_Weight;
+      if ((this.productAttributeChemicalStructures.length > 0) || (this.productAttributemolecular_Formula.length > 0) || (this.productAttributemolecular_Weight.length > 0)) {
         this.ProductAttributeLoader = false;
         this.pihAlertMessage = false;
         this.productAttributeStructures = this.productdata;
         console.log(this.productAttributeStructures);
         this.chemicalStructureTable = this.productAttributeChemicalStructures;
 
-    
+
         this.chemicalStructureTable.forEach(element => {
-          if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+          this.chemicalStructurematerialLevel=[];
+          this.chemicalStructureproductLevel=[];
+          this.chemicalStructurecasLevel=[];
+          if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
             this.chemicalStructurematerialLevel.push(element);
           }
-          else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+          else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
             this.chemicalStructureproductLevel.push(element);
           }
-          else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+          else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
             this.chemicalStructurecasLevel.push(element);
           }
         })
-    
+
         this.molecularFormulaTable = this.productAttributemolecular_Formula;
         this.molecularFormulaTable.forEach(element => {
-          if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+          this.molecularFormulaMaterialLevel=[];
+          this.molecularFormulaProductLevel=[];
+          this.molecularFormulaCasLevel=[];
+
+          if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
             this.molecularFormulaMaterialLevel.push(element);
           }
-          else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+          else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
             this.molecularFormulaProductLevel.push(element);
           }
-          else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+          else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
             this.molecularFormulaCasLevel.push(element);
           }
         })
         this.molecularWeightTable = this.productAttributemolecular_Weight;
+        this.molecularWeightMaterialLevel=[];
+        this.molecularWeightProductLevel=[];
+        this.molecularWeightCasLevel=[];
         this.molecularWeightTable.forEach(element => {
-          if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+          if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
             this.molecularWeightMaterialLevel.push(element);
+            console.log(this.molecularWeightMaterialLevel);
           }
-          else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+          else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
             this.molecularWeightProductLevel.push(element);
           }
-          else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+          else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
             this.molecularWeightCasLevel.push(element);
           }
         })
@@ -511,7 +566,38 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     console.log(this.Url);
   }
   backTostructurePage() {
-     this.moleclularWeightDetailDataPage = false;
+    this.moleclularWeightDetailDataPage = false;
+  }
+
+  onChangeStructureFormula(item) {
+     if(item == 'Chemical Structure' ) {
+      this.chemiaclSection = true;
+      this.formulaSection = false;
+      this.weightSection = false;
+
+    } else if(item == 'Molecular Formula') {
+      this.chemiaclSection = false;
+      this.formulaSection = true;
+      this.weightSection = false;
+
+    } else if(item == 'Molecular weight') { 
+      this.chemiaclSection = false;
+      this.formulaSection = false;
+      this.weightSection = true;
+
+    }
+  }
+
+
+  onChangeFlowDiagram(item) {
+    if(item == 'Manufacturing Flow Diagram' ) {
+      this.ManufractureSection = true;
+      this.synthesisSection = false;
+  
+    } else if(item == 'Synthesis Diagram') {
+      this.ManufractureSection = false;
+      this.synthesisSection = true;
+    } 
   }
   //Flow Diagram Function Call
   productAttributeFlowdiagram() {
@@ -525,58 +611,64 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData)
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
       console.log(data);
       this.productdata = data;
       console.log(this.productdata);
-        this.basicDetailsproducts = this.productdata;
-        this.ManufractureDiagramCheck = this.basicDetailsproducts[0].manufacture_Flow;
-        this.SynthesisDiagramCheck = this.basicDetailsproducts[1].synthesis_Diagram;
-        if(this.ManufractureDiagramCheck.length > 0 || this.SynthesisDiagramCheck.length > 0 ) {
-          this.ProductAttributeLoader = false;
-          this.pihAlertMessage = false;
-          if (this.ManufractureDiagramCheck.length > 0) {
-            this.ManufractureDiagramPart = true;
-            this.ManufractureDiagram = this.ManufractureDiagramCheck;
-            this.ManufractureDiagram.forEach(element => {
-              if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
-                this.ManufractureDiagramMaterialLevel.push(element);
-              }
-              else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
-                this.ManufractureDiagramProductLevel.push(element);
-              }
-              else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
-                this.ManufractureDiagramCasLevel.push(element);
-              }
-            })
+      this.basicDetailsproducts = this.productdata;
+      this.ManufractureDiagramCheck = this.basicDetailsproducts[0].manufacture_Flow;
+      this.SynthesisDiagramCheck = this.basicDetailsproducts[1].synthesis_Diagram;
+      if (this.ManufractureDiagramCheck.length > 0 || this.SynthesisDiagramCheck.length > 0) {
+        this.ProductAttributeLoader = false;
+        this.pihAlertMessage = false;
+        if (this.ManufractureDiagramCheck.length > 0) {
+          this.ManufractureDiagramPart = true;
+          this.ManufractureDiagram = this.ManufractureDiagramCheck;
+          this.ManufractureDiagramMaterialLevel=[];
+          this.ManufractureDiagramProductLevel=[];
+          this.ManufractureDiagramCasLevel=[];
+          this.ManufractureDiagram.forEach(element => {
+            if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+              this.ManufractureDiagramMaterialLevel.push(element);
+            }
+            else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+              this.ManufractureDiagramProductLevel.push(element);
+            }
+            else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+              this.ManufractureDiagramCasLevel.push(element);
+            }
+          })
 
-          } else {
-            this.ManufractureDiagramPart = false;
-          }
-          this.SynthesisDiagramCheck = this.basicDetailsproducts[1].synthesis_Diagram;
-          if (this.SynthesisDiagramCheck.length > 0) {
-            this.SynthesisDiagramPart = true;
-            this.SynthesisDiagram = this.SynthesisDiagramCheck;
-            this.SynthesisDiagram.forEach(element => {
-              if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
-                this.SynthesisDiagramMaterialLevel.push(element);
-              }
-              else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
-                this.SynthesisDiagramProductLevel.push(element);
-              }
-              else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
-                this.SynthesisDiagramCasLevel.push(element);
-              }
-            })
-          } else {
-            this.SynthesisDiagramPart = false;
-          }
+        } else {
+          this.ManufractureDiagramPart = false;
         }
+        this.SynthesisDiagramCheck = this.basicDetailsproducts[1].synthesis_Diagram;
+        if (this.SynthesisDiagramCheck.length > 0) {
+          this.SynthesisDiagramPart = true;
+          this.SynthesisDiagram = this.SynthesisDiagramCheck;
+          this.SynthesisDiagramMaterialLevel=[];
+          this.SynthesisDiagramProductLevel=[];
+          this.SynthesisDiagramCasLevel=[];
+          this.SynthesisDiagram.forEach(element => {
+            if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+              this.SynthesisDiagramMaterialLevel.push(element);
+            }
+            else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+              this.SynthesisDiagramProductLevel.push(element);
+            }
+            else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+              this.SynthesisDiagramCasLevel.push(element);
+            }
+          })
+        } else {
+          this.SynthesisDiagramPart = false;
+        }
+      }
       else {
         this.pihAlertMessage = true;
         this.ProductAttributeLoader = false;
@@ -650,32 +742,33 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   //Composition API Call
   compositionProcess(value) {
     console.log(value);
+    this.compositionlocations =[];
     this.compostionCheck = value;
     if (this.compostionCheck === 'Legal Composition') {
       this.compositionLegalTypes = true;
       this.compositionSHI = false;
       this.productAttributeAPIData = [];
-        // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+      // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
       this.CategoryDetails = { index: 0, Category: "Composition", Subcategory: "Legal Composition" }
       this.productAttributeAPIData.push({
         'Spec_id': this.specCompData,
         'Category_details': this.CategoryDetails,
-        'product_Level':this.momentiveService.getProductLevelDetails(),
-        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-        'CAS_Level':this.momentiveService.getCasLevelDetails(),
+        'product_Level': this.momentiveService.getProductLevelDetails(),
+        'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level': this.momentiveService.getCasLevelDetails(),
       });
       console.log(this.productAttributeAPIData)
       this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
         console.log(data);
         this.productdata = data;
-        if(this.productdata != 0){
+        if (this.productdata != 0) {
           this.compositionRating = true;
           this.notFoundComposition = false;
           this.compositionlocations = this.productdata;
           console.log(this.compositionlocations);
         } else {
-           this.compositionRating = false;
-           this.notFoundComposition = true;
+          this.compositionRating = false;
+          this.notFoundComposition = true;
         }
       });
 
@@ -683,27 +776,28 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.compositionLegalTypes = false;
       this.compositionSHI = true;
       this.productAttributeAPIData = [];
-        // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+      this.compositionlocations =[];
+      // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
       this.CategoryDetails = { index: 0, Category: "Composition", Subcategory: "Standard, 100 % & INCI Composition" }
       this.productAttributeAPIData.push({
         'Spec_id': this.specCompData,
         'Category_details': this.CategoryDetails,
-        'product_Level':this.momentiveService.getProductLevelDetails(),
-        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-        'CAS_Level':this.momentiveService.getCasLevelDetails(),
+        'product_Level': this.momentiveService.getProductLevelDetails(),
+        'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level': this.momentiveService.getCasLevelDetails(),
       });
       console.log(this.productAttributeAPIData)
       this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
         console.log(data);
         this.productdata = data;
-        if(this.productdata != 0){
+        if (this.productdata != 0) {
           this.compositionRating = true;
           this.notFoundComposition = false;
           this.compositionlocations = this.productdata;
           console.log(this.compositionlocations);
         } else {
-           this.compositionRating = false;
-           this.notFoundComposition = true;
+          this.compositionRating = false;
+          this.notFoundComposition = true;
         }
       });
     }
@@ -722,15 +816,16 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.productAttributeAPIData.push({
       'Spec_id': this.specCompData,
       'Category_details': this.CategoryDetails,
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.productAttributeAPIData);
     this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
       console.log(data);
       this.productdata = data;
       this.compositionStandardData = this.productdata;
+      console.log(this.compositionStandardData);
       this.legalCompositionData = this.productdata.legal_composition;
       this.SVT_table = this.productdata.svt;
     });
@@ -763,7 +858,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       return (event.order * result);
     });
   }
-  onSortClick(event,data) {
+  onSortClick(event, data) {
     let columndata = data;
     console.log(columndata);
     console.log(event);
@@ -773,11 +868,11 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     if (classList.contains('fa-caret-up')) {
       classList.remove('fa-caret-up');
       classList.add('fa-caret-down');
-      this.sortDir=-1;
+      this.sortDir = -1;
     } else {
       classList.add('fa-caret-up');
       classList.remove('fa-caret-down');
-      this.sortDir=1;
+      this.sortDir = 1;
     }
     this.GhsLabelsort(columndata);
   }
@@ -823,45 +918,78 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
 
 
+  // exportToCompostionExcel(table, name) {
+  //   var uri = 'data:application/vnd.ms-excel;base64,'
+  //     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+  //     , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+  //     , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+  //   if (!table.nodeType) table = document.getElementById(table)
+  //   var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+  //   window.location.href = uri + base64(format(template, ctx))
 
-  exportToCompostionExcel(table, name) {
-    var uri = 'data:application/vnd.ms-excel;base64,'
-      , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-      , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-      , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-      if (!table.nodeType) table = document.getElementById(table)
-      var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-      window.location.href = uri + base64(format(template, ctx))
-
-  }
- 
-
+  // }
+  exportToCompostionExcel() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.StandardCompositiontable.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'Standard Composition Table.xlsx');
+   }
+   exportToLegalExcel() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.LegalCompositiontable.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'Legal Composition Table.xlsx');
+   }
+   exportToSVTExcel() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.SVTtable.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'SVT Table.xlsx');
+   }
+  
+  exportToGhsLabelingExcel() {
+    console.log(this.copyghsLabelingData);
+   this.copyghsLabelingData.forEach(element => {
+      if(element.symbols) {
+      delete element.symbols;
+        }
+    })
+    console.log(this.copyghsLabelingData)
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.json_to_sheet(this.copyghsLabelingData);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'GhsLabeling.xlsx');
+   }
   //SpecID Intial Droopdownlist
   getIntialSpecList() {
 
-      this.SPECdropdownList = this.momentiveService.getCategorySpecList()
-      this.SpecListDetails = this.SPECdropdownList;
-      // set initial selection
-      this.specListData.setValue(this.SpecListDetails[0]);
+    this.SPECdropdownList = this.momentiveService.getCategorySpecList()
+    this.SpecListDetails = this.SPECdropdownList;
+    // set initial selection
+    this.specListData.setValue(this.SpecListDetails[0]);
 
-      this.firstSpecData = this.specListData.setValue(this.SpecListDetails[0]);
-      // load the initial speclist list
-      this.filteredspecList.next(this.SpecListDetails.slice());
-      // listen for search field value changes
-      this.specFilterCtrl.valueChanges
-        .pipe(takeUntil(this._onDestroy))
-        .subscribe(() => {
-          this.filterSPECListMulti();
-        });
-        console.log(this.SPECdropdownList);
- 
-        this.specCompData.push(this.specListData.value);
-        console.log(this.specCompData);
+    this.firstSpecData = this.specListData.setValue(this.SpecListDetails[0]);
+    // load the initial speclist list
+    this.filteredspecList.next(this.SpecListDetails.slice());
+    // listen for search field value changes
+    this.specFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterSPECListMulti();
+      });
+    console.log(this.SPECdropdownList);
+
+    this.specCompData.push(this.specListData.value);
+    console.log(this.specCompData);
   }
 
   CompositionSpecChange(data) {
     console.log(data)
-    this.specCompData =[]
+    this.specCompData = []
     this.specCompData.push(data);
     console.log(this.specCompData);
     this.productAttributeComposition();
@@ -898,31 +1026,41 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.SpecListDetails.filter(speclist => speclist.name.toLowerCase().indexOf(search) > -1)
     );
   }
-  imagePreview(data) { 
+  imagePreview(data,imageType) {
     console.log(data);
-    this.imgaePreviewUrl = data;
+    if(imageType == 'png') {
+       this.showImage = true;
+       this.showPdf = false;
+       this.imgaePreviewUrl = data;
+    } else if(imageType == 'pdf') {
+       this.showPdf = true;
+       this.showImage = false;
+       this.imgaePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(data);
+      console.log(this.imgaePreviewUrl);
+    }
+    
   }
 
-  categorizeProductType(productData){
-    this.materialLevelCategoy =[];
-    this.productLevelCategoy =[];
-    this.casLevelCategoy =[];
+  categorizeProductType(productData) {
+    this.materialLevelCategoy = [];
+    this.productLevelCategoy = [];
+    this.casLevelCategoy = [];
 
     this.categorizeArrayData = productData;
     this.categorizeArrayData.forEach(element => {
-      if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+      if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
         this.materialLevelCategoy.push(element);
       }
-      else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+      else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
         this.productLevelCategoy.push(element);
       }
-      else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+      else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
         this.casLevelCategoy.push(element);
       }
     })
-  console.log(this.productLevelCategoy);
-  console.log(this.materialLevelCategoy);
-  console.log(this.casLevelCategoy);
+    console.log(this.productLevelCategoy);
+    console.log(this.materialLevelCategoy);
+    console.log(this.casLevelCategoy);
 
   }
 }

@@ -151,6 +151,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   secondLevelSearch: any = [];
   basicProperitiesAPIDetails: any = [];
   limitedSPec: any = [];
+  newLimitedData:any = []
 
 
   //Get Material and CAS Level Details:
@@ -177,6 +178,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   searchProductText:any;
   searchMaterialText:any;
   searchCASText:any;
+  
+
 
   /** control for the selected SPEC_List for multi-selection */
   public specMultiCtrl: FormControl = new FormControl();
@@ -215,11 +218,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
 
-$('.collapse').on('show.bs.collapse', function () {
-  $('.collapse').each(function(){
-      $(this).collapse('hide');
-  });
-});
+
 
     this.url = window.location.href.includes('home');
     console.log(this.url);
@@ -505,6 +504,9 @@ $('.collapse').on('show.bs.collapse', function () {
   OntologyTest() {
     this.router.navigate(['/ontology/ontology-test']);
   }
+  OtherSAPTable() {
+    this.router.navigate(['/app-other-tables']);
+  }
 
   //SpecID Droopdownlist
   getIntialSpecList(data) {
@@ -537,6 +539,7 @@ $('.collapse').on('show.bs.collapse', function () {
         }
       });
       // set initial selection
+       this.toggleSelection('false')
       this.specMultiCtrl.setValue(this.NewSpecList);
       this.momentiveService.setCategorySpecList(this.NewSpecList);
       this.getAPICallCASDetails();
@@ -623,29 +626,31 @@ $('.collapse').on('show.bs.collapse', function () {
   }
   //Filter Option In SPEC ID
   toggleSelection(change): void {
-    alert('Allow To Select Only 20 SPEC List')
+
     console.log(this.SpecLists);
-    let newLimitedData = [];
+    this.newLimitedData = [];
     this.filteredSpecMulti.pipe(takeUntil(this._onDestroy))
       .subscribe((val) => {
         if (change.checked) {
+          // alert('Allow To Select Only 20 SPEC List');
           this.limitedSPec = [];
           console.log(val);
           this.limitedSPec = val;
-          newLimitedData = this.limitedSPec.slice(0, 20);
-          console.log(newLimitedData);
-          this.specMultiCtrl.setValue(newLimitedData);
+          this.newLimitedData = this.limitedSPec.slice(0, 20);
+          console.log(this.newLimitedData);
+          this.specMultiCtrl.setValue(this.newLimitedData);
           console.log(this.specMultiCtrl);
         } else {
           this.limitedSPec = val;
-          newLimitedData = this.limitedSPec.slice(0, 1);
-          console.log(newLimitedData);
-          this.specMultiCtrl.setValue(newLimitedData);
+          this.newLimitedData = this.limitedSPec.slice(0, 1);
+          console.log(this.newLimitedData);
+          this.specMultiCtrl.setValue(this.newLimitedData);
         }
       });
   }
   //Sets the initial value after the filteredSPEC_Lists are loaded initially
   protected setInitialValue() {
+    this.limitedSPec = [];
     this.filteredSpecMulti
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {

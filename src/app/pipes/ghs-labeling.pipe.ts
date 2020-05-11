@@ -16,12 +16,12 @@ export class GhsLabelingPipe implements PipeTransform {
     searchGHSText = searchGHSText.toLowerCase();
     console.log(searchGHSText);
       return items.filter(function(Product) {
-        return Product.spec_Id.toLowerCase().includes(searchGHSText.toLowerCase()) ||
-        Product.regulatory_Basis.toLowerCase().includes(searchGHSText.toLowerCase()) ||
-        Product.usage.toLowerCase().includes(searchGHSText.toLowerCase()) ||
-        Product.signal_Word.toLowerCase().includes(searchGHSText.toLowerCase()) ||
-        Product.hazard_Statements.toLowerCase().includes(searchGHSText.toLowerCase()) ||
-        Product.prec_Statements.toLowerCase().includes(searchGHSText.toLowerCase());
+        return Product.spec_Id.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
+        Product.regulatory_Basis.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
+        Product.usage.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
+        Product.signal_Word.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
+        Product.hazard_Statements.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
+        Product.prec_Statements.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase());
         //Product.additional_Information.toLowerCase().includes(searchGHSText.toLowerCase());
     })
    }}

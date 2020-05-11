@@ -13,6 +13,7 @@ import { ToxicologyComponent } from './toxicology/toxicology.component';
 import { RestrictedSubstanceComponent } from './restricted-substance/restricted-substance.component';
 import { SalesVolumeComponent } from './sales-volume/sales-volume.component';
 import { ReportDataComponent } from './report-data/report-data.component';
+import { OtherTablesComponent } from './other-tables/other-tables.component';
 
 const routes: Routes = [
   { path: '', component: PageindexComponent },
@@ -28,6 +29,8 @@ const routes: Routes = [
   { path: 'app-restricted-substance', component: RestrictedSubstanceComponent },
   { path: 'app-sales-volume', component: SalesVolumeComponent },
   { path: 'app-report-data', component: ReportDataComponent },
+  { path: 'app-other-tables', component: OtherTablesComponent },
+
   {
     path: 'ontology',
     loadChildren: 'src/app/ontology/ontology.module#OntologyModule'

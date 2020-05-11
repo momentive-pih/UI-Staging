@@ -15,9 +15,9 @@ export class ProductLevelPipe implements PipeTransform {
     // convert the searchProductText to lower case
     searchProductText = searchProductText.toLowerCase();
       return items.filter(function(Product) {
-        return Product.real_Spec_Id.toLowerCase().includes(searchProductText.toLowerCase()) ||
-        Product.namprod.toLowerCase().includes(searchProductText.toLowerCase()) ||
-        Product.synonyms.toLowerCase().includes(searchProductText.toLowerCase()) ;
+        return Product.real_Spec_Id.toString().toLowerCase().includes(searchProductText.toString().toLowerCase()) ||
+        Product.namprod.toString().toLowerCase().includes(searchProductText.toString().toLowerCase()) ||
+        Product.synonyms.toString().toLowerCase().includes(searchProductText.toString().toLowerCase()) ;
     })
 
    }

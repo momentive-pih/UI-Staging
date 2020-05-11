@@ -24,7 +24,7 @@
                         </div>
                     </div>
 
-                    <li class="nav-item sidebar-nav" *ngFor="let product of sidebarCategoriesData ;let i = index">
+                    <li class="nav-item sidebar-nav" *ngFor="let product of sidebarCategoriesHomeData ;let i = index">
                         <a class="nav-link">
                             <img class="media-object img-circle profile-img img-side" src="{{product.image}}">
                             <span (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)"
@@ -39,15 +39,18 @@
                         <ul class="nav nav-group-sub" id="{{product.sales_tab}}" class="collapse" role="tabpanel"
                             aria-labelledby="headingOne">
                             <li class="nav-item sub-sidebar-nav" *ngFor="let data of product.tab_content;">
-                                <i class="fa fa-square"></i> <span
+                                <i class="fa fa-circle icon-sub"></i> &nbsp; <span
                                     (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal"
                                     data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">
-                                    {{data.name}}</span>
+                                    {{data.name}} <br>
+                                    <li class="nav-item side-nav-nav"  *ngFor="let subdata of data.sub;let index = i">
+                                            <a class="nav-link sub-nav"> <i class="fa fa-circle icon-sub"></i> {{subdata.name}}</a></li>
+                                    </span>
                                 <!-- <span *ngIf="data.sub.length > 0" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne" >
                                 <i class="fa fa-angle-down side-sub-icon"></i>
-                            </span> -->
+                            </span>
 
-                                <!-- <ul class="nav" id="{{data.id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                              <ul class="nav" id="{{data.id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
                                 <li class="nav-item side-nav-back"  *ngFor="let subdata of data.sub;let index = i">
                                    <a class="nav-link"> <i class="fa fa-square"></i> {{subdata.name}}</a></li>
                                 
@@ -118,10 +121,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div id="filter-panel" class="collapse filter-panel">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12">
+                 
                                         <div class="selcted-crt">
 
                                             <b class="selected-sug">Selected Product -</b> &nbsp;<span
@@ -135,11 +135,7 @@
                                                 <small>{{data.name}}</small> {{i== selectedSpecList.length-1 ? '': ','}}
                                             </span>
                                         </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                         
                     </div>
 
                 </div>

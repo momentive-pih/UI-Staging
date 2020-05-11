@@ -267,13 +267,19 @@ th {
 .spec-toggle {
     float: right;
 }
-
+.decimal-data {
+    text-align: right;
+}
+.comp-header{
+    color:#333;
+    font-weight: bolder;
+}
 .potential-btn {
     text-align: center;
 }
 
 .composition-specDrop {
-    width: 40%;
+    width: 30%;
     float: right;
     margin-top: 12px;
 }
@@ -298,6 +304,15 @@ th {
     overflow-y: scroll;
 }
 
+.list-check-nav {
+    white-space: nowrap;
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align: center;
+}
 /* prime Table */
 
 ::ng-deep  .ui-table table, .ui-table table
@@ -396,7 +411,7 @@ th {
       width:30%;
       float: right;
   }
-
+  .show {display: block;}
   .panel {
     margin-bottom: 24px;
     background-color: #ffffff;
@@ -515,3 +530,16 @@ th {
     text-decoration: none;
     color: #fff;
   }
+.modal-bodys{
+    overflow-y: auto;
+    height:500px;
+}
+.modal-bodys img{
+    max-width: 100%;
+    height: auto;
+    overflow-y: scroll;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  
+}

@@ -1,0 +1,429 @@
+<div class="content-body">
+    <div class="list-check-nav">
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button *ngFor="let item of otherTableCheck ;let i = index" [value]="i"
+                [checked]="item.name === SAPTableCheck" (change)="onChangeOtherTable(item.name)">
+                {{item.name}}</mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+    <br>
+    <div *ngIf="PhraseCheck">
+        <span *ngIf="sapOthersDataLoader">
+            <i class="loader-class fa fa-spinner fa-spin"></i>
+            <span class="loader-text">Loading Data....</span>
+        </span>
+        <span *ngIf="pihAlertMessage">
+            <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+        </span>
+
+        <div class="row" *ngIf="!sapOthersDataLoader && !pihAlertMessage">
+            <div class="col-md-12">
+                <h6 class="others-head">Phrase Translation</h6>
+                <p-table #dt [columns]="pharseHead" [value]="pharseData" (sortFunction)="customSort($event)"
+                    [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
+                    columnResizeMode="expand" [responsive]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-template>
+                    <br>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pResizableColumn>
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr class="ui-resizable-column">
+                            <td class="ptable-size">{{index+1}}</td>
+                            <td class="ptable-size">{{rowData.phrase_Key}}</td>
+                            <td class="ptable-size">{{rowData.phrase_Text}}</td>
+                            <td class="ptable-size">{{rowData.phrase_Code}}</td>
+                            <td class="ptable-size">{{rowData.phrase_Graph}}</td>
+                            
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="allergenCheck">
+
+        <span *ngIf="sapOthersDataLoader">
+            <i class="loader-class fa fa-spinner fa-spin"></i>
+            <span class="loader-text">Loading Data....</span>
+        </span>
+        <span *ngIf="pihAlertMessage">
+            <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+        </span>
+        <div class="row" *ngIf="!sapOthersDataLoader && !pihAlertMessage">
+            <div class="col-md-12">
+                    <h6 class="others-head">Allergens</h6>
+                <p-table #dt [columns]="allergenHead" [value]="allergenData" (sortFunction)="customSort($event)"
+                    [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
+                    columnResizeMode="expand" [responsive]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pResizableColumn>
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr class="ui-resizable-column">
+                            <td class="ptable-size">{{index+1}}</td>
+                            <td class="ptable-size">{{rowData.spec_Id}}</td>
+                            <td class="ptable-size">{{rowData.usage}}</td>
+                            <td class="ptable-size">{{rowData.alerg}}</td>
+                            <td class="ptable-size">{{rowData.alest}}</td>
+                            
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="bioCompatibilityCheck">
+        <span *ngIf="sapOthersDataLoader">
+            <i class="loader-class fa fa-spinner fa-spin"></i>
+            <span class="loader-text">Loading Data....</span>
+        </span>
+        <span *ngIf="pihAlertMessage">
+            <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+        </span>
+        <div class="row" *ngIf="!sapOthersDataLoader && !pihAlertMessage">
+            <div class="col-md-12">
+                    <h6 class="others-head">Biocompatibility Testing PRI</h6>
+                <p-table #dt [columns]="bioCompatibilityHead" [value]="bioCompatibilityData"
+                    (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}"
+                    [resizableColumns]="true" columnResizeMode="expand" [responsive]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pResizableColumn>
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr class="ui-resizable-column">
+                            <td class="ptable-size">{{index+1}}</td>
+                            <td class="ptable-size">{{rowData.spec_Id}}</td>
+                            <td class="ptable-size">{{rowData.usage}}</td>
+                            <td class="ptable-size">{{rowData.bstat}}</td>
+                            <td class="ptable-size">{{rowData.btest}}</td>
+                           
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="bseTseGmoCheck">
+        <span *ngIf="sapOthersDataLoader">
+            <i class="loader-class fa fa-spinner fa-spin"></i>
+            <span class="loader-text">Loading Data....</span>
+        </span>
+        <span *ngIf="pihAlertMessage">
+            <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+        </span>
+        <div class="row" *ngIf="!sapOthersDataLoader && !pihAlertMessage">
+            <div class="col-md-12">
+                    <h6 class="others-head">BSE/TSE & GMO</h6>
+                <p-table #dt [columns]="bseTseHead" [value]="bseTseData" (sortFunction)="customSort($event)"
+                    [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
+                    columnResizeMode="expand" [responsive]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pResizableColumn>
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr class="ui-resizable-column">
+
+                            <td class="ptable-size">{{index+1}}</td>
+                            <td class="ptable-size">{{rowData.spec_Id}}</td>
+                            <td class="ptable-size">{{rowData.usage}}</td>
+                            <td class="ptable-size">{{rowData.bstsg}}</td>
+                            <td class="ptable-size">{{rowData.btgst}}</td>
+                        
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="epaCheck">
+        <span *ngIf="sapOthersDataLoader">
+            <i class="loader-class fa fa-spinner fa-spin"></i>
+            <span class="loader-text">Loading Data....</span>
+        </span>
+        <span *ngIf="pihAlertMessage">
+            <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+        </span>
+        <div class="row" *ngIf="!sapOthersDataLoader && !pihAlertMessage">
+            <div class="col-md-12">
+                    <h6 class="others-head">Environmental Protection Agency (EPA)</h6>
+                <p-table #dt [columns]="epaHead" [value]="epaData" (sortFunction)="customSort($event)"
+                    [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
+                    columnResizeMode="expand" [responsive]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pResizableColumn>
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr class="ui-resizable-column">
+                            <td class="ptable-size">{{index+1}}</td>
+                            <td class="ptable-size">{{rowData.spec_Id}}</td>
+                            <td class="ptable-size">{{rowData.usage}}</td>
+                            <td class="ptable-size">{{rowData.eparg}}</td>
+                            <td class="ptable-size">{{rowData.epast}}</td>
+                          
+                       
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="registrationCompanyCheck">
+        <span *ngIf="sapOthersDataLoader">
+            <i class="loader-class fa fa-spinner fa-spin"></i>
+            <span class="loader-text">Loading Data....</span>
+        </span>
+        <span *ngIf="pihAlertMessage">
+            <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+        </span>
+        <div class="row" *ngIf="!sapOthersDataLoader && !pihAlertMessage">
+            <div class="col-md-12">
+                    <h6 class="others-head">Registration-Company Specific</h6>
+                <p-table #dt [columns]="registrationCompanyHead" [value]="registrationCompanyData"
+                    (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}"
+                    [resizableColumns]="true" columnResizeMode="expand" [responsive]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pResizableColumn>
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr class="ui-resizable-column">
+
+                            <td class="ptable-size">{{index+1}}</td>
+                            <td class="ptable-size">{{rowData.spec_Id}}</td>
+                            <td class="ptable-size">{{rowData.usage}}</td>
+                            <td class="ptable-size">{{rowData.bukrs}}</td>
+                            <td class="ptable-size">{{rowData.regns}}</td>
+                            <td class="ptable-size">{{rowData.regqy}}</td>
+                            <td class="ptable-size">{{rowData.werks}}</td>
+                            
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="productregulatoryCheck">
+        <span *ngIf="sapOthersDataLoader">
+            <i class="loader-class fa fa-spinner fa-spin"></i>
+            <span class="loader-text">Loading Data....</span>
+        </span>
+        <span *ngIf="pihAlertMessage">
+            <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+        </span>
+        <div class="row" *ngIf="!sapOthersDataLoader && !pihAlertMessage">
+            <div class="col-md-12">
+                    <h6 class="others-head">Product Regulatory Information</h6>
+                <p-table #dt [columns]="productRegulatoryHead" [value]="productRegulatoryData"
+                    (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}"
+                    [resizableColumns]="true" columnResizeMode="expand" [responsive]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ui-helper-clearfix" style="text-align: right">
+                                    <button class="btb pg-button" type="button" label="All Data"
+                                        (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                    <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <br>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                pResizableColumn>
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                    ariaLabelDesc="Activate to sort in descending order"
+                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                        <tr class="ui-resizable-column">
+                            <td class="ptable-size">{{index+1}}</td>
+                            <td class="ptable-size">{{rowData.spec_Id}}</td>
+                            <td class="ptable-size">{{rowData.usage}}</td>
+                            <td class="ptable-size">{{rowData.prirg}}</td>
+                            <td class="ptable-size-spec">{{rowData.cstat}}</td>
+                           
+                            
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -575,22 +575,3 @@ window.addEventListener('load', function() {
     App.initAfterLoad();
 });
 
-$('#expandAllFormats').on('click', function () {
-   alert('1234');
-    if ($(this).data("lastState") === null || $(this).data("lastState") === 0) {
-         $('.collapse.in').collapse('hide');
-         $(this).data("lastState",1);
-         $(this).text("Expand All");
-     }
-     else {
-         
-         $('.panel-collapse').removeData('bs.collapse').collapse({parent:false, toggle:false})
-         .collapse('show')
-         .removeData('bs.collapse')
-         .collapse({parent:'#accordionFormat', toggle:false});
-         
-         $(this).data("lastState",0);
-         $(this).text("Collapse All");
-     }
-    
- });

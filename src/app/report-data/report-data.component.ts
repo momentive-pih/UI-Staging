@@ -38,7 +38,7 @@ export class ReportDataComponent implements OnInit {
   documentTypes: any;
   historical_documents: boolean;
   released_documents: boolean = true;
-  DocumentPart: any;
+  DocumentPart: any = [];
   reportHistoryDataDataproducts: any = []
   selectedDocuments: string = "Released Documents";
   selectedCompositionControl = new FormControl(this.selectedDocuments);

@@ -203,10 +203,17 @@ article[role="manufacturer"] ul li i {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
-
+.tab-content{
+    padding: 15px 15px 15px;
+    background: #FFF;
+    border: 0px solid #D5D5D5;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 0px;
+}
 .widget-header {
     position: relative;
-    margin-top: 10px;
+    margin-top: 0px;
     margin-left: 5px
 }
 
@@ -296,4 +303,58 @@ thead th {
     font-size: 14px;
     padding: 0px;
     margin-top: -10px;
+}
+.ng-select.custom ::ng-deep .ng-arrow-wrapper {
+    width: 25px;
+    padding-right: 5px;
+    display: none;
+}
+.ng-select.custom ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-optgroup {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 8px 10px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 15px;
+    background: whitesmoke;
+}
+.ng-select.custom ::ng-deep .ng-dropdown-panel.ng-select-bottom .ng-dropdown-panel-items .ng-option:last-child {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-value {
+    font-size: .9em;
+    margin-bottom: 5px;
+    background-color: #1a355e !important;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-value .ng-value-label {
+    display: inline-block;
+    padding: 1px 5px;
+    color: #fff;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-value .ng-value-icon.left {
+    border-right: 1px solid #1a355e;
+    color: #fff;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-value .ng-value-icon:hover {
+    background-color: #1a355e;
+    color: #fff;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container {
+    min-height: 0px;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    min-height: 43px;
 }

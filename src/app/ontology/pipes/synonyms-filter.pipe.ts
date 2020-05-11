@@ -9,7 +9,12 @@ export class SynonymsFilterPipe implements PipeTransform {
     if (term === undefined) return items;
 
     return items.filter(function(Product) {
-        return Product.key.toLowerCase().includes(term.toLowerCase()) || Product.synonyms.toLowerCase().includes(term.toLowerCase());
+        return Product.key.toLowerCase().includes(term.toLowerCase()) ||
+         Product.synonyms.toLowerCase().includes(term.toLowerCase()) ||
+         Product.key_Category.toLowerCase().includes(term.toLowerCase()) ||
+         Product.created_By.toLowerCase().includes(term.toLowerCase()) ||
+         Product.created_Date.toLowerCase().includes(term.toLowerCase())||
+         Product.updated_Date.toLowerCase().includes(term.toLowerCase());
     })
 }
 

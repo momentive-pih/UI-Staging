@@ -17,7 +17,8 @@
 							<div class="new-search">
 							   <ng-select #code class="custom" [items]="items$" placeholder="Enter the details"
 							   bindLabel="name" bindValue="name" formControlName="selectedSearchNew"
-							   [closeOnSelect]="true" [multiple]="true" [hideSelected]="false" [clearable]="false"
+                               [closeOnSelect]="true" [multiple]="true" [hideSelected]="false"
+                               [clearOnBackspace]="true"  [clearable]="true"
 							   [typeahead]="input$" [dropdownPosition]="'bottom'" [searchable]="true"
 							   [selectableGroupAsModel]="false" [compareWith]="compareAccounts"
 							   [selectableGroup]="false" groupBy="group" (change)="onChangeData($event)"
@@ -62,6 +63,7 @@
                         <a class="category-list"><b>PSPEC*</b> - Pure Specification ID</a>
                         <a class="category-list"><b>SYN*</b> - Product Synonyms</a>
                         <a class="category-list"><b>CHEM*</b> - Chemical Name</a>
+                        <a class="category-list"><b>ONT*</b> - Ontology</a>
                 </div>
               </div>
     
@@ -96,6 +98,7 @@
                     <i class="fa fa-random mr-2"></i> Ontology Management </a>
             </li>
 
+          
             
         </ul>
     </div>
@@ -135,6 +138,10 @@
             <li class="nav-item dropdown font-weight-semibold">
                 <a (click)="changePage('ontology/synonyms', false)" class="navbar-nav-link">
                     <i class="fa fa-random mr-2"></i> Ontology Management </a>
+            </li>
+            <li class="nav-item dropdown font-weight-semibold">
+                    <a (click)="OtherSAPTable()" class="navbar-nav-link">
+                        <i class="fa fa-plus"></i> Additional Information </a>
             </li>
            
         </ul>
@@ -187,16 +194,16 @@
 
       
 
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="accordion" id="accordionBasicProperties" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#myGroup" href="#productLevel" aria-expanded="true" aria-controls="collapseOne">
+                                <a class="collapsed" role="button" data-toggle="collapse"  href="#productLevel" aria-expanded="true" aria-controls="collapseOne">
                                     <h5><b>Product Level Details</b></h5>
                                 </a>
                             </h6>
                         </div>
-                        <div id="productLevel" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne">
+                        <div id="productLevel" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne"  data-parent="#accordionBasicProperties">
                             <div class="panel-body">
                                 <div *ngIf="productLevel.length > 0">
                                     <h5><b>Product Level Details</b></h5>
@@ -240,20 +247,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
+               
              
-                <br>
-
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+           
+               
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#myGroup" href="#materialLevel" aria-expanded="true" aria-controls="collapseOne">
+                                <a class="collapsed" role="button" data-toggle="collapse"  href="#materialLevel" aria-expanded="true" aria-controls="collapseOne">
                                     <h5><b>Material Level Details</b></h5>
                                 </a>
                             </h6>
                         </div>
-                        <div id="materialLevel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div id="materialLevel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"  data-parent="#accordionBasicProperties">
                             <div class="panel-body">
                 <div *ngIf="MaterialLevel.length > 0">
                    
@@ -302,18 +308,18 @@
                         </div>
                     </div>
                 </div>
-                </div></div></div></div>
-                <br>
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                </div></div></div>
+              
+                
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#myGroup" href="#casLevel" aria-expanded="true" aria-controls="collapseOne">
+                                <a class="collapsed" role="button" data-toggle="collapse"  href="#casLevel" aria-expanded="true" aria-controls="collapseOne">
                                     <h5><b> Component Level Details</b></h5>
                                 </a>
                             </h6>
                         </div>
-                        <div id="casLevel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div id="casLevel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"  data-parent="#accordionBasicProperties">
                             <div class="panel-body">
                 <div *ngIf="casLevel.length > 0">
                   

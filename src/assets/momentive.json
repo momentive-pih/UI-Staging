@@ -152,7 +152,183 @@
 
 }
 ],
- 
+ "sidebarCategoriesHomeData" : [
+  {
+    "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+    "id":"LSR 2680FC A",
+    "Name" : "Product Attributes",
+    "image" : "../../../assets/images/momentive/category/productAttributes.jpg",
+    "sales_tab": "product_attribute",
+    "modal_id": "composition",
+    "tab_modal": "compositionModal",
+    
+    "tab_content":[
+      {
+      "name": "Basic Information","id":"basic",
+      "sub": [{"name":"Basic Information","id":"1"},
+        {"name":"Potential Application","id":"2"}
+        ]
+      }, 
+      {
+        "name": "GHS Labeling","id":"ghs",
+        "sub": []
+      }, 
+      {
+        "name": "Structures and Formulas","id":"structure",
+        "sub": [{"name":"Chemical Structure","id":"1"},
+          {"name":"Molecular Formula","id":"2"},  
+          {"name":"Molecular Weight","id":"3"}
+          ]
+      },
+      {
+        "name": "Composition","id":"composition",
+        "sub": []
+      },
+      {
+      "name":"Flow Diagrams","id":"diagram",
+      "sub": [
+        {"name":"Manufracture Diagram","id":"2"},  
+        {"name":"Synthesis Diagram","id":"3"}
+      ]
+      }]
+    },
+    {
+    "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+    "id":"LSR 2680FC A",
+    "Name" : "Product compliance",
+    "image": "../../../assets/images/momentive/category/ProductCompliance.jpg",
+    "sales_tab": "product_Compliance",
+    "modal_id": "product_Compliance",
+    "tab_modal": "complianceModal",
+    
+    "tab_content":[
+    {
+      "name": "Notification Status","id":"1",
+      "sub": []
+    }, 
+    {
+      "name": "AG Registration Status","id":"2",
+      "sub": []
+    }]
+    
+    },
+    {
+    "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+    "id":"LSR 2680FC A",
+    "Name" : "Customer Communication",
+    "image": "../../../assets/images/momentive/category/customerCommunication.png",
+    "sales_tab": "customerCommunication",
+    "modal_id": "customerCommunication",
+    "tab_modal": "communicationModal",
+    "customer_name":"OU EUROBIO LAB",
+    
+    "tab_content":[
+    {
+      "name": "US FDA Letter","id":"1",
+      "sub": []
+    },
+    {
+      "name": "EU Food Contact","id":"2",
+      "sub": []
+    },
+    {
+      "name": "Heavy Metals content","id":"3",
+      "sub": []
+    }, 
+    {
+      "name": "Communication History","id":"4",
+      "sub": []
+    }]
+    
+    },
+    {
+    "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+    "id":"LSR 2680FC A",
+    "Name" : "Toxicology",
+    "image": "../../../assets/images/momentive/category/toxicology.jpg",
+    "sales_tab": "toxicology",
+    "modal_id": "toxicology",
+    "tab_modal": "toxicologyModal",
+    
+    "tab_content":[
+    {
+      "name": "Study Title and Date","id":"1",
+      "sub": []
+    }, 
+    {
+      "name": "Monthly Toxicology Study List","id":"2",
+      "sub": [ ]
+      },
+    {
+      "name": "Toxicology Summary","id":"2",
+      "sub": []
+    },
+    {
+      "name": "Toxicology Registration Tracker","id":"2",
+      "sub": []
+    }]
+    
+    
+    },
+    
+    {
+    "product_name":  "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+    "id":"LSR 2680FC A",
+    "Name" : "Restricted Substance",
+    "image": "../../../assets/images/momentive/category/restrictedsubstance.png",
+    "sales_tab": "restrictedSubstance",
+    "modal_id": "restrictedSubstance",
+    "tab_modal": "restrictedSubstanceModal" ,
+    
+    "tab_content":[
+    {
+      "name": "GADSL","id":"1",
+      "sub": []
+    }, 
+    {
+      "name": "California Prop 65","id":"2",
+      "sub": []
+    }]
+    
+    
+    },
+    
+    
+    {
+    "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+    "id":"LSR 2680FC A",
+    "Name" : "Sales Information",
+    "image" : "../../../assets/images/momentive/category/salesInformation.jpg",
+    "sales_tab": "sales_Information",
+    "modal_id": "sales_Information",
+    "tab_modal": "salesModal", 
+    
+    "tab_content":[
+    {
+      "name": "Sales Volume","id":"1",
+      "sub": []
+    }
+    ]
+    
+    
+    },
+    {
+    "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
+    "id":"LSR 2680FC A",
+    "Name" : "Report Data",
+    "image":"../../../assets/images/momentive/category/report.png",
+    "sales_tab": "report_Data",
+    "modal_id": "report_Data",
+    "tab_modal": "reportModal",
+    
+    "tab_content":[
+    {
+      "name": "Released Documents","id":"1",
+      "sub": []
+    }]
+    
+    }
+ ],
 
 "sidebarCategoriesData": [
   {
@@ -964,7 +1140,45 @@
             { "field": "material_number", "header": "Material Number","width": "20%"},
             { "field": "tier_owner", "header": "Tier 2 Owner","width": "20%"}
          
-          ]
+          ],
+   
+          
+  "otherSAPTableCheck" : [
+    {
+       "name":"Phrase Translation",
+       "value":"Phrase Translation",
+       "checked": true
+    },
+    {
+     "name":"Allergens",
+     "value":"Allergens",
+     "checked": false
+     },
+     {
+        "name":"Biocompatibility Testing PRI",
+        "value":"Biocompatibility Testing PRI",
+        "checked": false
+     },
+     {
+         "name":"BSE/TSE & GMO",
+         "value":"BSE/TSE & GMO",
+         "checked": false
+      },
+      {
+        "name":"Environmental Protection Agency (EPA)",
+        "value":"Environmental Protection Agency (EPA)",
+        "checked": false
+     } ,
+     {
+      "name":"Registration-Company Specific",
+      "value":"Registration-Company Specific",
+      "checked": false
+   },
+   {
+    "name":"Product Regulatory Information",
+    "value":"Product Regulatory Information",
+    "checked": false
+ } ]
 
 } 
 

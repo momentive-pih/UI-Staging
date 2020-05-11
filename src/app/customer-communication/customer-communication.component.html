@@ -5,7 +5,9 @@
                 <div class="slide-center">
                     <div class="list-check">
                         <mat-radio-group aria-label="Select an option">
-                            <mat-radio-button *ngFor="let item of customerCommunicationChecks;let i = index" [value]="i" [checked]="item.name === customerCommunicationTab" (change)="onChangeCommunication(item.name)"> {{item.name}}</mat-radio-button>
+                            <mat-radio-button *ngFor="let item of customerCommunicationChecks;let i = index" [value]="i"
+                                [checked]="item.name === customerCommunicationTab"
+                                (change)="onChangeCommunication(item.name)"> {{item.name}}</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -19,158 +21,168 @@
             </span>
             <!--NO DATA FOUND SECTION-->
             <span *ngIf="pihAlertMessage">
-                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+                <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
             </span>
 
             <!--USFDA CODE SECTION-->
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage && !USFDADetailDataPage">
-                <h6 class="text-default font-weight-semibold">US FDA Letter: <i class="fa fa-info-circle" role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
-              
-                <div class="panel-group accordion" id="accordionExample">
-                        <div class="panel panel-primary">
-                           <div class="panel-heading" role="tab" id="headingOne">
-                              <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true" aria-controls="collapseOne">
-                                 Product Level 
-                                 </a>
-                              </h6>
-                           </div>
-                           <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                              <div class="panel-body">
+                <h6 class="text-default font-weight-semibold">US FDA Letter: <i class="fa fa-info-circle" role="button"
+                        title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
 
-                                <span  *ngIf="!productLevelCategoy.length"> No Data Found</span>
+                <div class="accordion" id="accordionUSFDA">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h6 class="panel-title">
+                                <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true"
+                                aria-controls="collapseOne">
+                                    <h6>Product Level</h6>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne"
+                            data-parent="#accordionUSFDA">
+                            <div class="panel-body">
 
-                                 <div  *ngIf="productLevelCategoy.length > 0" class="row">
-                                        <div class="col-md-12 table-responsive">
-                                              
-                                                <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th><b>S.NO</b></th>
-                                                                <th><b>Date of Issue</b></th>
-                                                                <th><b>Product Name</b></th>
-                                                                <th><b>Product Type</b></th>
-                                                                <th><b>file_Source</b></th>
-                                                                <th><b>Document Name</b></th>
-                                                               
-                        
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr *ngFor="let data of productLevelCategoy; let i = index">
-                                                                <td>{{i+1}}</td>
-                                                                <td>{{data.createdDate}}</td>
-                                                                <td>{{data.productName}}</td>
-                                                                <td>{{data.product_Type}}</td>
-                                                                <td>{{data.file_Source}}</td>
-                                                                <td (click)="documentUSFDAPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
-                                                                
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                             </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div></div>
-                        
-                        <div class="panel-group accordion" id="accordionExample">
-                           <div class="panel panel-primary">
-                              <div class="panel-heading" role="tab" id="headingTwo">
-                                 <h6 class="panel-title">
-                                    <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false" aria-controls="collapseTwo">
-                                    Material Level 
-                                    </a>
-                                 </h6>
-                              </div>
-                              <div id="materialLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                 <div class="panel-body">
-                                     <span *ngIf="!materialLevelCategoy.length"> No Data Found </span>
-                                    <div *ngIf="materialLevelCategoy.length > 0" class="row">
-                                            <div class="col-md-12 table-responsive">
-                                                
-                                                    <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th><b>S.NO</b></th>
-                                                                    <th><b>Date of Issue</b></th>
-                                                                    <th><b>Product Name</b></th>
-                                                                    <th><b>Product Type</b></th>
-                                                                    <th><b>file_Source</b></th>
-                                                                    <th><b>Document Name</b></th>
-                                                                   
-                            
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr *ngFor="let data of materialLevelCategoy; let i = index">
-                                                                    <td>{{i+1}}</td>
-                                                                    <td>{{data.createdDate}}</td>
-                                                                    <td>{{data.productName}}</td>
-                                                                    <td>{{data.product_Type}}</td>
-                                                                    <td>{{data.file_Source}}</td>
-                                                                    <td (click)="documentUSFDAPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
-                                                                    
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                 </div>
+                                <span *ngIf="!productLevelCategoy.length"> No Data Found</span>
+
+                                <div *ngIf="productLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><b>S.NO</b></th>
+                                                    <th><b>Date of Issue</b></th>
+                                                    <th><b>Product Name</b></th>
+                                                    <th><b>Product Type</b></th>
+                                                    <th><b>File Source</b></th>
+                                                    <th><b>Document Name</b></th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of productLevelCategoy; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{data.createdDate}}</td>
+                                                    <td>{{data.productName}}</td>
+                                                    <td>{{data.product_Type}}</td>
+                                                    <td>{{data.file_Source}}</td>
+                                                    <td (click)="documentUSFDAPreview(data)"><a
+                                                            href="javascript:void(0)">{{data.fileName}}</a> </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                 </div>
-                              </div>
-                           </div></div>
-                          
-                           <div class="panel-group accordion" id="accordionExample">
-                              <div class="panel panel-primary">
-                                 <div class="panel-heading" role="tab" id="headingThree">
-                                    <h6 class="panel-title">
-                                       <a  data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false" aria-controls="collapseThree">
-                                            Component Level 
-                                       </a>
-                                    </h6>
-                                 </div>
-                                 <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                    <div class="panel-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <span   *ngIf="!casLevelCategoy.length"> No Data Found</span>
-                                      
-                                    <div *ngIf="casLevelCategoy.length > 0" class="row">
-                                            <div class="col-md-12 table-responsive">
-                                               
-                                                    <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th><b>S.NO</b></th>
-                                                                    <th><b>Date of Issue</b></th>
-                                                                    <th><b>Product Name</b></th>
-                                                                    <th><b>Product Type</b></th>
-                                                                    <th><b>file_Source</b></th>
-                                                                    <th><b>Document Name</b></th>
-                                                                   
-                            
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr *ngFor="let data of casLevelCategoy; let i = index">
-                                                                    <td>{{i+1}}</td>
-                                                                    <td>{{data.createdDate}}</td>
-                                                                    <td>{{data.productName}}</td>
-                                                                    <td>{{data.product_Type}}</td>
-                                                                    <td>{{data.file_Source}}</td>
-                                                                    <td (click)="documentUSFDAPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
-                                                                    
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                 </div>
-                                       </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h6 class="panel-title">
+                                <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                                    <h6>Material Level</h6>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="materialLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionUSFDA">
+                            <div class="panel-body">
+                                <span *ngIf="!materialLevelCategoy.length"> No Data Found </span>
+                                <div *ngIf="materialLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><b>S.NO</b></th>
+                                                    <th><b>Date of Issue</b></th>
+                                                    <th><b>Product Name</b></th>
+                                                    <th><b>Product Type</b></th>
+                                                    <th><b>File Source</b></th>
+                                                    <th><b>Document Name</b></th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of materialLevelCategoy; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{data.createdDate}}</td>
+                                                    <td>{{data.productName}}</td>
+                                                    <td>{{data.product_Type}}</td>
+                                                    <td>{{data.file_Source}}</td>
+                                                    <td (click)="documentUSFDAPreview(data)"><a
+                                                            href="javascript:void(0)">{{data.fileName}}</a> </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                 </div>
-                              </div>
-                           </div>  
-              
-              
-        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h6 class="panel-title">
+                                <a  data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                   <h6>Component Level</h6> 
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree"
+                            data-parent="#accordionUSFDA">
+                            <div class="panel-body">
+
+                                <span *ngIf="!casLevelCategoy.length"> No Data Found</span>
+
+                                <div *ngIf="casLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><b>S.NO</b></th>
+                                                    <th><b>Date of Issue</b></th>
+                                                    <th><b>Product Name</b></th>
+                                                    <th><b>Product Type</b></th>
+                                                    <th><b>File Source</b></th>
+                                                    <th><b>Document Name</b></th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of casLevelCategoy; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{data.createdDate}}</td>
+                                                    <td>{{data.productName}}</td>
+                                                    <td>{{data.product_Type}}</td>
+                                                    <td>{{data.file_Source}}</td>
+                                                    <td (click)="documentUSFDAPreview(data)"><a
+                                                            href="javascript:void(0)">{{data.fileName}}</a> </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
 
 
@@ -184,14 +196,17 @@
                         <label class="text-default font-weight-semibold">Document Panel</label>
                         <div>
                             <!-- <embed class="food-document" alt="Thumbnail [200x250]" style="width:550px; height:700px;" [src]="Url" type="application/pdf"> -->
-                                <iframe type="application/pdf" [attr.src]="Url"
-                                frameborder="no" style="width:100%;height:500px"></iframe> 
-                            </div>
+                            <iframe type="application/pdf" [attr.src]="Url" frameborder="no"
+                                style="width:100%;height:500px"></iframe>
+                        </div>
                     </div>
 
                     <div class="col-md-6">
-                        <span class="back-btn"><button class="btn btn-back" (click)="backToUSPage()"><i class="fa fa-reply"></i> Back</button></span>
-                        <label class="text-default font-weight-semibold"><h3>Result Panel</h3></label>
+                        <span class="back-btn"><button class="btn btn-back" (click)="backToUSPage()"><i
+                                    class="fa fa-reply"></i> Back</button></span>
+                        <label class="text-default font-weight-semibold">
+                            <h3>Result Panel</h3>
+                        </label>
                         <div class=" result-box text-center">
                             <div class="box">
                                 <div class="box-title">
@@ -217,193 +232,208 @@
             </span>
 
             <span *ngIf="pihAlertMessage">
-                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+                <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
             </span>
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage && !EUFOODdetailDataPage">
-                <h6 class="text-default font-weight-semibold">Eu Food Contact: <i class="fa fa-info-circle" role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
-              
-                   
-                <div class="panel-group accordion" id="accordionExample">
-                        <div class="panel panel-primary">
-                           <div class="panel-heading" role="tab" id="headingOne">
-                              <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true" aria-controls="collapseOne">
-                                 Product Level 
-                                 </a>
-                              </h6>
-                           </div>
-                           <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                              <div class="panel-body">
-                                    <span  *ngIf="!productLevelCategoy.length"> No Data Found</span>
+                <h6 class="text-default font-weight-semibold">Eu Food Contact: <i class="fa fa-info-circle"
+                        role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
 
-                                    <div  *ngIf="productLevelCategoy.length > 0" class="row">
-                                        <div class="col-md-12 table-responsive">
-                                              
-                                                <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                    <th><b>S.NO</b></th>
-                                                                    <th><b>Date of Issue</b></th>
-                                                                    <th><b>Product Name</b></th>
-                                                                    <th><b>Product Type</b></th>
-                                                                    <th><b>file_Source</b></th>
-                                                                    <th><b>Document Name</b></th>
-                                                                  
-                        
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr *ngFor="let data of productLevelCategoy; let i = index">
-                                                                    <td>{{i+1}}</td>
-                                                                    <td>{{data.createdDate}}</td>
-                                                                    <td>{{data.productName}}</td>
-                                                                    <td>{{data.product_Type}}</td>
-                                                                    <td>{{data.file_Source}}</td>
-                                                                <td (click)="documentsEUFoodPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
-                                                                
-                        
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                             </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div></div>
-                        
-                        <div class="panel-group accordion" id="accordionExample">
-                           <div class="panel panel-primary">
-                              <div class="panel-heading" role="tab" id="headingTwo">
-                                 <h6 class="panel-title">
-                                    <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false" aria-controls="collapseTwo">
-                                    Material Level 
-                                    </a>
-                                 </h6>
-                              </div>
-                              <div id="materialLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                 <div class="panel-body">
-                                        <span *ngIf="!materialLevelCategoy.length"> No Data Found </span>
-                                        <div *ngIf="materialLevelCategoy.length > 0" class="row">
-                                            <div class="col-md-12 table-responsive">
-                                                
-                                                    <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                        <th><b>S.NO</b></th>
-                                                                        <th><b>Date of Issue</b></th>
-                                                                        <th><b>Product Name</b></th>
-                                                                        <th><b>Product Type</b></th>
-                                                                        <th><b>file_Source</b></th>
-                                                                        <th><b>Document Name</b></th>
-                                                                      
-                            
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr *ngFor="let data of materialLevelCategoy; let i = index">
-                                                                        <td>{{i+1}}</td>
-                                                                        <td>{{data.createdDate}}</td>
-                                                                        <td>{{data.productName}}</td>
-                                                                        <td>{{data.product_Type}}</td>
-                                                                        <td>{{data.file_Source}}</td>
-                                                                    <td (click)="documentsEUFoodPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
-                                                                    
-                            
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                 </div>
+
+                <div class="accordion" id="accordionEUFood">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h6 class="panel-title">
+                                <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true"
+                                aria-controls="collapseOne">
+                                    <h6>Product Level</h6>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne"
+                            data-parent="#accordionEUFood">
+                            <div class="panel-body">
+                                <span *ngIf="!productLevelCategoy.length"> No Data Found</span>
+
+                                <div *ngIf="productLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><b>S.NO</b></th>
+                                                    <th><b>Date of Issue</b></th>
+                                                    <th><b>Product Name</b></th>
+                                                    <th><b>Product Type</b></th>
+                                                    <th><b>File Source</b></th>
+                                                    <th><b>Document Name</b></th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of productLevelCategoy; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{data.createdDate}}</td>
+                                                    <td>{{data.productName}}</td>
+                                                    <td>{{data.product_Type}}</td>
+                                                    <td>{{data.file_Source}}</td>
+                                                    <td (click)="documentsEUFoodPreview(data)"><a
+                                                            href="javascript:void(0)">{{data.fileName}}</a> </td>
+
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                 </div>
-                              </div>
-                           </div></div>
-                          
-                           <div class="panel-group accordion" id="accordionExample">
-                              <div class="panel panel-primary">
-                                 <div class="panel-heading" role="tab" id="headingThree">
-                                    <h6 class="panel-title">
-                                       <a  data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false" aria-controls="collapseThree">
-                                            Component Level 
-                                       </a>
-                                    </h6>
-                                 </div>
-                                 <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                    <div class="panel-body">
-                                            <span   *ngIf="!casLevelCategoy.length"> No Data Found</span>
-                                      
-                                            <div *ngIf="casLevelCategoy.length > 0" class="row">
-                                            <div class="col-md-12 table-responsive">
-                                               
-                                                    <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                        <th><b>S.NO</b></th>
-                                                                        <th><b>Date of Issue</b></th>
-                                                                        <th><b>Product Name</b></th>
-                                                                        <th><b>Product Type</b></th>
-                                                                        <th><b>file_Source</b></th>
-                                                                        <th><b>Document Name</b></th>
-                                                                      
-                            
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr *ngFor="let data of casLevelCategoy; let i = index">
-                                                                        <td>{{i+1}}</td>
-                                                                        <td>{{data.createdDate}}</td>
-                                                                        <td>{{data.productName}}</td>
-                                                                        <td>{{data.product_Type}}</td>
-                                                                        <td>{{data.file_Source}}</td>
-                                                                    <td (click)="documentsEUFoodPreview(data)"><a href="javascript:void(0)">{{data.fileName}}</a> </td>
-                                                                    
-                            
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                 </div>
-                                       </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h6 class="panel-title">
+                                <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                                   <h6>Material Level</h6> 
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="materialLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionEUFood">
+                            <div class="panel-body">
+                                <span *ngIf="!materialLevelCategoy.length"> No Data Found </span>
+                                <div *ngIf="materialLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><b>S.NO</b></th>
+                                                    <th><b>Date of Issue</b></th>
+                                                    <th><b>Product Name</b></th>
+                                                    <th><b>Product Type</b></th>
+                                                    <th><b>File Source</b></th>
+                                                    <th><b>Document Name</b></th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of materialLevelCategoy; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{data.createdDate}}</td>
+                                                    <td>{{data.productName}}</td>
+                                                    <td>{{data.product_Type}}</td>
+                                                    <td>{{data.file_Source}}</td>
+                                                    <td (click)="documentsEUFoodPreview(data)"><a
+                                                            href="javascript:void(0)">{{data.fileName}}</a> </td>
+
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                 </div>
-                              </div>
-                           </div>  
-              
-              
-              
-          
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h6 class="panel-title">
+                                <a data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                    <h6>Component Level</h6>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree"
+                            data-parent="#accordionEUFood">
+                            <div class="panel-body">
+                                <span *ngIf="!casLevelCategoy.length"> No Data Found</span>
+
+                                <div *ngIf="casLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><b>S.NO</b></th>
+                                                    <th><b>Date of Issue</b></th>
+                                                    <th><b>Product Name</b></th>
+                                                    <th><b>Product Type</b></th>
+                                                    <th><b>File Source</b></th>
+                                                    <th><b>Document Name</b></th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of casLevelCategoy; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{data.createdDate}}</td>
+                                                    <td>{{data.productName}}</td>
+                                                    <td>{{data.product_Type}}</td>
+                                                    <td>{{data.file_Source}}</td>
+                                                    <td (click)="documentsEUFoodPreview(data)"><a
+                                                            href="javascript:void(0)">{{data.fileName}}</a> </td>
+
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
             </div>
 
-            <!--EU FOOD CONTACT DETAIL SECTION-->
-            <div *ngIf="EUFOODdetailDataPage">
-                <h6 class="text-default font-weight-semibold">Eu Food Contact Document - <i class="fa fa-info-circle" role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
-                <p>{{filename}}</p>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="text-default font-weight-semibold">Document Panel</label>
-                        <div>
-                            <!-- <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:550px; height:600px;"> -->
-                                <iframe type="application/pdf" [attr.src]="Url"
-                                frameborder="no" style="width:100%;height:500px"></iframe> 
-                            </div>
+         
+        </div>
+
+           <!--EU FOOD CONTACT DETAIL SECTION-->
+           <div *ngIf="EUFOODdetailDataPage">
+            <h6 class="text-default font-weight-semibold">Eu Food Contact Document - <i class="fa fa-info-circle"
+                    role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
+            <p>{{filename}}</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="text-default font-weight-semibold">Document Panel</label>
+                    <div>
+                        <!-- <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:550px; height:600px;"> -->
+                        <iframe type="application/pdf" [attr.src]="Url" frameborder="no"
+                            style="width:100%;height:500px"></iframe>
                     </div>
-                    <div class="col-md-6">
-                        <span class="back-btn"><button class="btn btn-back" (click)="backToEUPage()"><i class="fa fa-reply"></i> Back</button></span>
-                        <label class="text-default font-weight-semibold">Result Panel</label>
-                        <div class=" result-box text-center">
-                                <table class="table table-bordered table-bc">
-                                        <thead>
-                                            <th>Keys </th>
-                                            <th>Values</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let data of Extract_Result | keyvalue : intialSort; let i = index">
-                                                <td width="20%"><b>{{data.key}}</b></td>
-                                                <td width="65%">
-                                                    <textarea class="form-control"  type="text" [(ngModel)]="data.value" name=value-{{i}} (keyup)="documentKey(data)"></textarea></td>
-                                                <!-- <td>{{data.value}}</td><input class="form-control" type="text" formControlName="extractNamedetails" name="extractNamedetails"> -->
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
+                </div>
+                <div class="col-md-6">
+                    <span class="back-btn"><button class="btn btn-back" (click)="backToEUPage()"><i
+                                class="fa fa-reply"></i> Back</button></span>
+                    <label class="text-default font-weight-semibold">Result Panel</label>
+                    <div class=" result-box text-center">
+                        <table class="table table-bordered table-bc">
+                            <thead>
+                                <th>Keys </th>
+                                <th>Values</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of Extract_Result | keyvalue : intialSort; let i = index">
+                                    <td width="20%"><b>{{data.key}}</b></td>
+                                    <td width="65%">
+                                        <textarea class="form-control" type="text" [(ngModel)]="data.value"
+                                            name=value-{{i}} (keyup)="documentKey(data)"></textarea></td>
+                                    <!-- <td>{{data.value}}</td><input class="form-control" type="text" formControlName="extractNamedetails" name="extractNamedetails"> -->
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -416,10 +446,11 @@
             </span>
 
             <span *ngIf="pihAlertMessage">
-                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+                <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
             </span>
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage">
-                <h6 class="text-default font-weight-semibold">Heavy Metals: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
+                <h6 class="text-default font-weight-semibold">Heavy Metals: <i class="fa fa-info-circle" role="button"
+                        title="This data is from Document on Shared Drive - P"></i></h6>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box">
@@ -445,278 +476,317 @@
             </span>
 
             <span *ngIf="pihAlertMessage">
-                    <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+                <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
             </span>
 
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage && !communicationHistoryEmailSection">
-                <h6 class="text-default font-weight-semibold">Communication History:<i class="fa fa-info-circle" role="button" title="This data is from SFDC"></i></h6>
-            
-                <div class="panel-group accordion" id="accordionExample">
-                        <div class="panel panel-primary">
-                           <div class="panel-heading" role="tab" id="headingOne" >
-                              <h6 class="panel-title">
-                                 <a data-toggle="collapse"  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                 Product Level 
-                                 </a>
-                              </h6>
-                           </div>
-                           <div id="collapseOne" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                              <div class="panel-body">
-                                    <span  *ngIf="!productLevelCategoy.length"> No Data Found</span>
+                <h6 class="text-default font-weight-semibold">Communication History:<i class="fa fa-info-circle"
+                        role="button" title="This data is from SFDC"></i></h6>
 
-                                    <div  *ngIf="productLevelCategoy.length > 0" class="row">
-                                        <div class="col-md-12 table-responsive">
-                                              
-                                                <p-table #dt [columns]="CommunicationHistoryHead" [value]="productLevelCategoy"  (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
-                                                [responsive]="true">
-                                                    <ng-template pTemplate="caption">
-                                                        <div class="row">
-                                                            <div class="col-md-6" style="text-align: left">
-                                                                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value,'contains')">
-                                                            </div>
-                                                            <div class="col-md-6" style="text-align: right">
-                                
-                                                                <div class="ui-helper-clearfix" style="text-align: right">
-                                                                    <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                </div>
-                                                            </div>
+                <div class="accordion" id="accordionCutomerCommunication">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne">
+                            <h6 class="panel-title">
+                                <a>
+                                    Product Level
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse show" aria-labelledby="headingOne"
+                            data-parent="#accordionCutomerCommunication">
+                            <div class="panel-body">
+                                <span *ngIf="!productLevelCategoy.length"> No Data Found</span>
+
+                                <div *ngIf="productLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <p-table #dt [columns]="CommunicationHistoryHead" [value]="productLevelCategoy"
+                                            (sortFunction)="customSort($event)" [customSort]="true"
+                                            [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
+                                            columnResizeMode="expand" [responsive]="true">
+                                            <ng-template pTemplate="caption">
+                                                <div class="row">
+                                                    <div class="col-md-6" style="text-align: left">
+                                                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                                                        <input type="text" class="pg-search" pInputText size="50"
+                                                            placeholder="Search"
+                                                            (input)="dt.filterGlobal($event.target.value,'contains')">
+                                                    </div>
+                                                    <div class="col-md-6" style="text-align: right">
+
+                                                        <div class="ui-helper-clearfix" style="text-align: right">
+                                                            <button class="btb pg-button" type="button" label="All Data"
+                                                                (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
                                                         </div>
-                                                    </ng-template>
-                                
-                                                    <ng-template pTemplate="header" let-columns>
-                                                        <tr>
-                                                            <th class="ptable-sno">S.No</th>
-                                                            <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
-                                                                {{col.header}}
-                                                                <p-sortIcon [field]="col.field"></p-sortIcon>
-                                                            </th>
-                                                        </tr>
-                                                    </ng-template>
-                                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns"  let-index="rowIndex">
-                                                        <tr class="ui-resizable-column">    
-                                                                <td>{{index+1}}</td>
-                                                            <td class="ptable-size" (click)="emailHistoryPage(rowData.case_Number)"><a href="javascript:void(0)">
-                                                                {{rowData.case_Number}}</a>
-                                                            </td>
-                                                            <td class="ptable-size">
-                                                                    {{rowData.topic}}
-                                                                </td>
-                                                                <td class="ptable-cust-size" title="{{rowData.customer_Name}}">
-                                                                        {{rowData.customer_Name}}
-                                                                    </td>
-                                                                    <td class="ptable-size">
-                                                                            {{rowData.manufacturing_Plant}}
-                                                                        </td>
-                                                                      
-                                                                        <td class="ptable-size">
-                                                                                {{rowData.key}}
-                                                                            </td>
-                                                                            <td class="ptable-size">
-                                                                                    {{rowData.key_Type}}
-                                                                                </td>
-                                                                                <td class="ptable-size">
-                                                                                        {{rowData.tier_2_Owner}}
-                                                                                    </td>
-                                                        </tr>
-                                                    </ng-template>
-                                                </p-table>
-                                             </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div></div>
-                        
-                        <div class="panel-group accordion" id="accordionExample">
-                           <div class="panel panel-primary">
-                              <div class="panel-heading" role="tab" id="headingTwo">
-                                 <h6 class="panel-title">
-                                    <a data-toggle="collapse"  data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Material Level 
-                                    </a>
-                                 </h6>
-                              </div>
-                              <div id="collapseTwo" class="panel-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                 <div class="panel-body">
-                                        <span *ngIf="!materialLevelCategoy.length"> No Data Found </span>
-                                        <div *ngIf="materialLevelCategoy.length > 0" class="row">
-                                            <div class="col-md-12 table-responsive">
-                                                
-                                                    <p-table #dt [columns]="CommunicationHistoryHead" [value]="materialLevelCategoy"  (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
-                                                    [responsive]="true">
-                                                        <ng-template pTemplate="caption">
-                                                            <div class="row">
-                                                                <div class="col-md-6" style="text-align: left">
-                                                                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                                                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value,'contains')">
-                                                                </div>
-                                                                <div class="col-md-6" style="text-align: right">
-                                    
-                                                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </ng-template>
-                                    
-                                                        <ng-template pTemplate="header" let-columns>
-                                                            <tr>
-                                                                <th class="ptable-sno">S.No</th>
-                                                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
-                                                                    {{col.header}}
-                                                                    <p-sortIcon [field]="col.field"></p-sortIcon>
-                                                                </th>
-                                                            </tr>
-                                                        </ng-template>
-                                                        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns"  let-index="rowIndex">
-                                                            <tr class="ui-resizable-column">    
-                                                                    <td>{{index+1}}</td>
-                                                                <td class="ptable-size" (click)="emailHistoryPage(rowData.case_Number)"><a href="javascript:void(0)">
-                                                                    {{rowData.case_Number}}</a>
-                                                                </td>
-                                                                <td class="ptable-size">
-                                                                        {{rowData.topic}}
-                                                                    </td>
-                                                                    <td class="ptable-cust-size" title="{{rowData.customer_Name}}">
-                                                                            {{rowData.customer_Name}}
-                                                                        </td>
-                                                                        <td class="ptable-size">
-                                                                                {{rowData.manufacturing_Plant}}
-                                                                            </td>
-                                                                          
-                                                                            <td class="ptable-size">
-                                                                                    {{rowData.key}}
-                                                                                </td>
-                                                                                <td class="ptable-size">
-                                                                                        {{rowData.key_Type}}
-                                                                                    </td>
-                                                                                    <td class="ptable-size">
-                                                                                            {{rowData.tier_2_Owner}}
-                                                                                        </td>
-                                                            </tr>
-                                                        </ng-template>
-                                                    </p-table>
-                                                 </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th class="ptable-sno">S.No</th>
+                                                    <th class="ptable-head" *ngFor="let col of columns"
+                                                        [pSortableColumn]="col.field" pResizableColumn>
+                                                        {{col.header}}
+                                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData let-expanded="expanded"
+                                                let-columns="columns" let-index="rowIndex">
+                                                <tr class="ui-resizable-column">
+                                                    <td>{{index+1}}</td>
+                                                    <td class="ptable-size"
+                                                        (click)="emailHistoryPage(rowData.case_Number)"><a
+                                                            href="javascript:void(0)">
+                                                            {{rowData.case_Number}}</a>
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.topic}}
+                                                    </td>
+                                                    <td class="ptable-cust-size" title="{{rowData.customer_Name}}">
+                                                        {{rowData.customer_Name}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.manufacturing_Plant}}
+                                                    </td>
+
+                                                    <td class="ptable-size">
+                                                        {{rowData.key}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.key_Type}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.tier_2_Owner}}
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
                                     </div>
-                                 </div>
-                              </div>
-                           </div></div>
-                          
-                           <div class="panel-group accordion" id="accordionExample">
-
-                              <div class="panel panel-primary">
-                                 <div class="panel-heading" role="tab" id="headingThree">
-                                    <h6 class="panel-title">
-                                       <a  data-toggle="collapse"  data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Component Level 
-                                       </a>
-                                    </h6>
-                                 </div>
-                                 <div id="collapseThree" class="panel-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                    <div class="panel-body">
-                                            <span   *ngIf="!casLevelCategoy.length"> No Data Found</span>
-                                      
-                                            <div *ngIf="casLevelCategoy.length > 0" class="row">
-                                            <div class="col-md-12 table-responsive">
-                                               
-                                                    <p-table #dt [columns]="CommunicationHistoryHead" [value]="casLevelCategoy"  (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
-                                                    [responsive]="true">
-                                                        <ng-template pTemplate="caption">
-                                                            <div class="row">
-                                                                <div class="col-md-6" style="text-align: left">
-                                                                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                                                                    <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value,'contains')">
-                                                                </div>
-                                                                <div class="col-md-6" style="text-align: right">
-                                    
-                                                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </ng-template>
-                                    
-                                                        <ng-template pTemplate="header" let-columns>
-                                                            <tr>
-                                                                <th class="ptable-sno">S.No</th>
-                                                                <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
-                                                                    {{col.header}}
-                                                                    <p-sortIcon [field]="col.field"></p-sortIcon>
-                                                                </th>
-                                                            </tr>
-                                                        </ng-template>
-                                                        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns"  let-index="rowIndex">
-                                                            <tr class="ui-resizable-column">    
-                                                                    <td>{{index+1}}</td>
-                                                                <td class="ptable-size" (click)="emailHistoryPage(rowData.case_Number)"><a href="javascript:void(0)">
-                                                                    {{rowData.case_Number}}</a>
-                                                                </td>
-                                                                <td class="ptable-size">
-                                                                        {{rowData.topic}}
-                                                                    </td>
-                                                                    <td class="ptable-cust-size" title="{{rowData.customer_Name}}">
-                                                                            {{rowData.customer_Name}}
-                                                                        </td>
-                                                                        <td class="ptable-size">
-                                                                                {{rowData.manufacturing_Plant}}
-                                                                            </td>
-                                                                          
-                                                                            <td class="ptable-size">
-                                                                                    {{rowData.key}}
-                                                                                </td>
-                                                                                <td class="ptable-size">
-                                                                                        {{rowData.product_Type}}
-                                                                                    </td>
-                                                                                    <td class="ptable-size">
-                                                                                            {{rowData.tier_2_Owner}}
-                                                                                        </td>
-                                                            </tr>
-                                                        </ng-template>
-                                                    </p-table>
-                                                 </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>  
-
-
-        
-            </div>
-
-             <div *ngIf="communicationHistoryEmailSection">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                    <span><b>Case Number :</b> {{emailCasNumber}}</span>
-                                    <span class="back-btn"><button class="btn btn-back" (click)="backToCommunication()"><i class="fa fa-reply"></i> Back</button></span>
+                                </div>
                             </div>
                         </div>
-                            
-                            <div class="row mb-2">
-                                <div class="col-md-12">
-                                  <a class="text-dark">
-                                  <div class="card shadow">
+                    </div>
+                
+
+               
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h6 class="panel-title">
+                                <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                    <h6>Material Level</h6>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionCutomerCommunication">
+                            <div class="panel-body">
+                                <span *ngIf="!materialLevelCategoy.length"> No Data Found </span>
+                                <div *ngIf="materialLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <p-table #dt [columns]="CommunicationHistoryHead" [value]="materialLevelCategoy"
+                                            (sortFunction)="customSort($event)" [customSort]="true"
+                                            [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
+                                            columnResizeMode="expand" [responsive]="true">
+                                            <ng-template pTemplate="caption">
+                                                <div class="row">
+                                                    <div class="col-md-6" style="text-align: left">
+                                                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                                                        <input type="text" class="pg-search" pInputText size="50"
+                                                            placeholder="Search"
+                                                            (input)="dt.filterGlobal($event.target.value,'contains')">
+                                                    </div>
+                                                    <div class="col-md-6" style="text-align: right">
+
+                                                        <div class="ui-helper-clearfix" style="text-align: right">
+                                                            <button class="btb pg-button" type="button" label="All Data"
+                                                                (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th class="ptable-sno">S.No</th>
+                                                    <th class="ptable-head" *ngFor="let col of columns"
+                                                        [pSortableColumn]="col.field" pResizableColumn>
+                                                        {{col.header}}
+                                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData let-expanded="expanded"
+                                                let-columns="columns" let-index="rowIndex">
+                                                <tr class="ui-resizable-column">
+                                                    <td>{{index+1}}</td>
+                                                    <td class="ptable-size"
+                                                        (click)="emailHistoryPage(rowData.case_Number)"><a
+                                                            href="javascript:void(0)">
+                                                            {{rowData.case_Number}}</a>
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.topic}}
+                                                    </td>
+                                                    <td class="ptable-cust-size" title="{{rowData.customer_Name}}">
+                                                        {{rowData.customer_Name}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.manufacturing_Plant}}
+                                                    </td>
+
+                                                    <td class="ptable-size">
+                                                        {{rowData.key}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.key_Type}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.tier_2_Owner}}
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+          
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h6 class="panel-title">
+                                <a data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                    <h6>Component Level</h6>
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" aria-labelledby="headingThree"
+                            data-parent="#accordionCutomerCommunication">
+                            <div class="panel-body">
+                                <span *ngIf="!casLevelCategoy.length"> No Data Found</span>
+
+                                <div *ngIf="casLevelCategoy.length > 0" class="row">
+                                    <div class="col-md-12 table-responsive">
+
+                                        <p-table #dt [columns]="CommunicationHistoryHead" [value]="casLevelCategoy"
+                                            (sortFunction)="customSort($event)" [customSort]="true"
+                                            [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
+                                            columnResizeMode="expand" [responsive]="true">
+                                            <ng-template pTemplate="caption">
+                                                <div class="row">
+                                                    <div class="col-md-6" style="text-align: left">
+                                                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                                                        <input type="text" class="pg-search" pInputText size="50"
+                                                            placeholder="Search"
+                                                            (input)="dt.filterGlobal($event.target.value,'contains')">
+                                                    </div>
+                                                    <div class="col-md-6" style="text-align: right">
+
+                                                        <div class="ui-helper-clearfix" style="text-align: right">
+                                                            <button class="btb pg-button" type="button" label="All Data"
+                                                                (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th class="ptable-sno">S.No</th>
+                                                    <th class="ptable-head" *ngFor="let col of columns"
+                                                        [pSortableColumn]="col.field" pResizableColumn>
+                                                        {{col.header}}
+                                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData let-expanded="expanded"
+                                                let-columns="columns" let-index="rowIndex">
+                                                <tr class="ui-resizable-column">
+                                                    <td>{{index+1}}</td>
+                                                    <td class="ptable-size"
+                                                        (click)="emailHistoryPage(rowData.case_Number)"><a
+                                                            href="javascript:void(0)">
+                                                            {{rowData.case_Number}}</a>
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.topic}}
+                                                    </td>
+                                                    <td class="ptable-cust-size" title="{{rowData.customer_Name}}">
+                                                        {{rowData.customer_Name}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.manufacturing_Plant}}
+                                                    </td>
+
+                                                    <td class="ptable-size">
+                                                        {{rowData.key}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.product_Type}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                        {{rowData.tier_2_Owner}}
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div *ngIf="communicationHistoryEmailSection">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span><b>Case Number :</b> {{emailCasNumber}}</span>
+                            <span class="back-btn"><button class="btn btn-back" (click)="backToCommunication()"><i
+                                        class="fa fa-reply"></i> Back</button></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-12">
+                            <a class="text-dark">
+                                <div class="card shadow">
                                     <div class="card-body" *ngFor="let data of emailDetailsContent">
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <h5><b>Email Subject -</b> {{data.email_Subject}}</h5>
-                                             <p><b>Email Content -</b> {{data.email_Content}}</p>
-                                             <li>Email Attachments</li>
-                                        
-                                                     <li  *ngFor="let doc of data.attached_Docs">
-                                                  <span *ngIf="data.attached_Docs.length > 0" ><a href="{{doc.url}}" target="_blank">{{doc.name}}</a></span>
-                                                
-                                                  
-                                               
-                                             </li>
+                                                <h5><b>Email Subject -</b> {{data.email_Subject}}</h5>
+                                                <p><b>Email Content -</b> {{data.email_Content}}</p>
+                                                <li>Email Attachments</li>
+
+                                                <li *ngFor="let doc of data.attached_Docs">
+                                                    <span *ngIf="data.attached_Docs.length > 0"><a href="{{doc.url}}"
+                                                            target="_blank">{{doc.name}}</a></span>
+
+
+
+                                                </li>
                                             </div>
                                         </div>
                                     </div>
-                                  </div>
-                                  </a>
                                 </div>
-                            </div></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>

@@ -140,10 +140,9 @@ export class OntologyDocumentsComponent implements OnInit {
       this.productName = this.PDfOntology[0].productName;
       this.pdfUrl = this.PDfOntology[0].url;
       console.log(this.pdfUrl);
-      let SAS_token ='?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-05-29T20:19:29Z&st=2020-04-02T12:19:29Z&spr=https&sig=aodIg0rDPVsNEJY7d8AerhD79%2FfBO9LZGJdx2j9tsCM%3D';
-      let urlPDF = this.pdfUrl + SAS_token;
-      console.log(urlPDF);
-      this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(urlPDF);
+      // let SAS_token ='?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-05-29T20:19:29Z&st=2020-04-02T12:19:29Z&spr=https&sig=aodIg0rDPVsNEJY7d8AerhD79%2FfBO9LZGJdx2j9tsCM%3D';
+      // let urlPDF = this.pdfUrl + SAS_token;
+      this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
       console.log(this.Url);
     });
 
@@ -246,5 +245,9 @@ export class OntologyDocumentsComponent implements OnInit {
 
   documentKey(data) {
     console.log(data);
+  }
+
+  backOntology() {
+    this.router.navigate(['ontology']);
   }
 }

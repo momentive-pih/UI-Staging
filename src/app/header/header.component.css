@@ -72,7 +72,12 @@
     font-size: 15px;
     background: whitesmoke;
 }
-
+.ng-select ::ng-deep .ng-clear-wrapper .ng-clear {
+    display: none;
+    font-size: 18px;
+    line-height: 1;
+    pointer-events: none;
+}
 .form-width {
     width: 80%;
 }

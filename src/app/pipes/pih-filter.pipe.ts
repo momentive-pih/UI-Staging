@@ -14,15 +14,15 @@ export class PihFilterPipe implements PipeTransform {
     if (!searchMaterialText) { return items; }
 
     // convert the searchMaterialText to lower case
-    searchMaterialText = searchMaterialText.toLowerCase();
-    console.log(searchMaterialText);
+    // searchMaterialText = searchMaterialText.toLowerCase();
+    // console.log(searchMaterialText);
 
 
       return items.filter(function(Product) {
-        return Product.real_Spec_Id.toLowerCase().includes(searchMaterialText.toLowerCase()) ||
-         Product.material_Number.toLowerCase().includes(searchMaterialText.toLowerCase()) ||
-         Product.description.toLowerCase().includes(searchMaterialText.toLowerCase()) ||
-         Product.bdt.toLowerCase().includes(searchMaterialText.toLowerCase()) ;
+        return Product.real_Spec_Id.toString().toLowerCase().includes(searchMaterialText.toString().toLowerCase()) ||
+         Product.material_Number.toString().toLowerCase().includes(searchMaterialText.toString().toLowerCase()) ||
+         Product.description.toString().toLowerCase().includes(searchMaterialText.toString().toLowerCase()) ||
+         Product.bdt.toString().toLowerCase().includes(searchMaterialText.toString().toLowerCase()) ;
     })
 
    }

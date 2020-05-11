@@ -9,6 +9,7 @@ import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { element } from 'protractor';
+import { FormControl } from '@angular/forms';
 declare var $: any;
 
 @Component({
@@ -42,6 +43,14 @@ export class SalesVolumeComponent implements OnInit {
   salesInformationLoader: boolean = true;
   pihAlertMessage: boolean;
   saleVolumeDataHeader:any=[];
+  salesBasedYear:any=[];
+  selectedsalesYear: string = "Sales in 2020";
+  selectedSalesControl = new FormControl(this.selectedsalesYear);
+  sale_2019:boolean =false;
+  sale_2018:boolean =false;
+  sale_2017:boolean =false;
+  sale_2020:boolean = true
+
 
   constructor(private route: ActivatedRoute,private router: Router,private momentiveService: MomentiveService
   ) {
@@ -74,6 +83,21 @@ export class SalesVolumeComponent implements OnInit {
       console.error(err);
     });
 
+    this.salesBasedYear = [
+     {
+       "type": "Sales in 2020",
+        "value": "Sales in 2020"
+      },{
+      "type": "Sales in 2019",
+      "value": "Sales in 2019"
+    }, {
+      "type": "Sales in 2018",
+      "value": "Sales in 2018"
+    },
+    {
+      "type": "Sales in 2017",
+      "value": "Sales in 2017"
+    }],
 
 //Sales Volume Header 
     this.saleVolumeDataHeader = [
@@ -81,7 +105,8 @@ export class SalesVolumeComponent implements OnInit {
       { "field": "spec_id", "header": "Specification ID" },
       { "field": "material_description", "header": "Material Description" },
       { "field": "material_number", "header": "Material Number" },
-      { "field": "past_Sales", "header": "Past Sales" },
+      { "field": "total_sale_2020","header":"Total for the year 2019 in Kg"},
+      { "field": "past_Sales", "header": "Past Sales in Kg" },
       { "field": "region_sold", "header": "Region where sold" },
       { "field": "sales_Org", "header": "Sales Org" }
     ]
@@ -139,6 +164,74 @@ export class SalesVolumeComponent implements OnInit {
       this.locationCheck = true;
       this.volumeCheck = false;
     }
+  }
+
+  selectSaleYear(item) {
+    if('Sales in 2019' == item) {
+       this.sale_2019 = true;
+       this.sale_2018 = false
+       this.sale_2017 = false
+       this.sale_2020 = false
+       this.saleDataHead = [
+        { "field": "basic_data", "header": "Basic Data" },
+        { "field": "spec_id", "header": "Specification ID" },
+        { "field": "material_description", "header": "Material Description" },
+        { "field": "material_number", "header": "Material Number" },
+        { "field": "total_sale_2019","header":"Total for the year 2020 in Kg"},
+        { "field": "past_Sales", "header": "Past Sales in Kg" },
+        { "field": "region_sold", "header": "Region where sold" },
+        { "field": "sales_Org", "header": "Sales Org" }
+      ]
+    }
+    if('Sales in 2018' == item) {
+      this.sale_2018 = true
+      this.sale_2019 = false
+       this.sale_2017 = false
+       this.sale_2020 = false
+       this.saleDataHead = [
+        { "field": "basic_data", "header": "Basic Data" },
+        { "field": "spec_id", "header": "Specification ID" },
+        { "field": "material_description", "header": "Material Description" },
+        { "field": "material_number", "header": "Material Number" },
+        { "field": "total_sale_2018","header":"Total for the year 2018 in Kg"},
+        { "field": "past_Sales", "header": "Past Sales in Kg" },
+        { "field": "region_sold", "header": "Region where sold" },
+        { "field": "sales_Org", "header": "Sales Org" }
+      ]
+    }
+    if('Sales in 2017' == item) {
+      this.sale_2017 = true
+      this.sale_2018 = false
+       this.sale_2019 = false
+       this.sale_2020 = false
+       this.saleDataHead = [
+        { "field": "basic_data", "header": "Basic Data" },
+        { "field": "spec_id", "header": "Specification ID" },
+        { "field": "material_description", "header": "Material Description" },
+        { "field": "material_number", "header": "Material Number" },
+        { "field": "total_sale_2017","header":"Total for the year 2017 in Kg"},
+        { "field": "past_Sales", "header": "Past Sales in Kg" },
+        { "field": "region_sold", "header": "Region where sold" },
+        { "field": "sales_Org", "header": "Sales Org" }
+      ]
+    }
+    if('Sales in 2020' == item) {
+      this.sale_2017 = false
+      this.sale_2018 = false
+       this.sale_2019 = false
+       this.sale_2020 = true
+       this.saleDataHead = [
+        { "field": "basic_data", "header": "Basic Data" },
+        { "field": "spec_id", "header": "Specification ID" },
+        { "field": "material_description", "header": "Material Description" },
+        { "field": "material_number", "header": "Material Number" },
+        { "field": "total_sale_2020","header":"Total for the year 2020 in Kg"},
+        { "field": "past_Sales", "header": "Past Sales in Kg" },
+        { "field": "region_sold", "header": "Region where sold" },
+        { "field": "sales_Org", "header": "Sales Org" }
+      ]
+    }
+
   }
 
   //sorting Functionality

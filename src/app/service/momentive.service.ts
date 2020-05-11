@@ -128,6 +128,15 @@ export class MomentiveService {
   getOntologyManagement() {
     return this.http.get(Constants.SERVICES_DOMAIN + "getOntologyManagement");
   }
+
+  addSynonymsEvent(data) {
+    return this.http.post(Constants.SERVICES_DOMAIN + "postUpdateOntologyManagement", data);
+  }
+
+  addAdditionalDeatils(data) {
+    return this.http.post(Constants.SERVICES_DOMAIN + "postOtherDetails", data);
+  }
+  
   //self Service Report
   getSelfServiceReport(data) {
     return this.http.post(Constants.SERVICES_DOMAIN + "postSelfServiceReport", data);

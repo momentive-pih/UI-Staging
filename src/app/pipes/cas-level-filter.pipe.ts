@@ -18,9 +18,9 @@ export class CasLevelFilterPipe implements PipeTransform {
 
 
       return items.filter(function(Product) {
-        return Product.pure_Spec_Id.toLowerCase().includes(searchCASText.toLowerCase()) ||
-        Product.chemical_Name.toLowerCase().includes(searchCASText.toLowerCase()) ||
-        Product.cas_Number.toLowerCase().includes(searchCASText.toLowerCase()) ;
+        return Product.pure_Spec_Id.toString().toLowerCase().includes(searchCASText.toString().toLowerCase()) ||
+        Product.chemical_Name.toString().toLowerCase().includes(searchCASText.toString().toLowerCase()) ||
+        Product.cas_Number.toString().toLowerCase().includes(searchCASText.toString().toLowerCase()) ;
     })
 
    }

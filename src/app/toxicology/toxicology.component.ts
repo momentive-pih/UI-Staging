@@ -64,6 +64,8 @@ export class ToxicologyComponent implements OnInit {
   registartion_Tracker_Data: any = [];
   toxicologyStudyDataHead: any = [];
   toxicologyMonthlyDataCheck: any = [];
+  toxicologyMonthlySelantCheck:any =[];
+  toxicologyMonthlySilaneCheck:any =[];
   registrationTrackerHeader:any=[];
   registrationSummaryHeader:any=[];
   registrationHeader:any =[];
@@ -234,6 +236,11 @@ export class ToxicologyComponent implements OnInit {
     console.log(this.toxicologyDetails);
     this.momentiveService.getToxicology(this.toxicologyDetails).subscribe(data => {
       console.log(data);
+      this.productdata = data;
+      this.toxicologyMonthlySelantCheck = this.productdata[0].selant;
+      console.log(this.toxicologyMonthlySelantCheck);
+      this.toxicologyMonthlySilaneCheck = this.productdata[0].silanes;
+      console.log(this.toxicologyMonthlySilaneCheck);
       if (this.monthlyType === 'sealant') {
         this.toxicolgyLoader = true;
         this.productdata = data;

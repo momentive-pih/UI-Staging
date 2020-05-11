@@ -252,7 +252,7 @@ export class ProductComplianceComponent implements OnInit {
         if (this.productdata[0].complianceRegistrationCanada_Data.length > 0) {
           this.ProductComplianceTabLoader = false;
           this.pihAlertMessage = false;
-          this.complianceRegistrationCanada_Header = this.productdata[0].complianceRegistrationCanada_Data;
+          this.complianceLocationRegistrationData = this.productdata[0].complianceRegistrationCanada_Data;
           this.complianceRegistrationCanada_Header = this.complianceRegistrationDataCanada_Header;
           console.log(this.complianceLocationRegistrationData);
         } else {

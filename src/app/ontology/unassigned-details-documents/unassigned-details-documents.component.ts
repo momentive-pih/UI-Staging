@@ -230,4 +230,7 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
   documentKey(data) {
     console.log(data);
   }
+  backOntology() {
+    this.router.navigate(['ontology/unassigned-documents']);
+  }
 }

@@ -180,15 +180,39 @@ $(document).ready(function(){
                             .find(".more-less")
                             .toggleClass('glyphicon-plus glyphicon-minus');
                 }
-                $('.panel-group').on('hidden.bs.collapse', toggleIcon);
-                $('.panel-group').on('shown.bs.collapse', toggleIcon);
+                $('.panel-primary').on('hidden.bs.collapse', toggleIcon);
+                $('.panel-primary').on('shown.bs.collapse', toggleIcon);
     
                 $('.accordion').on('hidden.bs.collapse', toggleIcon);
                 $('.accordion').on('shown.bs.collapse', toggleIcon);
+           
     });
 
-
 scrollNav();
+
+$(document).ready(function () {
+$('.collapse').on('show.bs.collapse', function () {
+  $('.collapse').each(function(){
+      $(this).collapse('hide');
+  });
+});
+});
+
+$(document).ready(function(){
+    // Add minus icon for collapse element which is open by default
+    $(".collapse.show").each(function(){
+      $(this).prev(".panel-heading").find(".fa").addClass("fa-angle-up").removeClass("fa-angle-down");
+    });
+    
+    // Toggle plus minus icon on show hide of collapse element
+    $(".collapse").on('show.bs.collapse', function(){
+      $(this).prev(".panel-heading").find(".fa").removeClass("fa-angle-down").addClass("fa-angle-up");
+    }).on('hide.bs.collapse', function(){
+      $(this).prev(".panel-heading").find(".fa").removeClass("fa-angle-up").addClass("fa-angle-down");
+    });
+});
+
+
 
 $(document).ready(function () {
     $('#sidebarCollapse').on('click', function () {
@@ -235,34 +259,12 @@ $(document).ready(function() {
         }
     }
     
-//Fancy Box Image preview
-    //    $("a.myselector").fancybox({
-    //     'overlayShow'   :   flase,
-    //     'autoScale': true,
-    //     'autoDimensions': false,
-    //     'modal': true,
-    //     'type': 'iframe',
-    //     'autoSize' : false,
-    //     'width' : '50%',
-    //     'showCloseButton' : true,
-    //     afterShow : function() {
-    //         $('.fancybox-skin').append('<a title="Close" class="fancybox-item fancybox-close" href="javascript:jQuery.fancybox.close();"></a>');
-    //     } 
-    // });
-
 
     $('[data-toggle="offcanvas"]').click(function () {
           $('#wrapper').toggleClass('toggled');
     });  
 
- 
-    // $(".modal-wide").on("show.bs.modal", function() {
-    //     var height = $(window).height() - 200;
-    //     $(this).find(".modal-body").css("max-height", height);
-    //   });
- 
 
 
   });
 
-    

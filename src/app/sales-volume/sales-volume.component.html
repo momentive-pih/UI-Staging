@@ -1,15 +1,28 @@
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-body">
-                    <h6 class="text-default font-weight-semibold"><span class="">Sales Volume:<i class="fa fa-info-circle"
-                            role="button" title="This data is from SAP BW"></i></span>
-                    </h6>
-                </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <h6 class="text-default font-weight-semibold"><span class="">Sales Volume:<i class="fa fa-info-circle"
+                        role="button" title="This data is from SAP BW"></i></span>
+                </h6>
             </div>
         </div>
+        <div class="col-md-3" *ngIf="!pihAlertMessage">
+            <br>
+                <mat-form-field>
+                    <mat-label>Year Based Sale</mat-label>
+                    <mat-select name="selectedsalesYear" [(value)]="selectedsalesYear" placeholder="Select sale based year" (selectionChange)="selectSaleYear($event.value)">
+                        <mat-option *ngFor="let data of salesBasedYear" [value]="data.type">
+                            {{data.type}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+    </div>
 
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
+  
         <!--Sales Volume table Section-->
         <div class="modal-body" *ngIf="volumeCheck">
             <span *ngIf="salesInformationLoader">
@@ -55,6 +68,10 @@
                             <td class="ptable-size">{{rowData.spec_id}}</td>
                             <td class="ptable-size">{{rowData.material_description}}</td>
                             <td class="ptable-size">{{rowData.material_number}}</td>
+                            <td class="ptable-size"> <span *ngIf="sale_2017">{{rowData.total_sale_2017}}</span> 
+                                                        <span *ngIf="sale_2018">{{rowData.total_sale_2018}} </span>
+                                                        <span *ngIf="sale_2019">{{rowData.total_sale_2019}}</span>
+                                                        <span *ngIf="sale_2020">{{rowData.total_sale_2020}}</span> </td>
                             <td class="ptable-size">{{rowData.past_Sales}}</td>
                             <td class="ptable-size">{{rowData.region_sold}}</td>
                             <td class="ptable-size">{{rowData.sales_Org}}</td>
