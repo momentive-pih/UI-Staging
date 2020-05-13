@@ -221,7 +221,13 @@ $(document).ready(function () {
     });
 });
 
-  
+// $(document).ready(function () {
+// $('.modal').on('show.bs.modal', function () {
+   
+//     $('.modal .modal-body').css('overflow-y', 'auto'); 
+//     $('.modal .modal-body').css('max-height', $(window).height() * 0.7);
+// });
+// });
 
 
 $(document).ready(function() {
@@ -264,7 +270,6 @@ $(document).ready(function() {
           $('#wrapper').toggleClass('toggled');
     });  
 
-
-
+ 
   });
 

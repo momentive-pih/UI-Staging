@@ -37,6 +37,7 @@ export class RestrictedSubstanceComponent implements OnInit {
   restrictedCaliforniapaginator = false;
   UserSelectedProducts: any;
   radiovalue: any;
+  contentHeight:boolean= false;
   productdata: any = [];
   selectedSpecList: any = [];
   CategoryDetails: any = [];
@@ -47,6 +48,7 @@ export class RestrictedSubstanceComponent implements OnInit {
   restrictedCaliforniaTableHeader: any = [];
   restrictedCaliforniaDataHeader: any = [];
   restrictedGASDLDataHeader: any = [];
+  topcheckedData:boolean = true
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -65,6 +67,12 @@ export class RestrictedSubstanceComponent implements OnInit {
         }, 0);
       }
     });
+    this.contentHeight = false;
+    this.momentiveService.notifyCheckObservable$.subscribe(value =>{
+      console.log(value);
+      this.topcheckedData = value;
+      this.contentHeight = !this.contentHeight;
+    })
 
 
     // restrictedSubstanceChecks

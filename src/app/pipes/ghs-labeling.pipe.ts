@@ -21,7 +21,11 @@ export class GhsLabelingPipe implements PipeTransform {
         Product.usage.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
         Product.signal_Word.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
         Product.hazard_Statements.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
-        Product.prec_Statements.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase());
+        Product.prec_Statements.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase())||
+        Product.prstd.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
+        Product.prstp.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
+        Product.prstr.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase()) ||
+        Product.prsts.toString().toLowerCase().includes(searchGHSText.toString().toLowerCase());
         //Product.additional_Information.toLowerCase().includes(searchGHSText.toLowerCase());
     })
    }}

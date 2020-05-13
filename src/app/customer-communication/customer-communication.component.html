@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-        <div class="board-inner radio-check-mbv">
+        <div class="board-inner radio-check-mbv" *ngIf="topcheckedData">
             <div class="slide-nav">
                 <div class="slide-center">
                     <div class="list-check">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal-body" *ngIf="usFDA">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight'  *ngIf="usFDA">
             <!--LOADING OPTION SECTION-->
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
@@ -225,7 +225,7 @@
 
         <!--EU FOOD CONTACT SECTION-->
 
-        <div class="modal-body" *ngIf="EuFoodContact">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' *ngIf="EuFoodContact">
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
@@ -439,7 +439,7 @@
             </div>
         </div>
         <!--HEAVY METAL SECTION-->
-        <div class="modal-body" *ngIf="heavyMetals">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight'  *ngIf="heavyMetals">
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
@@ -469,7 +469,7 @@
         </div>
 
         <!--COMMUNICATION HISTORY SECTION-->
-        <div class="modal-body" *ngIf="communicationHistory">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight'  *ngIf="communicationHistory">
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>

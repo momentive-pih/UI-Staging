@@ -1,8 +1,18 @@
 .modal-body {
-    background-color: #fff;
-    max-height: calc(100vh - 212px);
-    overflow-y: auto;
+  background-color: #fff;
+  position: relative !important;
+  height: calc(100vh - 80px) !important;
+  overflow-y: auto !important;
+  padding:20px;
 }
+.modal-body-new {
+  position: relative;
+  height: calc(100vh - 200px) ;
+  overflow-y: auto;
+  padding:20px;
+  background-color:#fff;
+}
+
 
 .docs-btn {
     color: #1a355e !important;

@@ -344,3 +344,13 @@
 .spec-btn {
    cursor: pointer;
 }
+.board-inner{
+    display: none;
+}
+.catsection{
+    font-size: 11px;
+    padding: 3px 5px 1px 5px;
+    float: right;
+    border: 0px;
+    margin: 5px;
+}

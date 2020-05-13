@@ -43,10 +43,11 @@
                                     (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal"
                                     data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">
                                     {{data.name}} <br>
-                                    <li class="nav-item side-nav-nav"  *ngFor="let subdata of data.sub;let index = i">
-                                            <a class="nav-link sub-nav"> <i class="fa fa-circle icon-sub"></i> {{subdata.name}}</a></li>
-                                    </span>
-                                <!-- <span *ngIf="data.sub.length > 0" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne" >
+                            <li class="nav-item side-nav-nav" *ngFor="let subdata of data.sub;let index = i">
+                                <a class="nav-link sub-nav"> <i class="fa fa-circle icon-sub"></i> {{subdata.name}}</a>
+                            </li>
+                            </span>
+                            <!-- <span *ngIf="data.sub.length > 0" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne" >
                                 <i class="fa fa-angle-down side-sub-icon"></i>
                             </span>
 
@@ -55,11 +56,11 @@
                                    <a class="nav-link"> <i class="fa fa-square"></i> {{subdata.name}}</a></li>
                                 
                             </ul> -->
-                            </li>
-                            <li class="nav-item-divider"></li>
-                        </ul>
                     </li>
-                    <!-- /main -->
+                    <li class="nav-item-divider"></li>
+                </ul>
+                </li>
+                <!-- /main -->
                 </ul>
             </div>
         </div>
@@ -108,40 +109,44 @@
     <div class="modal-dialog momodel modal-fluid" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <b class="selected-sug">{{productTitle}} &nbsp; <span class="spec-btn" data-toggle="collapse"
-                        data-target="#filter-panel"><i class="fa fa-caret-down" title="Selected Products and Specification" aria-hidden="true"></i></span></b>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
-                        class="fa fa-times"></i></button>
+                <div class="col-md-8">
+                    <b class="selected-sug">{{productTitle}} &nbsp; <span class="spec-btn" data-toggle="collapse"
+                            data-target="#filter-panel"><i class="fa fa-caret-down"
+                                title="Selected Products and Specification" aria-hidden="true"></i></span></b>
+                </div>
 
+                <div class="col-md-4">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+                            class="fa fa-times"></i></button>
 
+                    <button class="catsection" type="button" (click)="toggleHighlight(1)">{{buttonName}}
+                    </button>
+                </div>
             </div>
-
-
-
             <div class="container-fluid">
                 <div class="row">
                     <div id="filter-panel" class="collapse filter-panel">
-                 
-                                        <div class="selcted-crt">
 
-                                            <b class="selected-sug">Selected Product -</b> &nbsp;<span
-                                                class="selected-sug" *ngFor="let data of globalSearchData;let i=index">
-                                                <small>{{data.name}}</small> {{i== globalSearchData.length-1 ? '': ','}}
-                                            </span>
-                                            <br>
+                        <div class="selcted-crt">
 
-                                            <b class="selected-sug">Selected Specification Lists -</b> &nbsp;<span
-                                                class="selected-sug" *ngFor="let data of selectedSpecList;let i=index">
-                                                <small>{{data.name}}</small> {{i== selectedSpecList.length-1 ? '': ','}}
-                                            </span>
-                                        </div>
-                         
+                            <b class="selected-sug">Selected Product -</b> &nbsp;<span class="selected-sug"
+                                *ngFor="let data of globalSearchData;let i=index">
+                                <small>{{data.name}}</small> {{i== globalSearchData.length-1 ? '': ','}}
+                            </span>
+                            <br>
+
+                            <b class="selected-sug">Selected Specification Lists -</b> &nbsp;<span class="selected-sug"
+                                *ngFor="let data of selectedSpecList;let i=index">
+                                <small>{{data.name}}</small> {{i== selectedSpecList.length-1 ? '': ','}}
+                            </span>
+                        </div>
+
                     </div>
 
                 </div>
             </div>
 
-            <div class="board-inner">
+            <div [ngClass]="{'board-inner': highlightedDiv === 1}">
                 <div class="slide-nav">
                     <div class="slide-left-outsize" *ngIf="sidebarTopIcon">
                         <span class="fa fa-backward"></span>

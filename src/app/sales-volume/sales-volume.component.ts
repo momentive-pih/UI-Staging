@@ -49,7 +49,8 @@ export class SalesVolumeComponent implements OnInit {
   sale_2019:boolean =false;
   sale_2018:boolean =false;
   sale_2017:boolean =false;
-  sale_2020:boolean = true
+  sale_2020:boolean = true;
+  contentHeight:boolean = false;
 
 
   constructor(private route: ActivatedRoute,private router: Router,private momentiveService: MomentiveService
@@ -72,7 +73,11 @@ export class SalesVolumeComponent implements OnInit {
         }, 0);
       }
     });
-
+    this.contentHeight = false;
+    this.momentiveService.notifyCheckObservable$.subscribe(value =>{
+      console.log(value);
+      this.contentHeight = !this.contentHeight;
+    })
 
     // Sales Volume Tab change function
     this.momentiveService.getSearchData().subscribe(data => {
@@ -105,7 +110,7 @@ export class SalesVolumeComponent implements OnInit {
       { "field": "spec_id", "header": "Specification ID" },
       { "field": "material_description", "header": "Material Description" },
       { "field": "material_number", "header": "Material Number" },
-      { "field": "total_sale_2020","header":"Total for the year 2019 in Kg"},
+      { "field": "total_sale_2020","header":"Total for the year 2020 in Kg"},
       { "field": "past_Sales", "header": "Past Sales in Kg" },
       { "field": "region_sold", "header": "Region where sold" },
       { "field": "sales_Org", "header": "Sales Org" }
@@ -177,7 +182,7 @@ export class SalesVolumeComponent implements OnInit {
         { "field": "spec_id", "header": "Specification ID" },
         { "field": "material_description", "header": "Material Description" },
         { "field": "material_number", "header": "Material Number" },
-        { "field": "total_sale_2019","header":"Total for the year 2020 in Kg"},
+        { "field": "total_sale_2019","header":"Total for the year 2019 in Kg"},
         { "field": "past_Sales", "header": "Past Sales in Kg" },
         { "field": "region_sold", "header": "Region where sold" },
         { "field": "sales_Org", "header": "Sales Org" }

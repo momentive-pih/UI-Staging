@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-        <div class="board-inner radio-check-mbv">
+        <div class="board-inner radio-check-mbv" *ngIf="topcheckedData">
             <div class="slide-nav">
                 <div class="slide-center">
                     <div class="list-check">
@@ -13,7 +13,7 @@
         </div>
 
 
-        <div class="modal-body" *ngIf="complianceNotification">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' *ngIf="complianceNotification">
             <!--Alert Message and Loading section-->
             <span *ngIf="ProductComplianceTabLoader">
                         <i class="loader-class fa fa-spinner fa-spin"></i>

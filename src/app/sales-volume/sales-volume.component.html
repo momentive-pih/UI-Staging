@@ -24,7 +24,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
   
         <!--Sales Volume table Section-->
-        <div class="modal-body" *ngIf="volumeCheck">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' *ngIf="volumeCheck">
             <span *ngIf="salesInformationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading Sales Information data....</span>

@@ -87,6 +87,7 @@ export class CustomerCommunicationComponent implements OnInit {
   communicationHistoryDetails: any = [];
   USFDADetailDataPage: boolean = false;
   EUFOODdetailDataPage: boolean = false;
+  contentHeight:boolean = false;
   CommunicationHistoryDataHead: any = [];
   HeavyMetalsData: any;
   communicationHistoryEmailSection:boolean = false;
@@ -97,6 +98,7 @@ export class CustomerCommunicationComponent implements OnInit {
   materialLevelCategoy:any =[];
   casLevelCategoy:any=[];
   categoryLevelData:any;
+  topcheckedData:boolean = true
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private router: Router, private sanitizer: DomSanitizer,
@@ -122,7 +124,12 @@ export class CustomerCommunicationComponent implements OnInit {
         }, 0);
       }
     });
-
+    this.contentHeight = false;
+    this.momentiveService.notifyCheckObservable$.subscribe(value =>{
+      console.log(value);
+      this.topcheckedData = value;
+      this.contentHeight = !this.contentHeight;
+    })
   
  //Collapse script
  $('.collapse').on('show.bs.collapse', function () {

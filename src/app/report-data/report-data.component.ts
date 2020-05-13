@@ -39,6 +39,7 @@ export class ReportDataComponent implements OnInit {
   historical_documents: boolean;
   released_documents: boolean = true;
   DocumentPart: any = [];
+  contentHeight:boolean= false;
   reportHistoryDataDataproducts: any = []
   selectedDocuments: string = "Released Documents";
   selectedCompositionControl = new FormControl(this.selectedDocuments);
@@ -72,6 +73,12 @@ export class ReportDataComponent implements OnInit {
         { "field": "version", "header": "Version" },
         { "field": "released_on", "header": "Released on" }
       ]
+
+      this.contentHeight = false;
+      this.momentiveService.notifyCheckObservable$.subscribe(value =>{
+        console.log(value);
+        this.contentHeight = !this.contentHeight;
+      })
   }
 
   //Release Document API Call

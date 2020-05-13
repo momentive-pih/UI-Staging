@@ -64,6 +64,8 @@ export class HomeComponent implements OnInit {
   productdata: any = [];
   intialSelctedData:any =[];
   UserSelectedProducts: any;
+  highlightedDiv: number;
+  buttonName ='Hide Categories';
   globalSearchData:any=[];
   objectKeys = Object.keys;
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
@@ -76,6 +78,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
     // Home Page API CALL
     this.intialSelctedData = localStorage.getItem('SearchBarData');
     console.log(this.intialSelctedData);
@@ -307,4 +311,20 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+
+  toggleHighlight(newValue: number) {
+    if (this.highlightedDiv === newValue) {
+      this.highlightedDiv = 0;
+      this.buttonName ='Hide Categories'
+      this.momentiveService.callMethodOfRadioComponent(true);
+    }
+    else {
+      this.highlightedDiv = newValue;
+      this.buttonName ='Show Categories'
+      this.momentiveService.callMethodOfRadioComponent(false);
+    }
+  }
+
+
 }

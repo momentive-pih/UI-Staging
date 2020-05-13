@@ -78,6 +78,7 @@ export class ProductComplianceComponent implements OnInit {
   ProductComlianceDetails: any = [];
   ProductComplianceTabLoader: boolean;
   pihAlertMessage: boolean = false;
+  contentHeight:boolean = false;
   pc_NotificationDataHeader: any = [];
   complianceLocationRegistrationData: any = [];
   locationBasedRegistration: any;
@@ -85,6 +86,7 @@ export class ProductComplianceComponent implements OnInit {
   complianceRegistrationDataEUHeader: any = [];
   complianceRegistrationDataLatin_Header: any = [];
   selectedAGRegistrationLocation: string = "EU";
+  topcheckedData:boolean = true
   selectedCompositionControl = new FormControl(this.selectedAGRegistrationLocation);
 
   constructor(private route: ActivatedRoute,private router: Router, private momentiveService: MomentiveService) {
@@ -121,6 +123,12 @@ export class ProductComplianceComponent implements OnInit {
         }, 0);
       }
     });
+    this.contentHeight = false;
+    this.momentiveService.notifyCheckObservable$.subscribe(value =>{
+      console.log(value);
+      this.topcheckedData = value;
+      this.contentHeight = !this.contentHeight;
+    })
 
     //Notification Header
     this.pc_NotificationDataHeader = [

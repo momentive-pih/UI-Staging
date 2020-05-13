@@ -1,6 +1,6 @@
 <div class="row">
    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-      <div class="board-inner radio-check-mbv">
+      <div class="board-inner radio-check-mbv" *ngIf="topcheckedData">
          <div class="slide-nav">
             <div class="slide-center">
                <div class="list-check">
@@ -13,7 +13,8 @@
             </div>
          </div>
       </div>
-      <div class="modal-body">
+
+      <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' >
          <!--Alert Meaasge and Loading Section-->
          <div *ngIf="primaryInformtionTypes">
             <span *ngIf="ProductAttributeLoader">
@@ -62,8 +63,8 @@
                      <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                            <h6 class="panel-title">
-                              <a  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                              aria-controls="collapseOne">
+                              <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                 aria-controls="collapseOne">
                                  <h6>Product Level</h6>
                               </a>
                            </h6>
@@ -93,7 +94,8 @@
                                              <td>{{each.product}}</td>
                                              <td>{{each.product_Type}}</td>
                                              <td>{{each.file_source}}</td>
-                                             <td style="width:40%"> <a href="#" (click)="imagePreview(each.prod_App,each.file_Type)"
+                                             <td style="width:40%"> <a href="#"
+                                                   (click)="imagePreview(each.prod_App,each.file_Type)"
                                                    class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                    {{each.filename}}
                                                 </a>
@@ -117,7 +119,7 @@
                         <div class="panel-heading" role="tab" id="headingTwo">
                            <h6 class="panel-title">
                               <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                              aria-controls="collapseTwo">
+                                 aria-controls="collapseTwo">
                                  <h6>Material Level</h6>
                               </a>
                            </h6>
@@ -147,7 +149,8 @@
                                              <td>{{each.product}}</td>
                                              <td>{{each.product_Type}}</td>
                                              <td>{{each.file_source}}</td>
-                                             <td style="width:40%"> <a href="#" (click)="imagePreview(each.prod_App,each.file_Type)"
+                                             <td style="width:40%"> <a href="#"
+                                                   (click)="imagePreview(each.prod_App,each.file_Type)"
                                                    class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                    {{each.filename}}
                                                 </a>
@@ -171,8 +174,8 @@
                         <div class="panel-heading" role="tab" id="headingThree">
                            <h6 class="panel-title">
                               <a data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
-                              aria-controls="collapseThree">
-                                <h6>Component Level</h6> 
+                                 aria-controls="collapseThree">
+                                 <h6>Component Level</h6>
                               </a>
                            </h6>
                         </div>
@@ -201,7 +204,8 @@
                                              <td>{{each.product}}</td>
                                              <td>{{each.product_Type}}</td>
                                              <td>{{each.file_source}}</td>
-                                             <td style="width:40%"> <a href="#" (click)="imagePreview(each.prod_App,each.file_Type)"
+                                             <td style="width:40%"> <a href="#"
+                                                   (click)="imagePreview(each.prod_App,each.file_Type)"
                                                    class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                    {{each.filename}}
                                                 </a>
@@ -264,40 +268,52 @@
                      </form>
                   </div>
                   <div class="col-md-8">
-                     <button (click)="exportToGhsLabelingExcel()"
-                        class="btn spec-btn pull-right">Export
+                     <button (click)="exportToGhsLabelingExcel()" class="btn spec-btn pull-right">Export
                         To Excel</button>
                   </div>
                </div>
                <br>
+               <div [class.search-table-outter-new]='contentHeight' [class.search-table-outter]='!contentHeight'>
                <div class="row">
                   <div class="col-md-12">
                      <table class="table" #ghsTable>
                         <thead>
                            <tr>
                               <th>S.No</th>
-                              <th>Specification Id
+                              <th class="ghs-head">Specification Id-NAM Prod
                                  <i (click)="onSortClick($event,'spec_Id')" class="my-icon fa fa-caret-up"></i>
                               </th>
-                              <th>Regulatory Basis
+                              <th class="ghs-head">Regulatory Basis
                                  <i (click)="onSortClick($event,'regulatory_Basis')" class="my-icon fa fa-caret-up"></i>
                               </th>
-                              <th>Usage
+                              <th class="ghs-head">Usage
                                  <i (click)="onSortClick($event,'usage')" class="my-icon fa fa-caret-up"></i>
                               </th>
-                              <th>Symbols
+                              <th class="ghs-head">Symbols
                                  <i (click)="onSortClick($event,'symbols')" class="my-icon fa fa-caret-up"></i>
                               </th>
-                              <th>Signal Word <i (click)="onSortClick($event,'signal_Word')"
+                              <th class="ghs-head">Signal Word <i (click)="onSortClick($event,'signal_Word')"
                                     class="my-icon fa fa-caret-up"></i></th>
-                              <th>Hazard Statements
+                              <th class="ghs-head-haz">     Hazard Statements 
                                  <i (click)="onSortClick($event,'hazard_Statements')"
                                     class="my-icon fa fa-caret-up"></i>
                               </th>
-                              <th>Prec Statements
+                              <th class="ghs-head" title="Precautionary Statement General">PS General
                                  <i (click)="onSortClick($event,'prec_Statements')" class="my-icon fa fa-caret-up"></i>
                               </th>
-                              <th>Additional Information / Remarks
+                              <th class="ghs-head" title="Precautionary Statement Prevention">PS Prevention
+                                 <i (click)="onSortClick($event,'prstp')" class="my-icon fa fa-caret-up"></i>
+                              </th>
+                              <th  class="ghs-head" title="Precautionary Statement Response">PS Response
+                                 <i (click)="onSortClick($event,'prstr')" class="my-icon fa fa-caret-up"></i>
+                              </th>
+                              <th class="ghs-head" title="Precautionary Statement Storage">PS Storage
+                                 <i (click)="onSortClick($event,'prsts')" class="my-icon fa fa-caret-up"></i>
+                              </th>
+                              <th class="ghs-head" title="Precautionary Statement Disposal">PS Disposal
+                                 <i (click)="onSortClick($event,'prstd')" class="my-icon fa fa-caret-up"></i>
+                              </th>
+                              <th class="ghs-head">Additional Information / Remarks
                                  <i (click)="onSortClick($event,'additional_Information')"
                                     class="my-icon fa fa-caret-up"></i>
                               </th>
@@ -333,6 +349,18 @@
                                  {{each.prec_Statements}}
                               </td>
                               <td class="ptable-size">
+                                 {{each.prstp}}
+                              </td>
+                              <td class="ptable-size">
+                                 {{each.prstr}}
+                              </td>
+                              <td class="ptable-size">
+                                 {{each.prsts}}
+                              </td>
+                              <td class="ptable-size">
+                                 {{each.prstd}}
+                              </td>
+                              <td class="ptable-size">
                                  {{each.additional_Information}}
                               </td>
                            </tr>
@@ -340,7 +368,7 @@
                      </table>
                   </div>
                </div>
-            </div>
+            </div></div>
          </div>
          <!--Structure and Formulas-->
          <div *ngIf="structureAndFormulaTypes">
@@ -353,15 +381,16 @@
             </span>
             <div *ngIf="!ProductAttributeLoader && !pihAlertMessage && !moleclularWeightDetailDataPage">
 
-               
-                  <div class="list-check-nav">
-                        <mat-radio-group aria-label="Select an option">
-                           <mat-radio-button *ngFor="let item of structureFormulaCheck ;let i = index" [value]="i"
-                              [checked]="item.name === structureFormulaCheckData" (change)="onChangeStructureFormula(item.name)">
-                              {{item.name}}</mat-radio-button>
-                        </mat-radio-group>
-                     </div>
-                  
+
+               <div class="list-check-nav">
+                  <mat-radio-group aria-label="Select an option">
+                     <mat-radio-button *ngFor="let item of structureFormulaCheck ;let i = index" [value]="i"
+                        [checked]="item.name === structureFormulaCheckData"
+                        (change)="onChangeStructureFormula(item.name)">
+                        {{item.name}}</mat-radio-button>
+                  </mat-radio-group>
+               </div>
+
                <!---Chemical Structure-->
                <div class="row" *ngIf="chemiaclSection">
                   <div class="col-md-12">
@@ -373,7 +402,7 @@
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#chemicalStructureproductLevel"
-                                 aria-expanded="true" aria-controls="collapseOne">
+                                    aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
@@ -405,8 +434,8 @@
                                                 <td>{{data.productName}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -430,7 +459,7 @@
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#chemicalStructurematerialLevel"
-                                 aria-expanded="false" aria-controls="collapseTwo">
+                                    aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
@@ -462,8 +491,8 @@
                                                 <td>{{data.productName}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -487,7 +516,7 @@
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#chemicalStructurecasLevel"
-                                 aria-expanded="false" aria-controls="collapseThree">
+                                    aria-expanded="false" aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
@@ -519,8 +548,8 @@
                                                 <td>{{data.productName}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -548,14 +577,12 @@
                   <div class="col-md-12 table-responsive">
                      <h6 class="text-default font-weight-semibold mb-2 mh-2">Molecular Formula: <i
                            class="fa fa-info-circle" role="button" title="This data is from TIR & SIP SP"></i></h6>
-
-
                      <div class="accordion" id="accordionMolecularFormula">
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#molecularFormulaProductLevel"
-                                 aria-expanded="true" aria-controls="collapseOne">
+                                    aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
@@ -587,8 +614,8 @@
                                                 <td>{{data.productName}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -612,7 +639,7 @@
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#molecularFormulaMaterialLevel"
-                                 aria-expanded="false" aria-controls="collapseTwo">
+                                    aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
@@ -643,8 +670,8 @@
                                                 <td>{{data.productName}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -665,10 +692,10 @@
 
 
                         <div class="panel panel-primary">
-                           <div class="panel-heading" role="tab" id="headingThree" >
+                           <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
-                                 <a  data-toggle="collapse" data-target="#molecularFormulaCasLevel" aria-expanded="false"
-                                 aria-controls="collapseThree">
+                                 <a data-toggle="collapse" data-target="#molecularFormulaCasLevel" aria-expanded="false"
+                                    aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
@@ -699,8 +726,8 @@
                                                 <td>{{data.productName}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -734,9 +761,9 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
-                                 <a  data-toggle="collapse" data-target="#molecularWeightProductLevel"
-                                 aria-expanded="true" aria-controls="collapseOne">
-                                   <h6>Product Level</h6> 
+                                 <a data-toggle="collapse" data-target="#molecularWeightProductLevel"
+                                    aria-expanded="true" aria-controls="collapseOne">
+                                    <h6>Product Level</h6>
                                  </a>
                               </h6>
                            </div>
@@ -781,7 +808,7 @@
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#molecularWeightMaterialLevel"
-                                 aria-expanded="false" aria-controls="collapseTwo">
+                                    aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
@@ -827,7 +854,7 @@
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#molecularWeightCasLevel" aria-expanded="false"
-                                 aria-controls="collapseThree">
+                                    aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
@@ -868,315 +895,393 @@
                            </div>
                         </div>
                      </div>
-
                   </div>
-
-
-            
                </div>
-  
-                            <!--Molecular Weight Details Section-->
-    
+
+               <!--Molecular Weight Details Section-->
+
             </div>
             <div *ngIf="moleclularWeightDetailDataPage">
-                  <h6 class="text-default font-weight-semibold">Molecular Weight -<span>{{filename}}</span></h6>
-                  <div class="row">
-                     <div class="col-md-6">
-                        <label class="text-default font-weight-semibold">Document Panel</label>
-                        <div>
-                           <!-- <embed class="food-document" alt="Thumbnail [200x250]" style="width:550px; height:700px;" [src]="Url" type="application/pdf"> -->
-                           <iframe type="application/pdf" [attr.src]="Url" frameborder="no"
-                              style="width:100%;height:500px"></iframe>
-                        </div>
+               <h6 class="text-default font-weight-semibold">Molecular Weight -<span>{{filename}}</span></h6>
+               <div class="row">
+                  <div class="col-md-6">
+                     <label class="text-default font-weight-semibold">Document Panel</label>
+                     <div>
+                        <!-- <embed class="food-document" alt="Thumbnail [200x250]" style="width:550px; height:700px;" [src]="Url" type="application/pdf"> -->
+                        <iframe type="application/pdf" [attr.src]="Url" frameborder="no"
+                           style="width:100%;height:500px"></iframe>
                      </div>
-                     <div class="col-md-6">
-                        <span class="back-btn"><button class="btn btn-back" (click)="backTostructurePage()"><i
-                                 class="fa fa-reply"></i> Back</button></span>
-                        <label class="text-default font-weight-semibold">
-                           <h3>Result Panel</h3>
-                        </label>
-                        <div class=" result-box text-center">
-                           <div class="box">
-                              <div class="box-title">
-                                 <h3 class="link-data">{{filename}}</h3>
-                              </div>
-                              <div class="box-text">
-                                 <span class="result-text">{{Extract_Result}}
-                                 </span>
-                              </div>
+                  </div>
+                  <div class="col-md-6">
+                     <span class="back-btn"><button class="btn btn-back" (click)="backTostructurePage()"><i
+                              class="fa fa-reply"></i> Back</button></span>
+                     <label class="text-default font-weight-semibold">
+                        <h3>Result Panel</h3>
+                     </label>
+                     <div class=" result-box text-center">
+                        <div class="box">
+                           <div class="box-title">
+                              <h3 class="link-data">{{filename}}</h3>
+                           </div>
+                           <div class="box-text">
+                              <span class="result-text">{{Extract_Result}}
+                              </span>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
-   
+            </div>
+
          </div>
          <!--Composition section-->
          <div *ngIf="compositionTypes">
             <div class="row">
                <div class="col-md-12">
 
-<div class="row">
-   <div class="col-md-4">
-      <h5><b>Composition Details</b></h5>
-   </div>
-      <div class="col-md-8">
-            <mat-form-field class="composition-specDrop">
-               <mat-select [formControl]="specListData" name="specList"
-                  placeholder="Select SPEC ID" disableOptionCentering
-                  panelClass="myPanelClass" #singleSelect
-                  (selectionChange)="CompositionSpecChange($event.value)">
-                  <mat-select-filter [formControl]="specFilterCtrl" ngDefaultControl>
-                  </mat-select-filter>
-                  <mat-option *ngFor="let specDetails of filteredspecList | async"
-                     [value]="specDetails">
-                     {{specDetails.name}}
-                  </mat-option>
-               </mat-select>
-            </mat-form-field>
-         </div>
-</div>
-
-<div class="panel panel-primary">
-      <div class="panel-heading" role="tab" id="headingOne">
-         <h6 class="panel-title">
-            <a class="collapsed"  data-toggle="collapse" data-target="#compositionProductLevel"
-            aria-expanded="true" aria-controls="collapseOne">
-               <h6>Product Level</h6>
-            </a>
-         </h6>
-      </div>
-      <div id="compositionProductLevel" class="panel-collapse collapse show" aria-labelledby="headingOne"
-         >
-         <div class="panel-body">
-            <table>
-               <thead>
-                  <th>REAL SUB Number</th>
-                  <th>Product Name</th>
-                  <th>Relabel Name(s)</th>
-                  <th>BDT | INCI Name</th>
-               </thead>
-               <tbody>
-                  <tr *ngIf="productLevelDetails">
-                     <td>{{productLevelDetails.spec_id}}</td>
-                     <td>{{productLevelDetails.product_Identification}}</td>
-                     <td>{{productLevelDetails.relabels}}</td>
-                     <td>{{productLevelDetails.INCI_name}}</td>
-                  </tr>
-               </tbody>
-            </table>
-    
-   </div>
-</div>
-    </div>
-
-                     <div class="accordion" id="accordioncomposition">
-                     
-                               <div class="panel panel-primary">
-                                 <div class="panel-heading" role="tab" id="headingOne">
-                                    <h6 class="panel-title">
-                                       <a class="collapsed" data-toggle="collapse" data-target="#compositionMaterialLevel"
-                                       aria-expanded="true" aria-controls="collapseOne">
-                                         <h6>Material Level</h6>
-                                       </a>
-                                    </h6>
-                                 </div>
-                                 <div id="compositionMaterialLevel" class="panel-collapse collapse" aria-labelledby="headingOne"
-                                    data-parent="#accordioncomposition">
-                                    <div class="panel-body">
+                  <div class="row comp-heading">
+                     <div class="col-md-4">
+                        <br>
+                        <h5><b>Composition Details</b></h5>
+                     </div>
+                     <div class="col-md-8">
+                        <mat-form-field class="composition-specDrop">
+                           <mat-select [formControl]="specListData" name="specList" placeholder="Select SPEC ID"
+                              disableOptionCentering panelClass="myPanelClass" #singleSelect
+                              (selectionChange)="CompositionSpecChange($event.value)">
+                              <mat-select-filter [formControl]="specFilterCtrl" ngDefaultControl>
+                              </mat-select-filter>
+                              <mat-option *ngFor="let specDetails of filteredspecList | async" [value]="specDetails">
+                                 {{specDetails.name}}
+                              </mat-option>
+                           </mat-select>
+                        </mat-form-field>
+                     </div>
+                  </div>
+                  
+                     <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                           <h6 class="panel-title">
+                              <a class="collapsed" data-toggle="collapse" data-target="#compositionProductLevel"
+                                 aria-expanded="true" aria-controls="collapseOne">
+                                 <h6>Product & Material Level Details</h6>
+                              </a>
+                           </h6>
+                        </div>
 
 
-                                          <div class="row">
-                                                <div class="col-md-4">
-                                                   <nav>
-                                                      <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                                         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
-                                                            href="#allMaterial" role="tab" aria-controls="nav-home"
-                                                            aria-selected="true">All
-                                                            Material</a>
-                                                         <a class="nav-item nav-link" id="nav-tab" data-toggle="tab"
-                                                            href="#activeMaterial" role="tab" aria-controls="nav-profile"
-                                                            aria-selected="false">Active
-                                                            Material</a>
-                                                      </div>
-                                                   </nav>
-                                                </div>
-                                  
-                                                <div class="col-md-12">
-                                                   <div class="tab-content" id="nav-tabContent">
-                                                      <div class="tab-pane fade show active" id="allMaterial" role="tabpanel"
-                                                         aria-labelledby="nav-home-tab">
+                        <div id="compositionProductLevel" class="panel-collapse collapse show"
+                           aria-labelledby="headingOne" data-parent="#accordioncomposition">
+                           <div class="panel-body">
+                              <div class="row">
+                                 <div class="col-md-5">
+                                    <span><b>Product Level Details</b></span>
+                             
+                                    <div class="comp-card">
+                                       <ul class="list-group">
+                                          <li class="list-group-item"><b>REAL SUB Number
+                                                :</b>{{productLevelDetails.spec_id}}</li>
+                                          <li class="list-group-item"><b>Product Name:</b>
+                                             {{productLevelDetails.product_Identification}}</li>
+                                          <li class="list-group-item"><b>Relabel Name(s):</b>
+                                             {{productLevelDetails.relabels}}</li>
+                                          <li class="list-group-item"><b>BDT | INCI Name :</b>
+                                             {{productLevelDetails.INCI_name}}</li>
 
-                                                         <p-table #dt [columns]="compositionMaterialDataHead" [value]="allMaterialLevel" (sortFunction)="customSort($event)" [customSort]="true"  [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
-                                                         [responsive]="true">
-                                                       
-                                                             <ng-template pTemplate="header" let-columns>
-                                                                 <tr>
-                                                                     <th>S.No</th>
-                                                                     <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
-                                                                         {{col.header}}
-                                                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                     </th>
-                                                                 </tr>
-                                                             </ng-template>
-                                                 
-                                                             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                                 <tr class="ui-resizable-column">
-                                                                     <td>{{index+1}}</td>
-                                                                     
-                                                                     <td class="ptable-size">{{rowData.material_Number}}</td>
-                                                                     <td class="ptable-size">{{rowData.description}}</td>
-                                                                     <td class="ptable-size">{{rowData.bdt}}</td>
-                                                                
-                                                                 </tr>
-                                                             </ng-template>
-                                                         </p-table>
-                                                    
-                                                      </div>
-                                                      <div class="tab-pane fade" id="activeMaterial" role="tabpanel"
-                                                         aria-labelledby="nav-profile-tab">
-
-                                                         <p-table #dt [columns]="compositionMaterialDataHead" [value]="activeMaterial" (sortFunction)="customSort($event)" [customSort]="true"  [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
-                                                         [responsive]="true">
-                                                       
-                                                             <ng-template pTemplate="header" let-columns>
-                                                                 <tr>
-                                                                     <th>S.No</th>
-                                                                     <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
-                                                                         {{col.header}}
-                                                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                     </th>
-                                                                 </tr>
-                                                             </ng-template>
-                                                 
-                                                             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                                 <tr class="ui-resizable-column">
-                                                                     <td>{{index+1}}</td>
-                                                                     
-                                                                     <td class="ptable-size">{{rowData.material_Number}}</td>
-                                                                     <td class="ptable-size">{{rowData.description}}</td>
-                                                                     <td class="ptable-size">{{rowData.bdt}}</td>
-                                                                
-                                                                 </tr>
-                                                             </ng-template>
-                                                         </p-table>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                             </div>
-                              </div>
-                           </div>
-                               </div>
-                           
-                               <div class="panel panel-primary">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                       <h6 class="panel-title">
-                                          <a class="collapsed"   data-toggle="collapse" data-target="#compositionLevelDetails"
-                                          aria-expanded="true" aria-controls="collapseOne">
-                                            <h6>Composition Level Details</h6>
-                                          </a>
-                                       </h6>
+                                       </ul>
                                     </div>
-                                    <div id="compositionLevelDetails" class="panel-collapse collapse" aria-labelledby="headingOne"
-                                       data-parent="#accordioncomposition">
-                                       <div class="panel-body">
-                                             <div class="row">
-                                                   <div class="col-md-3">
-                                                      <mat-form-field>
-                                                         <mat-select name="compositionVaraible" [(value)]="selectedComposition"
-                                                            placeholder="Select Composition Type" (selectionChange)="compositionProcess($event.value)">
-                                                            <mat-option *ngFor="let data of compositionsTypes" [value]="data.name">
-                                                               {{data.name}}
-                                                            </mat-option>
-                                                         </mat-select>
-                                                      </mat-form-field>
-                                                   </div>
-                                                   <div class="col-md-3" *ngIf="compositionRating">
-                                                      <mat-form-field>
-                                                         <mat-select name="locationVaraible" [(value)]="selectedlocation"
-                                                            placeholder="Rating and Validity Area" (selectionChange)="SubLevelComposition($event.value)">
-                                                            <mat-option *ngFor="let region of compositionlocations" [value]="region.name">
-                                                               {{region.name}}
-                                                            </mat-option>
-                                                         </mat-select>
-                                                      </mat-form-field>
-                                                   </div>
-                                                </div>
-                                                <!--Standard Composition-->
-                                                <span *ngIf="compositionDataLevel">
-                                                   <span class="comp-center" *ngIf="notFoundComposition">
+
+
+                                 </div>
+                                 <div class="col-md-7">
+
+                                    <div class="row com-mat-ht">
+                                       <div class="col-md-8">
+                                          <nav>
+                                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                                                   href="#allMaterial" role="tab" aria-controls="nav-home"
+                                                   aria-selected="true">All
+                                                   Material</a>
+                                                <a class="nav-item nav-link" id="nav-tab" data-toggle="tab"
+                                                   href="#activeMaterial" role="tab" aria-controls="nav-profile"
+                                                   aria-selected="false">Active
+                                                   Material</a>
+                                             </div>
+                                          </nav>
+                                       </div>
+                                       <div class="col-md-4">
+                                          <button class="btn btn-cmp" (click)="moreTableData()"><span
+                                                *ngIf="!tableHeight">Full View</span><span *ngIf="tableHeight">Half
+                                                View</span></button>
+                                       </div>
+
+                                       <div class="col-md-12">
+                                          <div class="tab-content" id="nav-tabContent" [class.comp-divsec]='tableHeight'
+                                             style="overflow:auto;
+                     height: 200px;margin-top: -25px;">
+                                             <div class="tab-pane fade show active" id="allMaterial" role="tabpanel"
+                                                aria-labelledby="nav-home-tab">
+
+                                                <p-table #dtable [columns]="compositionMaterialDataHead"
+                                                   [value]="allMaterialLevel" (sortFunction)="customSort($event)"
+                                                   [customSort]="true" [style]="{'overflow':'auto!important'}"
+                                                   [resizableColumns]="true" columnResizeMode="expand"
+                                                   [responsive]="true">
+                                                   <ng-template pTemplate="caption">
                                                       <div class="row">
-                                                         <div class="col-md-12">
-                                                            <br>
-                                                            <b>No Data Found</b>
+                                                         <div class="col-md-6">
+                                                            <div style="text-align: left">
+                                                               <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                               <input type="text" class="pg-search" pInputText size="32"
+                                                                  placeholder="Search"
+                                                                  (input)="dtable.filterGlobal($event.target.value, 'contains')">
+                                                            </div>
+                                                         </div>
+                                                         <div class="col-md-6">
+                                                            <div class="ui-helper-clearfix" style="text-align: right">
+                                                               <button class="btb pg-button" type="button"
+                                                                  label="All Data" (click)="dtable.exportCSV()">Export
+                                                                  CSV Data</button>&nbsp;
+                                                               <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                            </div>
                                                          </div>
                                                       </div>
-                                                   </span>
-                                                   <div class="row" *ngIf="compositionSHI && !notFoundComposition">
-                                                      <div class="col-md-12">
+                                                   </ng-template>
 
-                                                            <div class="row">
-                                                                  <div class="col-md-6">
-                                                                     <span class="comp-header">Standard, 100% & INCI Composition</span>
-                                                                  </div>
-                                                                  <div class="col-md-6">
-                                                                     <button (click)="exportToCompostionExcel()"
-                                                                        class="btn spec-btn pull-right">Export
-                                                                        To Excel</button>
-                                                                  </div>
-                                                               </div>
-                                                               <br>
-                                                         <div class="table-responsive">
-                                                            <div class="table-responsive">
-                                                            
-                                                               <table class="table table-striped table-bordered" width="100%"  #StandardCompositiontable>
-                                                                  <thead>
-                                                                     <tr>
-                                                                        <th colspan="3" style="background-color:  #a0a3e0;color:#fff !important;">
-                                                                           Component
-                                                                           Details
-                                                                        </th>
-                                                                        <th colspan="3" style="background-color: #ebc3db;color:#fff !important;">
-                                                                           Standard
-                                                                           Composition
-                                                                        </th>
-                                                                        <th colspan="3" style="background-color: #c7e2bb;color:#fff !important;">100 %
-                                                                           Composition
-                                                                        </th>
-                                                                        <th colspan="3" style="background-color: rgb(235, 195, 65);color:#fff !important;">
-                                                                           INCI Composition
-                                                                        </th>
-                                                                     </tr>
-                                                                     <tr>
-                                                                        <th>Pure Spec ID</th>
-                                                                        <th>CAS Number</th>
-                                                                        <th style="width:15%">Ingredient Name</th>
-                                                                        <th>Component Type</th>
-                                                                        <th>Value</th>
-                                                                        <th style="width:5%">Unit</th>
-                                                                        <th>Component Type</th>
-                                                                        <th>Value</th>
-                                                                        <th style="width:5%">Unit</th>
-                                                                        <th>Component Type</th>
-                                                                        <th>Value & Unit</th>
-                                                                     </tr>
-                                                                  </thead>
-                                                                  <tbody>
-                                                                     <tr *ngFor="let sale of compositionStandardData">
-                                                                        <td>{{sale.pure_spec_Id}}</td>
-                                                                        <td>{{sale.cas_Number}}</td>
-                                                                        <td style="word-break:break-word;">{{sale.ingredient_Name}}</td>
-                                                                        <td>{{sale.std_Componant_Type}}</td>
-                                                                        <td class="decimal-data">{{sale.std_value}}</td>
-                                                                        <td style="width:5%">{{sale.std_unit}}</td>
-                                                                        <td>{{sale.hundrd_Componant_Type}}</td>
-                                                                        <td class="decimal-data">{{sale.hundrd_value}}</td>
-                                                                        <!-- <td style="width:5%">{{sale.hundrd_unit}}</td> -->
-                                                                        <td style="width:5%">%</td>
-                                                                        <td>{{sale.inci_Componant_Type}}</td>
-                                                                        <td class="decimal-data">{{sale.inci_value_unit}}</td>
-                                                                     </tr>
-                                                                     <!-- <tr>
+                                                   <ng-template pTemplate="header" let-columns>
+                                                      <tr>
+                                                         <th>S.No</th>
+                                                         <th class="ptable-head" *ngFor="let col of columns"
+                                                            [pSortableColumn]="col.field" pResizableColumn>
+                                                            {{col.header}}
+                                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                                               ariaLabelDesc="Activate to sort in descending order"
+                                                               ariaLabelAsc="Activate to sort in ascending order">
+                                                            </p-sortIcon>
+                                                         </th>
+                                                      </tr>
+                                                   </ng-template>
+
+                                                   <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                                      let-index="rowIndex">
+                                                      <tr class="ui-resizable-column">
+                                                         <td>{{index+1}}</td>
+
+                                                         <td class="ptable-size">{{rowData.material_Number}}</td>
+                                                         <td class="ptable-size">{{rowData.description}}</td>
+                                                         <td class="ptable-size">{{rowData.bdt}}</td>
+
+                                                      </tr>
+                                                   </ng-template>
+                                                </p-table>
+
+                                             </div>
+                                             <div class="tab-pane fade" id="activeMaterial" role="tabpanel"
+                                                aria-labelledby="nav-profile-tab">
+
+                                                <p-table #dt [columns]="compositionMaterialDataHead"
+                                                   [value]="activeMaterial" (sortFunction)="customSort($event)"
+                                                   [customSort]="true" [style]="{'overflow':'auto!important'}"
+                                                   [resizableColumns]="true" columnResizeMode="expand"
+                                                   [responsive]="true">
+
+                                                   <ng-template pTemplate="caption">
+                                                      <div class="row">
+                                                         <div class="col-md-6">
+                                                            <div style="text-align: left">
+                                                               <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                               <input type="text" class="pg-search" pInputText size="32"
+                                                                  placeholder="Search"
+                                                                  (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                            </div>
+                                                         </div>
+                                                         <div class="col-md-6">
+                                                            <div class="ui-helper-clearfix" style="text-align: right">
+                                                               <button class="btb pg-button" type="button"
+                                                                  label="All Data" (click)="dt.exportCSV()">Export CSV
+                                                                  Data</button>&nbsp;
+                                                               <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </ng-template>
+                                                   <ng-template pTemplate="header" let-columns>
+                                                      <tr>
+                                                         <th>S.No</th>
+                                                         <th class="ptable-head" *ngFor="let col of columns"
+                                                            [pSortableColumn]="col.field" pResizableColumn>
+                                                            {{col.header}}
+                                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                                               ariaLabelDesc="Activate to sort in descending order"
+                                                               ariaLabelAsc="Activate to sort in ascending order">
+                                                            </p-sortIcon>
+                                                         </th>
+                                                      </tr>
+                                                   </ng-template>
+
+                                                   <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                                      let-index="rowIndex">
+                                                      <tr class="ui-resizable-column">
+                                                         <td>{{index+1}}</td>
+
+                                                         <td class="ptable-size">{{rowData.material_Number}}</td>
+                                                         <td class="ptable-size">{{rowData.description}}</td>
+                                                         <td class="ptable-size">{{rowData.bdt}}</td>
+
+                                                      </tr>
+                                                   </ng-template>
+                                                </p-table>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                           </div>
+                        </div>
+                     </div>
+
+
+                     <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                           <h6 class="panel-title">
+                              <a class="collapsed" data-toggle="collapse" data-target="#compositionLevelDetails"
+                                 aria-expanded="true" aria-controls="collapseOne">
+                                 <h6>Composition Level Details</h6>
+                              </a>
+                           </h6>
+                        </div>
+                        <div id="compositionLevelDetails" class="panel-collapse collapse" aria-labelledby="headingOne"
+                           data-parent="#accordioncomposition">
+                           <div class="panel-body">
+                              <div class="row">
+                                 <div class="col-md-3">
+
+                                    <mat-form-field>
+                                       <mat-select name="compositionVaraible" [formControl]="selectedComposition"
+                                          placeholder="Select Composition Type"
+                                          (selectionChange)="compositionProcess($event.value)">
+                                          <mat-option *ngFor="let data of compositionsTypes" [value]="data.name">
+                                             {{data.name}}
+                                          </mat-option>
+                                       </mat-select>
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="col-md-3">
+
+                                    <mat-form-field>
+                                       <mat-select name="locationVaraible" [formControl]="selectedRegionlocation"
+                                          placeholder="Rating and Validity Area"
+                                          (selectionChange)="SubLevelComposition($event.value)">
+                                          <mat-option *ngFor="let region of compositionlocations" [value]="region.name">
+                                             {{region.name}}
+                                          </mat-option>
+                                       </mat-select>
+                                    </mat-form-field>
+
+                                 </div>
+                              </div>
+                              <!--Standard Composition-->
+                              <span *ngIf="compositionDataLevel">
+                                 <span class="comp-center" *ngIf="notFoundComposition">
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                          <br>
+                                          <b>No Data Found</b>
+                                       </div>
+                                    </div>
+                                 </span>
+                                 <div class="row" *ngIf="compositionSHI && !notFoundComposition">
+                                    <div class="col-md-12">
+
+                                       <div class="row">
+                                          <div class="col-md-6">
+                                             <span class="comp-header">Standard, 100% & INCI Composition</span>
+                                           
+                                             
+                                          </div>
+
+
+
+                                          <div class="col-md-4">
+                                                <form class="syn-search" action="#">
+                                                      <div class="form-group-feedback form-group-feedback-right">
+                                                         <input type="search" class="form-control" name="standardComposition"
+                                                            [(ngModel)]="searchStandardCompositionText" autocomplete="off"
+                                                            placeholder="Search composition details">
+                                                         <div class="form-control-feedback">
+                                                            <i class="fa fa-search font-size-base text-muted"></i>
+                                                         </div>
+                                                      </div>
+                                                   </form>
+                                            </div> 
+
+                                            <div class="col-md-2">
+                                             <button (click)="exportToCompostionExcel()"
+                                                class="btn spec-btn pull-right">Export
+                                                To Excel</button>
+                                          </div>
+                                       </div>
+
+                                       <div class="table-responsive">
+                                          <div class="table-responsive">
+
+                                             <table class="table table-striped table-bordered" width="100%"
+                                                #StandardCompositiontable>
+                                                <thead>
+                                                   <tr>
+                                                      <th colspan="3"
+                                                         style="background-color:  #a0a3e0;color:#fff !important;width: 40%;">
+                                                         Component
+                                                         Details
+                                                      </th>
+                                                      <th colspan="3"
+                                                         style="background-color: #ebc3db;color:#fff !important;">
+                                                         Standard
+                                                         Composition
+                                                      </th>
+                                                      <th colspan="3"
+                                                         style="background-color: #c7e2bb;color:#fff !important;">100 %
+                                                         Composition
+                                                      </th>
+                                                      <th colspan="3"
+                                                         style="background-color: rgb(235, 195, 65);color:#fff !important;">
+                                                         INCI Composition
+                                                      </th>
+                                                   </tr>
+                                                   <tr>
+                                                      <th style="width:8%">Pure Spec ID</th>
+                                                      <th style="width:8%">CAS Number</th>
+                                                      <th>Ingredient Name</th>
+                                                      <th>Component Type</th>
+                                                      <th>Value</th>
+                                                      <th style="width:5%">Unit</th>
+                                                      <th>Component Type</th>
+                                                      <th>Value</th>
+                                                      <th style="width:5%">Unit</th>
+                                                      <th>Component Type</th>
+                                                      <th>Value & Unit</th>
+                                                   </tr>
+                                                </thead>
+                                                <tbody>
+                                                   <tr
+                                                      *ngFor="let sale of compositionStandardData | stdCompositionFilter: searchStandardCompositionText;">
+                                                      <td>{{sale.pure_spec_Id}}</td>
+                                                      <td>{{sale.cas_Number}}</td>
+                                                      <td style="word-break:break-word;">{{sale.ingredient_Name}}</td>
+                                                      <td>{{sale.std_Componant_Type}}</td>
+                                                      <td class="decimal-data">{{sale.std_value}}</td>
+                                                      <td style="width:5%">{{sale.std_unit}}</td>
+                                                      <td>{{sale.hundrd_Componant_Type}}</td>
+                                                      <td class="decimal-data">{{sale.hundrd_value}}</td>
+                                                      <!-- <td style="width:5%">{{sale.hundrd_unit}}</td> -->
+                                                      <td style="width:5%">%</td>
+                                                      <td>{{sale.inci_Componant_Type}}</td>
+                                                      <td class="decimal-data">{{sale.inci_value_unit}}</td>
+                                                   </tr>
+                                                   <!-- <tr>
                                                                           <td colspan="3">Total</td>
                                                                           <td colspan="3">
                                                                               <p class="spec-toggle">18.00 %</p>
@@ -1188,167 +1293,201 @@
                                                                               <p class="spec-toggle">44.80 %</p>
                                                                           </td>
                                                                           </tr> -->
-                                                                  </tbody>
-                                                               </table>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                   </div>
-                                                   <!--Legal Composition-->
-                                                   <div class="row" *ngIf="compositionLegalTypes && !notFoundComposition">
-                                                      <!-- Legal Composition -->
-                                                      <div class="col-md-12">
-
-                                                            <div class="row">
-                                                                  <div class="col-md-6">
-                                                                     <span class="comp-header">Legal Composition</span>
-                                                                  </div>
-                                                                  <div class="col-md-6">
-                                                                     <button (click)="exportToLegalExcel()"
-                                                                        class="btn spec-btn pull-right">Export
-                                                                        To Excel</button>
-                                                                  </div>
-                                                               </div>
-                                                               <br>
-                                                         <div class="table-responsive">
-                                                            <div class="table-responsive">
-                                       
-                                                               <table class="table table-striped table-bordered" width="100%" #LegalCompositiontable>
-                                                                  <thead>
-                                                                     <tr>
-                                                                        <th>
-                                                                           S.No
-                                                                        </th>
-                                                                        <th>
-                                                                           Specification Id
-                                                                        </th>
-                                                                        <th>
-                                                                           CAS Number
-                                                                        </th>
-                                                                        <th>
-                                                                           Ingredient Name
-                                                                        </th>
-                                                                        <th>
-                                                                           Component Type
-                                                                        </th>
-                                                                        <th>
-                                                                           Legal Unit
-                                                                        </th>
-                                                                        <th>
-                                                                           Legal Value
-                                                                        </th>
-                                                                     </tr>
-                                                                  </thead>
-                                                                  <tbody>
-                                                                     <tr *ngFor="let data of legalCompositionData; let i = index">
-                                                                        <td>
-                                                                           {{i+1}}
-                                                                        </td>
-                                                                        <td>
-                                                                           {{data.pure_spec_Id}}
-                                                                        </td>
-                                                                        <td>
-                                                                           {{data.cas_Number}}
-                                                                        </td>
-                                                                        <td>
-                                                                           {{data.ingredient_Name}}
-                                                                        </td>
-                                                                        <td>
-                                                                           {{data.legal_Componant_Type}}
-                                                                        </td>
-                                                                        <td>
-                                                                           {{data.legal_unit}}
-                                                                        </td>
-                                                                        <td class="decimal-data">
-                                                                           {{data.legal_value}}
-                                                                        </td>
-                                                                     </tr>
-                                                                  </tbody>
-                                                               </table>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                   </div>
-                                                   <br>
-                                                   <!-- SVT Legal Composition -->
-                                                   <div class="row">
-                                                      <div class="col-md-12" *ngIf="svtCompositionLevel">
-                                                         <div class="row">
-                                                            <div class="col-md-6">
-                                                               <span class="comp-header">SVT Substance Details</span>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                               <button (click)="exportToSVTExcel()"
-                                                                  class="btn spec-btn pull-right">Export
-                                                                  To Excel</button>
-                                                            </div>
-                                                         </div>
-                                                         <br>
-                                                         <div class="table-responsive" #SVTtable>
-                                                            <div class="table-responsive">
-                                                               <table class="table table-striped table-bordered" width="100%">
-                                                                  <thead>
-                                                                     <tr>
-                                                                        <th colspan="1" style="background-color:  #a0a3e0;color:#fff !important;">
-                                                                           Scenario
-                                                                        </th>
-                                                                        <th colspan="4" style="background-color: #ebc3db;color:#fff !important;">SVT LV
-                                                                        </th>
-                                                                        <th colspan="4" style="background-color: #c7e2bb;color:#fff !important;">SVT TE
-                                                                        </th>
-                                                                        <th colspan="4" style="background-color: rgb(235, 195, 65);color:#fff !important;">
-                                                                           SVT AN
-                                                                        </th>
-                                                                     </tr>
-                                                                     <tr>
-                                                                        <th>Pure Spec ID</th>
-                                                                        <th>2018</th>
-                                                                        <th>2019</th>
-                                                                        <th>2020</th>
-                                                                        <th>Amount Limit in tonnes</th>
-                                                                        <th>2018</th>
-                                                                        <th>2019</th>
-                                                                        <th>2020</th>
-                                                                        <th>Amount Limit in tonnes</th>
-                                                                        <th>2018</th>
-                                                                        <th>2019</th>
-                                                                        <th>2020</th>
-                                                                        <th>Amount Limit in tonnes</th>
-                                                                     </tr>
-                                                                  </thead>
-                                                                  <tbody>
-                                                                     <tr *ngFor="let legalData of SVT_table">
-                                                                        <td>{{legalData.pure_spec_Id}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_LV_eight}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_LV_nine}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_LV_twenty}}</td>
-                                                                        <td class="decimal-data">{{legalData.amount_limit_SVT_LV}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_TE_eight}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_TE_nine}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_TE_Twenty}}</td>
-                                                                        <td class="decimal-data">{{legalData.amount_limit_SVT_TE}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_AN_eight}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_AN_nine}}</td>
-                                                                        <td class="decimal-data">{{legalData.SVT_AN_twenty}}</td>
-                                                                        <td class="decimal-data">{{legalData.amount_limit_SVT_AN}}</td>
-                                                                     </tr>
-                                                                  </tbody>
-                                                               </table>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                   </div>
-                                                </span>
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                       </div>
+                                    </div>
                                  </div>
-                              </div>
-                               </div>
+                                 <!--Legal Composition-->
+                                 <div class="row" *ngIf="compositionLegalTypes && !notFoundComposition">
+                                    <!-- Legal Composition -->
+                                    <div class="col-md-12">
+
+                                       <div class="row">
+                                          <div class="col-md-6">
+                                             <span class="comp-header">Legal Composition</span>
+                                          </div>
+                                          <div class="col-md-4">
+
+                                             <form class="syn-search" action="#">
+                                                <div class="form-group-feedback form-group-feedback-right">
+                                                   <input type="search" class="form-control" name="legalcomposition"
+                                                      [(ngModel)]="searchLegalComposition" autocomplete="off"
+                                                      placeholder="Search composition details">
+                                                   <div class="form-control-feedback">
+                                                      <i class="fa fa-search font-size-base text-muted"></i>
+                                                   </div>
+                                                </div>
+                                             </form>
+                                          </div>
+
+                                          <div class="col-md-2">
+
+                                             <button (click)="exportToLegalExcel()"
+                                                class="btn spec-btn pull-right">Export
+                                                To Excel</button>
+                                          </div>
+                                       </div>
+                                       <br>
+                                       <div class="table-responsive">
+                                          <div class="table-responsive">
+
+                                             <table class="table table-striped table-bordered" width="100%"
+                                                #LegalCompositiontable>
+                                                <thead>
+                                                   <tr>
+                                                      <th>
+                                                         S.No
+                                                      </th>
+                                                      <th>
+                                                         Specification Id
+                                                      </th>
+                                                      <th>
+                                                         CAS Number
+                                                      </th>
+                                                      <th>
+                                                         Ingredient Name
+                                                      </th>
+                                                      <th>
+                                                         Component Type
+                                                      </th>
+                                                      <th>
+                                                         Legal Unit
+                                                      </th>
+                                                      <th>
+                                                         Legal Value
+                                                      </th>
+                                                   </tr>
+                                                </thead>
+                                                <tbody>
+                                                   <tr
+                                                      *ngFor="let data of legalCompositionData | legalCompositionFilter: searchLegalComposition;  let i = index">
+                                                      <td>
+                                                         {{i+1}}
+                                                      </td>
+                                                      <td>
+                                                         {{data.pure_spec_Id}}
+                                                      </td>
+                                                      <td>
+                                                         {{data.cas_Number}}
+                                                      </td>
+                                                      <td>
+                                                         {{data.ingredient_Name}}
+                                                      </td>
+                                                      <td>
+                                                         {{data.legal_Componant_Type}}
+                                                      </td>
+                                                      <td>
+                                                         {{data.legal_unit}}
+                                                      </td>
+                                                      <td class="decimal-data">
+                                                         {{data.legal_value}}
+                                                      </td>
+                                                   </tr>
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <!-- SVT Legal Composition -->
+                                 <div class="row">
+                                    <div class="col-md-12" *ngIf="svtCompositionLevel">
+                                       <div class="row">
+                                          <div class="col-md-6">
+                                             <span class="comp-header">SVT Substance Details</span>
+                                          </div>
+                                          <div class="col-md-4">
+
+                                             <form class="syn-search" action="#">
+                                                <div class="form-group-feedback form-group-feedback-right">
+                                                   <input type="search" class="form-control" name="svtComposition"
+                                                      [(ngModel)]="searchSVTComposition" autocomplete="off"
+                                                      placeholder="Search composition details">
+                                                   <div class="form-control-feedback">
+                                                      <i class="fa fa-search font-size-base text-muted"></i>
+                                                   </div>
+                                                </div>
+                                             </form>
+                                          </div>
+                                          <div class="col-md-2">
+                                             <button (click)="exportToSVTExcel()" class="btn spec-btn pull-right">Export
+                                                To Excel</button>
+                                          </div>
+                                       </div>
+                                       <br>
+                                       <div class="table-responsive" #SVTtable>
+                                          <div class="table-responsive">
+                                             <table class="table table-striped table-bordered" width="100%">
+                                                <thead>
+                                                   <tr>
+                                                      <th colspan="1"
+                                                         style="background-color:  #a0a3e0;color:#fff !important;">
+                                                         Scenario
+                                                      </th>
+                                                      <th colspan="4"
+                                                         style="background-color: #ebc3db;color:#fff !important;">SVT LV
+                                                      </th>
+                                                      <th colspan="4"
+                                                         style="background-color: #c7e2bb;color:#fff !important;">SVT TE
+                                                      </th>
+                                                      <th colspan="4"
+                                                         style="background-color: rgb(235, 195, 65);color:#fff !important;">
+                                                         SVT AN
+                                                      </th>
+                                                   </tr>
+                                                   <tr>
+                                                      <th>Pure Spec ID</th>
+                                                      <th>2018</th>
+                                                      <th>2019</th>
+                                                      <th>2020</th>
+                                                      <th>Amount Limit in tonnes</th>
+                                                      <th>2018</th>
+                                                      <th>2019</th>
+                                                      <th>2020</th>
+                                                      <th>Amount Limit in tonnes</th>
+                                                      <th>2018</th>
+                                                      <th>2019</th>
+                                                      <th>2020</th>
+                                                      <th>Amount Limit in tonnes</th>
+                                                   </tr>
+                                                </thead>
+                                                <tbody>
+                                                   <tr
+                                                      *ngFor="let legalData of SVT_table | svtCompositionFilter: searchSVTComposition; ">
+                                                      <td>{{legalData.pure_spec_Id}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_LV_eight}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_LV_nine}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_LV_twenty}}</td>
+                                                      <td class="decimal-data">{{legalData.amount_limit_SVT_LV}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_TE_eight}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_TE_nine}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_TE_Twenty}}</td>
+                                                      <td class="decimal-data">{{legalData.amount_limit_SVT_TE}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_AN_eight}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_AN_nine}}</td>
+                                                      <td class="decimal-data">{{legalData.SVT_AN_twenty}}</td>
+                                                      <td class="decimal-data">{{legalData.amount_limit_SVT_AN}}</td>
+                                                   </tr>
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </span>
+                           </div>
+                        </div>
                      </div>
+                
 
 
                </div>
             </div>
-            
-         
+
+
          </div>
          <!--Flow Diagram Section-->
          <div *ngIf="flowDiagrams">
@@ -1361,14 +1500,14 @@
             </span>
             <div *ngIf="!ProductAttributeLoader && !pihAlertMessage">
 
-                      
-                  <div class="list-check-nav">
-                        <mat-radio-group aria-label="Select an option">
-                           <mat-radio-button *ngFor="let item of flowDiagramCheck ;let i = index" [value]="i"
-                              [checked]="item.name === flowDiagramCheckData" (change)="onChangeFlowDiagram(item.name)">
-                              {{item.name}}</mat-radio-button>
-                        </mat-radio-group>
-                     </div>
+
+               <div class="list-check-nav">
+                  <mat-radio-group aria-label="Select an option">
+                     <mat-radio-button *ngFor="let item of flowDiagramCheck ;let i = index" [value]="i"
+                        [checked]="item.name === flowDiagramCheckData" (change)="onChangeFlowDiagram(item.name)">
+                        {{item.name}}</mat-radio-button>
+                  </mat-radio-group>
+               </div>
                <!--Manufracture Diagram-->
                <div class="row" *ngIf="ManufractureSection">
                   <div class="col-md-12">
@@ -1381,7 +1520,7 @@
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#ManufractureDiagramProductLevel"
-                                 aria-expanded="true" aria-controls="collapseOne">
+                                    aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
@@ -1411,8 +1550,8 @@
                                                 <td>{{data.product_Type}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -1436,7 +1575,7 @@
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#ManufractureDiagramMaterialLevel"
-                                 aria-expanded="false" aria-controls="collapseTwo">
+                                    aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
@@ -1466,8 +1605,8 @@
                                                 <td>{{data.product_Type}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -1491,7 +1630,7 @@
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#ManufractureDiagramCasLevel"
-                                 aria-expanded="false" aria-controls="collapseThree">
+                                    aria-expanded="false" aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
@@ -1520,8 +1659,8 @@
                                                 <td>{{data.product_Type}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -1555,7 +1694,7 @@
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#SynthesisDiagramProductLevel"
-                                 aria-expanded="true" aria-controls="collapseOne">
+                                    aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
@@ -1585,8 +1724,8 @@
                                                 <td>{{data.product_Type}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -1609,7 +1748,7 @@
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#SynthesisDiagramMaterialLevel"
-                                 aria-expanded="false" aria-controls="collapseTwo">
+                                    aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
@@ -1639,8 +1778,8 @@
                                                 <td>{{data.product_Type}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -1663,7 +1802,7 @@
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#SynthesisDiagramCasLevel" aria-expanded="false"
-                                 aria-controls="collapseThree">
+                                    aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
@@ -1693,8 +1832,8 @@
                                                 <td>{{data.product_Type}}</td>
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)" class="thumbnail"
-                                                      data-toggle="modal" data-target="#lightbox">
+                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
+                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
@@ -1729,11 +1868,11 @@
                <div class="modal-content">
                   <div class="modal-bodys">
                      <div *ngIf="showPdf">
-                           <iframe type="application/pdf" [attr.src]="imgaePreviewUrl" frameborder="no"
+                        <iframe type="application/pdf" [attr.src]="imgaePreviewUrl" frameborder="no"
                            style="width:100%;height:450px"></iframe>
                      </div>
                      <div *ngIf="showImage">
-                           <img class="responsive" src="{{imgaePreviewUrl}}" alt="" />
+                        <img class="responsive" src="{{imgaePreviewUrl}}" alt="" />
                      </div>
                   </div>
                </div>

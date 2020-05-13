@@ -1,4 +1,4 @@
-<div class="modal-body">
+<div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight'>
     <!--Dropdown Section-->
     <div class="row">
         <div class="col-md-9">
@@ -64,7 +64,7 @@
             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
                 <tr class="ui-resizable-column">
                     <td>{{index+1}}</td>
-                    <td class="ptable-size"><span *ngIf="rowData.category === 'MSDS'"><a href="http://sds.momentive.com/ehswww/servlet/MultiFileServlet?msdsstr={{rowData.material_details}}&region=USA&lang=English" download>{{rowData.category}}</a></span>
+                    <td class="ptable-size"><span *ngIf="rowData.category === 'MSDS'"><a href="http://sds.momentive.com/ehswww/servlet/MultiFileServlet?msdsstr={{rowData.material_details}}&region={{rowData.region}}&lang=English" download>{{rowData.category}}</a></span>
                         <span *ngIf="rowData.category !== 'MSDS'">{{rowData.category}}</span>
                     </td>
                     <td class="ptable-size">{{rowData.spec_id}}</td>

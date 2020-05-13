@@ -117,11 +117,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   categoryType: any;
   selectedproductType: any;
   selectedProducts = false;
-  basicProperties: any = []
+  basicProperties: any = [];
   searchAlertMessage: any;
   relatedProducts = true;
   searchLoader = false;
   searchTextTerms: any;
+  searchTextONTTerms: any = [];
   searchTerm: any;
   objectKeys = Object.keys;
   public items$: Observable<product[]>;
@@ -328,22 +329,29 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           });
           console.log(this.searchTerm);
-
           if (this.searchTerm.includes("*")) {
             const searchTermNew = this.searchTerm.split('*');
             this.searchTextTerms = searchTermNew[1];
-            console.log(this.searchTextTerms);
+            this.searchTextONTTerms = searchTermNew[0].toLowerCase();
+            console.log(this.searchTextONTTerms);
           } else {
             this.searchTextTerms = this.searchTerm;
           }
 
+         
+         
           this.items$ = this.product_Name.filter((product_Name) => {
             return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.name.toLowerCase().includes(this.searchTextTerms.toLowerCase()) ||
               product_Name.name.toLowerCase().startsWith(this.searchTextTerms.toLowerCase())
+             
           });
+          if(this.searchTextONTTerms === 'ont') {
+            console.log(this.product_Name);
+            this.items$ = this.product_Name;
+          }
         } else {
           this.product_Name = [];
           this.loading = false;
@@ -384,7 +392,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
           product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase());
       });
-    }
+    } 
+    
   }
   compareAccounts = (item, selected) => {
     if (selected.name && item.name) {

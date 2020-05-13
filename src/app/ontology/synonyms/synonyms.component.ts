@@ -53,8 +53,11 @@ export class SynonymsComponent implements OnInit {
   synonymsCheckData:any;
   userFilter: any = { key: '' };
   searchSynonymsName:any;
+  synonyms_solr_Id:any;
+  synonyms_id:any;
   ExistDataCheck:any;
   searchTextTerms:any;
+  synonymsUpdateButton: boolean =false;
 
  
   
@@ -127,11 +130,10 @@ SynonymsManagement() {
 
   onChangeData(data) {
     console.log(data);
-    this.searchSynonymsName =data;
+    this.searchSynonymsName = data;
   }
   //Submit Function
-  onSubmit() {
-   
+  synonymsAdd() {
       console.log(this.addSynonyms);
       this.synonymsData = this.addSynonyms.value;
       console.log(this.synonymsData);
@@ -163,15 +165,54 @@ SynonymsManagement() {
       } else {
           this.toastr.warningToastr('Synonyms Already Exist .', 'Alert!');
       }
-    
-    
   
   }
  
+  synonymsEdit(synonymsValue) {
+    this.synonymsUpdateButton = true;
+    console.log(synonymsValue);
+    this.synonyms_id = synonymsValue.id;
+    this.synonyms_solr_Id = synonymsValue.solr_id;
+    this.addSynonyms.controls["synonymsName"].setValue(synonymsValue.synonyms);
+     this.addSynonyms.controls["SearchProductname"].setValue(synonymsValue.key);
+  }
 
-   
+  synonymsUpdate() {
+    console.log(this.addSynonyms)
+    this.synonymsData = this.addSynonyms.value;
+    console.log(this.synonymsData);
+    this.synonymsCheckData = this.synonymsData.synonymsName;
+    this.ExistDataCheck = false;
+    this.Ontologysynonyms.forEach(element => {
+      if(element.synonyms == this.synonymsCheckData) {
+             this.ExistDataCheck = true;  
+             return false;
+       }
+     });
+    if(!this.ExistDataCheck) {
+      console.log(this.synonymsData);
+      let addSynonymsData = {
+        'ontology_Id' : this.synonyms_id,
+        'solr_Id': this.synonyms_solr_Id,
+        'ontologySynonyms' : this.synonymsData.synonymsName,
+        'synonymsProductName' : this.searchSynonymsName.name,
+        'synonymsProductType' : this.searchSynonymsName.type,
+        'synonymsCreatedBy' : 'PIH-admin',
+        'synonymsUpdatedBy' : 'PIH-admin'
+      }
+      console.log(addSynonymsData);
+      this.momentiveService.addSynonymsEvent(addSynonymsData).subscribe(data =>{
+        console.log(data)
+        this.toastr.successToastr('Synonyms Updated Successfully .', 'Success!');
+        this.SynonymsManagement();
+      },err => {
+        console.error(err);
+      })
+    } else {
+        this.toastr.warningToastr('Synonyms Already Exist .', 'Alert!');
+    }
 
-  
+  }
 
 
 

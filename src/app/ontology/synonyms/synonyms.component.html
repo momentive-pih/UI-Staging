@@ -17,7 +17,7 @@
                 <div class="tab-content">
                     <div class="widget-header">
                         <h5><b>Add New Synonyms</b></h5>
-                        <form [formGroup]="addSynonyms" (ngSubmit)="onSubmit()">
+                        <form [formGroup]="addSynonyms">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="new-search">
@@ -38,7 +38,8 @@
                                         formControlName="synonymsName" name="synonymsName" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn momentive-btn" [disabled]="!addSynonyms.valid">Add Synonyms</button> &nbsp;
+                                    <button class="btn momentive-btn" *ngIf="!synonymsUpdateButton" (click)="synonymsAdd()"  [disabled]="!addSynonyms.valid">Add Synonyms</button> &nbsp;
+                                    <button class="btn momentive-btn" *ngIf="synonymsUpdateButton" (click)="synonymsUpdate()" [disabled]="!addSynonyms.valid">Update Synonyms</button> &nbsp;
                                 </div>
 
                             </div>
@@ -76,7 +77,7 @@
                                                     <th>Synonyms</th>
                                                     <th>Created By & Created Date[dd/MM/yyyy]</th>
                                                      <th>Updated By & Updated Date[dd/MM/yyyy]</th>                         
-                                                   <!--<th class="td-actions">Actions</th> -->
+                                                     <!-- <th class="td-actions">Actions</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -88,9 +89,9 @@
                                                     <td>{{data.synonyms}}</td>
                                                     <td>{{data.created_By}} || {{data.created_Date | date: 'dd/MM/yyyy'}}</td>
                                                     <td>PIH-admin || {{data.updated_Date | date: 'dd/MM/yyyy'}}</td>
-                                                    <!-- <td>{{data.created_By}}</td>
-                                                      <td class="td-actions" width="20%">                           
-                                                      <a class="docs-btn" data-toggle="modal" data-target="#editSynonyms"><i class="fa fa-pencil-square-o"></i></a>   
+                                                    
+                                                      <!-- <td class="td-actions" width="10%">                           
+                                                      <a class="docs-btn" (click)="synonymsEdit(data)"><i class="fa fa-pencil-square-o"></i></a>   
                                                       <a class="docs-btn"><i class="fa fa-trash"></i></a>   
                                                    </td> -->
                                                 </tr>

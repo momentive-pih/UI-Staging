@@ -46,6 +46,9 @@ import { CasLevelFilterPipe } from './pipes/cas-level-filter.pipe';
 import { ProductLevelPipe } from './pipes/product-level.pipe';
 import { GhsLabelingPipe } from './pipes/ghs-labeling.pipe';
 import { OtherTablesComponent } from './other-tables/other-tables.component';
+import { SvtCompositionFilterPipe } from './pipes/svt-composition-filter.pipe';
+import { LegalCompositionFilterPipe } from './pipes/legal-composition-filter.pipe';
+import { StdCompositionFilterPipe } from './pipes/std-composition-filter.pipe';
 
 
 
@@ -71,6 +74,9 @@ import { OtherTablesComponent } from './other-tables/other-tables.component';
     ProductLevelPipe,
     GhsLabelingPipe,
     OtherTablesComponent,
+    SvtCompositionFilterPipe,
+    LegalCompositionFilterPipe,
+    StdCompositionFilterPipe,
    
   ],
   imports: [

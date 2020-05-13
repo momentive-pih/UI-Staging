@@ -81,9 +81,11 @@ export class ToxicologyComponent implements OnInit {
   casLevelCategoy:any=[];
   Url:any;
   toxicologyStudyDataPage:boolean = false;
+  contentHeight:boolean = false;
   toxicologyStudyPage:any;
   Extract_Result_one:any;
   selectedMonthlyToxicologyType: string = "sealant";
+  topcheckedData:boolean = true
   selectedmonthlytoxicologyControl = new FormControl(this.selectedMonthlyToxicologyType);
   constructor(private route: ActivatedRoute,private sanitizer: DomSanitizer,private router: Router,private momentiveService: MomentiveService) {
 
@@ -108,6 +110,12 @@ export class ToxicologyComponent implements OnInit {
         }, 0);
       }
     });
+this.contentHeight = false;
+    this.momentiveService.notifyCheckObservable$.subscribe(value =>{
+      console.log(value);
+      this.topcheckedData = value;
+      this.contentHeight = !this.contentHeight;
+    })
 
     // toxicology Radio tab API
     this.momentiveService.getSearchData().subscribe(data => {
@@ -142,6 +150,7 @@ export class ToxicologyComponent implements OnInit {
         { "field": "spec_Id", "header": "Specification ID" },
         { "field": "product_Name", "header": "Product Name" },
         { "field": "product_Type", "header": "Product Type" },
+        {"field":"date","header":"Date"},
         { "field": "file_Source", "header": "File Source" },
         { "field": "studies", "header": "Studies" },
         { "field": "status", "header": "Status" },
@@ -428,6 +437,7 @@ export class ToxicologyComponent implements OnInit {
       this.monthlyCheck = true;
       this.summaryCheck = false;
       this.dataCheck = false;
+      this.selectedMonthlyToxicologyType = "sealant";
       this.toxicologyProcess('sealant');
     }
     if (this.toxicologyTab === 'Toxicology Summary') {
