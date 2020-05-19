@@ -37,10 +37,10 @@ import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { MatFormFieldModule, MatIconModule, MatToolbarModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSelectFilterModule } from 'mat-select-filter';
+import { MatRadioModule } from '@angular/material';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { SharedModule } from '../app/shared/shared.module';
 import { ImageViewerModule } from 'ng2-image-viewer';
-import { MatRadioModule } from '@angular/material';
 import { PihFilterPipe } from './pipes/pih-filter.pipe';
 import { CasLevelFilterPipe } from './pipes/cas-level-filter.pipe';
 import { ProductLevelPipe } from './pipes/product-level.pipe';
@@ -49,6 +49,9 @@ import { OtherTablesComponent } from './other-tables/other-tables.component';
 import { SvtCompositionFilterPipe } from './pipes/svt-composition-filter.pipe';
 import { LegalCompositionFilterPipe } from './pipes/legal-composition-filter.pipe';
 import { StdCompositionFilterPipe } from './pipes/std-composition-filter.pipe';
+import { MsAdalAngular6Module } from 'microsoft-adal-angular6';
+import { AuthenticationGuard } from 'microsoft-adal-angular6';
+
 
 
 
@@ -113,7 +116,12 @@ import { StdCompositionFilterPipe } from './pipes/std-composition-filter.pipe';
     MatSelectModule, MatSelectFilterModule, MatIconModule, MatToolbarModule,
     NgMultiSelectDropDownModule.forRoot(),
     ToastrModule.forRoot(),
-    SharedModule.forRoot()
+    SharedModule.forRoot(),
+     
+  ],
+  exports: [
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

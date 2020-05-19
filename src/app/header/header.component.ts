@@ -138,6 +138,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   specDataSelectListDetails:any;
   sideSpecList: any;
   userSelectedSPECDetails: any = [];
+  basicLevelExcelCompositionData:any=[];
+  copybasicLevelCompositionData:any=[];
   basicPropertiesLoader: any;
   public loading;
   notifier: any;
@@ -179,7 +181,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   searchProductText:any;
   searchMaterialText:any;
   searchCASText:any;
-  
+  loggedUserName:string;
 
 
   /** control for the selected SPEC_List for multi-selection */
@@ -219,13 +221,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
 
-
-
     this.url = window.location.href.includes('home');
     console.log(this.url);
     this.basicPropertiesEvent(event);
 
-
+  
+    console.log("8888888888888")
+    this.loggedUserName = localStorage.getItem('userName');
+    console.log(this.loggedUserName);
     // product_type
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
@@ -244,6 +247,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       $(this).closest('.dropdown-select').find('.option-list, .search-box').toggle();
     });
    
+    
+
 
     //Main Search Bar Placeholder & Other Details
     this.placeholder = 'Enter the Details';
@@ -483,6 +488,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           element.material_Number = parseInt(element.material_Number);
         });
         this.casLevel = this.basicProperties[0].cas_Level;
+        this.copybasicLevelCompositionData = JSON.parse(JSON.stringify(this.casLevel));
       } else {
         this.basicPropertiesLoader = true;
       }
@@ -687,6 +693,23 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  exportToBasicCasLevel() {
+    this.basicLevelExcelCompositionData =[];
+   this.copybasicLevelCompositionData.forEach(element => {
+     this.basicLevelExcelCompositionData.push({
+       'Pure Specification Id' : element.pure_Spec_Id,
+       'Chemical Name' : element.chemical_Name,
+       'Cas Number' : element.cas_Number
+       
+     });
+     });
+   const ws: xlsx.WorkSheet =   
+   xlsx.utils.json_to_sheet(this.basicLevelExcelCompositionData);
+   const wb: xlsx.WorkBook = xlsx.utils.book_new();
+   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+   xlsx.writeFile(wb, 'Basic Level Composition Table.xlsx');
+  }
+
   //Export Excel in Product Level Details
   exportToBasicProductTable() {
     const ws: xlsx.WorkSheet =
@@ -704,13 +727,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     xlsx.writeFile(wb, 'Material-Level.xlsx');
   }
   //Export Excel in CAS Level Details
-  exportToBasicCasLevel() {
-    const ws: xlsx.WorkSheet =
-      xlsx.utils.table_to_sheet(this.basicCas.nativeElement);
-    const wb: xlsx.WorkBook = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-    xlsx.writeFile(wb, 'CAS-Level.xlsx');
-  }
+  // exportToBasicCasLevel() {
+  //   const ws: xlsx.WorkSheet =
+  //     xlsx.utils.table_to_sheet(this.basicCas.nativeElement);
+  //   const wb: xlsx.WorkBook = xlsx.utils.book_new();
+  //   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+  //   xlsx.writeFile(wb, 'CAS-Level.xlsx');
+  // }
 
 
   //API Parameter sending Call Details:

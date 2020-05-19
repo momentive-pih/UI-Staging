@@ -137,3 +137,23 @@ textarea.form-control {
     font-size: 15px;
     background: whitesmoke;
 }
+.info-btn{
+    float: right;
+    cursor: pointer;
+}
+#customers thead,  td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    
+  }
+  #customers tr td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+
+  #customerTable {
+    overflow-y: auto;
+    max-height:400px;
+}

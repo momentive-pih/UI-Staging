@@ -618,3 +618,6 @@ th {
 .syn-search {
     margin-bottom: 8px;
 }
+.realSpec-hide{
+    display: none;
+}

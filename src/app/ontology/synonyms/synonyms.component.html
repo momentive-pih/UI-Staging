@@ -38,8 +38,8 @@
                                         formControlName="synonymsName" name="synonymsName" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn momentive-btn" *ngIf="!synonymsUpdateButton" (click)="synonymsAdd()"  [disabled]="!addSynonyms.valid">Add Synonyms</button> &nbsp;
-                                    <button class="btn momentive-btn" *ngIf="synonymsUpdateButton" (click)="synonymsUpdate()" [disabled]="!addSynonyms.valid">Update Synonyms</button> &nbsp;
+                                    <button class="btn momentive-btn" (click)="synonymsAdd()"  [disabled]="!addSynonyms.valid">Add Synonyms</button> &nbsp;
+
                                 </div>
 
                             </div>
@@ -75,25 +75,46 @@
                                                     <th>Product Name</th>
                                                     <th>Product Type</th>
                                                     <th>Synonyms</th>
-                                                    <th>Created By & Created Date[dd/MM/yyyy]</th>
-                                                     <th>Updated By & Updated Date[dd/MM/yyyy]</th>                         
-                                                     <!-- <th class="td-actions">Actions</th> -->
+                                                                         
+                                                     <th class="td-actions">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr
                                                     *ngFor="let data of Ontologysynonyms| synonymsFilter: searchText; let i = index">
                                                     <td>{{i+1}}</td>
-                                                    <td>{{data.key}}</td>
-                                                    <td>{{data.key_Category}}</td>
-                                                    <td>{{data.synonyms}}</td>
-                                                    <td>{{data.created_By}} || {{data.created_Date | date: 'dd/MM/yyyy'}}</td>
-                                                    <td>PIH-admin || {{data.updated_Date | date: 'dd/MM/yyyy'}}</td>
+                                                    <!-- <td>{{data.key}}</td> -->
+                                                    <td  style="width:35%">
+                                                            
+                                                                    <div class="new-search">
+                                
+                                                                        <ng-select #code class="custom" [items]="items$ | async" bindLabel="name" [readonly]="data.editable"
+                                                                            bindValue="name" [closeOnSelect]="true" [multiple]="false"
+                                                                            [hideSelected]="true" [dropdownPosition]="'bottom'" [searchable]="true"
+                                                                             [(ngModel)]="data.key" 
+                                                                            [closeOnSelect]="true" placeholder="Select Product Name" [markFirst]="true"
+                                                                            (change)="onChangeData($event)"   [hideSelected]="false" appendTo="body" groupBy="type"
+                                                                            [typeahead]="input$" required>
+                                                                        </ng-select>
+                                
+                                                                    </div>
+                                                   
                                                     
-                                                      <!-- <td class="td-actions" width="10%">                           
-                                                      <a class="docs-btn" (click)="synonymsEdit(data)"><i class="fa fa-pencil-square-o"></i></a>   
-                                                      <a class="docs-btn"><i class="fa fa-trash"></i></a>   
-                                                   </td> -->
+                                                    
+                                                    </td>
+                                                    <td style="width:20%">{{data.key_Category}}</td>
+                                                    <td ><input class="form-control"  [disabled] ="data.editable" type="text" name="synonyms" [(ngModel)]="data.synonyms" /></td>
+                                                    <!-- <td>{{data.synonyms}}</td> -->
+                                                   
+                                                    
+                                                      <td class="td-actions" width="10%">   
+                                                            <a class="docs-btn" title="Change Log"  data-toggle="modal" data-target="#synonymsInformation" (click)="synonymsUserDetails(data)"><i class="fa fa-info"></i></a>                          
+                                                      <a class="docs-btn" (click)="synonymsEdit(data)"  *ngIf="data.editable"><i class="fa fa-pencil-square-o"></i></a>  
+                                                      
+
+                                                      <a class="docs-btn" title="update" *ngIf="!data.editable" (click)="synonymsUpdate(data)"><i class="fa fa-upload" aria-hidden="true"></i></a> 
+                                                      <a class="docs-btn" title="clear" *ngIf="!data.editable" (click)="synonymsClearData()"><i class="fa fa-close"></i></a>   
+                                                   </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -108,37 +129,40 @@
     </div>
 </div>
 
-<!-- <div class="modal" id="editSynonyms">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="syn-modal">Edit Synonyms</h4>
-          <button type="button" class="close syn-modal" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <form [formGroup]="addSynonyms" (ngSubmit)="onSubmit()">
-                <div>
-                    <label><b>Product Name</b></label>
-                    <input type="text" formControlName="product_Name" class="form-control" />
-                </div>
-                <div>
-                    <label><b>#ELA-Key</b></label>
-                    <input type="text" formControlName="key_Value" class="form-control"/>
-                </div>
-                <div>
-                    <label><b>Created-By</b></label>
-                    <input type="text" formControlName="created_by" class="form-control"/>
-                </div>
-                <div>
-                    <label><b>Created-Date</b></label>
-                    <input type="password" formControlName="created_date" class="form-control" />
-                </div>
-                <br>
-                <div>
-                    <button class="btn momentive-btn">Submit</button>
-                </div>
-            </form>
+
+
+<!-- Modal -->
+<div id="synonymsInformation" class="modal fade" role="dialog" *ngIf='synonymsManagementData'>
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+    <h6 class="modal-title-h">Change Log - {{synonymsManagementData.synonyms}}</h6>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+             
+            </div>
+            <div class="modal-body" id="customerTable">
+                    <table id="customers">
+                
+                            <thead>
+                                  <td><b>S.No</b></td>
+                                 
+                                  <td><b>Updated Date</b></td>
+                                  <td><b>Updated By</b></td>
+                              </thead>
+                              <tbody>
+                              <tr *ngFor="let data of synonymsUserUpdatedDetails ; let i = index">
+                                  <td>{{i+1}}</td>
+                                
+                                  <td>{{data.updated_Date}}</td>
+                                  <td>{{data.updated_By}}</td>
+                              </tr>
+                          </tbody>
+                          </table>
+            </div>
+          
+          </div>
+      
         </div>
       </div>
-    </div>
-  </div> -->

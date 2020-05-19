@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MomentiveService } from './../../service/momentive.service';
 import { Router, ActivatedRoute, NavigationStart, NavigationExtras } from '@angular/router';
+import { FormControl } from '@angular/forms';
 declare var $: any;
 
 @Component({
@@ -27,8 +28,15 @@ export class OntologyHomeComponent implements OnInit {
   alertText: any;
   ontologyServiceDetails: any = [];
   selectedSpecList: any = [];
+  selectedOntologyDocuments:any =[];
   ontologyassignedDocument: boolean = true;
   ontologyAlertDocument: boolean = false;
+   unassignedSectionDocument:boolean= false;
+   assignedSectionDocument:boolean=true;
+
+  ontologySelectedDocuments: string = "Assigned Documents";
+  selectedCompositionControl = new FormControl(this.ontologySelectedDocuments);
+
   constructor(private route: ActivatedRoute,
     private router: Router, private momentiveService: MomentiveService) {
 
@@ -38,7 +46,7 @@ export class OntologyHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    
 
       //Collapse script
   $('.collapsed').on('show.bs.collapse', function () {
@@ -46,6 +54,14 @@ export class OntologyHomeComponent implements OnInit {
         $(this).collapse('hide');
     });
   });
+
+  this.selectedOntologyDocuments = [{
+    "type": "Assigned Documents",
+    "value": "Assigned Documents"
+  }, {
+    "type": "Unassigned Documents",
+    "value": "Unassigned Documents"
+  }],
 //ontology Documents list API Call
     this.ontologyServiceDetails = [];
     this.selectedSpecList = this.momentiveService.getCategorySpecList();
@@ -98,5 +114,20 @@ export class OntologyHomeComponent implements OnInit {
   }
   collapse() {
     $('.collapse').collapse('hide');
+  }
+
+
+
+  selectedBasedDocuments(value) {
+    console.log(value);
+    if(value == "Assigned Documents") {
+          this.unassignedSectionDocument = false;
+          this.assignedSectionDocument = true;
+    } else {
+
+          this.unassignedSectionDocument = true;
+          this.assignedSectionDocument = false;
+    }
+
   }
 }

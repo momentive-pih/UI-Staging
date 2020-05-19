@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef,ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -8,6 +8,7 @@ import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MomentiveService } from './../../service/momentive.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrManager } from 'ng6-toastr-notifications';
 declare var $: any;
 interface product_Name {
   name: string;
@@ -51,6 +52,7 @@ export class OntologyDocumentsComponent implements OnInit {
   filename: any;
   productName: any;
   pdfUrl: any;
+  ontologyHeading:any;
   Url: any;
   extractedFields: any = [];
   documentCategory: any = [];
@@ -71,12 +73,26 @@ export class OntologyDocumentsComponent implements OnInit {
   file: any;
   pdfSrc: any;
   ontologyServiceDetails: any = [];
+  ontologyassignment:any=[];
+  ontologyDocumetskey:any=[];
   selectedSpecList: any = []
   public items$: Observable<product_Name[]>;
   public input$ = new Subject<string | null>();
   @ViewChild('code', { static: false }) private codeRef?: ElementRef<HTMLElement>;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute,
+  seletedOntologyDocumentKey:any
+  selectedProductKey:any
+  editedOntologyDocuments:any
+  documentsProductKey:any
+  documentsProductKey_category:any
+  unassignedExtractedData:any=[];
+  unassignedIntialData:any =[];
+  unassignedUpdatedData:any =[];
+  copyOntologyExtractDocuments:any =[];
+  ontologyDocumentUpdatedData:any=[];
+  ontologyUserUpdatedDetails:any=[];
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute,public toastr: ToastrManager, vcr: ViewContainerRef,
     private router: Router, private sanitizer: DomSanitizer,
     private momentiveService: MomentiveService) {
       //Intial Page Load
@@ -127,6 +143,7 @@ export class OntologyDocumentsComponent implements OnInit {
       if (this.PDfOntology) {
         //this.extractedFields = this.ontologyPdfFileData[0].Extract_Field;
         this.extarctPDFData = this.PDfOntology[0].Extract_Field;
+        this.copyOntologyExtractDocuments = JSON.parse(JSON.stringify(this.extarctPDFData));
         this.extractKeys = this.extarctPDFData.ontologyKey;
         this.extractProductKey = this.extractKeys.split(',');
         delete this.extarctPDFData.ontologyKey;
@@ -147,10 +164,11 @@ export class OntologyDocumentsComponent implements OnInit {
     });
 
     // ONtology Key Pair Value Function
-    this.momentiveService.getSearchData().subscribe(data => {
-      this.productdata = data;
-      this.ontology_Lsr_key = this.productdata.Ontology_product_Name;
-      console.log(this.productdata);
+    this.momentiveService.getOntologyManagement().subscribe(data => {
+      this.ontologyassignment = data;
+      console.log(this.ontologyassignment);
+      this.ontologyDocumetskey = this.ontologyassignment[0].product_Details
+      console.log(this.ontologyDocumetskey);
     }, err => {
       console.error(err);
     });
@@ -177,10 +195,7 @@ export class OntologyDocumentsComponent implements OnInit {
   clearCheck(data) {
     console.log(data);
   }
-  onChangeData(data) {
-    console.log(data);
-    this.disabledCondition = false;
-  }
+
   onFocused(data) {
     this.onChangeSearch(data);
   }
@@ -223,31 +238,128 @@ export class OntologyDocumentsComponent implements OnInit {
     console.log(this.extractFieldsForm.value);
   }
 
-  //Ontology Edit Functionality
+
+  clearOntology() {
+    this.extarctPDFData ={};
+    delete this.extarctPDFData.ontologyKey;
+    this.extarctPDFData = this.copyOntologyExtractDocuments
+    console.log(this.extarctPDFData);
+    this.copyOntologyExtractDocuments = JSON.parse(JSON.stringify(this.extarctPDFData));
+    this.ontologyExtractKey = this.keyselected
+    console.log(this.extarctPDFData);
+  }
+  //Ontology Key-value Pair Readonly Option
+ 
+
+
+  //Ontology Update Functionality
+  onChangeData(data) {
+    console.log(data);
+    this.seletedOntologyDocumentKey = data;
+    this.disabledCondition = false;
+  }
+
+    //Ontology Edit Functionality
   editOntology(data) {
     console.log(data);
+    this.editedOntologyDocuments = this.PDfOntology;
     if (data) {
       this.disabledCondition = false;
       this.disabledkey = false;
     }
   }
 
-  //Ontology Update Functionality
+  //Update Function
   updateOntology(data) {
     console.log(data);
-    this.disabledkey = false;
-  }
+    this.selectedProductKey = this.reactiveForm.get('Searchname').value;
+    this.unassignedIntialData = JSON.parse(JSON.stringify(this.PDfOntology));
+    let update_Extract = {}
+    console.log(this.unassignedIntialData);
+    console.log(this.selectedProductKey);
+    if(this.selectedProductKey.length) {
+      if(this.PDfOntology[0].productName == this.selectedProductKey[0].name && this.PDfOntology.product_Key == this.selectedProductKey[0].type) {
+        this.documentsProductKey = this.PDfOntology[0].productName;
+        this.documentsProductKey_category = this.PDfOntology[0].product_Key;
+      } else {
+        this.documentsProductKey = this.seletedOntologyDocumentKey[0].name 
+        this.documentsProductKey_category = this.seletedOntologyDocumentKey[0].type
+      }
+    } else {
+      alert('Please Select Product')
+    }
+ 
+    this.unassignedExtractedData.forEach(element =>
+      {
+        update_Extract [element.key] = element.value
+      });
 
-  //Ontology Key-value Pair Readonly Option
+      console.log(update_Extract);
+      if(this.selectedProductKey.length) {
+      this.unassignedUpdatedData.push({
+        "ontology_Id":this.unassignedIntialData[0].sql_Id,
+        "solr_Id": this.unassignedIntialData[0].solr_Id,
+        'data_extract':this.unassignedIntialData[0].data_extract,
+        "productName": this.documentsProductKey,
+        "product_Key":this.documentsProductKey_category,
+        "Extract_Field": update_Extract,
+        "updated_By" : localStorage.getItem('userName')
+        
+      })
+        console.log(this.unassignedUpdatedData);
+        this.momentiveService.getontologyUpdatedDocuments(this.unassignedUpdatedData).subscribe(data => {
+          console.log(data);
+
+          let responseData = data
+          if(responseData[0].status = 200) {
+            
+            this.toastr.successToastr('Ontology Assigned Documents'+' '+ responseData[0].message, 'Success!');
+          } else {
+            this.toastr.warningToastr('Ontology Assigned Documents' +' '+ responseData[0].message, 'warning!');
+          }
+       
+          this.disabledkey = true;
+          this.disabledCondition = true;
+        })
+   
+
+}
+
+
+  }
+  //Readonly Function
   ReadOntology(data) {
     console.log(data);
   }
-
   documentKey(data) {
     console.log(data);
+    let idx = this.unassignedExtractedData.indexOf(data);
+    console.log(idx);
+    if(idx == -1){
+      this.unassignedExtractedData.push(data);
+      console.log(this.unassignedExtractedData);
+    } 
+   
+      
+    // let idx = this.unassignedExtractedData.indexOf(data.key == data.key)
+    // if(idx == -1){
+    //   this.unassignedExtractedData.push(data);
+    //   console.log(this.unassignedExtractedData);
+    // } else  {
+    //     this.unassignedExtractedData.splice(idx,1);
+    //     this.unassignedExtractedData.push(data);
+    //     console.log(this.unassignedExtractedData);
+    // }
   }
-
   backOntology() {
     this.router.navigate(['ontology']);
+  }
+  ontologyUserDetails() {
+    this.ontologyDocumentUpdatedData = this.PDfOntology;
+    this.ontologyHeading = this.ontologyDocumentUpdatedData[0].fileName
+    this.momentiveService.ontologyDocumnetsLogDetails({"id":this.ontologyDocumentUpdatedData[0].solr_Id}).subscribe(data =>{
+      console.log(data);
+      this.ontologyUserUpdatedDetails = data;
+    })
   }
 }

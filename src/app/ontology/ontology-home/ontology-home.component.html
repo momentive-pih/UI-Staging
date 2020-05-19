@@ -1,32 +1,55 @@
-<div class="container">
-    <br>
-    <!--Alert Message and Loading Symbol-->
-    <div class="row" *ngIf="ontologyAlertDocument">
-        <div class="col-md-12">
-            <h5 class="msg-data">No documents for the Selected Product</h5>
-        </div>
-    </div>
 
-    <div class="row" *ngIf="ontologyassignedDocument">
-        <div class="col-md-12">
-            <i class="loader-class fa fa-spinner fa-spin"></i>
-            <span class="loader-text">Loading data....</span>
+<div class="container-fluid">
+<div class="row">
+        <div class="col-md-12  mr-r">
+                <div class="document-sec">
+                        <mat-form-field>
+                            <mat-label>Ontology Documents</mat-label>
+                            <mat-select name="selectedDocuments" [(value)]="ontologySelectedDocuments" placeholder="Select Documents" (selectionChange)="selectedBasedDocuments($event.value)">
+                                <mat-option *ngFor="let data of selectedOntologyDocuments" [value]="data.type">
+                                    {{data.type}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+        
         </div>
-    </div>
+    </div></div>
+
+<div *ngIf="unassignedSectionDocument">
+  <app-unassigned-documents></app-unassigned-documents>
 </div>
 
+
 <!--Related Documents Section-->
+<div *ngIf="assignedSectionDocument">
+
+    <div class="container">
+       <!--Alert Message and Loading Symbol-->
+       <div class="row" *ngIf="ontologyAlertDocument">
+            <div class="col-md-12">
+                <h5 class="msg-data">No documents for the Selected Product</h5>
+            </div>
+        </div>
+    
+        <div class="row" *ngIf="ontologyassignedDocument">
+            <div class="col-md-12">
+                <i class="loader-class fa fa-spinner fa-spin"></i>
+                <span class="loader-text">Loading data....</span>
+            </div>
+        </div></div>
 <div id="content" *ngIf="!ontologyAlertDocument && !ontologyassignedDocument">
+
     <div class="row">
         <div class="col-md-6">
-            <h5>Related all Documents</h5>
+            <h5>Assigned Documents</h5>
         </div>
         <div class="col-md-6 mr-r">
-            <button class="docs-btn" (click)="expand()">Show All</button>
-            <button class="docs-btn" (click)="collapse()">Hide All</button>
+                <button class="docs-btn" (click)="expand()">Show All</button>
+                <button class="docs-btn" (click)="collapse()">Hide All</button>
         </div>
+    </div>
 
-    </div><br>
     <div class="row">
         <div class="col-md-12 col-md-offset-2" *ngFor="let data of ontologyFileDocuments;let i = index">
             <div class="accordion" id="accordionOntology" role="tablist" aria-multiselectable="true">
@@ -74,4 +97,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

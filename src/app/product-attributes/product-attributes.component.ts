@@ -209,6 +209,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   synthesisSection:boolean = false;
   contentHeight:boolean = false;
   intiallocationDetails:any;
+  compDataCheck:any
   compositionslocations :any =[]
   /** control for the selected speclist */
   public specListData: FormControl = new FormControl();
@@ -220,13 +221,18 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   protected _onDestroy = new Subject<void>();
   @ViewChild('singleSelect', { static: false }) singleSelect: MatSelect;
   @ViewChild('SVTtable', { static: false }) SVTtable: ElementRef;
-  @ViewChild('StandardCompositiontable', { static: false }) StandardCompositiontable: ElementRef;
+  @ViewChild('StandardCompositiontable', { static: false }) StandardCompositiontable:ElementRef;
   @ViewChild('LegalCompositiontable', { static: false }) LegalCompositiontable: ElementRef;
   @ViewChild('ghsTable', { static: false }) ghsTable: ElementRef;
+  addcomposition:FormGroup;
+  validityComposition:FormGroup;
 
-
-  selectedComposition = new FormControl();
-  selectedRegionlocation = new FormControl();
+  copyExcelstandardCompositionData:any=[];
+  copySVTCompositionData:any=[];
+  copyExcelSVTCompositionData:any=[];
+  copyLegalCompositionData:any=[];
+  copyExcelLegalCompositionData:any = []
+  
   //Composition DropDown 
   compositionsTypes: any = [
     {
@@ -266,18 +272,25 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.topcheckedData = value;
       this.contentHeight = !this.contentHeight;
     })
+
+   
+   this.addcomposition = this.fb.group({
+    selectedComposition : new FormControl('')
+  });
+   this.validityComposition = this.fb.group({
+    selectedRegionlocation : new FormControl('')
+   })
+  
  
   }
   ngOnInit() {
 
-    //Collapse script
-    this.selectedComposition.setValue('Standard, 100 % & INCI Composition');
-    
    //Report Data Header
    this.compositionMaterialDataHead = [
-    { "field": "material_Number", "header": "Material Number" },
-    { "field": "description", "header": "Material Description" },
-    { "field": "bdt", "header": "Basic Data Text" },
+    { "field": "real_Spec_Id","header":"Real Specification-NamProd","display":'none'},
+    { "field": "material_Number", "header": "Material Number","display":'true' },
+    { "field": "description", "header": "Material Description","display":'true'},
+    { "field": "bdt", "header": "Basic Data Text","display":'true' },
   ]
 
     // ProductAttribute Radio Box API Call
@@ -460,6 +473,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.ProductAttributeLoader = true;
     this.pihAlertMessage = false;
     this.productAttributeAPIData = [];
+    
     this.CategoryDetails = { index: 3, Category: "Product Attributes", Subcategory: "Composition" }
     console.log(this.CategoryDetails);
     this.productAttributeAPIData.push({
@@ -484,14 +498,40 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.activeMaterial.forEach(element => {
         element.material_Number = parseInt(element.material_Number);
       });
+   
+      this.addcomposition.get('selectedComposition').setValue('Standard, 100 % & INCI Composition');
+      this.compDataCheck = this.addcomposition.get('selectedComposition').value;
+      if(this.compDataCheck == 'Standard, 100 % & INCI Composition') {
 
+        this.compositionSHI = true;
+        this.compositionLegalTypes= false;
+        this.svtCompositionLevel = false;
+        } else {
+          this.compositionSHI = false;
+          this.compositionLegalTypes= true;
+          this.svtCompositionLevel = true;
+        }
+        
+     
       this.compositionlocations = JSON.parse(JSON.stringify(this.productData[0].std_hund_usage));
       this.legalCompositionData = JSON.parse(JSON.stringify(this.productData[0].legal_values.legal_composition));
       this.SVT_table = JSON.parse(JSON.stringify(this.productData[0].legal_values.svt));
-      console.log(this.legalUsageData);
+
+      this.copyLegalCompositionData = JSON.parse(JSON.stringify(this.legalCompositionData));
+      this.copySVTCompositionData = JSON.parse(JSON.stringify(this.SVT_table));
+      console.log(this.SVT_table);
       console.log(this.compositionlocations);
-      this.selectedRegionlocation.setValue(this.compositionlocations[0].name);
+  
+      this.validityComposition.get('selectedRegionlocation').setValue(this.compositionlocations[0].name);
       this.compositionStandardData = JSON.parse(JSON.stringify(this.productData[0].std_values));
+      this.copystandardCompositionData = JSON.parse(JSON.stringify(this.compositionStandardData));
+      
+      console.log(this.compositionStandardData);
+      // if(this.compositionStandardData.length > 0) {
+      //   this.svtCompositionLevel = true;
+      // } else {
+      //   this.svtCompositionLevel = false;
+      // }
     });
 
   }
@@ -763,6 +803,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.compositionlocations=[];
       this.legalCompositionData=[];
       this.compositionStandardData=[];
+    
       this.getIntialSpecList();
       this.productAttributeComposition();
 
@@ -804,10 +845,12 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
           this.notFoundComposition = false;
           this.compositionlocations = this.productdata;
           console.log(this.compositionlocations);
-          this.selectedRegionlocation.setValue(this.compositionlocations[0].name);
+          this.validityComposition.get('selectedRegionlocation').setValue(this.compositionlocations[0].name);
           this.legalCompositionData = JSON.parse(JSON.stringify(this.productData[0].legal_values.legal_composition));
           this.SVT_table = JSON.parse(JSON.stringify(this.productData[0].legal_values.svt));
-          if(this.compositionlocations[0].name === 'REACH: REG_REACH') {
+          console.log(this.SVT_table);
+          console.log(this.legalCompositionData);
+          if(this.SVT_table.length > 0 ) {
             this.svtCompositionLevel = true;
           } else {
             this.svtCompositionLevel = false;
@@ -820,6 +863,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
     } else if (this.compostionCheck === 'Standard, 100 % & INCI Composition') {
       this.compositionLegalTypes = false;
+      this.svtCompositionLevel = false;
       this.compositionSHI = true;
       this.productAttributeAPIData = [];
       this.compositionlocations =[];
@@ -840,8 +884,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
           this.compositionRating = true;
           this.notFoundComposition = false;
           this.compositionlocations = this.productdata;
-          this.selectedRegionlocation.setValue(this.compositionlocations[0].name);
+          this.validityComposition.get('selectedRegionlocation').setValue(this.compositionlocations[0].name);
           this.compositionStandardData = JSON.parse(JSON.stringify(this.productData[0].std_values));
+          this.copystandardCompositionData = JSON.parse(JSON.stringify(this.compositionStandardData));
           console.log(this.compositionlocations);
         } else {
           this.compositionRating = false;
@@ -855,12 +900,15 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   //Legal Composition API call
   SubLevelComposition(value) {
     this.productAttributeAPIData = [];
+    this.legalCompositionData = [];
+    this.compositionStandardData = [];
+    this.SVT_table = [];
     this.compositionDataLevel = true;
     console.log(value);
     this.subLevelData = value;
-    // this.selectedSpecList = this.firstSpecData;
-    // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
-    this.CategoryDetails = { Subcategory: this.compostionCheck, validity: this.subLevelData }
+    this.compostionCheck = this.addcomposition.get('selectedComposition').value;
+    if(this.compostionCheck == 'Standard, 100 % & INCI Composition') {
+      this.CategoryDetails = { Subcategory: this.compostionCheck, validity: this.subLevelData }
     this.productAttributeAPIData.push({
       'Spec_id': this.specCompData,
       'Category_details': this.CategoryDetails,
@@ -873,16 +921,50 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       console.log(data);
       this.productdata = data;
       this.compositionStandardData = this.productdata;
+      this.copystandardCompositionData = JSON.parse(JSON.stringify(this.compositionStandardData ));
       console.log(this.compositionStandardData);
-      this.legalCompositionData = this.productdata.legal_composition;
-      this.SVT_table = this.productdata.svt;
     });
+  }
+    else {
+      this.CategoryDetails = { Subcategory: this.compostionCheck, validity: this.subLevelData }
+      this.productAttributeAPIData.push({
+        'Spec_id': this.specCompData,
+        'Category_details': this.CategoryDetails,
+        'product_Level': this.momentiveService.getProductLevelDetails(),
+        'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level': this.momentiveService.getCasLevelDetails(),
+      });
+      console.log(this.productAttributeAPIData);
+      this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+        console.log(data);
+        this.productdata = data;
+        this.compositionStandardData = this.productdata;
+        this.legalCompositionData = this.productdata.legal_composition;
+        this.copyLegalCompositionData = JSON.parse(JSON.stringify(this.legalCompositionData )); 
+        if(this.compositionStandardData.svt.length > 0) {
+          this.svtCompositionLevel = true;
+          this.SVT_table = this.productdata.svt;
+          this.copySVTCompositionData = JSON.parse(JSON.stringify(this.SVT_table ));
+          console.log(this.SVT_table)
+        } else {
+          this.svtCompositionLevel = false;
+        }
+      });
+    }
 
+   
+   
     if (this.compostionCheck === "Legal Composition" && this.subLevelData === 'REACH: REG_REACH') {
-      this.svtCompositionLevel = true;
+        if(this.SVT_table.length > 0) {
+          this.svtCompositionLevel = true;
+          this.SVT_table = this.productdata.svt
+        } else {
+          this.svtCompositionLevel = false;
+        }
     } else {
       this.svtCompositionLevel = false;
     }
+    
   }
 
   //Table Sort functionality
@@ -965,34 +1047,82 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
 
 
-
   // exportToCompostionExcel(table, name) {
   //   var uri = 'data:application/vnd.ms-excel;base64,'
   //     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
   //     , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
   //     , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
   //   if (!table.nodeType) table = document.getElementById(table)
+  
   //   var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
   //   window.location.href = uri + base64(format(template, ctx))
-
   // }
   exportToCompostionExcel() {
+    this.copyExcelstandardCompositionData =[]
+    console.log(this.StandardCompositiontable);
+    this.copystandardCompositionData.forEach(element => {
+      this.copyExcelstandardCompositionData.push({
+        'Pure Specification Id' : element.pure_spec_Id,
+        'Real Specificaion Id' : element.real_Spec_Id,
+        'Cas Number' : element.cas_Number,
+        'Ingredient Name' : element.ingredient_Name,
+        'Standard Composition Component Type' :element.std_Componant_Type,
+        'Standard Composition  Value' : element.std_value,
+        'Standard Composition  Unit' :element.std_unit,
+        '100 % Composition Component Type' :element.hundrd_Componant_Type,
+        '100 % Composition Unit' :element.hundrd_value,
+        '100 % Composition value' :element.hundrd_unit,
+        'INCI Composition Component Type' : element.inci_Componant_Type,
+        'INCI Composition value & Unit': element.inci_value_unit,
+      });
+      });
     const ws: xlsx.WorkSheet =   
-    xlsx.utils.table_to_sheet(this.StandardCompositiontable.nativeElement);
+    xlsx.utils.json_to_sheet(this.copyExcelstandardCompositionData);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Standard Composition Table.xlsx');
    }
    exportToLegalExcel() {
+     this.copyExcelLegalCompositionData =[];
+    this.copyLegalCompositionData.forEach(element => {
+      this.copyExcelLegalCompositionData.push({
+        'Pure Specification Id' : element.pure_spec_Id,
+        'Real Specificaion Id' : element.real_Spec_Id,
+        'Cas Number' : element.cas_Number,
+        'Ingredient Name' : element.ingredient_Name,
+        'Legal Composition Component Type' :element.legal_Componant_Type,
+        'Legal Composition  Value' : element.legal_value,
+        'Legal Composition  unit' : element.legal_unit
+      });
+      });
     const ws: xlsx.WorkSheet =   
-    xlsx.utils.table_to_sheet(this.LegalCompositiontable.nativeElement);
+    xlsx.utils.json_to_sheet(this.copyExcelLegalCompositionData);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Legal Composition Table.xlsx');
    }
    exportToSVTExcel() {
+this.copyExcelSVTCompositionData =[];
+    this.copySVTCompositionData.forEach(element => {
+      this.copyExcelSVTCompositionData.push({
+        'Pure Specification Id' : element.pure_spec_Id,
+        'Real Specificaion Id' : element.real_Spec_Id,
+        'SVT LV - 2018' : element.SVT_LV_eight,
+        'SVT LV - 2019' : element.SVT_LV_nine,
+        'SVT LV - 2020' :element.SVT_LV_twenty,
+        'SVT LV Amount Limit in tonnes' : element.amount_limit_SVT_LV,
+        'SVT TE-2018' :element.SVT_TE_eight,
+        'SVT TE-2019' :element.SVT_TE_nine,
+        'SVT TE-2020' :element.SVT_TE_Twenty,
+        'SVT TE Amount Limit in tonnes' :element.amount_limit_SVT_TE,
+        'SVT AN-2018' : element.SVT_AN_eight,
+        'SVT AN-2019': element.SVT_AN_nine,
+        'SVT AN-2020' : element.SVT_AN_twenty,
+        'SVT AN Amount Limit in tonnes': element.amount_limit_SVT_AN,
+      });
+      });
     const ws: xlsx.WorkSheet =   
-    xlsx.utils.table_to_sheet(this.SVTtable.nativeElement);
+    xlsx.utils.json_to_sheet(this.copyExcelSVTCompositionData);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'SVT Table.xlsx');
@@ -1021,10 +1151,6 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       'Usage': element.usage,
     });
     });
-
-   
-  
-    
     console.log(this.copyghsLabelingData)
     const ws: xlsx.WorkSheet =   
     xlsx.utils.json_to_sheet(this.copyExcelGhsLabelingData);

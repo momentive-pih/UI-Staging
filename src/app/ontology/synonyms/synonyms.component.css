@@ -358,3 +358,21 @@ thead th {
     border: 1px solid #ddd;
     min-height: 43px;
 }
+.modal-title-h{
+    margin:-10px
+}
+#customers thead,  td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    
+  }
+  #customers tr td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center
+  }
+  #customerTable {
+    overflow-y: auto;
+    max-height:400px;
+}

@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SynonymsFilterPipe } from './../pipes/synonyms-filter.pipe';
 import { element } from 'protractor';
+import { FooterColumnGroup } from 'primeng/primeng';
 
 declare var $: any;
 interface Person {
@@ -22,6 +23,7 @@ interface Person {
 })
 export class SynonymsComponent implements OnInit {
   addSynonyms: FormGroup;
+  editSynonyms: FormGroup;
   submitted = false;
   synonymsFieldsForm: FormGroup;
   addField = false;
@@ -57,9 +59,16 @@ export class SynonymsComponent implements OnInit {
   synonyms_id:any;
   ExistDataCheck:any;
   searchTextTerms:any;
-  synonymsUpdateButton: boolean =false;
-
- 
+  UpdatedSynonymsValue:any;
+  synonymsUpdateButton: boolean = false;
+  updatedProductkey:any;
+  updatedProductKeyCategory:any;
+  synonysProductKey:any;
+  synonysProductKey_category:any;
+  disabledkey:boolean=true;
+  copyOntologySynonys:any=[];
+  synonymsManagementData:any;
+  synonymsUserUpdatedDetails:any =[];
   
 
   public items$: Observable<Person[]>;
@@ -81,6 +90,10 @@ export class SynonymsComponent implements OnInit {
       SearchProductname: new FormControl(),
 
    });
+
+   this.editSynonyms = new FormGroup({
+    editSearchProductname : new FormControl('')
+   })
 
 
       // Product name
@@ -105,6 +118,10 @@ SynonymsManagement() {
       if (this.ontologyManagementSynonyms[0].ontology_Details.length > 0) {
         this.ontologySynonymsLoader = false;
         this.Ontologysynonyms = this.ontologyManagementSynonyms[0].ontology_Details
+        this.Ontologysynonyms.forEach(element => {
+            element.editable = true;
+        })
+        this.copyOntologySynonys = JSON.parse(JSON.stringify(this.Ontologysynonyms));
       }
     }, err => {
       console.error(err);
@@ -151,69 +168,104 @@ SynonymsManagement() {
           'ontologySynonyms' : this.synonymsData.synonymsName,
           'synonymsProductName' : this.searchSynonymsName.name,
           'synonymsProductType' : this.searchSynonymsName.type,
-          'synonymsCreatedBy' : 'PIH-admin',
-          'synonymsUpdatedBy' : 'PIH-admin'
+          'synonymsCreatedBy' : localStorage.getItem('userName'),
+          'synonymsUpdatedBy' : localStorage.getItem('userName')
         }
         console.log(addSynonymsData);
         this.momentiveService.addSynonymsEvent(addSynonymsData).subscribe(data =>{
           console.log(data)
-          this.toastr.successToastr('Synonyms Added Successfully .', 'Success!');
+
+          let responseData = data
+          if(responseData[0].status = 200) {
+            this.toastr.successToastr('Synonyms' +'  '+ responseData[0].message, 'Success!');
+          } else {
+            this.toastr.warningToastr('Synonyms' +'  '+responseData[0].message, 'warning!');
+          }
+        
+          
+          this.addSynonyms.reset();
           this.SynonymsManagement();
+         
         },err => {
           console.error(err);
         })
       } else {
           this.toastr.warningToastr('Synonyms Already Exist .', 'Alert!');
+          this.addSynonyms.reset();
       }
   
   }
  
   synonymsEdit(synonymsValue) {
     this.synonymsUpdateButton = true;
+    this.disabledkey = false;
+    synonymsValue.editable = false;
     console.log(synonymsValue);
-    this.synonyms_id = synonymsValue.id;
-    this.synonyms_solr_Id = synonymsValue.solr_id;
-    this.addSynonyms.controls["synonymsName"].setValue(synonymsValue.synonyms);
-     this.addSynonyms.controls["SearchProductname"].setValue(synonymsValue.key);
+    this.updatedProductkey = synonymsValue.key;
+    this.updatedProductKeyCategory = synonymsValue.key_Category;
+    // this.synonyms_id = synonymsValue.id;
+    // this.synonyms_solr_Id = synonymsValue.solr_id;
+    // this.addSynonyms.controls["synonymsName"].setValue(synonymsValue.synonyms);
+    //  this.addSynonyms.controls["SearchProductname"].setValue(synonymsValue.key);
+  }
+  synonymsClearData() {
+    this.Ontologysynonyms = this.copyOntologySynonys;
+    this.copyOntologySynonys = JSON.parse(JSON.stringify(this.Ontologysynonyms));
+
   }
 
-  synonymsUpdate() {
-    console.log(this.addSynonyms)
-    this.synonymsData = this.addSynonyms.value;
-    console.log(this.synonymsData);
-    this.synonymsCheckData = this.synonymsData.synonymsName;
-    this.ExistDataCheck = false;
+  synonymsUpdate(data) {
+    this.UpdatedSynonymsValue = data;
+    console.log(this.UpdatedSynonymsValue);
+    if(this.UpdatedSynonymsValue.key == this.updatedProductkey && this.UpdatedSynonymsValue.key_Category == this.updatedProductKeyCategory) {
+      this.synonysProductKey = this.UpdatedSynonymsValue.key;
+      this.synonysProductKey_category = this.UpdatedSynonymsValue.key_Category;
+    } else {
+      this.synonysProductKey = this.searchSynonymsName.name 
+      this.synonysProductKey_category = this.searchSynonymsName.type
+    }
+    this.ExistDataCheck = false;  
     this.Ontologysynonyms.forEach(element => {
       if(element.synonyms == this.synonymsCheckData) {
              this.ExistDataCheck = true;  
              return false;
        }
      });
-    if(!this.ExistDataCheck) {
-      console.log(this.synonymsData);
+
+     if(!this.ExistDataCheck) {
       let addSynonymsData = {
-        'ontology_Id' : this.synonyms_id,
-        'solr_Id': this.synonyms_solr_Id,
-        'ontologySynonyms' : this.synonymsData.synonymsName,
-        'synonymsProductName' : this.searchSynonymsName.name,
-        'synonymsProductType' : this.searchSynonymsName.type,
-        'synonymsCreatedBy' : 'PIH-admin',
-        'synonymsUpdatedBy' : 'PIH-admin'
+        'ontology_Id' : this.UpdatedSynonymsValue.id,
+        'solr_Id': this.UpdatedSynonymsValue.solr_Id,
+        'ontologySynonyms' :   this.UpdatedSynonymsValue.synonyms,
+        'synonymsProductName' : this.synonysProductKey,
+        'synonymsProductType' :  this.synonysProductKey_category,
+        'synonymsCreatedBy' :  localStorage.getItem('userName'),
+        'synonymsUpdatedBy' : localStorage.getItem('userName')
       }
       console.log(addSynonymsData);
       this.momentiveService.addSynonymsEvent(addSynonymsData).subscribe(data =>{
         console.log(data)
         this.toastr.successToastr('Synonyms Updated Successfully .', 'Success!');
+        this.synonymsUpdateButton = false;
+        this.disabledkey = true;
         this.SynonymsManagement();
       },err => {
         console.error(err);
       })
-    } else {
-        this.toastr.warningToastr('Synonyms Already Exist .', 'Alert!');
-    }
-
+    
+     } else {
+      this.toastr.warningToastr('Synonyms Already Exist .', 'Alert!');
+     }
   }
 
+  synonymsUserDetails(data) {
+    console.log(data);
+    this.synonymsManagementData = data;
+    console.log(this.synonymsManagementData);
+    this.momentiveService.ontologyManagementLogDetails({"id":this.synonymsManagementData.id}).subscribe(data =>{
+      console.log(data);
+      this.synonymsUserUpdatedDetails = data;
+    })
 
-
+  }
 }

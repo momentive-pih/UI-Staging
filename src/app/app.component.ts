@@ -1,8 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
+import { MomentiveService } from './service/momentive.service';
 import { HostListener } from '@angular/core';
+
+
 declare var $: any;
+
 
 @Component({
   selector: 'app-root',
@@ -11,8 +15,13 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
   title = 'momentive';
+  userName:any;
 
-  constructor(location: PlatformLocation, private router: Router) { }
+  
+  constructor(location: PlatformLocation,private router: Router,private momentiveService: MomentiveService) {
+
+ 
+   }
 
   ngOnInit() {
     this.router.navigate(['']);
@@ -21,7 +30,11 @@ export class AppComponent implements OnInit {
         history.go(1);
         $(".modal .close").click()
     }
-    
+
+
+
   }
+ 
+ 
 
 }

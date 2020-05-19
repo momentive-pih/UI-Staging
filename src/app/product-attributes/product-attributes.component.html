@@ -1041,8 +1041,8 @@
                                                          <div class="col-md-6">
                                                             <div class="ui-helper-clearfix" style="text-align: right">
                                                                <button class="btb pg-button" type="button"
-                                                                  label="All Data" (click)="dtable.exportCSV()">Export
-                                                                  CSV Data</button>&nbsp;
+                                                                  label="All Data" (click)="dtable.exportCSV()">Export to Excel
+                                                                  </button>&nbsp;
                                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
                                                             </div>
                                                          </div>
@@ -1053,8 +1053,8 @@
                                                       <tr>
                                                          <th>S.No</th>
                                                          <th class="ptable-head" *ngFor="let col of columns"
-                                                            [pSortableColumn]="col.field" pResizableColumn>
-                                                            {{col.header}}
+                                                            [pSortableColumn]="col.field" pResizableColumn [ngStyle]="{'display':col.display}">
+                                                            {{col.header}}{{col.display}}
                                                             <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                                                                ariaLabelDesc="Activate to sort in descending order"
                                                                ariaLabelAsc="Activate to sort in ascending order">
@@ -1067,7 +1067,7 @@
                                                       let-index="rowIndex">
                                                       <tr class="ui-resizable-column">
                                                          <td>{{index+1}}</td>
-
+                                                         <td class="ptable-size" style="display:none">{{rowData.real_Spec_Id}}</td>
                                                          <td class="ptable-size">{{rowData.material_Number}}</td>
                                                          <td class="ptable-size">{{rowData.description}}</td>
                                                          <td class="ptable-size">{{rowData.bdt}}</td>
@@ -1099,8 +1099,8 @@
                                                          <div class="col-md-6">
                                                             <div class="ui-helper-clearfix" style="text-align: right">
                                                                <button class="btb pg-button" type="button"
-                                                                  label="All Data" (click)="dt.exportCSV()">Export CSV
-                                                                  Data</button>&nbsp;
+                                                                  label="All Data" (click)="dt.exportCSV()">Export to Excel
+                                                                  </button>&nbsp;
                                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
                                                             </div>
                                                          </div>
@@ -1109,8 +1109,8 @@
                                                    <ng-template pTemplate="header" let-columns>
                                                       <tr>
                                                          <th>S.No</th>
-                                                         <th class="ptable-head" *ngFor="let col of columns"
-                                                            [pSortableColumn]="col.field" pResizableColumn>
+                                                         <th class="ptable-head"  *ngFor="let col of columns"
+                                                            [pSortableColumn]="col.field" pResizableColumn  [ngStyle]="{'display': col.display}">
                                                             {{col.header}}
                                                             <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                                                                ariaLabelDesc="Activate to sort in descending order"
@@ -1124,7 +1124,7 @@
                                                       let-index="rowIndex">
                                                       <tr class="ui-resizable-column">
                                                          <td>{{index+1}}</td>
-
+                                                         <td class="ptable-size" style="display:none">{{rowData.real_Spec_Id}}</td>
                                                          <td class="ptable-size">{{rowData.material_Number}}</td>
                                                          <td class="ptable-size">{{rowData.description}}</td>
                                                          <td class="ptable-size">{{rowData.bdt}}</td>
@@ -1158,21 +1158,21 @@
                            <div class="panel-body">
                               <div class="row">
                                  <div class="col-md-3">
-
+                                  <form [formGroup]="addcomposition">
                                     <mat-form-field>
-                                       <mat-select name="compositionVaraible" [formControl]="selectedComposition"
+                                       <mat-select name="compositionVaraible" formControlName ="selectedComposition"
                                           placeholder="Select Composition Type"
                                           (selectionChange)="compositionProcess($event.value)">
                                           <mat-option *ngFor="let data of compositionsTypes" [value]="data.name">
                                              {{data.name}}
                                           </mat-option>
                                        </mat-select>
-                                    </mat-form-field>
+                                    </mat-form-field></form>
                                  </div>
                                  <div class="col-md-3">
-
+                                       <form [formGroup]="validityComposition">
                                     <mat-form-field>
-                                       <mat-select name="locationVaraible" [formControl]="selectedRegionlocation"
+                                       <mat-select name="locationVaraible" formControlName="selectedRegionlocation"
                                           placeholder="Rating and Validity Area"
                                           (selectionChange)="SubLevelComposition($event.value)">
                                           <mat-option *ngFor="let region of compositionlocations" [value]="region.name">
@@ -1180,6 +1180,7 @@
                                           </mat-option>
                                        </mat-select>
                                     </mat-form-field>
+                                 </form>
 
                                  </div>
                               </div>
@@ -1224,7 +1225,7 @@
                                                 To Excel</button>
                                           </div>
                                        </div>
-
+                                    
                                        <div class="table-responsive">
                                           <div class="table-responsive">
 
@@ -1232,6 +1233,11 @@
                                                 #StandardCompositiontable>
                                                 <thead>
                                                    <tr>
+                                                      <th colspan="1"
+                                                         style="background-color: #c8e993;color:#fff !important;width: 40%;display: none;">
+                                                         Real Specification -NamProd
+                                                      </th>
+
                                                       <th colspan="3"
                                                          style="background-color:  #a0a3e0;color:#fff !important;width: 40%;">
                                                          Component
@@ -1252,6 +1258,7 @@
                                                       </th>
                                                    </tr>
                                                    <tr>
+                                                      <th class="realSpec-hide">Real Spec-NamProd</th>
                                                       <th style="width:8%">Pure Spec ID</th>
                                                       <th style="width:8%">CAS Number</th>
                                                       <th>Ingredient Name</th>
@@ -1268,6 +1275,7 @@
                                                 <tbody>
                                                    <tr
                                                       *ngFor="let sale of compositionStandardData | stdCompositionFilter: searchStandardCompositionText;">
+                                                      <td class="realSpec-hide">{{sale.real_Spec_Id}}</td>
                                                       <td>{{sale.pure_spec_Id}}</td>
                                                       <td>{{sale.cas_Number}}</td>
                                                       <td style="word-break:break-word;">{{sale.ingredient_Name}}</td>
@@ -1334,14 +1342,15 @@
                                           <div class="table-responsive">
 
                                              <table class="table table-striped table-bordered" width="100%"
-                                                #LegalCompositiontable>
+                                                #LegalComposition>
                                                 <thead>
                                                    <tr>
                                                       <th>
                                                          S.No
                                                       </th>
+                                                      <th class="realSpec-hide">Real Specification -NamProd</th>
                                                       <th>
-                                                         Specification Id
+                                                        Pure Specification Id
                                                       </th>
                                                       <th>
                                                          CAS Number
@@ -1353,11 +1362,12 @@
                                                          Component Type
                                                       </th>
                                                       <th>
+                                                            Legal Value
+                                                         </th>
+                                                      <th>
                                                          Legal Unit
                                                       </th>
-                                                      <th>
-                                                         Legal Value
-                                                      </th>
+                                                     
                                                    </tr>
                                                 </thead>
                                                 <tbody>
@@ -1366,6 +1376,7 @@
                                                       <td>
                                                          {{i+1}}
                                                       </td>
+                                                      <td class="realSpec-hide">{{data.real_Spec_Id}}</td>
                                                       <td>
                                                          {{data.pure_spec_Id}}
                                                       </td>
@@ -1378,12 +1389,13 @@
                                                       <td>
                                                          {{data.legal_Componant_Type}}
                                                       </td>
+                                                      <td class="decimal-data">
+                                                            {{data.legal_value}}
+                                                         </td>
                                                       <td>
                                                          {{data.legal_unit}}
                                                       </td>
-                                                      <td class="decimal-data">
-                                                         {{data.legal_value}}
-                                                      </td>
+                                                     
                                                    </tr>
                                                 </tbody>
                                              </table>
@@ -1413,16 +1425,20 @@
                                              </form>
                                           </div>
                                           <div class="col-md-2">
-                                             <button (click)="exportToSVTExcel()" class="btn spec-btn pull-right">Export
+                                             <button class="btn spec-btn pull-right" (click)="exportToSVTExcel()">Export
                                                 To Excel</button>
                                           </div>
                                        </div>
                                        <br>
-                                       <div class="table-responsive" #SVTtable>
+                                       <div class="table-responsive" >
                                           <div class="table-responsive">
-                                             <table class="table table-striped table-bordered" width="100%">
+                                             <table class="table table-striped table-bordered" width="100%" #SVTCompositionTable>
                                                 <thead>
                                                    <tr>
+                                                       <th colspan="1"
+                                                         style="background-color: #c8e993;color:#fff !important;width: 40%;display: none;">
+                                                         Real Specification -NamProd
+                                                      </th>
                                                       <th colspan="1"
                                                          style="background-color:  #a0a3e0;color:#fff !important;">
                                                          Scenario
@@ -1439,6 +1455,7 @@
                                                       </th>
                                                    </tr>
                                                    <tr>
+                                                      <th class="realSpec-hide">Real Specification -NamProd</th>
                                                       <th>Pure Spec ID</th>
                                                       <th>2018</th>
                                                       <th>2019</th>
@@ -1457,6 +1474,7 @@
                                                 <tbody>
                                                    <tr
                                                       *ngFor="let legalData of SVT_table | svtCompositionFilter: searchSVTComposition; ">
+                                                      <td class="realSpec-hide">{{legalData.real_Spec_Id}}</td>
                                                       <td>{{legalData.pure_spec_Id}}</td>
                                                       <td class="decimal-data">{{legalData.SVT_LV_eight}}</td>
                                                       <td class="decimal-data">{{legalData.SVT_LV_nine}}</td>

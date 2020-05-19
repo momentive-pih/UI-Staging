@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Constants } from './../constants/constants';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+declare var $: any;
 
 let token = ""
 let headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -18,7 +19,7 @@ headers.set('Access-Control-Allow-Origin', '*')
 
 export class MomentiveService {
   invokeEvent: Subject<any> = new Subject();
-  invokeCheckEvent : Subject<any> = new Subject ();
+  invokeCheckEvent: Subject<any> = new Subject();
   homeEvent: Subject<any> = new Subject();
   CategoryEvent: Subject<any> = new Subject();
   itemsNew: any = [];
@@ -34,9 +35,10 @@ export class MomentiveService {
   productLevelAPIData: any = [];
   materialLevelData: any = [];
   casLevelData: any = [];
-  intialAllSpecList:any =[];
-
-
+  intialAllSpecList: any = [];
+  headerDict: any;
+  requestOptions: any;
+  loginUserName:any;
 
   notifyObservable$ = this.invokeEvent.asObservable();
   notifyCheckObservable$ = this.invokeCheckEvent.asObservable()
@@ -44,6 +46,19 @@ export class MomentiveService {
 
 
   constructor(private http: HttpClient) {
+
+    this.headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      "Access-Control-Allow-Methods": 'GET,POST,PATCH,DELETE,PUT,OPTIONS',
+      "Access-Control-Allow-Headers": 'Origin, Content-Type, X-Auth-Token, content-type',
+    }
+
+    this.requestOptions = {
+      headers: new Headers(this.headerDict),
+    };
 
   }
 
@@ -142,13 +157,41 @@ export class MomentiveService {
   addAdditionalDeatils(data) {
     return this.http.post(Constants.SERVICES_DOMAIN + "postOtherDetails", data);
   }
-  
+
   //self Service Report
   getSelfServiceReport(data) {
     return this.http.post(Constants.SERVICES_DOMAIN + "postSelfServiceReport", data);
   }
+  getontologyUpdatedDocuments(data) {
+    return this.http.post(Constants.SERVICES_DOMAIN + "postUpdateOntologyDocuments", data);
+  }
 
+  ontologyManagementLogDetails(data) {
+    return this.http.post(Constants.SERVICES_DOMAIN + "postOntologyManagementLogDetails", data);
+  }
 
+  ontologyDocumnetsLogDetails(data) {
+    return this.http.post(Constants.SERVICES_DOMAIN + "postOntologyDocumentLogDetails", data);
+  }
+  getAzureUserDetails() {
+    return this.http.get("https://appservice-win-pih.azurewebsites.net/.auth/me", this.requestOptions);
+  }
+
+//    getAzureUserDetails(){
+//     alert('123')
+//     // This url has been obfuscated but you get the gist. This is the expected format so I can't alter the string
+//     const url = '';
+
+//     $.ajax({
+//       url: 'https://appservice-win-pih.azurewebsites.net/.auth/me',
+//       type: 'GET',
+//       dataType: 'jsonp',
+//       success: function (data: any) {
+//         console.log(data);
+//       },
+//       error: function (e : any) { alert(e.toString) },
+//     });
+// }
   setSelectedProductData(value) {
     this.selectedProduct = value;
     console.log(this.selectedProduct);
@@ -164,6 +207,7 @@ export class MomentiveService {
     this.ProductCategoryData = value;
     console.log(this.ProductCategoryData);
   }
+
 
   getCategoryData() {
     return this.ProductCategoryData;
@@ -190,7 +234,7 @@ export class MomentiveService {
   getAllSpecList() {
     return this.intialAllSpecList;
   }
-  
+
   setBasicLevelDetails(value) {
     this.basicLevelList = value;
     console.log(this.basicLevelList);
@@ -227,7 +271,14 @@ export class MomentiveService {
   getSearchData() {
     return this.http.get('../../assets/momentive.json');
   }
+  setUserName(value : string) {
+   this.loginUserName = value;
+   console.log(this.loginUserName)
+  }
 
+  getLoggedUserName() {
+    return this.loginUserName;
+  }
 
   getOntologyDocuments() {
     return this.http.get('../../assets/ontology.json');

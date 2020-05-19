@@ -19,8 +19,9 @@
                 </div>
                 <div class="col-md-6 docs-dir">
                         <button class="docs-btn"><i class="fa fa-share" (click)="backOntology()" title="back"> Back</i> </button> &nbsp;
-                    <button class="docs-btn"><i class="fa fa-edit" (click)="editOntology(extarctPDFData)" title="Edit"> Edit</i> </button> &nbsp;
-                    <button class="docs-btn"> <i class="fa fa-share" title="Update" (click)="updateOntology(extarctPDFData)"> Update</i></button> &nbsp;
+                    <button class="docs-btn" *ngIf="disabledCondition"><i class="fa fa-edit" (click)="editOntology(extarctPDFData)" title="Edit"> Edit</i> </button> &nbsp;
+                    <button class="docs-btn" *ngIf="!disabledCondition"> <i class="fa fa-share" title="Update" (click)="updateOntology(extarctPDFData)"> Update</i></button> &nbsp;
+                    <button class="docs-btn" *ngIf="!disabledCondition"> <i class="fa fa-share" title="clear" (click)="clearOntology()"> Cancel</i></button> &nbsp;
                     <!-- <button class="docs-btn" > <i class="fa fa-eye" (click)="ReadOntology(extarctPDFData)" title="Delete"> ReadIT</i> </button> -->
                 </div>
             </div>
@@ -28,13 +29,13 @@
             <!--Key-Value pair Section-->
             <table class="table table-bordered table-bc">
                 <thead>
-                    <th>Keys </th>
-                    <th>Values</th>
+                    <th>Items</th>
+                    <th>Values  <a class="info-btn" title="Change Log"  data-toggle="modal" data-target="#ontologyUserInformation" (click)="ontologyUserDetails()"><i class="fa fa-info"></i></a> </th>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <b>Key</b>
+                            <b>Product</b>
                             <td>
                                 <div class="forms">
                                     <div class="reactive-form">
@@ -42,8 +43,8 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="new-search">
-                                                        <ng-select #code class="custom" [items]="ontology_Lsr_key" bindLabel="name" [readonly]="disabledkey" formControlName="Searchname" [closeOnSelect]="true" placeholder="Select key" [markFirst]="true" [hideSelected]="false" appendTo="body" groupBy="product"
-                                                            [searchable]="true" [dropdownPosition]="'bottom'" multiple="true" (change)="onChangeData($event)" (remove)="clearCheck($event)" [(ngModel)]="ontologyExtractKey">
+                                                        <ng-select #code class="custom" [items]="ontologyDocumetskey" bindLabel="name" [readonly]="disabledkey" formControlName="Searchname" [closeOnSelect]="true" placeholder="Select key" [markFirst]="true" [hideSelected]="false" appendTo="body" groupBy="product"
+                                                            [searchable]="true" [dropdownPosition]="'bottom'" multiple="flase" groupBy="type" (change)="onChangeData($event)" (remove)="clearCheck($event)" [(ngModel)]="ontologyExtractKey">
                                                         </ng-select>
 
                                                     </div>
@@ -55,10 +56,12 @@
                                 </div>
                             </td>
                     </tr>
-                    <tr *ngFor="let data of extarctPDFData | keyvalue : intialSort; let i = index">
-                        <td width="20%"><b>{{data.key}}</b></td>
-                        <td width="65%">
-                            <textarea class="form-control" [disabled]="disabledCondition" type="text" [(ngModel)]="data.value" name=value-{{i}} (keyup)="documentKey(data)"></textarea></td>
+                    <tr *ngFor="let extractdata of extarctPDFData | keyvalue : intialSort; let i = index">
+                    <td width="20%"  *ngIf="extractdata.key != 'ontologyKey'" ><b>{{extractdata.key}}</b></td>
+                        <td width="65%"  *ngIf="extractdata.key != 'ontologyKey'">
+                            <textarea class="form-control" [disabled]="disabledCondition" type="text"
+                             [(ngModel)]="extractdata.value"
+                             name=value-{{i}} (change)="documentKey(extractdata)"></textarea></td>
                         <!-- <td>{{data.value}}</td><input class="form-control" type="text" formControlName="extractNamedetails" name="extractNamedetails"> -->
                     </tr>
                 </tbody>
@@ -66,3 +69,39 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div id="ontologyUserInformation" class="modal fade" role="dialog" *ngIf="ontologyHeading">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+    <h6 class="modal-title-h">Change Log - <small>{{ontologyHeading}}</small> </h6>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+             
+            </div>
+            <div class="modal-body" id="customerTable">
+                    <table id="customers">
+                
+                            <thead>
+                                  <td><b>S.No</b></td>
+                                  
+                                  <td><b>Updated Date</b></td>
+                                  <td><b>Updated By</b></td>
+                              </thead>
+                              <tbody>
+                                    <tr *ngFor="let data of ontologyUserUpdatedDetails ; let i = index">
+                                            <td>{{i+1}}</td>
+                                           
+                                            <td>{{data.updated_Date}}</td>
+                                            <td>{{data.updated_By}}</td>
+                                        </tr>
+                          </tbody>
+                          </table>
+            </div>
+          
+          </div>
+      
+        </div>
+      </div>
