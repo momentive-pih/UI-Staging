@@ -22,12 +22,12 @@
                                 <div class="col-md-4">
                                     <div class="new-search">
 
-                                        <ng-select #code class="custom" [items]="items$ | async" bindLabel="name"
+                                        <ng-select #code class="custom" [items]="items$" bindLabel="name"
                                             bindValue="name" [closeOnSelect]="true" [multiple]="false"
                                             [hideSelected]="true" [dropdownPosition]="'bottom'" [searchable]="true"
                                              formControlName="SearchProductname"
                                             [closeOnSelect]="true" placeholder="Select Product Name" [markFirst]="true"
-                                            (change)="onChangeData($event)"   [hideSelected]="false" appendTo="body" groupBy="type"
+                                            (change)="onChangeData($event)"   appendTo="body" groupBy="type"
                                             [typeahead]="input$" required>
                                         </ng-select>
 
@@ -88,7 +88,7 @@
                                                             
                                                                     <div class="new-search">
                                 
-                                                                        <ng-select #code class="custom" [items]="items$ | async" bindLabel="name" [readonly]="data.editable"
+                                                                        <ng-select #code class="custom" [items]="items$" bindLabel="name" [readonly]="data.editable"
                                                                             bindValue="name" [closeOnSelect]="true" [multiple]="false"
                                                                             [hideSelected]="true" [dropdownPosition]="'bottom'" [searchable]="true"
                                                                              [(ngModel)]="data.key" 

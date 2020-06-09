@@ -186,3 +186,10 @@
 .ontology-action {
     display: inline-flex;
 }
+.document-sec{
+    width: 20%;
+    float: right;
+    margin-top: 20px;
+    margin-bottom: -20px;
+    margin-right: 20px;
+}

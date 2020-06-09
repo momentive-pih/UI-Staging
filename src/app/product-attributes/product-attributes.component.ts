@@ -21,6 +21,7 @@ import { SvtCompositionFilterPipe } from '../pipes/svt-composition-filter.pipe';
 import { LegalCompositionFilterPipe } from '../pipes/legal-composition-filter.pipe';
 import { StdCompositionFilterPipe } from '../pipes/std-composition-filter.pipe';
 
+
 interface speclist {
   id: string;
   name: string;
@@ -28,6 +29,7 @@ interface speclist {
 
 declare var $: any;
 $.fn.modal.Constructor.prototype._enforceFocus = function () { };
+
 @Component({
   selector: 'app-product-attributes',
   templateUrl: './product-attributes.component.html',
@@ -174,9 +176,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   chemiaclSection:boolean= true;
   formulaSection:boolean = false;
   weightSection:boolean = false;
-  searchStandardCompositionText:any;
-  searchLegalComposition:any
-  searchSVTComposition:any;
+  searchStandardCompositionText:string ='';
+  searchLegalComposition:string ='';
+  searchSVTComposition:string ='';
 
   chemicalStructureproductLevel: any = [];
   chemicalStructurematerialLevel: any = [];
@@ -285,6 +287,15 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
 
+    $(".wmd-view-topscroll").scroll(function(){
+      $(".wmd-view")
+          .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+  });
+  $(".wmd-view").scroll(function(){
+      $(".wmd-view-topscroll")
+          .scrollLeft($(".wmd-view").scrollLeft());
+  });
+
    //Report Data Header
    this.compositionMaterialDataHead = [
     { "field": "real_Spec_Id","header":"Real Specification-NamProd","display":'none'},
@@ -356,7 +367,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
         { "field": "prstp", "header": "Precautionary Statement Prevention" },
         { "field": "prstr", "header": "Precautionary Statement Response" },
         { "field": "prsts", "header": "Precautionary Statement Storage" },
-        { "field": "additional_Information", "header": "Additional Information / Remarks", "width": "20%" }
+        { "field": "additional_Information_remarks", "header": "Additional Information / Remarks", "width": "20%" }
       ]
     this.compositionDataLevel = true;
   }
@@ -559,6 +570,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       console.log(this.productAttributeStructures);
       this.productAttributeChemicalStructures = this.productAttributeStructures[0].chemical_Structure;
       this.productAttributemolecular_Formula = this.productAttributeStructures[1].molecular_Formula;
+      console.log(this.productAttributemolecular_Formula);
       this.productAttributemolecular_Weight = this.productAttributeStructures[2].molecular_Weight;
       if ((this.productAttributeChemicalStructures.length > 0) || (this.productAttributemolecular_Formula.length > 0) || (this.productAttributemolecular_Weight.length > 0)) {
         this.ProductAttributeLoader = false;
@@ -574,31 +586,38 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
           this.chemicalStructurecasLevel=[];
           if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
             this.chemicalStructurematerialLevel.push(element);
+            console.log(this.chemicalStructurematerialLevel);
           }
           else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
             this.chemicalStructureproductLevel.push(element);
+            console.log(this.chemicalStructureproductLevel);
           }
           else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
             this.chemicalStructurecasLevel.push(element);
+            console.log(this.chemicalStructurecasLevel);
           }
         })
 
         this.molecularFormulaTable = this.productAttributemolecular_Formula;
+        console.log(this.molecularFormulaTable);
+        this.molecularFormulaMaterialLevel=[];
+        this.molecularFormulaProductLevel=[];
+        this.molecularFormulaCasLevel=[];
         this.molecularFormulaTable.forEach(element => {
-          this.molecularFormulaMaterialLevel=[];
-          this.molecularFormulaProductLevel=[];
-          this.molecularFormulaCasLevel=[];
-
           if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
             this.molecularFormulaMaterialLevel.push(element);
+            console.log(this.molecularFormulaMaterialLevel);
           }
-          else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
-            this.molecularFormulaProductLevel.push(element);
-          }
+          
           else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
             this.molecularFormulaCasLevel.push(element);
           }
+          else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+            this.molecularFormulaProductLevel.push(element);
+            console.log(this.molecularFormulaProductLevel);
+          }
         })
+
         this.molecularWeightTable = this.productAttributemolecular_Weight;
         this.molecularWeightMaterialLevel=[];
         this.molecularWeightProductLevel=[];
@@ -610,9 +629,11 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
           }
           else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
             this.molecularWeightProductLevel.push(element);
+            console.log(this.molecularWeightProductLevel);
           }
           else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
             this.molecularWeightCasLevel.push(element);
+            console.log(this.molecularWeightCasLevel);
           }
         })
       }
@@ -641,6 +662,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
   backTostructurePage() {
     this.moleclularWeightDetailDataPage = false;
+    this.structureFormulaCheckData = 'Molecular weight'
   }
 
   onChangeStructureFormula(item) {
@@ -821,6 +843,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
   //Composition API Call
   compositionProcess(value) {
+    this.searchLegalComposition = "";
+    this.searchSVTComposition ="";
+    this.searchStandardCompositionText ="",
     console.log(value);
     this.compositionlocations =[];
     this.compostionCheck = value;
@@ -899,6 +924,8 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
   //Legal Composition API call
   SubLevelComposition(value) {
+    this.searchLegalComposition = "";
+    this.searchSVTComposition ="";
     this.productAttributeAPIData = [];
     this.legalCompositionData = [];
     this.compositionStandardData = [];
@@ -1070,8 +1097,8 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
         'Standard Composition  Value' : element.std_value,
         'Standard Composition  Unit' :element.std_unit,
         '100 % Composition Component Type' :element.hundrd_Componant_Type,
-        '100 % Composition Unit' :element.hundrd_value,
-        '100 % Composition value' :element.hundrd_unit,
+        '100 % Composition value' :element.hundrd_value,
+        '100 % Composition Unit' :element.hundrd_unit,
         'INCI Composition Component Type' : element.inci_Componant_Type,
         'INCI Composition value & Unit': element.inci_value_unit,
       });
@@ -1260,5 +1287,12 @@ this.copyExcelSVTCompositionData =[];
     console.log(this.casLevelCategoy);
 
   }
+
+  DownloadProfilePic(data) { ;
+  console.log(data);
+    var url =  data;
+   window.open(url);
+  }
+ 
 }
 

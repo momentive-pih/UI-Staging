@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit {
   highlightedDiv: number;
   buttonName ='Hide Categories';
   globalSearchData:any=[];
+  EmptyProductLevel:boolean=false;
   objectKeys = Object.keys;
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private router: Router,
@@ -80,6 +81,12 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
 
 
+    this.momentiveService.currentMessage.subscribe(message => {
+      console.log(message);
+      this.EmptyProductLevel = message;
+    })
+ 
+  
     // Home Page API CALL
     this.intialSelctedData = localStorage.getItem('SearchBarData');
     console.log(this.intialSelctedData);
@@ -191,7 +198,7 @@ export class HomeComponent implements OnInit {
         this.momentiveService.callMethodOfSecondComponent(this.radioItem);
       }, 0);
     } else if (this.modalValue === 'complianceModal') {
-      this.productTitle = 'Product Complaince';
+      this.productTitle = 'Product Compliance';
       this.secondModal = true;
       this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
       setTimeout(() => {

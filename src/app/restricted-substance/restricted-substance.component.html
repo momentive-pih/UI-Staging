@@ -20,10 +20,11 @@
             </span>
 
             <span *ngIf="pihAlertMessage">
-                <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+                <br>
+                <h5 class="loader-text"><b>Does not contain any substances that are on the GADSL</b></h5>
             </span>
             <div *ngIf="!restrictedLoader && !pihAlertMessage">
-                <h6 class="text-default font-weight-semibold">GADSL:<i class="fa fa-info-circle" role="button" title="This data is from GADSL/External Website"></i></h6>
+                <h6 class="text-default font-weight-semibold">GADSL:<i class="fa fa-info-circle" role="button" title="Source list is from GADSL website, placed in SharePoint"></i></h6>
                 <p-table #dt [columns]="restrictedGASDLHeader" [value]="restrictedGASDLData" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
                 [responsive]="true">
                     <ng-template pTemplate="caption">
@@ -43,7 +44,7 @@
                     <br>
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th>S.No</th>
+                            <th style="width:5%">S.No</th>
                             <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
                                 {{col.header}}
                                 <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
@@ -78,13 +79,14 @@
             <span *ngIf="pihAlertMessage">
                 
                 <h5 class="loader-text">
-                        <b>No ingredient requiring a warning under CA Prop 65</b>
                         <br>
-                    <img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
+                        <b>No Ingredient requiring a warning under Cal. Prop 65</b></h5>
+                        <!-- <br>
+                    <img src="../../../assets/images/momentive/category/noDataFound.png"> -->
             </span>
 
             <div *ngIf="!restrictedLoader && !pihAlertMessage">
-                <h6 class="text-default font-weight-semibold">California Prop 65:<i class="fa fa-info-circle" role="button" title="This data is from Cal Porp 65 website/External Website"></i></h6>
+                <h6 class="text-default font-weight-semibold">California Prop 65:<i class="fa fa-info-circle" role="button" title="Source list is from Cal. Prop. 65 website, placed in SharePoint"></i></h6>
                 <p-table #dt [columns]="restrictedCaliforniaTableHeader" [value]="restrictedCaliforniaData" (sortFunction)="customSort($event)" [customSort]="true" [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
                 [responsive]="true">
                     <ng-template pTemplate="caption">
@@ -104,7 +106,7 @@
                     <br>
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th>S.No</th>
+                            <th style="width:5%">S.No</th>
                             <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
                                 {{col.header}}
                                 <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>

@@ -40,7 +40,7 @@
                         <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne"
                             data-parent="#accordionStudyTitle">
                             <div class="panel-body">
-                                <span *ngIf="!productLevelCategoy.length">No Data Found</span>
+                                <span *ngIf="productLevelCategoy.length == 0">No Data Found</span>
                                 <div *ngIf="productLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -129,7 +129,7 @@
                         <div id="materialLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingTwo"
                             data-parent="#accordionStudyTitle">
                             <div class="panel-body">
-                                <span *ngIf="!materialLevelCategoy.length">No Data Found</span>
+                                <span *ngIf="materialLevelCategoy.length == 0">No Data Found</span>
                                 <div *ngIf="materialLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
                                         <p-table #dt [columns]="toxicologyStudyHead" [value]="materialLevelCategoy"
@@ -216,7 +216,7 @@
                         <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree"
                             data-parent="#accordionStudyTitle">
                             <div class="panel-body">
-                                <span *ngIf="!casLevelCategoy.length">No Data Found</span>
+                                <span *ngIf="casLevelCategoy.length == 0">No Data Found</span>
                                 <div *ngIf="casLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -335,33 +335,14 @@
                 </div>
             </div>
         </div>
+
+
+        
         <!--Monthly Toxicology Section-->
         <div class="modal-body-new" [class.modal-body]='contentHeight'  *ngIf="monthlyCheck">
             <h6 class="text-default font-weight-semibold">Monthly Toxicology Study Title List:<i
                     class="fa fa-info-circle" role="button" title="This data is from Sharepoint"></i></h6>
        
-                    <div class="row" *ngIf="toxicologyMonthlySelantCheck.length || toxicologyMonthlySilaneCheck.length">
-                            <div class="col-md-9">
-                                <h3 class="text-default font-weight-semibold"><span class="head-sub"
-                                        *ngIf="toxicology_sealant">Sealant</span>
-                                    <span class="head-sub" *ngIf="toxicology_silane">Silane </span>
-                                </h3>
-                            </div>
-            
-                            <div class="col-md-3">
-            
-                                <mat-form-field>
-                                    <mat-label>Monthly Toxicology Types</mat-label>
-                                    <mat-select name="toxicolgyMonthlyValue" [(value)]="selectedMonthlyToxicologyType"
-                                        placeholder="Select Monthly Toxicology" (selectionChange)="toxicologyProcess($event.value)">
-                                        <mat-option *ngFor="let data of toxicologydropData" [value]="data.type">
-                                            {{data.type}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-            
-                            </div>
-                        </div>
             <span *ngIf="toxicolgyLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
@@ -372,12 +353,17 @@
             </span>
 
             <div *ngIf="!toxicolgyLoader && !pihAlertMessage">
-                <div class="row" *ngIf="toxicology_silane">
+
+   
+                <div class="row">
                     <div class="col-md-12">
-                        <p-table #dt [columns]="monthlySilaneHeader" [value]="toxicologyMonthlyData"
-                            (sortFunction)="customSort($event)" [customSort]="true"
-                            [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand"
-                            [responsive]="true">
+
+                      
+                            <p-table class ="toxi-tab" #dt [columns]="monthlyToxicologyHeader" [value]="toxicologyMonthlyData"
+                            (sortFunction)="customSort($event)" [customSort]="true" [rows]="5"
+                            [resizableColumns]="true"  
+                            [responsive]="true"
+                           >
                             <ng-template pTemplate="caption">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -398,18 +384,20 @@
                                 </div>
                             </ng-template>
                             <br>
+                         
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th class="ptable-sno">S.No</th>
-                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                    <th class="ptable-head"  *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width':col.width}"
                                         pResizableColumn>
-                                        {{col.header}}
+                                        {{col.header}} 
                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                                             ariaLabelDesc="Activate to sort in descending order"
                                             ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                     </th>
                                 </tr>
                             </ng-template>
+                          
                             <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
                                 <tr class="ui-resizable-column">
                                     <td>{{index+1}}</td>
@@ -421,57 +409,12 @@
                         </p-table>
                     </div>
                 </div>
-                <div class="row" *ngIf="toxicology_sealant">
-                    <div class="col-md-12">
-                        <p-table #dt [columns]="monthlySelantHeader" [value]="toxicologyMonthlyData"
-                            (sortFunction)="customSort($event)" [customSort]="true"
-                            [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand"
-                            [responsive]="true">
-                            <ng-template pTemplate="caption">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div style="text-align: left">
-                                            <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                            <input type="text" class="pg-search" pInputText size="50"
-                                                placeholder="Search"
-                                                (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="ui-helper-clearfix" style="text-align: right">
-                                            <button class="btb pg-button" type="button" label="All Data"
-                                                (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                            <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-template>
-                            <br>
-                            <ng-template pTemplate="header" let-columns>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                        pResizableColumn>
-                                        {{col.header}}
-                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-                                            ariaLabelDesc="Activate to sort in descending order"
-                                            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                    </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                <tr class="ui-resizable-column">
-                                    <td>{{index+1}}</td>
-                                    <td class="ptable-size" *ngFor="let col of columns">
-                                        {{rowData[col.field]}}
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
+                
             </div>
         </div>
+
+
+
         <!--Toxicology Summary-->
         <div class="modal-body-new" [class.modal-body]='contentHeight'  *ngIf="summaryCheck">
             <span *ngIf="toxicolgyLoader">
@@ -499,7 +442,7 @@
                         <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne"
                             data-parent="#accordionToxicologySummary">
                             <div class="panel-body">
-                                <span *ngIf="!productLevelCategoy.length">No Data Found</span>
+                                <span *ngIf="productLevelCategoy.length == 0">No Data Found</span>
                                 <div *ngIf="productLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -576,7 +519,7 @@
                         <div id="materialLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingTwo"
                             data-parent="#accordionToxicologySummary">
                             <div class="panel-body">
-                                <span *ngIf="!materialLevelCategoy.length">No Data Found</span>
+                                <span *ngIf="materialLevelCategoy.length == 0">No Data Found</span>
                                 <div *ngIf="materialLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -653,7 +596,7 @@
                         <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree"
                             data-parent="#accordionToxicologySummary">
                             <div class="panel-body">
-                                <span *ngIf="!casLevelCategoy.length">No Data Found</span>
+                                <span *ngIf="casLevelCategoy.length == 0">No Data Found</span>
                                 <div *ngIf="casLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -719,10 +662,8 @@
 
 
             </div>
-       
-        </div>
-             <!--Toxicology Summary Detail Page-->
-             <div *ngIf="toxicologySummaryDataPage">
+        <!--Toxicology Summary Detail Page-->
+        <div *ngIf="toxicologySummaryDataPage">
                 <h6 class="text-default font-weight-semibold">Toxicology Summary</h6>
                 <p>{{filename}}</p>
                 <div class="row">
@@ -755,6 +696,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+            
         <!--Toxicology Registration Tracker-->
         <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' *ngIf="dataCheck">
             <span *ngIf="toxicolgyLoader">
@@ -774,7 +717,7 @@
 
                             <p-table #dt [columns]="registrationHeader" [value]="registartion_Tracker_Data"
                                 (sortFunction)="customSort($event)" [customSort]="true"
-                                [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
+                                [resizableColumns]="true"
                                 columnResizeMode="expand" [responsive]="true">
                                 <ng-template pTemplate="caption">
                                     <div class="row">
@@ -798,9 +741,9 @@
                                 <br>
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th>S.No</th>
+                                        <th style="width:5%">S.No</th>
                                         <th class="ptable-head" *ngFor="let col of columns"
-                                            [pSortableColumn]="col.field" pResizableColumn>
+                                            [pSortableColumn]="col.field" pResizableColumn  [ngStyle]="{'width':col.width}">
                                             {{col.header}}
                                             <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                                                 ariaLabelDesc="Activate to sort in descending order"
@@ -811,9 +754,15 @@
                                 <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
                                     <tr class="ui-resizable-column">
                                         <td>{{index+1}}</td>
-                                        <td class="ptable-size" *ngFor="let col of columns">
-                                            {{rowData[col.field]}}
-                                        </td>
+                                        <td class="ptable-size">{{rowData.product_Name}}</td>
+                                        <td class="ptable-size">{{rowData.country_Name}}</td>
+                                        <td class="ptable-size">{{rowData.tonnage_Band}}</td>
+                                        <td class="ptable-size">{{rowData.study_Type}}</td>
+                                        <td class="ptable-size">{{rowData.test_Method}}</td>
+                                        <td class="ptable-size">{{rowData.test_Name}}</td>
+                                        <td class="ptable-size">{{rowData.estimated_Timing}}</td>
+                                        <td class="ptable-size">{{rowData.estimated_Cost}}</td>
+                                        <td class="ptable-size">{{rowData.new_Estimates}}</td>
                                     </tr>
                                 </ng-template>
                             </p-table>

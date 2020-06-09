@@ -280,9 +280,28 @@ th {
 }
 
 
-.search-table-outter { overflow-x: scroll; height:300px}
-.search-table-outter-new { overflow-x: scroll; height:400px}
- 
+.search-GHStable-outter { overflow-x: scroll;
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+}
+.search-GHStable-outter-new { overflow-x: scroll;
+transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg); /* Safari and Chrome */}
+
+
+.Ghs-res 
+{
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+}
+.Ghs-res  {
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+}
 
 .productLevel {
     background: #29506f;
@@ -400,7 +419,7 @@ th {
     white-space: normal;
     overflow: hidden;
     border-width: 1px; 
-    word-break: break-all
+    word-break: break-word;
  }
 
  .ptable-sybl-size{

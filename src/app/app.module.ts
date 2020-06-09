@@ -51,6 +51,7 @@ import { LegalCompositionFilterPipe } from './pipes/legal-composition-filter.pip
 import { StdCompositionFilterPipe } from './pipes/std-composition-filter.pipe';
 import { MsAdalAngular6Module } from 'microsoft-adal-angular6';
 import { AuthenticationGuard } from 'microsoft-adal-angular6';
+import { polyfill } from 'es6-promise'; polyfill();
 
 
 

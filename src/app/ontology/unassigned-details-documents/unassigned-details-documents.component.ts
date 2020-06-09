@@ -87,6 +87,11 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
   unassignedIntialData:any;
   extractDocument:any;
   PIHpdfURL: any;
+  SearchProducts:any;
+  searchDataLength:any;
+  searchTextTerms:any;
+  ontologyTabCheck:any;
+  backButtonCheck:boolean = true
   unassignedUpdatedData:any =[];
   ontologyDocumentUpdatedData:any =[];
   ontologyUserUpdatedDetails:any=[];
@@ -110,12 +115,22 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
       extractNamedetails: [''],
     });
 
-    this.items$ = this.input$.pipe(
-      map((term) => this.searchProduct(term, this.product_Name))
-    );
+    this.input$.subscribe(
+      (term) => this.searchProduct(term,this.product_Name));
   }
 
   ngOnInit() {
+
+    
+    this.momentiveService.currentOntologyMessage.subscribe(message => {
+      console.log(message);
+      this.ontologyTabCheck = message;
+      if(this.ontologyTabCheck == 'ontology-Tab') {
+        this.backButtonCheck = true;
+      } else {
+        this.backButtonCheck = false;
+      }
+    })
 
     this.route.queryParams.subscribe(params => {
       this.documentId = params["document_id"];
@@ -164,15 +179,15 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
      // ontology Unasigned Key-value API Call
  // Product name
 
- this.momentiveService.getOntologyManagement().subscribe(data => {
-  this.ontologyUnassignment = data;
-  console.log(this.ontologyUnassignment);
-  this.ontologyDocumetskey = this.ontologyUnassignment[0].product_Details
-  console.log(this.ontologyDocumetskey);
+//  this.momentiveService.getOntologyManagement().subscribe(data => {
+//   this.ontologyUnassignment = data;
+//   console.log(this.ontologyUnassignment);
+//   this.ontologyDocumetskey = this.ontologyUnassignment[0].product_Details
+//   console.log(this.ontologyDocumetskey);
 
-}, err => {
-  console.error(err);
-});
+// }, err => {
+//   console.error(err);
+// });
 
     this.placeholder = 'Enter the Details';
     this.keyword = 'name';
@@ -219,13 +234,47 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
   }
 
   //ontology unassigned Key-value Pair Search  function
-  private searchProduct(term: string | null, arr): product_Name[] {
+  // private searchProduct(term: string | null, arr): product_Name[] {
+  //   const searchTerm = term ? term : '';
+  //   if (searchTerm.length > 0) {
+  //     return arr.filter((product_Name) => {
+  //       return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase());
+  //     });
+  //   }
+  // }
+
+  private searchProduct(term: string | null, arr){
     const searchTerm = term ? term : '';
-    if (searchTerm.length > 0) {
-      return arr.filter((product_Name) => {
-        return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase());
-      });
+    console.log(searchTerm);
+    this.SearchProducts = {
+      'SearchData': searchTerm
     }
+    this.searchDataLength = this.SearchProducts.SearchData.length;
+
+    if (this.searchDataLength > 1) {
+    this.momentiveService.postOntologyProductSearch(this.SearchProducts).subscribe(data => {
+      console.log(data);
+      if (data) {
+        console.log('inside');
+        this.product_Name = data;
+        if (searchTerm.includes("*")) {
+          const searchTermNew = searchTerm.split('*');
+          this.searchTextTerms = searchTermNew[1];
+          console.log(this.searchTextTerms);
+        } else {
+          this.searchTextTerms = searchTerm;
+        }
+        this.items$ =  this.product_Name.filter((person) => {
+          return person.name.toString().toLowerCase().startsWith(searchTerm.toString().toLowerCase()) ||
+          person.key.toString().toLowerCase().includes(searchTerm.toString().toLowerCase()) ||
+          person.type.toString().toLowerCase().startsWith(searchTerm.toString().toLowerCase()) ||
+          person.name.toString().toLowerCase().startsWith(this.searchTextTerms.toString().toLowerCase()) 
+        });
+      }
+
+    });
+  
+  }
   }
 
   intialSort() {
@@ -341,6 +390,10 @@ export class UnassignedDetailsDocumentsComponent implements OnInit {
   }
   backOntology() {
     this.router.navigate(['ontology/unassigned-documents']);
+  }
+  backOntologyUnassigned() {
+    this.router.navigate(['ontology']);
+    this.momentiveService.changeOntologyDetailTab('Unassigned-Tab')
   }
   ontologyUserDetails() {
     this.ontologyDocumentUpdatedData = this.PDfOntology;

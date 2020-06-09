@@ -72,7 +72,7 @@
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                            data-parent="#accordionExample">
                            <div class="panel-body">
-                              <span *ngIf="!productLevelCategoy.length">No Data Found</span>
+                              <span *ngIf="productLevelCategoy.length == 0">No Data Found</span>
                               <div *ngIf="productLevelCategoy.length > 0" class="row">
                                  <div class="col-md-12">
                                     <table class="table">
@@ -84,7 +84,7 @@
                                              <th>product Type</th>
                                              <th>File Source</th>
                                              <th>Product Application</th>
-                                             <th class="td-actions">Actions</th>
+                                             <!-- <th class="td-actions">Actions</th> -->
                                           </tr>
                                        </thead>
                                        <tbody>
@@ -100,11 +100,11 @@
                                                    {{each.filename}}
                                                 </a>
                                              </td>
-                                             <td class="td-actions">
-                                                <span class="docs-btn"><a href="{{each.prod_App}}" download><i
+                                             <!-- <td class="td-actions">
+                                                <span class="docs-btn"><a href="{{each.prod_App}}" target="_new" download><i
                                                          class="fa fa-share">
                                                       </i> Download</a></span>
-                                             </td>
+                                             </td> -->
                                           </tr>
                                        </tbody>
                                     </table>
@@ -127,7 +127,7 @@
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                            data-parent="#accordionExample">
                            <div class="panel-body">
-                              <span *ngIf="!materialLevelCategoy.length">No Data Found</span>
+                              <span *ngIf="materialLevelCategoy.length == 0">No Data Found</span>
                               <div *ngIf="materialLevelCategoy.length > 0" class="row">
                                  <div class="col-md-12">
                                     <table class="table">
@@ -139,7 +139,7 @@
                                              <th>product Type</th>
                                              <th>File Source</th>
                                              <th>Product Application</th>
-                                             <th class="td-actions">Actions</th>
+                                             <!-- <th class="td-actions">Actions</th> -->
                                           </tr>
                                        </thead>
                                        <tbody>
@@ -155,11 +155,11 @@
                                                    {{each.filename}}
                                                 </a>
                                              </td>
-                                             <td class="td-actions">
-                                                <span class="docs-btn"><a href="{{each.prod_App}}" download><i
+                                             <!-- <td class="td-actions">
+                                                <span class="docs-btn"><a href="{{each.prod_App}}" target="_new" download><i
                                                          class="fa fa-share">
                                                       </i> Download</a></span>
-                                             </td>
+                                             </td> -->
                                           </tr>
                                        </tbody>
                                     </table>
@@ -182,7 +182,7 @@
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                            data-parent="#accordionExample">
                            <div class="panel-body">
-                              <span *ngIf="!casLevelCategoy.length">No Data Found</span>
+                              <span *ngIf="casLevelCategoy.length == 0">No Data Found</span>
                               <div *ngIf="casLevelCategoy.length > 0" class="row">
                                  <div class="col-md-12">
                                     <table class="table">
@@ -194,7 +194,7 @@
                                              <th>product Type</th>
                                              <th>File Source</th>
                                              <th>Product Application</th>
-                                             <th class="td-actions">Actions</th>
+                                             <!-- <th class="td-actions">Actions</th> -->
                                           </tr>
                                        </thead>
                                        <tbody>
@@ -210,11 +210,11 @@
                                                    {{each.filename}}
                                                 </a>
                                              </td>
-                                             <td class="td-actions">
-                                                <span class="docs-btn"><a href="{{each.prod_App}}" download><i
-                                                         class="fa fa-share">
-                                                      </i> Download</a></span>
-                                             </td>
+                                             <!-- <td class="td-actions">
+                                                   <span class="docs-btn"><a href="{{each.prod_App}}" target="_new" download><i
+                                                            class="fa fa-share">
+                                                         </i> Download</a></span>
+                                                </td> -->
                                           </tr>
                                        </tbody>
                                     </table>
@@ -259,7 +259,7 @@
                   <div class="col-md-4">
                      <form class="syn-search" action="#">
                         <div class="form-group-feedback form-group-feedback-right">
-                           <input type="search" class="form-control" name="product" [(ngModel)]="searchGHSText"
+                           <input type="search" class="form-control" name="product" [(ngModel)]="searchGHSText" (focus)="searchGHSText =''"
                               autocomplete="off" placeholder="Search Data">
                            <div class="form-control-feedback">
                               <i class="fa fa-search font-size-base text-muted"></i>
@@ -273,10 +273,12 @@
                   </div>
                </div>
                <br>
-               <div [class.search-table-outter-new]='contentHeight' [class.search-table-outter]='!contentHeight'>
+            
+               
+               <div [class.search-GHStable-outter-new]='contentHeight' [class.search-GHStable-outter]='!contentHeight'>
                <div class="row">
-                  <div class="col-md-12">
-                     <table class="table" #ghsTable>
+                  <div class="col-md-12 Ghs-res">
+                     <table #ghsTable>
                         <thead>
                            <tr>
                               <th>S.No</th>
@@ -361,7 +363,7 @@
                                  {{each.prstd}}
                               </td>
                               <td class="ptable-size">
-                                 {{each.additional_Information}}
+                                 {{each.additional_Information_remarks}}
                               </td>
                            </tr>
                         </tbody>
@@ -401,16 +403,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#chemicalStructureproductLevel"
+                                 <a data-toggle="collapse" data-target="#chemicalStructureproductLevelPIH"
                                     aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="chemicalStructureproductLevel" class="collapse show" aria-labelledby="headingOne"
+                           <div id="chemicalStructureproductLevelPIH" class="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionChemicalStructure">
                               <div class="panel-body">
-                                 <span *ngIf="!chemicalStructureproductLevel.length">No Data Found</span>
+                                 <span *ngIf="chemicalStructureproductLevel.length == 0">No Data Found</span>
                                  <div *ngIf="chemicalStructureproductLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -423,7 +425,7 @@
                                                 <th>Product Name</th>
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
-                                                <th>Actions</th>
+                                                <!-- <th>Actions</th> -->
                                              </tr>
                                           </thead>
                                           <tbody>
@@ -439,11 +441,11 @@
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" target="_new" download><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                                 <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
                                              </tr>
                                           </tbody>
@@ -458,13 +460,13 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#chemicalStructurematerialLevel"
+                                 <a data-toggle="collapse" data-target="#chemicalStructurematerialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="chemicalStructurematerialLevel" class="collapse" aria-labelledby="headingTwo"
+                           <div id="chemicalStructurematerialLevelPIH" class="collapse" aria-labelledby="headingTwo"
                               data-parent="#accordionChemicalStructure">
                               <div class="panel-body">
                                  <span *ngIf="!chemicalStructurematerialLevel.length">No Data Found</span>
@@ -480,7 +482,7 @@
                                                 <th>Product Name</th>
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
-                                                <th>Actions</th>
+                                                <!-- <th>Actions</th> -->
                                              </tr>
                                           </thead>
                                           <tbody>
@@ -496,11 +498,11 @@
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" target="_new" download><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                                 <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
                                              </tr>
                                           </tbody>
@@ -515,16 +517,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#chemicalStructurecasLevel"
+                                 <a data-toggle="collapse" data-target="#chemicalStructurecasLevelPIH"
                                     aria-expanded="false" aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="chemicalStructurecasLevel" class="collapse" aria-labelledby="headingThree"
+                           <div id="chemicalStructurecasLevelPIH" class="collapse" aria-labelledby="headingThree"
                               data-parent="#accordionChemicalStructure">
                               <div class="panel-body">
-                                 <span *ngIf="!chemicalStructurecasLevel.length">No Data Found</span>
+                                 <span *ngIf="chemicalStructurecasLevel.length == 0">No Data Found</span>
                                  <div *ngIf="chemicalStructurecasLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -537,7 +539,7 @@
                                                 <th>Product Name</th>
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
-                                                <th>Actions</th>
+                                                <!-- <th>Actions</th> -->
                                              </tr>
                                           </thead>
                                           <tbody>
@@ -553,11 +555,11 @@
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" target="_new" download><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                                 <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
                                              </tr>
                                           </tbody>
@@ -581,17 +583,17 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#molecularFormulaProductLevel"
+                                 <a data-toggle="collapse" data-target="#molecularFormulaProductLevelPIH"
                                     aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="molecularFormulaProductLevel" class="collapse show" aria-labelledby="headingOne"
+                           <div id="molecularFormulaProductLevelPIH" class="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionMolecularFormula">
                               <div class="panel-body">
 
-                                 <span *ngIf="!molecularFormulaProductLevel.length">No Data Found</span>
+                                 <span *ngIf="molecularFormulaProductLevel.length == 0">No Data Found</span>
                                  <div *ngIf="molecularFormulaProductLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
                                        <table>
@@ -603,7 +605,7 @@
                                                 <th>Product Name</th>
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
-                                                <th>Action</th>
+                                                <!-- <th>Action</th> -->
                                              </tr>
                                           </thead>
                                           <tbody>
@@ -620,11 +622,11 @@
                                                    </a>
                                                 </td>
                                                 <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
+                                                <!-- <td class="potential-btn">
                                                    <span class="docs-btn"><a href="{{data.file_Path}}" download><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>
@@ -638,16 +640,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#molecularFormulaMaterialLevel"
+                                 <a data-toggle="collapse" data-target="#molecularFormulaMaterialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="molecularFormulaMaterialLevel" class="collapse" aria-labelledby="headingTwo"
+                           <div id="molecularFormulaMaterialLevelPIH" class="collapse" aria-labelledby="headingTwo"
                               data-parent="#accordionMolecularFormula">
                               <div class="panel-body">
-                                 <span *ngIf="!molecularFormulaMaterialLevel.length">No Data Found</span>
+                                 <span *ngIf="molecularFormulaMaterialLevel.length == 0">No Data Found</span>
                                  <div *ngIf="molecularFormulaMaterialLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
                                        <table>
@@ -659,7 +661,7 @@
                                                 <th>Product Name</th>
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
-                                                <th>Action</th>
+                                                <!-- <th>Action</th> -->
                                              </tr>
                                           </thead>
                                           <tbody>
@@ -676,11 +678,11 @@
                                                    </a>
                                                 </td>
                                                 <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
+                                                <!-- <td class="potential-btn">
                                                    <span class="docs-btn"><a href="{{data.file_Path}}" download><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>
@@ -694,16 +696,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#molecularFormulaCasLevel" aria-expanded="false"
+                                 <a data-toggle="collapse" data-target="#molecularFormulaCasLevelPIH" aria-expanded="false"
                                     aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="molecularFormulaCasLevel" class="collapse" aria-labelledby="headingThree"
+                           <div id="molecularFormulaCasLevelPIH" class="collapse" aria-labelledby="headingThree"
                               data-parent="#accordionMolecularFormula">
                               <div class="panel-body">
-                                 <span *ngIf="!molecularFormulaCasLevel.length">No Data Found</span>
+                                 <span *ngIf="molecularFormulaCasLevel.length == 0">No Data Found</span>
                                  <div *ngIf="molecularFormulaCasLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
                                        <table>
@@ -715,7 +717,7 @@
                                                 <th>Product Name</th>
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
-                                                <th>Action</th>
+                                                <!-- <th>Action</th> -->
                                              </tr>
                                           </thead>
                                           <tbody>
@@ -732,11 +734,11 @@
                                                    </a>
                                                 </td>
                                                 <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
+                                                <!-- <td class="potential-btn">
                                                    <span class="docs-btn"><a href="{{data.file_Path}}" download><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>
@@ -761,16 +763,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#molecularWeightProductLevel"
+                                 <a data-toggle="collapse" data-target="#molecularWeightProductLevelData"
                                     aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="molecularWeightProductLevel" class="collapse show" aria-labelledby="headingOne"
+                           <div id="molecularWeightProductLevelData" class="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionMolecularWeight">
                               <div class="panel-body">
-                                 <span *ngIf="!molecularWeightProductLevel.length">No Data Found</span>
+                                 <span *ngIf="molecularWeightProductLevel.length == 0">No Data Found</span>
                                  <div *ngIf="molecularWeightProductLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
                                        <table>
@@ -807,16 +809,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#molecularWeightMaterialLevel"
+                                 <a data-toggle="collapse" data-target="#molecularWeightMaterialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="molecularWeightMaterialLevel" class="collapse" aria-labelledby="headingTwo"
+                           <div id="molecularWeightMaterialLevelPIH" class="collapse" aria-labelledby="headingTwo"
                               data-parent="#accordionMolecularWeight">
                               <div class="panel-body">
-                                 <span *ngIf="!molecularWeightMaterialLevel.length">No Data Found</span>
+                                 <span *ngIf="molecularWeightMaterialLevel.length == 0">No Data Found</span>
                                  <div *ngIf="molecularWeightMaterialLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
                                        <table>
@@ -853,16 +855,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#molecularWeightCasLevel" aria-expanded="false"
+                                 <a data-toggle="collapse" data-target="#molecularWeightCasLevelPIH" aria-expanded="false"
                                     aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="molecularWeightCasLevel" class="collapse" aria-labelledby="headingThree"
+                           <div id="molecularWeightCasLevelPIH" class="collapse" aria-labelledby="headingThree"
                               data-parent="#accordionMolecularWeight">
                               <div class="panel-body">
-                                 <span *ngIf="!molecularWeightCasLevel.length">No Data Found</span>
+                                 <span *ngIf="molecularWeightCasLevel.length == 0">No Data Found</span>
                                  <div *ngIf="molecularWeightCasLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
                                        <table>
@@ -1054,7 +1056,7 @@
                                                          <th>S.No</th>
                                                          <th class="ptable-head" *ngFor="let col of columns"
                                                             [pSortableColumn]="col.field" pResizableColumn [ngStyle]="{'display':col.display}">
-                                                            {{col.header}}{{col.display}}
+                                                            {{col.header}}
                                                             <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                                                                ariaLabelDesc="Activate to sort in descending order"
                                                                ariaLabelAsc="Activate to sort in ascending order">
@@ -1210,7 +1212,7 @@
                                                 <form class="syn-search" action="#">
                                                       <div class="form-group-feedback form-group-feedback-right">
                                                          <input type="search" class="form-control" name="standardComposition"
-                                                            [(ngModel)]="searchStandardCompositionText" autocomplete="off"
+                                                            [(ngModel)]="searchStandardCompositionText" autocomplete="off" (focus)="searchStandardCompositionText =''"
                                                             placeholder="Search composition details">
                                                          <div class="form-control-feedback">
                                                             <i class="fa fa-search font-size-base text-muted"></i>
@@ -1321,7 +1323,7 @@
                                              <form class="syn-search" action="#">
                                                 <div class="form-group-feedback form-group-feedback-right">
                                                    <input type="search" class="form-control" name="legalcomposition"
-                                                      [(ngModel)]="searchLegalComposition" autocomplete="off"
+                                                      [(ngModel)]="searchLegalComposition" autocomplete="off" (focus)="searchLegalComposition =''"
                                                       placeholder="Search composition details">
                                                    <div class="form-control-feedback">
                                                       <i class="fa fa-search font-size-base text-muted"></i>
@@ -1416,7 +1418,7 @@
                                              <form class="syn-search" action="#">
                                                 <div class="form-group-feedback form-group-feedback-right">
                                                    <input type="search" class="form-control" name="svtComposition"
-                                                      [(ngModel)]="searchSVTComposition" autocomplete="off"
+                                                      [(ngModel)]="searchSVTComposition" autocomplete="off"  (focus)="searchSVTComposition =''"
                                                       placeholder="Search composition details">
                                                    <div class="form-control-feedback">
                                                       <i class="fa fa-search font-size-base text-muted"></i>
@@ -1537,16 +1539,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#ManufractureDiagramProductLevel"
+                                 <a data-toggle="collapse" data-target="#ManufractureDiagramProductLevelPIH"
                                     aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="ManufractureDiagramProductLevel" class="collapse show" aria-labelledby="headingOne"
+                           <div id="ManufractureDiagramProductLevelPIH" class="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionMaufractureExample">
                               <div class="panel-body">
-                                 <span *ngIf="!ManufractureDiagramProductLevel.length">No Data Found</span>
+                                 <span *ngIf="ManufractureDiagramProductLevel.length == 0">No Data Found</span>
                                  <div *ngIf="ManufractureDiagramProductLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -1558,7 +1560,7 @@
                                              <th>Product Type</th>
                                              <th>File Soure</th>
                                              <th style="width:50%">File Name</th>
-                                             <th>Action</th>
+                                             <!-- <th>Action</th> -->
                                           </thead>
                                           <tbody>
                                              <tr *ngFor="let data of ManufractureDiagramProductLevel;let i =index">
@@ -1567,18 +1569,18 @@
                                                 <td>{{data.productName}}</td>
                                                 <td>{{data.product_Type}}</td>
                                                 <td>{{data.file_Source}}</td>
-                                                <td style="width:40%"> <a href="#"
+                                                <td style="width:30%"> <a href="#"
                                                       (click)="imagePreview(data.file_Path,data.file_Type)"
                                                       class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
                                                 <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download target="_new"><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>
@@ -1592,16 +1594,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#ManufractureDiagramMaterialLevel"
+                                 <a data-toggle="collapse" data-target="#ManufractureDiagramMaterialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="ManufractureDiagramMaterialLevel" class="collapse" aria-labelledby="headingTwo"
+                           <div id="ManufractureDiagramMaterialLevelPIH" class="collapse" aria-labelledby="headingTwo"
                               data-parent="#accordionMaufractureExample">
                               <div class="panel-body">
-                                 <span *ngIf="!ManufractureDiagramMaterialLevel.length">No Data Found</span>
+                                 <span *ngIf="ManufractureDiagramMaterialLevel.length == 0">No Data Found</span>
                                  <div *ngIf="ManufractureDiagramMaterialLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -1612,8 +1614,8 @@
                                              <th>Product Name</th>
                                              <th>Product Type</th>
                                              <th>File Soure</th>
-                                             <th style="width:50%">File Name</th>
-                                             <th>Action</th>
+                                             <th style="width:40%">File Name</th>
+                                             <!-- <th>Action</th> -->
                                           </thead>
                                           <tbody>
                                              <tr *ngFor="let data of ManufractureDiagramMaterialLevel;let i =index">
@@ -1622,18 +1624,18 @@
                                                 <td>{{data.productName}}</td>
                                                 <td>{{data.product_Type}}</td>
                                                 <td>{{data.file_Source}}</td>
-                                                <td style="width:40%"> <a href="#"
+                                                <td style="width:30%"> <a href="#"
                                                       (click)="imagePreview(data.file_Path,data.file_Type)"
                                                       class="thumbnail" data-toggle="modal" data-target="#lightbox">
                                                       {{data.fileName}}
                                                    </a>
                                                 </td>
                                                 <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download target="_new"><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>
@@ -1647,16 +1649,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#ManufractureDiagramCasLevel"
+                                 <a data-toggle="collapse" data-target="#ManufractureDiagramCasLevelPIH"
                                     aria-expanded="false" aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="ManufractureDiagramCasLevel" class="collapse" aria-labelledby="headingThree"
+                           <div id="ManufractureDiagramCasLevelPIH" class="collapse" aria-labelledby="headingThree"
                               data-parent="#accordionMaufractureExample">
                               <div class="panel-body">
-                                 <span *ngIf="!ManufractureDiagramCasLevel.length">No Data Found</span>
+                                 <span *ngIf="ManufractureDiagramCasLevel.length == 0">No Data Found</span>
                                  <div *ngIf="ManufractureDiagramCasLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
                                        <table>
@@ -1666,8 +1668,8 @@
                                              <th>Product Name</th>
                                              <th>Product Type</th>
                                              <th>File Soure</th>
-                                             <th style="width:50%">File Name</th>
-                                             <th>Action</th>
+                                             <th style="width:40%">File Name</th>
+                                             <!-- <th>Action</th> -->
                                           </thead>
                                           <tbody>
                                              <tr *ngFor="let data of ManufractureDiagramCasLevel;let i =index">
@@ -1683,11 +1685,11 @@
                                                    </a>
                                                 </td>
                                                 <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download target="_new"><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>
@@ -1711,16 +1713,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#SynthesisDiagramProductLevel"
+                                 <a data-toggle="collapse" data-target="#SynthesisDiagramProductLevelPIH"
                                     aria-expanded="true" aria-controls="collapseOne">
                                     <h6>Product Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="SynthesisDiagramProductLevel" class="collapse show" aria-labelledby="headingOne"
+                           <div id="SynthesisDiagramProductLevelPIH" class="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionSynthesisExample">
                               <div class="panel-body">
-                                 <span *ngIf="!SynthesisDiagramProductLevel.length">No Data Found</span>
+                                 <span *ngIf="SynthesisDiagramProductLevel.length == 0">No Data Found</span>
                                  <div *ngIf="SynthesisDiagramProductLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -1732,7 +1734,7 @@
                                              <th>Product Type</th>
                                              <th>File Soure</th>
                                              <th style="width:50%">File Name</th>
-                                             <th>Action</th>
+                                             <!-- <th>Action</th> -->
                                           </thead>
                                           <tbody>
                                              <tr *ngFor="let data of SynthesisDiagramProductLevel;let i = index">
@@ -1748,11 +1750,11 @@
                                                    </a>
                                                 </td>
                                                 <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download target="_new"><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>
@@ -1765,16 +1767,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#SynthesisDiagramMaterialLevel"
+                                 <a data-toggle="collapse" data-target="#SynthesisDiagramMaterialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
                                     <h6>Material Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="SynthesisDiagramMaterialLevel" class="collapse" aria-labelledby="headingTwo"
+                           <div id="SynthesisDiagramMaterialLevelPIH" class="collapse" aria-labelledby="headingTwo"
                               data-parent="#accordionSynthesisExample">
                               <div class="panel-body">
-                                 <span *ngIf="!SynthesisDiagramMaterialLevel.length">No Data Found</span>
+                                 <span *ngIf="SynthesisDiagramMaterialLevel.length == 0">No Data Found</span>
                                  <div *ngIf="SynthesisDiagramMaterialLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -1786,7 +1788,7 @@
                                              <th>Product Type</th>
                                              <th>File Soure</th>
                                              <th style="width:50%">File Name</th>
-                                             <th>Action</th>
+                                             <!-- <th>Action</th> -->
                                           </thead>
                                           <tbody>
                                              <tr *ngFor="let data of SynthesisDiagramMaterialLevel;let i = index">
@@ -1802,11 +1804,11 @@
                                                    </a>
                                                 </td>
                                                 <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download target="_new"><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>
@@ -1819,16 +1821,16 @@
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
-                                 <a data-toggle="collapse" data-target="#SynthesisDiagramCasLevel" aria-expanded="false"
+                                 <a data-toggle="collapse" data-target="#SynthesisDiagramCasLevelPIH" aria-expanded="false"
                                     aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                  </a>
                               </h6>
                            </div>
-                           <div id="SynthesisDiagramCasLevel" class="collapse" aria-labelledby="headingThree"
+                           <div id="SynthesisDiagramCasLevelPIH" class="collapse" aria-labelledby="headingThree"
                               data-parent="#accordionSynthesisExample">
                               <div class="panel-body">
-                                 <span *ngIf="!SynthesisDiagramCasLevel.length">No Data Found</span>
+                                 <span *ngIf="SynthesisDiagramCasLevel.length == 0">No Data Found</span>
                                  <div *ngIf="SynthesisDiagramCasLevel.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
@@ -1840,7 +1842,7 @@
                                              <th>Product Type</th>
                                              <th>File Soure</th>
                                              <th style="width:50%">File Name</th>
-                                             <th>Action</th>
+                                             <!-- <th>Action</th> -->
                                           </thead>
                                           <tbody>
                                              <tr *ngFor="let data of SynthesisDiagramCasLevel;let i = index">
@@ -1856,11 +1858,11 @@
                                                    </a>
                                                 </td>
                                                 <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
+                                                <!-- <td class="potential-btn">
+                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download target="_new"><i
                                                             class="fa fa-share">
                                                          </i> Download</a></span>
-                                                </td>
+                                                </td> -->
                                              </tr>
                                           </tbody>
                                        </table>

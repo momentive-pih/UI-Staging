@@ -982,16 +982,16 @@
    "regionPart" : [
                   {
                     "type" : "EU",
-                    "value": "eu"
+                    "value": "EU"
                   }, 
                   {
                     "type" : "US Canada",
-                    "value":"us canada"
+                    "value":"US Canada"
                   },  
                   
                   {
                     "type" : "Latin America",
-                    "value": "latin america"
+                    "value": "Latin America"
                   }
                   ],
 

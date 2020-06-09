@@ -12,7 +12,6 @@ import { FooterColumnGroup } from 'primeng/primeng';
 declare var $: any;
 interface Person {
   name: string;
-  product:string;
 }
 
 
@@ -69,6 +68,10 @@ export class SynonymsComponent implements OnInit {
   copyOntologySynonys:any=[];
   synonymsManagementData:any;
   synonymsUserUpdatedDetails:any =[];
+  SearchProducts:any=[];
+  product_Name:any =[];
+  searchDataLength:any;
+  
   
 
   public items$: Observable<Person[]>;
@@ -77,10 +80,13 @@ export class SynonymsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,public toastr: ToastrManager, vcr: ViewContainerRef, private momentiveService: MomentiveService, private route: ActivatedRoute,
     private router: Router) {
       
-      this.items$ = this.input$.pipe(
-        map((term) => this.searchPeople(term))
-      )
+    //  this.input$.pipe(
+    //     map((term) => this.searchPeople(term))
+    //   )
 
+      this.input$.subscribe(
+        (term) => this.searchPeople(term,this.product_Name));
+    
   }
 
   ngOnInit() {
@@ -98,14 +104,14 @@ export class SynonymsComponent implements OnInit {
 
       // Product name
 
-      this.momentiveService.getOntologyManagement().subscribe(data => {
-        this.ontologyManagementSynonyms = data;
-        console.log(this.ontologyManagementSynonyms);
-        this.synonymskey = this.ontologyManagementSynonyms[0].product_Details
-        console.log(this.synonymskey);
-      }, err => {
-        console.error(err);
-      });
+      // this.momentiveService.getOntologyManagement().subscribe(data => {
+      //   this.ontologyManagementSynonyms = data;
+      //   console.log(this.ontologyManagementSynonyms);
+      //   this.synonymskey = this.ontologyManagementSynonyms[0].product_Details
+      //   console.log(this.synonymskey);
+      // }, err => {
+      //   console.error(err);
+      // });
      
   }
 
@@ -127,23 +133,42 @@ SynonymsManagement() {
       console.error(err);
     });
 }
-  private searchPeople(term: string | null): Person[] {
-    const searchTerm = term ? term : '';
 
-    if (searchTerm.includes("*")) {
-      const searchTermNew = searchTerm.split('*');
-      this.searchTextTerms = searchTermNew[1];
-      console.log(this.searchTextTerms);
-    } else {
-      this.searchTextTerms = searchTerm;
+
+  private searchPeople(term: string | null, arr){
+    const searchTerm = term ? term : '';
+    console.log(searchTerm);
+    this.SearchProducts = {
+      'SearchData': searchTerm
     }
-    return this.synonymskey.filter((person) => {
-      return person.name.toString().toLowerCase().startsWith(searchTerm.toString().toLowerCase()) ||
-      person.key.toString().toLowerCase().includes(searchTerm.toString().toLowerCase()) ||
-      person.type.toString().toLowerCase().startsWith(searchTerm.toString().toLowerCase()) ||
-      person.name.toString().toLowerCase().startsWith(this.searchTextTerms.toString().toLowerCase()) 
+    this.searchDataLength = this.SearchProducts.SearchData.length;
+
+    if (this.searchDataLength > 1) {
+    this.momentiveService.postOntologyProductSearch(this.SearchProducts).subscribe(data => {
+      console.log(data);
+      if (data) {
+        console.log('inside');
+        this.product_Name = data;
+        if (searchTerm.includes("*")) {
+          const searchTermNew = searchTerm.split('*');
+          this.searchTextTerms = searchTermNew[1];
+          console.log(this.searchTextTerms);
+        } else {
+          this.searchTextTerms = searchTerm;
+        }
+        this.items$ =  this.product_Name.filter((person) => {
+          return person.name.toString().toLowerCase().startsWith(searchTerm.toString().toLowerCase()) ||
+          person.key.toString().toLowerCase().includes(searchTerm.toString().toLowerCase()) ||
+          person.type.toString().toLowerCase().startsWith(searchTerm.toString().toLowerCase()) ||
+          person.name.toString().toLowerCase().startsWith(this.searchTextTerms.toString().toLowerCase()) 
+        });
+      }
+
     });
+  
   }
+  }
+  
 
   onChangeData(data) {
     console.log(data);

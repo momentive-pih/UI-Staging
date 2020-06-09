@@ -19,10 +19,10 @@
                     <label class="text-default font-weight-semibold"><h4><b>Search Parameter : {{productName}}</b></h4></label>
                 </div>
                 <div class="col-md-6 docs-dir">
-                        <button class="docs-btn"><i class="fa fa-share" (click)="backOntology()" title="back"> Back</i> </button> &nbsp;
-                    <button class="docs-btn" *ngIf="disabledCondition"><i class="fa fa-edit" (click)="editOntology(extarctPDFData)" title="Edit"> Edit</i> </button> &nbsp;
-                    <button class="docs-btn"  *ngIf="!disabledCondition"> <i class="fa fa-share" title="Update" (click)="updateOntology(extarctPDFData)"> Update</i></button> &nbsp;
-                    <button class="docs-btn" *ngIf="!disabledCondition"> <i class="fa fa-share" title="clear" (click)="clearOntology()"> Cancel</i></button> &nbsp;
+                        <button class="docs-btn" (click)="backOntology()"><i class="fa fa-share"  title="back"> Back</i> </button> &nbsp;
+                    <button class="docs-btn" *ngIf="disabledCondition" (click)="editOntology(extarctPDFData)"><i class="fa fa-edit" title="Edit"> Edit</i> </button> &nbsp;
+                    <button class="docs-btn"  *ngIf="!disabledCondition" (click)="updateOntology(extarctPDFData)"> <i class="fa fa-share" title="Update"> Update</i></button> &nbsp;
+                    <button class="docs-btn" *ngIf="!disabledCondition" (click)="clearOntology()"> <i class="fa fa-share" title="clear"> Cancel</i></button> &nbsp;
                     <!-- <button class="docs-btn" > <i class="fa fa-eye" (click)="ReadOntology(extarctPDFData)" title="Delete"> ReadIT</i> </button> -->
                 </div>
             </div>
@@ -42,8 +42,8 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="new-search">
-                                                                <ng-select #code class="custom" [items]="ontologyDocumetskey" bindLabel="name" [readonly]="disabledkey" formControlName="Searchname" [closeOnSelect]="true" placeholder="Select key" [markFirst]="true" [hideSelected]="false" appendTo="body" groupBy="product"
-                                                                    [searchable]="true" [dropdownPosition]="'bottom'" multiple="flase" groupBy="type" (change)="onChangeData($event)" (remove)="clearCheck($event)" [(ngModel)]="ontologyExtractKey">
+                                                                <ng-select #code class="custom" [items]="items$" bindLabel="name" [readonly]="disabledkey" formControlName="Searchname" [closeOnSelect]="true" placeholder="Select key" [markFirst]="true" [hideSelected]="false" appendTo="body" groupBy="product"
+                                                                    [searchable]="true" [typeahead]="input$" [dropdownPosition]="'bottom'" multiple="flase" groupBy="type" (change)="onChangeData($event)" (remove)="clearCheck($event)" [(ngModel)]="ontologyExtractKey">
                                                                 </ng-select>
         
                                                             </div>

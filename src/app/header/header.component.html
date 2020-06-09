@@ -131,10 +131,10 @@
                 <a (click)="changePage('app-home', true)" class="navbar-nav-link">
                     <i class="fa fa-home mr-2"></i> Home </a>
             </li>
-            <li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
+            <!-- <li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
                 <a (click)="basicPropertiesEvent('productDetails')" class="navbar-nav-link">
                     <i class="fa fa-th-large mr-2"></i> Basic Properties </a>
-            </li>
+            </li> -->
             <!-- <li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
 			 <a (click)="changePage('app-view-report', false)" class="navbar-nav-link">
 				 <i class="fa fa-stack-exchange mr-2"></i> Self Service </a>
@@ -170,7 +170,7 @@
             </mat-form-field>
         </ul>
         <ul class="navbar-nav col-md-1">
-            <button class="btn spec-btn" [disabled]="!specDataListDetails" (click)="selectedTopSpecList()" type='submit'>submit</button>
+            <button class="btn spec-btn" [disabled]="!specDataListDetails" (click)="selectedTopSpecList()" type='submit'>Submit</button>
         </ul>
     </div>
 </div>
@@ -219,7 +219,7 @@
                                         <div class="col-md-6">
                                             <form class="syn-search" action="#">
                                                 <div class="form-group-feedback form-group-feedback-right">
-                                                    <input type="search" class="form-control" name="product" [(ngModel)]="searchProductText" autocomplete="off" placeholder="Search Product Name">
+                                                    <input type="search" class="form-control" name="product" [(ngModel)]="searchProductText" autocomplete="off" (focus)="searchProductText =''" placeholder="Search Product Name">
                                                     <div class="form-control-feedback">
                                                         <i class="fa fa-search font-size-base text-muted"></i>
                                                     </div>
@@ -275,7 +275,7 @@
                         <div class="col-md-6">
                             <form class="syn-search" action="#">
                                 <div class="form-group-feedback form-group-feedback-right">
-                                    <input type="search" class="form-control" name="material" [(ngModel)]="searchMaterialText" autocomplete="off" placeholder="Search Material Number">
+                                    <input type="search" class="form-control" name="material" [(ngModel)]="searchMaterialText" autocomplete="off" (focus)="searchMaterialText =''" placeholder="Search Material Number">
                                     <div class="form-control-feedback">
                                         <i class="fa fa-search font-size-base text-muted"></i>
                                     </div>
@@ -335,7 +335,7 @@
                         <div class="col-md-6">
                             <form class="syn-search" action="#">
                                 <div class="form-group-feedback form-group-feedback-right">
-                                    <input type="search" class="form-control" name="casNumber" [(ngModel)]="searchCASText" autocomplete="off" placeholder="Search CAS Number">
+                                    <input type="search" class="form-control" name="casNumber" [(ngModel)]="searchCASText" autocomplete="off" (focus)="searchCASText =''"  placeholder="Search CAS Number">
                                     <div class="form-control-feedback">
                                         <i class="fa fa-search font-size-base text-muted"></i>
                                     </div>

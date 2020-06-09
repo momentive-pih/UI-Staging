@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef,ViewContainerRef} from '@angular/core';
 import { Attribute } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material';
 import { TableModule } from 'primeng/table';
@@ -9,6 +9,7 @@ import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { ToastrManager } from 'ng6-toastr-notifications';
 declare var $: any;
 
 
@@ -44,7 +45,7 @@ export class ReportDataComponent implements OnInit {
   selectedDocuments: string = "Released Documents";
   selectedCompositionControl = new FormControl(this.selectedDocuments);
 
-  constructor(private route: ActivatedRoute,private router: Router,private momentiveService: MomentiveService
+  constructor(private route: ActivatedRoute,public toastr: ToastrManager, vcr: ViewContainerRef,private router: Router,private momentiveService: MomentiveService
   ) {
     this.momentiveService.CategoryEvent.subscribe(data => {
       this.releaseDocumentsPage();
@@ -212,4 +213,10 @@ export class ReportDataComponent implements OnInit {
   onDeSelectAll(items: any) {
     console.log(items);
   }
+
+  DownloadProfilePic() { ;
+   this.toastr.successToastr('MSDS will download momentarily!');
+    //   var url =  data;
+    //  window.open(url);
+    }
 }

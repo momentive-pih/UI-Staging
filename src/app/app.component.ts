@@ -20,7 +20,9 @@ export class AppComponent implements OnInit {
   
   constructor(location: PlatformLocation,private router: Router,private momentiveService: MomentiveService) {
 
- 
+    console.log = function(){
+      
+    }
    }
 
   ngOnInit() {

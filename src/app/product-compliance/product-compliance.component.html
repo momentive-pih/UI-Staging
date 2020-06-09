@@ -81,7 +81,7 @@
         </div>
 
         <!--Compliance Registration-->
-        <div class="modal-body" *ngIf="complianceRegistration">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' *ngIf="complianceRegistration">
             <div class="row" *ngIf="complianceLocationRegistrationData.length">
                 <div class="col-md-9">
                     <h6 class="text-default font-weight-semibold mb-2 "><span *ngIf="complaint_EU">EU: <i

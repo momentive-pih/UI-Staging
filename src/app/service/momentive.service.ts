@@ -5,12 +5,11 @@ import { environment } from '../../environments/environment';
 import { Constants } from './../constants/constants';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 declare var $: any;
 
 let token = ""
-let headers = new HttpHeaders().set('Content-Type', 'application/json');
-headers = headers.set('authorization', 'Bearer ' + token);
-headers.set('Access-Control-Allow-Origin', '*')
+
 
 
 @Injectable()
@@ -38,27 +37,28 @@ export class MomentiveService {
   intialAllSpecList: any = [];
   headerDict: any;
   requestOptions: any;
-  loginUserName:any;
+  loginUserName: any;
+  checkEmptyProduct: any;
+
 
   notifyObservable$ = this.invokeEvent.asObservable();
   notifyCheckObservable$ = this.invokeCheckEvent.asObservable()
 
+  private messageSource = new BehaviorSubject<boolean>(false);
+  currentMessage = this.messageSource.asObservable();
+
+  private changeOntologyMessage = new BehaviorSubject<string>('ontology');
+  currentOntologyMessage = this.changeOntologyMessage.asObservable();
+
+  private OntologyDetailMessageTab = new BehaviorSubject<string>('ontology');
+  currentOntologyDetailMessage = this.OntologyDetailMessageTab.asObservable();
+
+  
 
 
   constructor(private http: HttpClient) {
 
-    this.headerDict = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
-      "Access-Control-Allow-Methods": 'GET,POST,PATCH,DELETE,PUT,OPTIONS',
-      "Access-Control-Allow-Headers": 'Origin, Content-Type, X-Auth-Token, content-type',
-    }
 
-    this.requestOptions = {
-      headers: new Headers(this.headerDict),
-    };
 
   }
 
@@ -173,25 +173,22 @@ export class MomentiveService {
   ontologyDocumnetsLogDetails(data) {
     return this.http.post(Constants.SERVICES_DOMAIN + "postOntologyDocumentLogDetails", data);
   }
+
+  // UI-Staging
   getAzureUserDetails() {
-    return this.http.get("https://appservice-win-pih.azurewebsites.net/.auth/me", this.requestOptions);
+    return this.http.get("https://appservice-win-pih.azurewebsites.net/.auth/me");
   }
 
-//    getAzureUserDetails(){
-//     alert('123')
-//     // This url has been obfuscated but you get the gist. This is the expected format so I can't alter the string
-//     const url = '';
+  //UI-production
+  // getAzureUserDetails() {
+  //   return this.http.get("https://app-win-pih.azurewebsites.net/.auth/me");
+  // }
 
-//     $.ajax({
-//       url: 'https://appservice-win-pih.azurewebsites.net/.auth/me',
-//       type: 'GET',
-//       dataType: 'jsonp',
-//       success: function (data: any) {
-//         console.log(data);
-//       },
-//       error: function (e : any) { alert(e.toString) },
-//     });
-// }
+
+  postOntologyProductSearch(data) {
+    return this.http.post(Constants.SERVICES_DOMAIN + "postOntologyProductSearch", data);
+  }
+
   setSelectedProductData(value) {
     this.selectedProduct = value;
     console.log(this.selectedProduct);
@@ -235,6 +232,19 @@ export class MomentiveService {
     return this.intialAllSpecList;
   }
 
+
+
+  changeMessage(message: boolean) {
+    this.messageSource.next(message)
+  }
+
+  changeOntologyTab(message: string) {
+    this.changeOntologyMessage.next(message)
+  }
+  changeOntologyDetailTab(message: string) {
+    this.OntologyDetailMessageTab.next(message)
+  }
+
   setBasicLevelDetails(value) {
     this.basicLevelList = value;
     console.log(this.basicLevelList);
@@ -271,9 +281,9 @@ export class MomentiveService {
   getSearchData() {
     return this.http.get('../../assets/momentive.json');
   }
-  setUserName(value : string) {
-   this.loginUserName = value;
-   console.log(this.loginUserName)
+  setUserName(value: string) {
+    this.loginUserName = value;
+    console.log(this.loginUserName)
   }
 
   getLoggedUserName() {

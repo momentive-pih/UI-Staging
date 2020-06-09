@@ -29,6 +29,7 @@ export class UnassignedDocumentsComponent implements OnInit {
   selectedSpecList: any = [];
   ontologyassignedDocument: boolean = true;
   ontologyAlertDocument: boolean = false;
+  selectedOntologyDocuments:any=[];
 
   constructor(private route: ActivatedRoute,
     private router: Router, private momentiveService: MomentiveService) {
@@ -45,6 +46,14 @@ export class UnassignedDocumentsComponent implements OnInit {
         $(this).collapse('hide');
     });
   });
+
+  this.selectedOntologyDocuments = [{
+    "type": "Assigned Documents",
+    "value": "Assigned Documents"
+  }, {
+    "type": "Unassigned Documents",
+    "value": "Unassigned Documents"
+  }],
 
     //Unassignment Document List API
     this.ontologyServiceDetails = [];
@@ -88,4 +97,5 @@ export class UnassignedDocumentsComponent implements OnInit {
   collapse() {
     $('.collapse').collapse('hide');
   }
+  
 }

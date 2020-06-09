@@ -124,6 +124,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   searchTextTerms: any;
   searchTextONTTerms: any = [];
   searchTerm: any;
+  searchProductTerms:any;
   objectKeys = Object.keys;
   public items$: Observable<product[]>;
   public input$ = new Subject<string | null>();
@@ -182,6 +183,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   searchMaterialText:any;
   searchCASText:any;
   loggedUserName:string;
+  specDataListCheck:any=[];
+  emptyProductLevel:boolean;
 
 
   /** control for the selected SPEC_List for multi-selection */
@@ -226,7 +229,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.basicPropertiesEvent(event);
 
   
-    console.log("8888888888888")
+    console.log("User Name")
     this.loggedUserName = localStorage.getItem('userName');
     console.log(this.loggedUserName);
     // product_type
@@ -310,9 +313,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   //Main Search Field Functinoality
   private searchProduct(term: string | null, arr, Isfirst) {
     this.suggestionDrop = true;
-    this.searchTerm = term ? term : '';
+    this.searchProductTerms = term ? term : '';
+    this.searchTerm = this.searchProductTerms.trimStart();
+    console.log(this.searchTerm.trimStart());
     this.SearchProducts = {
-      'SearchData': this.searchTerm
+      'SearchData': this.searchTerm.trimStart()
     };
 
     console.log(this.SearchProducts);
@@ -346,11 +351,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
          
          
           this.items$ = this.product_Name.filter((product_Name) => {
-            return product_Name.name.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+            return product_Name.name.toLowerCase().startsWith(parseInt(this.searchTerm.toLowerCase())) ||
               product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.name.toLowerCase().includes(this.searchTextTerms.toLowerCase()) ||
-              product_Name.name.toLowerCase().startsWith(this.searchTextTerms.toLowerCase())
+              product_Name.name.toLowerCase().startsWith(parseInt(this.searchTextTerms.toLowerCase()))
              
           });
           if(this.searchTextONTTerms === 'ont') {
@@ -361,10 +366,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.product_Name = [];
           this.loading = false;
           this.items$ = this.product_Name.filter((product_Name) => {
-            return product_Name.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            return product_Name.name.toLowerCase().includes(parseInt(this.searchTerm.toLowerCase())) ||
               product_Name.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
               product_Name.key.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-              product_Name.name.toLowerCase().includes(this.searchTextTerms.toLowerCase())
+              product_Name.name.toLowerCase().includes(parseInt(this.searchTextTerms.toLowerCase()))
           });
         }
       }, err => {
@@ -436,7 +441,15 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         this.Isfirst = false;
         console.log(res);
         const SearchArrayData = res;
+        console.log(SearchArrayData);
+        if(SearchArrayData[0].search_List) {
         this.secondLevelSearch = SearchArrayData[0].search_List;
+        this.momentiveService.changeMessage(false);
+        } else {
+           this.secondaryNavBar = false; 
+           this.momentiveService.changeMessage(true);
+        }
+        console.log(this.secondLevelSearch);
         this.momentiveService.setBasicLevelDetails(SearchArrayData[0].basic_properties);
         this.getIntialSpecList(this.selectedSearchText);
         this.product_Name = this.secondLevelSearch;
@@ -449,7 +462,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.searchProduct('', this.product_Name, this.Isfirst);
           this.relatedProducts = true;
         } else {
-          alert('NO More Related Products Available');
+          
+          //alert('NO More Related Products Available');
           this.relatedProducts = false;
           this.product_Name = [];
           this.searchProduct('', this.product_Name, this.Isfirst)
@@ -526,51 +540,62 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   //SpecID Droopdownlist
   getIntialSpecList(data) {
     this.NewSpecList = [];
-    console.log(this.NewSpecList);
     const SpecListedData = data;
     this.momentiveService.getSelectedProducts(SpecListedData).subscribe(data => {
       console.log(data)
-      this.SPECdropdownList = data;
-      this.SpecLists = this.SPECdropdownList[0].selected_spec_list;
-      this.momentiveService.setAllSpecList(this.SpecLists);
-
-      if (this.SpecLists.length === 1) {
-        this.specDataListDetails = false;
-      } else {
-        this.specDataListDetails = true;
-      }
-      console.log(this.SpecLists[0]);
-      const specNewData = this.SpecLists[0].name.split('|');
-      this.SpecSplitNewTerm = specNewData[0];
-      console.log(this.SpecSplitNewTerm);
-      console.log(this.SpecLists);
-      this.SpecLists.forEach(element => {
-        const NewDataSpec = element.name.split('|');
-        let SplitedSpecTerm = NewDataSpec[0];
-        if (SplitedSpecTerm === this.SpecSplitNewTerm) {
-          console.log(this.NewSpecList);
-          this.NewSpecList.push(element);
-          console.log(this.NewSpecList);
+      this.specDataListCheck = data;
+      console.log(this.specDataListCheck);
+      if(this.specDataListCheck[0].selected_spec_list) {
+        this.momentiveService.changeMessage(false);
+        this.SPECdropdownList = data;
+        this.SpecLists = this.SPECdropdownList[0].selected_spec_list;
+        this.momentiveService.setAllSpecList(this.SpecLists);
+  
+        if (this.SpecLists.length === 1) {
+          this.specDataListDetails = false;
+        } else {
+          this.specDataListDetails = true;
         }
-      });
-      // set initial selection
-       this.toggleSelection('false')
-      this.specMultiCtrl.setValue(this.NewSpecList);
-      this.momentiveService.setCategorySpecList(this.NewSpecList);
-      this.getAPICallCASDetails();
-      this.getAPICallMATDetails();
-      this.getAPICallProductDetails();
-      this.momentiveService.homeEvent.next();
-      // load the initial SPEC_List list
-      this.filteredSpecMulti.next(this.SpecLists.slice());
-      // listen for search field value changes
-      this.specMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this._onDestroy))
-        .subscribe(() => {
-          this.filteredSpecListMulti();
+        console.log(this.SpecLists[0]);
+        const specNewData = this.SpecLists[0].name.split('|');
+        this.SpecSplitNewTerm = specNewData[0];
+        console.log(this.SpecSplitNewTerm);
+        console.log(this.SpecLists);
+        this.SpecLists.forEach(element => {
+          const NewDataSpec = element.name.split('|');
+          let SplitedSpecTerm = NewDataSpec[0];
+          if (SplitedSpecTerm === this.SpecSplitNewTerm) {
+            console.log(this.NewSpecList);
+            this.NewSpecList.push(element);
+            console.log(this.NewSpecList);
+          }
         });
-      console.log(this.SPECdropdownList);
-    }, err => {
+        // set initial selection
+         this.toggleSelection('false')
+        this.specMultiCtrl.setValue(this.NewSpecList);
+        this.momentiveService.setCategorySpecList(this.NewSpecList);
+        this.getAPICallCASDetails();
+        this.getAPICallMATDetails();
+        this.getAPICallProductDetails();
+        this.momentiveService.homeEvent.next();
+        // load the initial SPEC_List list
+        this.filteredSpecMulti.next(this.SpecLists.slice());
+        // listen for search field value changes
+        this.specMultiFilterCtrl.valueChanges
+          .pipe(takeUntil(this._onDestroy))
+          .subscribe(() => {
+            this.filteredSpecListMulti();
+          });
+        console.log(this.SPECdropdownList);
+      } else {
+        this.secondaryNavBar = false; 
+        this.momentiveService.changeMessage(true)
+        this.SpecLists = [];
+        this.momentiveService.setAllSpecList(this.SpecLists);
+        
+      }
+      }
+    , err => {
       console.log(err);
     })
   }
@@ -742,6 +767,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tempMyCAS = [];
     this.casAPILevel = [];
     this.CASLevelAPIData = this.momentiveService.basicLevelList;
+    if (this.CASLevelAPIData[0].cas_Level.length === 0) { 
+      this.casAPILevel = [];
+      this.momentiveService.setCasLevelDetails(this.casAPILevel);
+    }
     console.log(this.CASLevelAPIData);
     console.log(this.CASLevelAPIData[0].cas_Level);
     if (this.CASLevelAPIData[0].cas_Level.length > 1) {
@@ -786,7 +815,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.casAPILevel.push(element);
         }
       });
-    } else {
+    } else  if (this.CASLevelAPIData[0].cas_Level.length === 1) {
       let SingleCASDetails = [];
       let singleRealSpec = [];
       this.casAPILevel = [];
@@ -818,6 +847,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.MATAPILevel = [];
     this.MATLevelAPIData = this.momentiveService.basicLevelList;
     console.log(this.MATLevelAPIData);
+    if (this.MATLevelAPIData[0].material_Level.length === 0) { 
+      this.MATAPILevel =[];
+      this.momentiveService.setMaterialLevelDetails(this.MATAPILevel);
+    }
     console.log(this.MATLevelAPIData[0].material_Level.length);
     if (this.MATLevelAPIData[0].material_Level.length > 1) {
       this.MATLevelAPIData[0].material_Level.forEach(element => {
@@ -861,11 +894,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.MATAPILevel.push(element);
         }
       });
-    } else {
+    } else if(this.MATLevelAPIData[0].material_Level.length === 1 ) {
       let SingleMATDetails = [];
       let singleRealSpec = [];
       this.MATAPILevel = [];
       let singleMATData = this.MATLevelAPIData[0].material_Level[0];
+      console.log(singleMATData)
       let singleRealspectemp = this.MATLevelAPIData[0].material_Level[0].spec_Nam_List
       singleRealspectemp.forEach(element => {
         singleRealSpec.push(element.real_Spec_Id);

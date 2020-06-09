@@ -351,7 +351,7 @@ export class ProductComplianceComponent implements OnInit {
   selectRegionProcess(value) {
     console.log(value);
     this.regionValueCheck = value;
-    if (this.regionValueCheck === 'eu') {
+    if (this.regionValueCheck === 'EU') {
       this.complaint_EU = true;
       this.complaint_canada = false;
       this.complaint_latin = false;

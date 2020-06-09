@@ -26,6 +26,7 @@ export class OntologyHomeComponent implements OnInit {
   unassignedDocument: boolean = true;;
   keyDocuments: any = [];
   alertText: any;
+  ontologyTabCheck:any;
   ontologyServiceDetails: any = [];
   selectedSpecList: any = [];
   selectedOntologyDocuments:any =[];
@@ -46,8 +47,19 @@ export class OntologyHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    
 
+    this.momentiveService.currentOntologyDetailMessage.subscribe(message => {
+      console.log(message);
+      this.ontologyTabCheck = message;
+      if(this.ontologyTabCheck == 'Unassigned-Tab') {       
+        this.ontologySelectedDocuments = "Unassigned Documents";
+        this.selectedBasedDocuments('Unassigned Documents') 
+      } else {
+        this.ontologySelectedDocuments = "Assigned Documents";
+        this.selectedBasedDocuments('Assigned Documents') 
+      }
+    })
+    
       //Collapse script
   $('.collapsed').on('show.bs.collapse', function () {
     $('.collapsed').each(function(){
@@ -124,7 +136,7 @@ export class OntologyHomeComponent implements OnInit {
           this.unassignedSectionDocument = false;
           this.assignedSectionDocument = true;
     } else {
-
+          this.momentiveService.changeOntologyTab('ontology-Tab')
           this.unassignedSectionDocument = true;
           this.assignedSectionDocument = false;
     }

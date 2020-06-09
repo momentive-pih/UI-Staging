@@ -54,10 +54,8 @@ export class ToxicologyComponent implements OnInit {
   selectedSpecList: any = []
   CategoryDetails: any = []
   monthlyType: any;
-  toxicologyMonthlysilaneHeader: any = [];
-  toxicologyMonthlyselantHeader: any = []
-  monthlySilaneHeader: any = [];
-  monthlySelantHeader: any = [];
+
+  monthlyToxicologyHeader:any =[]
   productdata: any = [];
   toxicologySummaryData: any = [];
   toxicologyRegistrationTracker: any = [];
@@ -85,7 +83,9 @@ export class ToxicologyComponent implements OnInit {
   toxicologyStudyPage:any;
   Extract_Result_one:any;
   selectedMonthlyToxicologyType: string = "sealant";
-  topcheckedData:boolean = true
+  topcheckedData:boolean = true;
+  toxicologyMonthlyStudyList:any = [];
+  scrollHeight = '300px'
   selectedmonthlytoxicologyControl = new FormControl(this.selectedMonthlyToxicologyType);
   constructor(private route: ActivatedRoute,private sanitizer: DomSanitizer,private router: Router,private momentiveService: MomentiveService) {
 
@@ -99,7 +99,7 @@ export class ToxicologyComponent implements OnInit {
     });
   });
 
-
+  // this.scrollHeight = '300px'
     this.momentiveService.notifyObservable$.subscribe(value => {
       this.selecteditem = value;
       console.log(this.selecteditem);
@@ -110,11 +110,17 @@ export class ToxicologyComponent implements OnInit {
         }, 0);
       }
     });
-this.contentHeight = false;
+    this.contentHeight = false;
     this.momentiveService.notifyCheckObservable$.subscribe(value =>{
       console.log(value);
       this.topcheckedData = value;
       this.contentHeight = !this.contentHeight;
+      if(value == true) {
+        this.scrollHeight = '300px'
+      } else if(value == false) {
+        this.scrollHeight = '400px'
+      }
+  
     })
 
     // toxicology Radio tab API
@@ -145,28 +151,23 @@ this.contentHeight = false;
       { "field": "test_Description", "header": "Test Description" },
       { "field": "filename", "header": "File Name" },
     ],
-//Monthly Toxicology Silane Header
-      this.toxicologyMonthlysilaneHeader = [
-        { "field": "spec_Id", "header": "Specification ID" },
-        { "field": "product_Name", "header": "Product Name" },
-        { "field": "product_Type", "header": "Product Type" },
-        {"field":"date","header":"Date"},
-        { "field": "file_Source", "header": "File Source" },
-        { "field": "studies", "header": "Studies" },
-        { "field": "status", "header": "Status" },
-        { "field": "comments", "header": "Comments" }
-      ],
-//Monthly Toxicology Selant Header
-      this.toxicologyMonthlyselantHeader = [
-        { "field": "spec_Id", "header": "Specification Id" },
-        { "field": "product_Name", "header": "Product Name" },
-        { "field": "product_Type", "header": "Product Type" },
-        { "field": "file_Source", "header": "File Source" },
-        { "field": "actions", "header": "Actions" },
-        { "field": "date", "header":"Date" },
-        { "field": "test", "header": "Test" }
+//Monthly Toxicology  Header
 
+      this.toxicologyMonthlyStudyList = [
+        { "field": "spec_Id", "header": "Specification Id","width" :"130px" },
+        { "field": "product_Name", "header": "Product Name","width" :"120px" },
+        { "field": "product_Type", "header": "Product Type" ,"width" :"120px"},
+        { "field": "segment", "header": "segment","width" :"120px" },
+        { "field": "file_Source", "header": "File Source","width" :"120px" },
+        { "field": "date", "header":"Date","width" :"150px"},
+        { "field": "studies", "header": "Studies","width" :"250px" },
+        { "field": "comments", "header": "Comments" ,"width" :"400px"},
+        { "field": "status", "header": "Status","width" :"250px"},
+        { "field": "actions", "header": "Actions","width" :"200px"},
+        { "field": "test", "header": "Test","width" :"200px" }
+      
       ],
+
 
         //RegistrationTracker
    this.registrationSummaryHeader = [
@@ -178,15 +179,15 @@ this.contentHeight = false;
   ]
   //RegistrationTracker
    this.registrationTrackerHeader = [
-    { "field": "product_Name", "header": "Product Name" },
-    { "field": "country_Name", "header": "Country" },
-    { "field": "tonnage_Band", "header": "Tonnage Band" },
-    { "field": "study_Type", "header": "Study Type" },
-    { "field": "test_Method", "header": "Test Method" },
-    { "field": "test_Name", "header": "Test Name" },
-    { "field": "estimated_Timing", "header": "Estimated Timing" },
-    { "field": "estimated_Cost", "header": "Estimated Cost" },
-    { "field": "new_Estimates", "header": "New Estimates" }
+    { "field": "product_Name", "header": "Product Name","width":"10%"},
+    { "field": "country_Name", "header": "Country","width" :"10%"},
+    { "field": "tonnage_Band", "header": "Tonnage Band","width" :"10%" },
+    { "field": "study_Type", "header": "Study Type","width" :"10%" },
+    { "field": "test_Method", "header": "Test Method","width" :"10%" },
+    { "field": "test_Name", "header": "Test Name","width" :"15%" },
+    { "field": "estimated_Timing", "header": "Estimated Timing","width" :"10%"},
+    { "field": "estimated_Cost", "header": "Estimated Cost","width" :"10%" },
+    { "field": "new_Estimates", "header": "New Estimates","width" :"10%" }
   ]
   }
 
@@ -227,8 +228,69 @@ this.contentHeight = false;
   }
 
   //Monthly Toxicology API Call
-  monthlyToxicology(toxiValue) {
-    this.monthlyType = toxiValue;
+  // monthlyToxicology(toxiValue) {
+  //   this.monthlyType = toxiValue;
+  //   this.toxicolgyLoader = true;
+  //   this.pihAlertMessage = false;
+  //   this.toxicologyDetails = [];
+  //   this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+  //   console.log(this.selectedSpecList);
+  //   this.CategoryDetails = { index: 2, Category: "toxicology", Subcategory: "Monthly Toxicology Study List" }
+  //   this.toxicologyDetails.push({
+  //     'Spec_id': this.selectedSpecList,
+  //     'Category_details': this.CategoryDetails,
+  //     'product_Level':this.momentiveService.getProductLevelDetails(),
+  //     'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+  //     'CAS_Level':this.momentiveService.getCasLevelDetails(),
+  //   });
+  //   console.log(this.toxicologyDetails);
+  //   this.momentiveService.getToxicology(this.toxicologyDetails).subscribe(data => {
+  //     console.log(data);
+  //     this.productdata = data;
+  //     this.toxicologyMonthlySelantCheck = this.productdata[0].selant;
+  //     console.log(this.toxicologyMonthlySelantCheck);
+  //     this.toxicologyMonthlySilaneCheck = this.productdata[0].silanes;
+  //     console.log(this.toxicologyMonthlySilaneCheck);
+  //     if (this.monthlyType === 'sealant') {
+  //       this.toxicolgyLoader = true;
+  //       this.productdata = data;
+  //       this.toxicologyMonthlyDataCheck = this.productdata[0].selant;
+  //       if (this.toxicologyMonthlyDataCheck.length > 0) {
+  //         this.toxicolgyLoader = false;
+  //         this.pihAlertMessage = false;
+  //         this.monthlySelantHeader = this.toxicologyMonthlyselantHeader;
+  //         this.toxicologyMonthlyData = this.toxicologyMonthlyDataCheck;
+  //         console.log(this.toxicologyMonthlyData);
+  //       }
+  //       else {
+  //         this.pihAlertMessage = true;
+  //         this.toxicolgyLoader = false;
+  //       }
+  //     } if (this.monthlyType === 'silane') {
+  //       this.toxicolgyLoader = true;
+  //       this.productdata = data;
+  //       this.toxicologyMonthlyDataCheck = this.productdata[0].silanes;
+  //       if (this.toxicologyMonthlyDataCheck.length > 0) {
+  //         this.toxicolgyLoader = false;
+  //         this.pihAlertMessage = false;
+  //         this.monthlySilaneHeader = this.toxicologyMonthlysilaneHeader;
+  //         this.toxicologyMonthlyData = this.toxicologyMonthlyDataCheck;
+  //         console.log(this.toxicologyMonthlyData);
+  //       } else {
+  //         this.pihAlertMessage = true;
+  //         this.toxicolgyLoader = false;
+  //       }
+  //     }
+  //   }, err => {
+  //     console.error(err);
+  //   });
+  // }
+
+
+//Toxicology Summary API Call
+ 
+
+toxicologyMonthlyStudy() {
     this.toxicolgyLoader = true;
     this.pihAlertMessage = false;
     this.toxicologyDetails = [];
@@ -246,18 +308,14 @@ this.contentHeight = false;
     this.momentiveService.getToxicology(this.toxicologyDetails).subscribe(data => {
       console.log(data);
       this.productdata = data;
-      this.toxicologyMonthlySelantCheck = this.productdata[0].selant;
-      console.log(this.toxicologyMonthlySelantCheck);
-      this.toxicologyMonthlySilaneCheck = this.productdata[0].silanes;
-      console.log(this.toxicologyMonthlySilaneCheck);
-      if (this.monthlyType === 'sealant') {
         this.toxicolgyLoader = true;
         this.productdata = data;
-        this.toxicologyMonthlyDataCheck = this.productdata[0].selant;
+        this.toxicologyMonthlyDataCheck = this.productdata;
+        console.log(this.toxicologyMonthlyDataCheck);
         if (this.toxicologyMonthlyDataCheck.length > 0) {
           this.toxicolgyLoader = false;
           this.pihAlertMessage = false;
-          this.monthlySelantHeader = this.toxicologyMonthlyselantHeader;
+          this.monthlyToxicologyHeader = this.toxicologyMonthlyStudyList;
           this.toxicologyMonthlyData = this.toxicologyMonthlyDataCheck;
           console.log(this.toxicologyMonthlyData);
         }
@@ -265,29 +323,12 @@ this.contentHeight = false;
           this.pihAlertMessage = true;
           this.toxicolgyLoader = false;
         }
-      } if (this.monthlyType === 'silane') {
-        this.toxicolgyLoader = true;
-        this.productdata = data;
-        this.toxicologyMonthlyDataCheck = this.productdata[0].silanes;
-        if (this.toxicologyMonthlyDataCheck.length > 0) {
-          this.toxicolgyLoader = false;
-          this.pihAlertMessage = false;
-          this.monthlySilaneHeader = this.toxicologyMonthlysilaneHeader;
-          this.toxicologyMonthlyData = this.toxicologyMonthlyDataCheck;
-          console.log(this.toxicologyMonthlyData);
-        } else {
-          this.pihAlertMessage = true;
-          this.toxicolgyLoader = false;
-        }
-      }
-    }, err => {
-      console.error(err);
-    });
-  }
+      });
+}
 
 
-//Toxicology Summary API Call
-  summaryToxicology() {
+
+summaryToxicology() {
     this.toxicolgyLoader = true;
     this.pihAlertMessage = false;
     this.toxicologyDetails = [];
@@ -361,22 +402,22 @@ this.contentHeight = false;
   }
 
   //Monthly Toxicology dropdown
-  toxicologyProcess(value) {
-    console.log(value);
-    this.toxicologyValueCheck = value;
-    if (this.toxicologyValueCheck === 'sealant') {
-      this.toxicology_sealant = true;
-      this.toxicology_silane = false;
-      this.monthlyToxicology(this.toxicologyValueCheck);
+  // toxicologyProcess(value) {
+  //   console.log(value);
+  //   this.toxicologyValueCheck = value;
+  //   if (this.toxicologyValueCheck === 'sealant') {
+  //     this.toxicology_sealant = true;
+  //     this.toxicology_silane = false;
+  //     this.monthlyToxicology(this.toxicologyValueCheck);
 
-    }
-    if (this.toxicologyValueCheck === 'silane') {
-      this.toxicology_sealant = false;
-      this.toxicology_silane = true;
-      this.monthlyToxicology(this.toxicologyValueCheck);
+  //   }
+  //   if (this.toxicologyValueCheck === 'silane') {
+  //     this.toxicology_sealant = false;
+  //     this.toxicology_silane = true;
+  //     this.monthlyToxicology(this.toxicologyValueCheck);
 
-    }
-  }
+  //   }
+  // }
 
 
   documentStudyDetail(data) {
@@ -437,8 +478,9 @@ this.contentHeight = false;
       this.monthlyCheck = true;
       this.summaryCheck = false;
       this.dataCheck = false;
-      this.selectedMonthlyToxicologyType = "sealant";
-      this.toxicologyProcess('sealant');
+      // this.selectedMonthlyToxicologyType = "sealant";
+      // this.toxicologyProcess('sealant');
+      this.toxicologyMonthlyStudy()
     }
     if (this.toxicologyTab === 'Toxicology Summary') {
       this.studyCheck = false;

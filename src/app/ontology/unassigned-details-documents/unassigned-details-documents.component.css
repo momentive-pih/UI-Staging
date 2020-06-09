@@ -157,3 +157,8 @@ textarea.form-control {
     overflow-y: auto;
     max-height:400px;
 }
+
+/* .fixframe {
+    position: relative;
+    z-index: 10;   
+}  */

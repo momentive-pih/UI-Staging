@@ -556,7 +556,7 @@
                                                         {{rowData.key}}
                                                     </td>
                                                     <td class="ptable-size">
-                                                        {{rowData.key_Type}}
+                                                        {{rowData.product_Type}}
                                                     </td>
                                                     <td class="ptable-size">
                                                         {{rowData.tier_2_Owner}}
@@ -643,7 +643,7 @@
                                                         {{rowData.key}}
                                                     </td>
                                                     <td class="ptable-size">
-                                                        {{rowData.key_Type}}
+                                                        {{rowData.product_Type}}
                                                     </td>
                                                     <td class="ptable-size">
                                                         {{rowData.tier_2_Owner}}
@@ -770,10 +770,10 @@
                                             <div class="col-xs-12 col-sm-12 col-md-12">
                                                 <h5><b>Email Subject -</b> {{data.email_Subject}}</h5>
                                                 <p><b>Email Content -</b> {{data.email_Content}}</p>
-                                                <li>Email Attachments</li>
+                                                <li *ngIf="data.attached_Docs.length > 0">Email Attachments</li>
 
                                                 <li *ngFor="let doc of data.attached_Docs">
-                                                    <span *ngIf="data.attached_Docs.length > 0"><a href="{{doc.url}}"
+                                                    <span *ngIf="data.attached_Docs.length > 0"><a href="{{doc.url}}" type="application/pdf"
                                                             target="_blank">{{doc.name}}</a></span>
 
 
