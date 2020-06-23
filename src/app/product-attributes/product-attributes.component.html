@@ -30,7 +30,8 @@
                   <div class="col-md-12">
                      <h6 class="card-subtitle mb-2 text-default font-weight-semibold">Product Identification: <i
                            class="fa fa-info-circle" title="This data is from SAP"></i></h6>
-                     <div class="row">
+                  
+                           <div class="row">
                         <div class="col-md-12">
                            <table>
                               <thead>
@@ -60,12 +61,13 @@
                   </span>
 
                   <div class="accordion" id="accordionExample" *ngIf="!potentialAPPData">
+                    <!--Product level-->
                      <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                            <h6 class="panel-title">
                               <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                                  aria-controls="collapseOne">
-                                 <h6>Product Level</h6>
+                                 <h6>Product Level (NAMPROD matches)</h6>
                               </a>
                            </h6>
                         </div>
@@ -80,8 +82,8 @@
                                           <tr>
                                              <th>S.No</th>
                                              <th>Specification Id</th>
-                                             <th>Product Name</th>
-                                             <th>product Type</th>
+                                             <th>Identifier</th>
+                                             <th>Identifier Category/Type</th>
                                              <th>File Source</th>
                                              <th>Product Application</th>
                                              <!-- <th class="td-actions">Actions</th> -->
@@ -114,13 +116,13 @@
                         </div>
                      </div>
 
-
+                    <!--Material Level (BDT matches)-->
                      <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingTwo">
                            <h6 class="panel-title">
                               <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
                                  aria-controls="collapseTwo">
-                                 <h6>Material Level</h6>
+                                 <h6>Material Level (BDT matches)</h6>
                               </a>
                            </h6>
                         </div>
@@ -135,8 +137,8 @@
                                           <tr>
                                              <th>S.No</th>
                                              <th>Specification Id</th>
-                                             <th>Product Name</th>
-                                             <th>product Type</th>
+                                             <th>Name</th>
+                                             <th>Type</th>
                                              <th>File Source</th>
                                              <th>Product Application</th>
                                              <!-- <th class="td-actions">Actions</th> -->
@@ -169,8 +171,8 @@
                         </div>
                      </div>
 
-
-                     <div class="panel panel-primary">
+                      <!--Component Level-->
+                     <!-- <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingThree">
                            <h6 class="panel-title">
                               <a data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
@@ -194,7 +196,7 @@
                                              <th>product Type</th>
                                              <th>File Source</th>
                                              <th>Product Application</th>
-                                             <!-- <th class="td-actions">Actions</th> -->
+                                            
                                           </tr>
                                        </thead>
                                        <tbody>
@@ -210,11 +212,7 @@
                                                    {{each.filename}}
                                                 </a>
                                              </td>
-                                             <!-- <td class="td-actions">
-                                                   <span class="docs-btn"><a href="{{each.prod_App}}" target="_new" download><i
-                                                            class="fa fa-share">
-                                                         </i> Download</a></span>
-                                                </td> -->
+                                            
                                           </tr>
                                        </tbody>
                                     </table>
@@ -222,7 +220,7 @@
                               </div>
                            </div>
                         </div>
-                     </div>
+                     </div> -->
                   </div>
                </div>
 
@@ -295,11 +293,13 @@
                                  <i (click)="onSortClick($event,'symbols')" class="my-icon fa fa-caret-up"></i>
                               </th>
                               <th class="ghs-head">Signal Word <i (click)="onSortClick($event,'signal_Word')"
-                                    class="my-icon fa fa-caret-up"></i></th>
+                                    class="my-icon fa fa-caret-up"></i>
+                                 </th>
                               <th class="ghs-head-haz">     Hazard Statements 
                                  <i (click)="onSortClick($event,'hazard_Statements')"
                                     class="my-icon fa fa-caret-up"></i>
                               </th>
+                          
                               <th class="ghs-head" title="Precautionary Statement General">PS General
                                  <i (click)="onSortClick($event,'prec_Statements')" class="my-icon fa fa-caret-up"></i>
                               </th>
@@ -347,6 +347,7 @@
                               <td class="ptable-size">
                                  {{each.hazard_Statements}}
                               </td>
+                              
                               <td class="ptable-size">
                                  {{each.prec_Statements}}
                               </td>
@@ -400,12 +401,13 @@
                            class="fa fa-info-circle" role="button"
                            title="This data is from Document on Shared Drive - P"></i></h6>
                      <div class="accordion" id="accordionChemicalStructure">
+                        <!--Product level-->
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingOne">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#chemicalStructureproductLevelPIH"
                                     aria-expanded="true" aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -421,8 +423,9 @@
                                              <tr>
                                                 <th>S.No</th>
                                                 <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
+                                                <th>Identifier</th>
+                                                <th>Identifier Category/Type</th>
+                                               
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
                                                 <!-- <th>Actions</th> -->
@@ -432,8 +435,9 @@
                                              <tr *ngFor="let data of chemicalStructureproductLevel ;let i = index">
                                                 <td>{{i+1}}</td>
                                                 <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
                                                 <td>{{data.productName}}</td>
+                                                <td>{{data.product_Type}}</td>
+                                               
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
                                                       (click)="imagePreview(data.file_Path,data.file_Type)"
@@ -456,13 +460,13 @@
                            </div>
                         </div>
 
-
+                       <!--Material Level-->
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingTwo">
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#chemicalStructurematerialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
-                                    <h6>Material Level</h6>
+                                    <h6>Material Level (BDT matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -478,8 +482,9 @@
                                              <tr>
                                                 <th>S.No</th>
                                                 <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
+                                                <th>Name</th>
+                                                <th>Type</th>
+
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
                                                 <!-- <th>Actions</th> -->
@@ -489,8 +494,9 @@
                                              <tr *ngFor="let data of chemicalStructurematerialLevel ;let i = index">
                                                 <td>{{i+1}}</td>
                                                 <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
                                                 <td>{{data.productName}}</td>
+                                                <td>{{data.product_Type}}</td>
+                                               
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
                                                       (click)="imagePreview(data.file_Path,data.file_Type)"
@@ -513,7 +519,7 @@
                            </div>
                         </div>
 
-
+                           <!--Componet Level-->
                         <div class="panel panel-primary">
                            <div class="panel-heading" role="tab" id="headingThree">
                               <h6 class="panel-title">
@@ -527,44 +533,51 @@
                               data-parent="#accordionChemicalStructure">
                               <div class="panel-body">
                                  <span *ngIf="chemicalStructurecasLevel.length == 0">No Data Found</span>
-                                 <div *ngIf="chemicalStructurecasLevel.length > 0" class="row">
-                                    <div class="col-md-12 table-responsive">
+                                 <div *ngIf="chemicalStructurecasLevel.length > 0">
 
-                                       <table>
-                                          <thead>
-                                             <tr>
-                                                <th>S.No</th>
-                                                <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
-                                                <th>File Source</th>
-                                                <th>CAS Diagram</th>
-                                                <!-- <th>Actions</th> -->
-                                             </tr>
-                                          </thead>
-                                          <tbody>
-                                             <tr *ngFor="let data of chemicalStructurecasLevel ;let i = index">
-                                                <td>{{i+1}}</td>
-                                                <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
-                                                <td>{{data.productName}}</td>
-                                                <td>{{data.file_Source}}</td>
-                                                <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
-                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
-                                                      {{data.fileName}}
-                                                   </a>
-                                                </td>
-                                                <!-- <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" target="_new" download><i
-                                                            class="fa fa-share">
-                                                         </i> Download</a></span>
-                                                </td> -->
-                                                <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </div>
+                                       <p-table #dt [columns]="chemicalStructurecasLevelHead" [value]="chemicalStructurecasLevel" (sortFunction)="customSort($event)" [customSort]="true"  [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                       [responsive]="true">
+                                           <ng-template pTemplate="caption">
+                                               <div class="row">
+                                                   <div class="col-md-6">
+                                                       <div style="text-align: left">
+                                                           <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                           <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                       </div>
+                                                   </div>
+                                              
+                                               </div>
+                                           </ng-template>
+                                           <br>
+                                           <ng-template pTemplate="header" let-columns>
+                                               <tr>
+                                                   <th>S.No</th>
+                                                   <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                       {{col.header}}
+                                                       <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                   </th>
+                                               </tr>
+                                           </ng-template>
+                                           <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                               <tr class="ui-resizable-column">
+                                                   <td>{{index+1}}</td>
+                                                   <td>{{rowData.spec_Id}}</td>
+                                                   <td>{{rowData.productName}}</td>
+                                                   <td>{{rowData.product_Type}}</td>
+                                                  
+                                                   <td>{{rowData.standardComposition}}</td>
+                                                   <td>{{rowData.legalComposition}}</td>
+                                                   <td>{{rowData.file_Source}}</td>
+                                                   <td style="width:20%"> <a href="#"
+                                                         (click)="imagePreview(rowData.file_Path,rowData.file_Type)"
+                                                         class="thumbnail" data-toggle="modal" data-target="#lightbox">
+                                                         {{rowData.fileName}}
+                                                      </a>
+                                                   </td>
+                                               </tr>
+                                           </ng-template>
+                                       </p-table>
+                                    
                                  </div>
                               </div>
                            </div>
@@ -585,7 +598,7 @@
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#molecularFormulaProductLevelPIH"
                                     aria-expanded="true" aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -601,8 +614,9 @@
                                              <tr>
                                                 <th>S.No</th>
                                                 <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
+                                                <th>Identifier</th>
+                                                <th>Identifier Category/Type</th>
+                                               
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
                                                 <!-- <th>Action</th> -->
@@ -612,8 +626,9 @@
                                              <tr *ngFor="let data of molecularFormulaProductLevel;let i = index">
                                                 <td>{{i+1}}</td>
                                                 <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
                                                 <td>{{data.productName}}</td>
+                                                <td>{{data.product_Type}}</td>
+                                              
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
                                                       (click)="imagePreview(data.file_Path,data.file_Type)"
@@ -642,7 +657,7 @@
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#molecularFormulaMaterialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
-                                    <h6>Material Level</h6>
+                                    <h6>Material Level (BDT matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -657,8 +672,9 @@
                                              <tr>
                                                 <th>S.No</th>
                                                 <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                               
                                                 <th>File Source</th>
                                                 <th>CAS Diagram</th>
                                                 <!-- <th>Action</th> -->
@@ -668,8 +684,9 @@
                                              <tr *ngFor="let data of molecularFormulaMaterialLevel;let i = index">
                                                 <td>{{i+1}}</td>
                                                 <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
                                                 <td>{{data.productName}}</td>
+                                                <td>{{data.product_Type}}</td>
+                                               
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:40%"> <a href="#"
                                                       (click)="imagePreview(data.file_Path,data.file_Type)"
@@ -706,43 +723,52 @@
                               data-parent="#accordionMolecularFormula">
                               <div class="panel-body">
                                  <span *ngIf="molecularFormulaCasLevel.length == 0">No Data Found</span>
-                                 <div *ngIf="molecularFormulaCasLevel.length > 0" class="row">
-                                    <div class="col-md-12 table-responsive">
-                                       <table>
-                                          <thead>
-                                             <tr>
-                                                <th>S.No</th>
-                                                <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
-                                                <th>File Source</th>
-                                                <th>CAS Diagram</th>
-                                                <!-- <th>Action</th> -->
-                                             </tr>
-                                          </thead>
-                                          <tbody>
-                                             <tr *ngFor="let data of molecularFormulaCasLevel;let i = index">
-                                                <td>{{i+1}}</td>
-                                                <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
-                                                <td>{{data.productName}}</td>
-                                                <td>{{data.file_Source}}</td>
-                                                <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
-                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
-                                                      {{data.fileName}}
-                                                   </a>
-                                                </td>
-                                                <!-- <td style="width:40%"> <a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <!-- <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download><i
-                                                            class="fa fa-share">
-                                                         </i> Download</a></span>
-                                                </td> -->
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </div>
+                                 <div *ngIf="molecularFormulaCasLevel.length > 0">
+
+
+                                       <p-table #dt [columns]="molecularFormulaCasLevelHead" [value]="molecularFormulaCasLevel" (sortFunction)="customSort($event)" [customSort]="true"  [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                       [responsive]="true">
+                                           <ng-template pTemplate="caption">
+                                               <div class="row">
+                                                   <div class="col-md-6">
+                                                       <div style="text-align: left">
+                                                           <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                           <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                       </div>
+                                                   </div>
+                                              
+                                               </div>
+                                           </ng-template>
+                                           <br>
+                                           <ng-template pTemplate="header" let-columns>
+                                               <tr>
+                                                   <th>S.No</th>
+                                                   <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                       {{col.header}}
+                                                       <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                   </th>
+                                               </tr>
+                                           </ng-template>
+                                           <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                               <tr class="ui-resizable-column">
+                                                   <td>{{index+1}}</td>
+                                                   <td>{{rowData.spec_Id}}</td>
+                                                   <td>{{rowData.productName}}</td>
+                                                   <td>{{rowData.product_Type}}</td>
+                                                  
+                                                   <td>{{rowData.standardComposition}}</td>
+                                                   <td>{{rowData.legalComposition}}</td>
+                                                   <td>{{rowData.file_Source}}</td>
+                                                   <td style="width:20%"> <a href="#"
+                                                         (click)="imagePreview(rowData.file_Path,rowData.file_Type)"
+                                                         class="thumbnail" data-toggle="modal" data-target="#lightbox">
+                                                         {{rowData.fileName}}
+                                                      </a>
+                                                   </td>
+                                               </tr>
+                                           </ng-template>
+                                       </p-table>
+                                    
                                  </div>
                               </div>
                            </div>
@@ -765,7 +791,7 @@
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#molecularWeightProductLevelData"
                                     aria-expanded="true" aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -780,8 +806,9 @@
                                              <tr>
                                                 <th>S.No</th>
                                                 <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
+                                                <th>Identifier Name</th>
+                                                <th>Identifier Category/Type</th>
+                                                
                                                 <th>File Source</th>
                                                 <th>File Name</th>
                                              </tr>
@@ -790,8 +817,9 @@
                                              <tr *ngFor="let data of molecularWeightProductLevel ;let i = index">
                                                 <td>{{i+1}}</td>
                                                 <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
                                                 <td>{{data.productName}}</td>
+                                                <td>{{data.product_Type}}</td>
+                                              
                                                 <td>{{data.file_Source}}</td>
                                                 <td style="width:30%"><a href="javascript:void(0);"
                                                       (click)="molecularWeightDocumentPage(data)">{{data.fileName}}</a>
@@ -811,7 +839,7 @@
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#molecularWeightMaterialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
-                                    <h6>Material Level</h6>
+                                    <h6>Material Level (BDT matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -826,8 +854,8 @@
                                              <tr>
                                                 <th>S.No</th>
                                                 <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
+                                                <th>Name</th>
+                                                <th>Type</th>
                                                 <th>File Source</th>
                                                 <th>File Name</th>
                                              </tr>
@@ -836,9 +864,9 @@
                                              <tr *ngFor="let data of molecularWeightMaterialLevel ;let i = index">
                                                 <td>{{i+1}}</td>
                                                 <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
                                                 <td>{{data.productName}}</td>
-                                                <td>{{data.file_Source}}</td>
+                                                <td>{{data.product_Type}}</td>
+                                                  <td>{{data.file_Source}}</td>
                                                 <td style="width:30%"><a href="javascript:void(0);"
                                                       (click)="molecularWeightDocumentPage(data)">{{data.fileName}}</a>
                                                 </td>
@@ -866,32 +894,47 @@
                               <div class="panel-body">
                                  <span *ngIf="molecularWeightCasLevel.length == 0">No Data Found</span>
                                  <div *ngIf="molecularWeightCasLevel.length > 0" class="row">
-                                    <div class="col-md-12 table-responsive">
-                                       <table>
-                                          <thead>
-                                             <tr>
-                                                <th>S.No</th>
-                                                <th>Specification ID</th>
-                                                <th>Product Type</th>
-                                                <th>Product Name</th>
-                                                <th>File Source</th>
-                                                <th>File Name</th>
-                                             </tr>
-                                          </thead>
-                                          <tbody>
-                                             <tr *ngFor="let data of molecularWeightCasLevel ;let i = index">
-                                                <td>{{i+1}}</td>
-                                                <td>{{data.spec_Id}}</td>
-                                                <td>{{data.product_Type}}</td>
-                                                <td>{{data.productName}}</td>
-                                                <td>{{data.file_Source}}</td>
-                                                <td style="width:30%"><a href="javascript:void(0);"
-                                                      (click)="molecularWeightDocumentPage(data)">{{data.fileName}}</a>
-                                                </td>
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </div>
+
+                                       <p-table #dt [columns]="molecularWeightCasLevelHead" [value]="molecularWeightCasLevel" (sortFunction)="customSort($event)" [customSort]="true"  [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                       [responsive]="true">
+                                           <ng-template pTemplate="caption">
+                                               <div class="row">
+                                                   <div class="col-md-6">
+                                                       <div style="text-align: left">
+                                                           <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                           <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                       </div>
+                                                   </div>
+                                              
+                                               </div>
+                                           </ng-template>
+                                           <br>
+                                           <ng-template pTemplate="header" let-columns>
+                                               <tr>
+                                                   <th>S.No</th>
+                                                   <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                       {{col.header}}
+                                                       <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                   </th>
+                                               </tr>
+                                           </ng-template>
+                                           <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                               <tr class="ui-resizable-column">
+                                                   <td>{{index+1}}</td>
+                                                   
+                                                   <td>{{rowData.spec_Id}}</td>
+                                                   <td>{{rowData.productName}}</td>
+                                                   <td>{{rowData.product_Type}}</td>
+                                                   <td>{{rowData.standardComposition}}</td>
+                                                   <td>{{rowData.legalComposition}}</td>
+                                                   <td>{{rowData.file_Source}}</td>
+                                                   <td style="width:30%"><a href="javascript:void(0);"
+                                                         (click)="molecularWeightDocumentPage(rowData)">{{rowData.fileName}}</a>
+                                                   </td>
+                                               </tr>
+                                           </ng-template>
+                                       </p-table>
+                                   
                                  </div>
                               </div>
                            </div>
@@ -937,7 +980,7 @@
 
          </div>
          <!--Composition section-->
-         <div *ngIf="compositionTypes">
+         <div *ngIf="compositionTypes">   
             <div class="row">
                <div class="col-md-12">
 
@@ -1541,7 +1584,7 @@
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#ManufractureDiagramProductLevelPIH"
                                     aria-expanded="true" aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -1556,8 +1599,8 @@
                                           <thead>
                                              <th style="width:5%">S.No</th>
                                              <th>Specification Id</th>
-                                             <th>Product Name</th>
-                                             <th>Product Type</th>
+                                             <th>Identifier</th>
+                                             <th>Identifier Category/Type</th>
                                              <th>File Soure</th>
                                              <th style="width:50%">File Name</th>
                                              <!-- <th>Action</th> -->
@@ -1596,7 +1639,7 @@
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#ManufractureDiagramMaterialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
-                                    <h6>Material Level</h6>
+                                    <h6>Material Level (BDT matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -1611,8 +1654,8 @@
                                           <thead>
                                              <th style="width:5%">S.No</th>
                                              <th>Specification Id</th>
-                                             <th>Product Name</th>
-                                             <th>Product Type</th>
+                                             <th>Name</th>
+                                             <th>Type</th>
                                              <th>File Soure</th>
                                              <th style="width:40%">File Name</th>
                                              <!-- <th>Action</th> -->
@@ -1659,41 +1702,51 @@
                               data-parent="#accordionMaufractureExample">
                               <div class="panel-body">
                                  <span *ngIf="ManufractureDiagramCasLevel.length == 0">No Data Found</span>
-                                 <div *ngIf="ManufractureDiagramCasLevel.length > 0" class="row">
-                                    <div class="col-md-12 table-responsive">
-                                       <table>
-                                          <thead>
-                                             <th style="width:5%">S.No</th>
-                                             <th>Specification Id</th>
-                                             <th>Product Name</th>
-                                             <th>Product Type</th>
-                                             <th>File Soure</th>
-                                             <th style="width:40%">File Name</th>
-                                             <!-- <th>Action</th> -->
-                                          </thead>
-                                          <tbody>
-                                             <tr *ngFor="let data of ManufractureDiagramCasLevel;let i =index">
-                                                <td>{{i+1}}</td>
-                                                <td>{{data.spec_Id}}</td>
-                                                <td>{{data.productName}}</td>
-                                                <td>{{data.product_Type}}</td>
-                                                <td>{{data.file_Source}}</td>
-                                                <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
-                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
-                                                      {{data.fileName}}
-                                                   </a>
-                                                </td>
-                                                <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <!-- <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download target="_new"><i
-                                                            class="fa fa-share">
-                                                         </i> Download</a></span>
-                                                </td> -->
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </div>
+                                 <div *ngIf="ManufractureDiagramCasLevel.length > 0">
+
+                                       <p-table #dt [columns]="ManufractureDiagramCasLevelHead" [value]="ManufractureDiagramCasLevel" (sortFunction)="customSort($event)" [customSort]="true"  [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                       [responsive]="true">
+                                           <ng-template pTemplate="caption">
+                                               <div class="row">
+                                                   <div class="col-md-6">
+                                                       <div style="text-align: left">
+                                                           <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                           <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                       </div>
+                                                   </div>
+                                              
+                                               </div>
+                                           </ng-template>
+                                           <br>
+                                           <ng-template pTemplate="header" let-columns>
+                                               <tr>
+                                                   <th>S.No</th>
+                                                   <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                       {{col.header}}
+                                                       <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                   </th>
+                                               </tr>
+                                           </ng-template>
+                                           <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                               <tr class="ui-resizable-column">
+                                                   <td>{{index+1}}</td>
+                                                   
+                                                   <td>{{rowData.spec_Id}}</td>
+                                                   <td>{{rowData.productName}}</td>
+                                                   <td>{{rowData.product_Type}}</td>
+                                                   <td>{{rowData.standardComposition}}</td>
+                                                   <td>{{rowData.legalComposition}}</td>
+                                                   <td>{{rowData.file_Source}}</td>
+                                                   <td style="width:20%"> <a href="#"
+                                                         (click)="imagePreview(rowData.file_Path,rowData.file_Type)"
+                                                         class="thumbnail" data-toggle="modal" data-target="#lightbox">
+                                                         {{rowData.fileName}}
+                                                      </a>
+                                                   </td>
+                                               </tr>
+                                           </ng-template>
+                                       </p-table>
+                                   
                                  </div>
                               </div>
                            </div>
@@ -1715,7 +1768,7 @@
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#SynthesisDiagramProductLevelPIH"
                                     aria-expanded="true" aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -1730,8 +1783,8 @@
                                           <thead>
                                              <th style="width:5%">S.No</th>
                                              <th>Specification Id</th>
-                                             <th>Product Name</th>
-                                             <th>Product Type</th>
+                                             <th>Identifier</th>
+                                             <th>Identifier Category/Type</th>
                                              <th>File Soure</th>
                                              <th style="width:50%">File Name</th>
                                              <!-- <th>Action</th> -->
@@ -1769,7 +1822,7 @@
                               <h6 class="panel-title">
                                  <a data-toggle="collapse" data-target="#SynthesisDiagramMaterialLevelPIH"
                                     aria-expanded="false" aria-controls="collapseTwo">
-                                    <h6>Material Level</h6>
+                                    <h6>Material Level (BDT matches)</h6>
                                  </a>
                               </h6>
                            </div>
@@ -1784,8 +1837,8 @@
                                           <thead>
                                              <th style="width:5%">S.No</th>
                                              <th>Specification Id</th>
-                                             <th>Product Name</th>
-                                             <th>Product Type</th>
+                                             <th>Name</th>
+                                             <th>Type</th>
                                              <th>File Soure</th>
                                              <th style="width:50%">File Name</th>
                                              <!-- <th>Action</th> -->
@@ -1831,42 +1884,51 @@
                               data-parent="#accordionSynthesisExample">
                               <div class="panel-body">
                                  <span *ngIf="SynthesisDiagramCasLevel.length == 0">No Data Found</span>
-                                 <div *ngIf="SynthesisDiagramCasLevel.length > 0" class="row">
-                                    <div class="col-md-12 table-responsive">
+                                 <div *ngIf="SynthesisDiagramCasLevel.length > 0">
 
-                                       <table>
-                                          <thead>
-                                             <th style="width:5%">S.No</th>
-                                             <th>Specification Id</th>
-                                             <th>Product Name</th>
-                                             <th>Product Type</th>
-                                             <th>File Soure</th>
-                                             <th style="width:50%">File Name</th>
-                                             <!-- <th>Action</th> -->
-                                          </thead>
-                                          <tbody>
-                                             <tr *ngFor="let data of SynthesisDiagramCasLevel;let i = index">
-                                                <td>{{i+1}}</td>
-                                                <td>{{data.spec_Id}}</td>
-                                                <td>{{data.productName}}</td>
-                                                <td>{{data.product_Type}}</td>
-                                                <td>{{data.file_Source}}</td>
-                                                <td style="width:40%"> <a href="#"
-                                                      (click)="imagePreview(data.file_Path,data.file_Type)"
-                                                      class="thumbnail" data-toggle="modal" data-target="#lightbox">
-                                                      {{data.fileName}}
-                                                   </a>
-                                                </td>
-                                                <!-- <td><a data-fancybox data-fancybox-close class="thumbnail fancybox" rel="ligthbox" href="{{data.file_Path}}">{{data.fileName}}</a></td> -->
-                                                <!-- <td class="potential-btn">
-                                                   <span class="docs-btn"><a href="{{data.file_Path}}" download target="_new"><i
-                                                            class="fa fa-share">
-                                                         </i> Download</a></span>
-                                                </td> -->
-                                             </tr>
-                                          </tbody>
-                                       </table>
-                                    </div>
+                                       <p-table #dt [columns]="SynthesisDiagramCasLevelHead" [value]="SynthesisDiagramCasLevel" (sortFunction)="customSort($event)" [customSort]="true"  [style]="{'overflow':'auto!important'}" [resizableColumns]="true" columnResizeMode="expand" 
+                                       [responsive]="true">
+                                           <ng-template pTemplate="caption">
+                                               <div class="row">
+                                                   <div class="col-md-6">
+                                                       <div style="text-align: left">
+                                                           <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
+                                                           <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                                       </div>
+                                                   </div>
+                                              
+                                               </div>
+                                           </ng-template>
+                                           <br>
+                                           <ng-template pTemplate="header" let-columns>
+                                               <tr>
+                                                   <th>S.No</th>
+                                                   <th class="ptable-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                                                       {{col.header}}
+                                                       <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                   </th>
+                                               </tr>
+                                           </ng-template>
+                                           <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                                               <tr class="ui-resizable-column">
+                                                   <td>{{index+1}}</td>
+                                                   
+                                                   <td>{{rowData.spec_Id}}</td>
+                                                   <td>{{rowData.productName}}</td>
+                                                   <td>{{rowData.product_Type}}</td>
+                                                   <td>{{rowData.standardComposition}}</td>
+                                                   <td>{{rowData.legalComposition}}</td>
+                                                   <td>{{rowData.file_Source}}</td>
+                                                   <td style="width:20%"> <a href="#"
+                                                         (click)="imagePreview(rowData.file_Path,rowData.file_Type)"
+                                                         class="thumbnail" data-toggle="modal" data-target="#lightbox">
+                                                         {{rowData.fileName}}
+                                                      </a>
+                                                   </td>
+                                               </tr>
+                                           </ng-template>
+                                       </p-table>
+                                    
                                  </div>
                               </div>
                            </div>
@@ -1880,12 +1942,15 @@
 
          <div class="clearfix"></div>
 
+
+
          <!--Image Preview-->
          <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg momodel modal-fluid">
                <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
                <div class="modal-content">
+                
                   <div class="modal-bodys">
                      <div *ngIf="showPdf">
                         <iframe type="application/pdf" [attr.src]="imgaePreviewUrl" frameborder="no"

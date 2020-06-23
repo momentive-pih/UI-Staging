@@ -85,6 +85,12 @@ export class ToxicologyComponent implements OnInit {
   selectedMonthlyToxicologyType: string = "sealant";
   topcheckedData:boolean = true;
   toxicologyMonthlyStudyList:any = [];
+  toxicologyProductStudyDataHead:any =[];
+  toxicologyMaterialStudyDataHead:any =[];
+  toxicologyCASStudyHead:any =[];
+  registrationProductSummaryHeader:any=[];
+      registrationMaterialSummaryHeader:any=[];
+      registrationCASSummaryHeader:any=[];
   scrollHeight = '300px'
   selectedmonthlytoxicologyControl = new FormControl(this.selectedMonthlyToxicologyType);
   constructor(private route: ActivatedRoute,private sanitizer: DomSanitizer,private router: Router,private momentiveService: MomentiveService) {
@@ -143,20 +149,39 @@ export class ToxicologyComponent implements OnInit {
 
 
 //Study Toxicology Header
-    this.toxicologyStudyDataHead = [
+
+this.toxicologyProductStudyDataHead = [
+  { "field": "spec_Id", "header": "Specification Id" },
+  { "field": "product_Name", "header": "Identifier" },
+  { "field": "product_Type", "header": "Identifier Category/Type" },
+  { "field": "file_Source", "header": "File Source" },
+  { "field": "test_Description", "header": "Test Description" },
+  { "field": "filename", "header": "File Name" },
+],
+    this.toxicologyMaterialStudyDataHead = [
       { "field": "spec_Id", "header": "Specification Id" },
-      { "field": "product_Name", "header": "Product Name" },
-      { "field": "product_Type", "header": "Product Type" },
+      { "field": "product_Name", "header": "Name" },
+      { "field": "product_Type", "header": "Type" },
       { "field": "file_Source", "header": "File Source" },
       { "field": "test_Description", "header": "Test Description" },
       { "field": "filename", "header": "File Name" },
     ],
+    this.toxicologyCASStudyHead = [
+      { "field": "spec_Id", "header": "Specification Id" },
+      { "field": "product_Name", "header": "Identifier" },
+      { "field": "product_Type", "header": "Identifier Category/Type" },
+      { "field": "standardComposition", "header": "Standard Composition" },
+      { "field": "legalComposition", "header": "Legal Composition" },
+      { "field": "file_Source", "header": "File Source" },
+      { "field": "test_Description", "header": "Test Description" },
+      { "field": "filename", "header": "File Name" },
+    ]
 //Monthly Toxicology  Header
 
       this.toxicologyMonthlyStudyList = [
         { "field": "spec_Id", "header": "Specification Id","width" :"130px" },
-        { "field": "product_Name", "header": "Product Name","width" :"120px" },
-        { "field": "product_Type", "header": "Product Type" ,"width" :"120px"},
+        { "field": "product_Name", "header": "Identifier","width" :"120px" },
+        { "field": "product_Type", "header": "Identifier Category/Type" ,"width" :"120px"},
         { "field": "segment", "header": "segment","width" :"120px" },
         { "field": "file_Source", "header": "File Source","width" :"120px" },
         { "field": "date", "header":"Date","width" :"150px"},
@@ -168,12 +193,28 @@ export class ToxicologyComponent implements OnInit {
       
       ],
 
-
+      
         //RegistrationTracker
-   this.registrationSummaryHeader = [
+   this.registrationProductSummaryHeader = [
     { "field": "spec_Id", "header": "Specification Id" },
-    { "field": "product_Name", "header": "Product Name" },
-    { "field": "product_Type", "header": "Product Type" },
+    { "field": "product_Name", "header": "Identifier" },
+    { "field": "product_Type", "header": "Identifier Category/Type" },
+    { "field": "file_Source", "header": "File Source" },
+    { "field": "filename", "header": "File Name" },
+  ],
+  this.registrationMaterialSummaryHeader = [
+    { "field": "spec_Id", "header": "Specification Id" },
+    { "field": "product_Name", "header": "Name" },
+    { "field": "product_Type", "header": "Type" },
+    { "field": "file_Source", "header": "File Source" },
+    { "field": "filename", "header": "File Name" },
+  ],
+  this.registrationCASSummaryHeader = [
+    { "field": "spec_Id", "header": "Specification Id" },
+    { "field": "product_Name", "header": "Identifier" },
+    { "field": "product_Type", "header": "Identifier Category/Type" },
+    { "field": "StandardComposition", "header": "Standard Composition" },
+    { "field": "compositionValue", "header": "Composition Value" },
     { "field": "file_Source", "header": "File Source" },
     { "field": "filename", "header": "File Name" },
   ]
@@ -213,7 +254,6 @@ export class ToxicologyComponent implements OnInit {
       this.toxicolgyLoader = true;
       this.productdata = data;
       if (this.productdata.length > 0) {
-        this.toxicologyStudyHead = this.toxicologyStudyDataHead;
         this.toxicologyStudyData = this.productdata;
         this.categorizeProductType(this.toxicologyStudyData);
         this.toxicolgyLoader = false;
@@ -352,7 +392,7 @@ summaryToxicology() {
         this.toxicolgyLoader = false;
         this.pihAlertMessage = false;
         this.toxicologySummaryData = this.productdata;
-       this.SummaryHeader = this.registrationSummaryHeader;
+      
        this.categorizeProductType(this.toxicologySummaryData);
         console.log(this.toxicologySummaryData);
       } else {

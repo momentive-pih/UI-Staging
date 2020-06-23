@@ -13,7 +13,7 @@
 				<div class="reactive-form">
 				   <form autocomplete="off" novalidate [formGroup]="reactiveForm">
 					  <div class="row">
-						 <div class="col-md-11">
+						 <div class="col-md-9">
 							<div class="new-search">
 							   <ng-select #code class="custom" [items]="items$" placeholder="Enter the details"
 							   bindLabel="name" bindValue="name" formControlName="selectedSearchNew"
@@ -47,6 +47,9 @@
     </ng-template>
     </ng-select>
 </div>
+</div>
+<div class="col-md-2"> 
+    <h5>Search</h5>
 </div>
 <div class="col-md-1">
         <div class="dropdown">

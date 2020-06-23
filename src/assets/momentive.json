@@ -156,7 +156,8 @@
   {
     "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
     "id":"LSR 2680FC A",
-    "Name" : "Product Attributes",
+    "searchField" : ["All","Risk Review","Registration","Customer Inquiry"],
+    "name" : "Product Attributes",
     "image" : "../../../assets/images/momentive/category/productAttributes.jpg",
     "sales_tab": "product_attribute",
     "modal_id": "composition",
@@ -195,7 +196,8 @@
     {
     "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
     "id":"LSR 2680FC A",
-    "Name" : "Product compliance",
+    "searchField" : ["All","Risk Review"],
+    "name" : "Product compliance",
     "image": "../../../assets/images/momentive/category/ProductCompliance.jpg",
     "sales_tab": "product_Compliance",
     "modal_id": "product_Compliance",
@@ -215,7 +217,8 @@
     {
     "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
     "id":"LSR 2680FC A",
-    "Name" : "Customer Communication",
+    "searchField" : ["All","Risk Review","Customer Inquiry"],
+    "name" : "Customer Communication",
     "image": "../../../assets/images/momentive/category/customerCommunication.png",
     "sales_tab": "customerCommunication",
     "modal_id": "customerCommunication",
@@ -244,7 +247,8 @@
     {
     "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
     "id":"LSR 2680FC A",
-    "Name" : "Toxicology",
+    "searchField" : ["All","Risk Review","Customer Inquiry"],
+    "name" : "Toxicology",
     "image": "../../../assets/images/momentive/category/toxicology.jpg",
     "sales_tab": "toxicology",
     "modal_id": "toxicology",
@@ -274,7 +278,8 @@
     {
     "product_name":  "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
     "id":"LSR 2680FC A",
-    "Name" : "Restricted Substance",
+    "searchField" : ["All"],
+    "name" : "Restricted Substance",
     "image": "../../../assets/images/momentive/category/restrictedsubstance.png",
     "sales_tab": "restrictedSubstance",
     "modal_id": "restrictedSubstance",
@@ -297,7 +302,8 @@
     {
     "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
     "id":"LSR 2680FC A",
-    "Name" : "Sales Information",
+    "searchField" : ["All","Customer Inquiry"],
+    "name" : "Sales Information",
     "image" : "../../../assets/images/momentive/category/salesInformation.jpg",
     "sales_tab": "sales_Information",
     "modal_id": "sales_Information",
@@ -315,7 +321,8 @@
     {
     "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
     "id":"LSR 2680FC A",
-    "Name" : "Report Data",
+    "searchField" : ["All","Customer Inquiry"],
+    "name" : "Report Data",
     "image":"../../../assets/images/momentive/category/report.png",
     "sales_tab": "report_Data",
     "modal_id": "report_Data",

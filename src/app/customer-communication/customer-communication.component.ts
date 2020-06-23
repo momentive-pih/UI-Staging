@@ -155,8 +155,8 @@ export class CustomerCommunicationComponent implements OnInit {
       { "field": "topic", "header": "Topic"},
       { "field": "customer_Name", "header": "Customer Name" },
       { "field": "manufacturing_Plant", "header": "Manufacturing Plant"},
-      { "field": "key", "header": "key" },
-      { "field": "product_Type", "header": "key Type"},
+      { "field": "key", "header": "Identifier" },
+      { "field": "product_Type", "header": "Identifier Category/Type"},
       { "field": "tier_2_Owner", "header": "Tier 2 Owner"}
     ]
   }

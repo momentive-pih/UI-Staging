@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight'  *ngIf="usFDA">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' *ngIf="usFDA">
             <!--LOADING OPTION SECTION-->
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
@@ -28,37 +28,32 @@
             <div *ngIf="!customerCommunicationLoader && !pihAlertMessage && !USFDADetailDataPage">
                 <h6 class="text-default font-weight-semibold">US FDA Letter: <i class="fa fa-info-circle" role="button"
                         title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
-
                 <div class="accordion" id="accordionUSFDA">
+                    <!--Product Level-->
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true"
-                                aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    aria-controls="collapseOne">
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                 </a>
                             </h6>
                         </div>
                         <div id="productLevelCategoy" class="panel-collapse collapse show" aria-labelledby="headingOne"
                             data-parent="#accordionUSFDA">
                             <div class="panel-body">
-
                                 <span *ngIf="!productLevelCategoy.length"> No Data Found</span>
-
                                 <div *ngIf="productLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
-
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th><b>S.NO</b></th>
                                                     <th><b>Date of Issue</b></th>
-                                                    <th><b>Product Name</b></th>
-                                                    <th><b>Product Type</b></th>
+                                                    <th><b>Identifier</b></th>
+                                                    <th><b>Identifier Category/Type</b></th>
                                                     <th><b>File Source</b></th>
                                                     <th><b>Document Name</b></th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -80,13 +75,13 @@
                         </div>
                     </div>
 
-
+                   <!--Material Level-->
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingTwo">
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false"
-                                aria-controls="collapseTwo">
-                                    <h6>Material Level</h6>
+                                    aria-controls="collapseTwo">
+                                    <h6>Material Level (BDT matches)</h6>
                                 </a>
                             </h6>
                         </div>
@@ -96,18 +91,15 @@
                                 <span *ngIf="!materialLevelCategoy.length"> No Data Found </span>
                                 <div *ngIf="materialLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
-
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th><b>S.NO</b></th>
                                                     <th><b>Date of Issue</b></th>
-                                                    <th><b>Product Name</b></th>
-                                                    <th><b>Product Type</b></th>
+                                                    <th><b>Name</b></th>
+                                                    <th><b>Type</b></th>
                                                     <th><b>File Source</b></th>
                                                     <th><b>Document Name</b></th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -129,25 +121,22 @@
                         </div>
                     </div>
 
-
-                    <div class="panel panel-primary">
+                  <!--component Level-->
+                    <!-- <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingThree">
                             <h6 class="panel-title">
-                                <a  data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false"
-                                aria-controls="collapseThree">
-                                   <h6>Component Level</h6> 
+                                <a data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    <h6>Component Level</h6>
                                 </a>
                             </h6>
                         </div>
                         <div id="casLevelCategoy" class="panel-collapse collapse" aria-labelledby="headingThree"
                             data-parent="#accordionUSFDA">
                             <div class="panel-body">
-
                                 <span *ngIf="!casLevelCategoy.length"> No Data Found</span>
-
                                 <div *ngIf="casLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
-
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -157,8 +146,6 @@
                                                     <th><b>Product Type</b></th>
                                                     <th><b>File Source</b></th>
                                                     <th><b>Document Name</b></th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -178,11 +165,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
-
-
-
             </div>
 
 
@@ -230,7 +214,6 @@
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
             </span>
-
             <span *ngIf="pihAlertMessage">
                 <h5 class="loader-text"><img src="../../../assets/images/momentive/category/noDataFound.png"></h5>
             </span>
@@ -238,14 +221,14 @@
                 <h6 class="text-default font-weight-semibold">Eu Food Contact: <i class="fa fa-info-circle"
                         role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
 
-
                 <div class="accordion" id="accordionEUFood">
+                    <!--Product Level -->
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true"
-                                aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    aria-controls="collapseOne">
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                 </a>
                             </h6>
                         </div>
@@ -253,21 +236,17 @@
                             data-parent="#accordionEUFood">
                             <div class="panel-body">
                                 <span *ngIf="!productLevelCategoy.length"> No Data Found</span>
-
                                 <div *ngIf="productLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
-
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th><b>S.NO</b></th>
                                                     <th><b>Date of Issue</b></th>
-                                                    <th><b>Product Name</b></th>
-                                                    <th><b>Product Type</b></th>
+                                                    <th><b>Identifier</b></th>
+                                                    <th><b>Identifier Category/Type</b></th>
                                                     <th><b>File Source</b></th>
                                                     <th><b>Document Name</b></th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -289,14 +268,13 @@
                             </div>
                         </div>
                     </div>
-
-
+                    <!--Material Level-->
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingTwo">
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false"
-                                aria-controls="collapseTwo">
-                                   <h6>Material Level</h6> 
+                                    aria-controls="collapseTwo">
+                                    <h6>Material Level (BDT matches)</h6>
                                 </a>
                             </h6>
                         </div>
@@ -306,18 +284,15 @@
                                 <span *ngIf="!materialLevelCategoy.length"> No Data Found </span>
                                 <div *ngIf="materialLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
-
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th><b>S.NO</b></th>
                                                     <th><b>Date of Issue</b></th>
-                                                    <th><b>Product Name</b></th>
-                                                    <th><b>Product Type</b></th>
+                                                    <th><b>Name</b></th>
+                                                    <th><b>Type</b></th>
                                                     <th><b>File Source</b></th>
                                                     <th><b>Document Name</b></th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -329,8 +304,6 @@
                                                     <td>{{data.file_Source}}</td>
                                                     <td (click)="documentsEUFoodPreview(data)"><a
                                                             href="javascript:void(0)">{{data.fileName}}</a> </td>
-
-
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -339,13 +312,12 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="panel panel-primary">
+                    <!--Component Level-->
+                    <!-- <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingThree">
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#casLevelCategoy" aria-expanded="false"
-                                aria-controls="collapseThree">
+                                    aria-controls="collapseThree">
                                     <h6>Component Level</h6>
                                 </a>
                             </h6>
@@ -389,57 +361,54 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
-
-  
-
             </div>
 
-         <!--EU FOOD CONTACT DETAIL SECTION-->
-  <div *ngIf="EUFOODdetailDataPage">
-    <h6 class="text-default font-weight-semibold">Eu Food Contact Document - <i class="fa fa-info-circle"
-            role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
-    <p>{{filename}}</p>
-    <div class="row">
-        <div class="col-md-6">
-            <label class="text-default font-weight-semibold">Document Panel</label>
-            <div>
-                <!-- <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:550px; height:600px;"> -->
-                <iframe type="application/pdf" [attr.src]="Url" frameborder="no"
-                    style="width:100%;height:500px"></iframe>
+            <!--EU FOOD CONTACT DETAIL SECTION-->
+            <div *ngIf="EUFOODdetailDataPage">
+                <h6 class="text-default font-weight-semibold">Eu Food Contact Document - <i class="fa fa-info-circle"
+                        role="button" title="This data is from MPM 2018, 2019 Sharepoint"></i></h6>
+                <p>{{filename}}</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="text-default font-weight-semibold">Document Panel</label>
+                        <div>
+                            <!-- <embed class="food-document" alt="Thumbnail [200x250]" [src]="Url" type="application/pdf" style="width:550px; height:600px;"> -->
+                            <iframe type="application/pdf" [attr.src]="Url" frameborder="no"
+                                style="width:100%;height:500px"></iframe>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="back-btn"><button class="btn btn-back" (click)="backToEUPage()"><i
+                                    class="fa fa-reply"></i> Back</button></span>
+                        <label class="text-default font-weight-semibold">Result Panel</label>
+                        <div class=" result-box text-center">
+                            <table class="table table-bordered table-bc">
+                                <thead>
+                                    <th>Keys </th>
+                                    <th>Values</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of Extract_Result | keyvalue : intialSort; let i = index">
+                                        <td width="20%"><b>{{data.key}}</b></td>
+                                        <td width="65%">
+                                            <textarea class="form-control" type="text" [(ngModel)]="data.value"
+                                                name=value-{{i}} (keyup)="documentKey(data)"></textarea></td>
+                                        <!-- <td>{{data.value}}</td><input class="form-control" type="text" formControlName="extractNamedetails" name="extractNamedetails"> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <span class="back-btn"><button class="btn btn-back" (click)="backToEUPage()"><i
-                        class="fa fa-reply"></i> Back</button></span>
-            <label class="text-default font-weight-semibold">Result Panel</label>
-            <div class=" result-box text-center">
-                <table class="table table-bordered table-bc">
-                    <thead>
-                        <th>Keys </th>
-                        <th>Values</th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let data of Extract_Result | keyvalue : intialSort; let i = index">
-                            <td width="20%"><b>{{data.key}}</b></td>
-                            <td width="65%">
-                                <textarea class="form-control" type="text" [(ngModel)]="data.value"
-                                    name=value-{{i}} (keyup)="documentKey(data)"></textarea></td>
-                            <!-- <td>{{data.value}}</td><input class="form-control" type="text" formControlName="extractNamedetails" name="extractNamedetails"> -->
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
         </div>
 
-         
+
         <!--HEAVY METAL SECTION-->
-        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight'  *ngIf="heavyMetals">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' *ngIf="heavyMetals">
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
@@ -469,7 +438,7 @@
         </div>
 
         <!--COMMUNICATION HISTORY SECTION-->
-        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight'  *ngIf="communicationHistory">
+        <div [class.modal-body]='contentHeight' [class.modal-body-new]='!contentHeight' *ngIf="communicationHistory">
             <span *ngIf="customerCommunicationLoader">
                 <i class="loader-class fa fa-spinner fa-spin"></i>
                 <span class="loader-text">Loading data....</span>
@@ -484,12 +453,13 @@
                         role="button" title="This data is from SFDC"></i></h6>
 
                 <div class="accordion" id="accordionCutomerCommunication">
+                    <!--Product Level-->
                     <div class="panel panel-primary">
-                        <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                        aria-controls="collapseOne">
+                        <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
-                                <a>
-                                    Product Level
+                                <a  data-toggle="collapse"
+                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <h6>Product Level (NAMPROD, NAMSYN & Real Specification matches)</h6>
                                 </a>
                             </h6>
                         </div>
@@ -569,15 +539,14 @@
                             </div>
                         </div>
                     </div>
-                
 
-               
+                    <!--Material Level-->
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingTwo">
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                            aria-controls="collapseTwo">
-                                    <h6>Material Level</h6>
+                                    aria-controls="collapseTwo">
+                                    <h6>Material Level (BDT and Material Number matches)</h6>
                                 </a>
                             </h6>
                         </div>
@@ -656,11 +625,10 @@
                             </div>
                         </div>
                     </div>
-                
 
-          
 
-                    <div class="panel panel-primary">
+                    <!--component Level-->
+                    <!-- <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingThree">
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
@@ -744,7 +712,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -773,7 +741,8 @@
                                                 <li *ngIf="data.attached_Docs.length > 0">Email Attachments</li>
 
                                                 <li *ngFor="let doc of data.attached_Docs">
-                                                    <span *ngIf="data.attached_Docs.length > 0"><a href="{{doc.url}}" type="application/pdf"
+                                                    <span *ngIf="data.attached_Docs.length > 0"><a href="{{doc.url}}"
+                                                            type="application/pdf"
                                                             target="_blank">{{doc.name}}</a></span>
 
 

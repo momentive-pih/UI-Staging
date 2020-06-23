@@ -62,35 +62,35 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   structureAndFormulaTypes = false;
   compositionTypes = false;
   flowDiagrams = false;
-  cols: any=[];
-  legalProducts: any=[];
-  selectedlegalProducts: any=[];
-  selectedColumns: any=[];
+  cols: any = [];
+  legalProducts: any = [];
+  selectedlegalProducts: any = [];
+  selectedColumns: any = [];
 
   // GHS Labeling
-  ghsLabelingData: any=[];
-  copyghsLabelingData:any=[];
-  ghsLabelingHeader: any=[];
-  selectedLabelingProducts: any=[];
-  selectedLabelingColumns: any=[];
+  ghsLabelingData: any = [];
+  copyghsLabelingData: any = [];
+  ghsLabelingHeader: any = [];
+  selectedLabelingProducts: any = [];
+  selectedLabelingColumns: any = [];
   legalpaginator = false;
-  private colsTempor: any=[];
-  public columnOptions: any=[];
+  private colsTempor: any = [];
+  public columnOptions: any = [];
   searchGHSText: any;
 
   // Composition Data
-  legalCompositionData: any=[];
-  legalCompositionHead: any=[];
-  selectedlegalCompositionProducts: any=[];
-  hunderedCompositionHead: any=[];
-  hunderedCompositionData: any=[];
-  copyhunderedCompositionData: any=[];
-  selectedhunderedCompositionProducts: any=[];
-  standardCompositionHead: any=[];
-  standardCompositionData: any=[];
-  copystandardCompositionData: any=[];
-  copylegalCompositionData: any=[];
-  selectedStandardCompositionProducts: any= [];
+  legalCompositionData: any = [];
+  legalCompositionHead: any = [];
+  selectedlegalCompositionProducts: any = [];
+  hunderedCompositionHead: any = [];
+  hunderedCompositionData: any = [];
+  copyhunderedCompositionData: any = [];
+  selectedhunderedCompositionProducts: any = [];
+  standardCompositionHead: any = [];
+  standardCompositionData: any = [];
+  copystandardCompositionData: any = [];
+  copylegalCompositionData: any = [];
+  selectedStandardCompositionProducts: any = [];
   ExcelStandardData = [];
   ExcelStandardSubData = [];
   newStandardData = [];
@@ -106,7 +106,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   SelectedUserData: any;
   compositionSpecID = false;
   SPECdropdownList: any = [];
-  legalUsageData:any = []
+  legalUsageData: any = []
   sideSpecList: any = [];
   specCompData: any = [];
   SpecListDetails: any = [];
@@ -144,10 +144,10 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   compositionRating: any;
   notFoundComposition: any;
   compositionlocations: any = [];
-  copyExcelGhsLabelingData:any=[];
-  compositionDataLevel: boolean=true
+  copyExcelGhsLabelingData: any = [];
+  compositionDataLevel: boolean = true
   compositionStandardData: any = [];
-  standardUsageData:any = [];
+  standardUsageData: any = [];
   compistionSpecArray: any = [];
   selectedValue: string;
   imgaePreviewUrl: any;
@@ -172,13 +172,13 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   productAttributeChemicalStructures: any = [];
   productAttributemolecular_Formula: any = [];
   productAttributemolecular_Weight: any = [];
-  structureFormulaCheck:any =[];
-  chemiaclSection:boolean= true;
-  formulaSection:boolean = false;
-  weightSection:boolean = false;
-  searchStandardCompositionText:string ='';
-  searchLegalComposition:string ='';
-  searchSVTComposition:string ='';
+  structureFormulaCheck: any = [];
+  chemiaclSection: boolean = true;
+  formulaSection: boolean = false;
+  weightSection: boolean = false;
+  searchStandardCompositionText: string = '';
+  searchLegalComposition: string = '';
+  searchSVTComposition: string = '';
 
   chemicalStructureproductLevel: any = [];
   chemicalStructurematerialLevel: any = [];
@@ -198,21 +198,21 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   SynthesisDiagramProductLevel: any = [];
   SynthesisDiagramMaterialLevel: any = [];
   SynthesisDiagramCasLevel: any = [];
-  compositionMaterialDataHead:any =[];
-  exportGhsLabelingDatas:any=[];
+  compositionMaterialDataHead: any = [];
+  exportGhsLabelingDatas: any = [];
   structureFormulaCheckData = "Chemical Structure"
-  flowDiagramCheck:any=[];
+  flowDiagramCheck: any = [];
   flowDiagramCheckData = "Manufacturing Flow Diagram";
-  showImage:boolean;
-  showPdf:boolean
-  tableHeight:boolean=false;
-  topcheckedData:boolean = true;
-  ManufractureSection:boolean =true
-  synthesisSection:boolean = false;
-  contentHeight:boolean = false;
-  intiallocationDetails:any;
-  compDataCheck:any
-  compositionslocations :any =[]
+  showImage: boolean;
+  showPdf: boolean
+  tableHeight: boolean = false;
+  topcheckedData: boolean = true;
+  ManufractureSection: boolean = true
+  synthesisSection: boolean = false;
+  contentHeight: boolean = false;
+  intiallocationDetails: any;
+  compDataCheck: any
+  compositionslocations: any = []
   /** control for the selected speclist */
   public specListData: FormControl = new FormControl();
   /** control for the MatSelect filter keyword */
@@ -223,18 +223,23 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   protected _onDestroy = new Subject<void>();
   @ViewChild('singleSelect', { static: false }) singleSelect: MatSelect;
   @ViewChild('SVTtable', { static: false }) SVTtable: ElementRef;
-  @ViewChild('StandardCompositiontable', { static: false }) StandardCompositiontable:ElementRef;
+  @ViewChild('StandardCompositiontable', { static: false }) StandardCompositiontable: ElementRef;
   @ViewChild('LegalCompositiontable', { static: false }) LegalCompositiontable: ElementRef;
   @ViewChild('ghsTable', { static: false }) ghsTable: ElementRef;
-  addcomposition:FormGroup;
-  validityComposition:FormGroup;
+  addcomposition: FormGroup;
+  validityComposition: FormGroup;
 
-  copyExcelstandardCompositionData:any=[];
-  copySVTCompositionData:any=[];
-  copyExcelSVTCompositionData:any=[];
-  copyLegalCompositionData:any=[];
-  copyExcelLegalCompositionData:any = []
-  
+  copyExcelstandardCompositionData: any = [];
+  copySVTCompositionData: any = [];
+  copyExcelSVTCompositionData: any = [];
+  copyLegalCompositionData: any = [];
+  copyExcelLegalCompositionData: any = [];
+  chemicalStructurecasLevelHead: any = [];
+  molecularFormulaCasLevelHead: any = [];
+  molecularWeightCasLevelHead: any = [];
+  ManufractureDiagramCasLevelHead: any = [];
+  SynthesisDiagramCasLevelHead: any = [];
+
   //Composition DropDown 
   compositionsTypes: any = [
     {
@@ -246,16 +251,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       value: "legal"
     }
   ]
- 
-
-
-
-
-
-
-
-
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private fb: FormBuilder,private router: Router, private momentiveService: MomentiveService,
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private fb: FormBuilder, private router: Router, private momentiveService: MomentiveService,
     public toastr: ToastrManager, vcr: ViewContainerRef, ) {
 
     this.momentiveService.notifyObservable$.subscribe(value => {
@@ -269,40 +265,60 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       }
     });
     this.contentHeight = false;
-    this.momentiveService.notifyCheckObservable$.subscribe(value =>{
+    this.momentiveService.notifyCheckObservable$.subscribe(value => {
       console.log(value);
       this.topcheckedData = value;
       this.contentHeight = !this.contentHeight;
     })
 
-   
-   this.addcomposition = this.fb.group({
-    selectedComposition : new FormControl('')
-  });
-   this.validityComposition = this.fb.group({
-    selectedRegionlocation : new FormControl('')
-   })
-  
- 
+
+    this.addcomposition = this.fb.group({
+      selectedComposition: new FormControl('')
+    });
+    this.validityComposition = this.fb.group({
+      selectedRegionlocation: new FormControl('')
+    })
+
+
   }
   ngOnInit() {
 
-    $(".wmd-view-topscroll").scroll(function(){
-      $(".wmd-view")
-          .scrollLeft($(".wmd-view-topscroll").scrollLeft());
-  });
-  $(".wmd-view").scroll(function(){
-      $(".wmd-view-topscroll")
-          .scrollLeft($(".wmd-view").scrollLeft());
-  });
+    //Modal box Resizeable and Draggable code
+    $('.modal-content').resizable({
+      alsoResize: ".modal-dialog",
+      handles: 'e, w',
+    });
+    $("#lightbox").draggable();
+    $('#lightbox').on('hidden.bs.modal', function (e) {
+      if (!($('.modal.in').length)) {
+        $('#lightbox').css({
+          top: 0,
+          left: 0,
+        });
+      }
 
-   //Report Data Header
-   this.compositionMaterialDataHead = [
-    { "field": "real_Spec_Id","header":"Real Specification-NamProd","display":'none'},
-    { "field": "material_Number", "header": "Material Number","display":'true' },
-    { "field": "description", "header": "Material Description","display":'true'},
-    { "field": "bdt", "header": "Basic Data Text","display":'true' },
-  ]
+      $('.modal-content').removeAttr('style');
+      $('.modal-dialog').removeAttr('style');
+    });
+
+
+    $(".wmd-view-topscroll").scroll(function () {
+      $(".wmd-view")
+        .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+    });
+    $(".wmd-view").scroll(function () {
+      $(".wmd-view-topscroll")
+        .scrollLeft($(".wmd-view").scrollLeft());
+    });
+
+
+    //Report Data Header
+    this.compositionMaterialDataHead = [
+      { "field": "real_Spec_Id", "header": "Real Specification-NamProd", "display": 'none' },
+      { "field": "material_Number", "header": "Material Number", "display": 'true' },
+      { "field": "description", "header": "Material Description", "display": 'true' },
+      { "field": "bdt", "header": "Basic Data Text", "display": 'true' },
+    ]
 
     // ProductAttribute Radio Box API Call
     this.momentiveService.getSearchData().subscribe(data => {
@@ -333,41 +349,92 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       "value": "All Usage"
     }],
 
-    this.structureFormulaCheck = [
-      {
-      "name": "Chemical Structure",
-      "value": "chemical Structure"
-     }, 
-     {
-      "name": "Molecular Formula",
-      "value": "Molecular Formula"
-    },
-    {
-      "name": "Molecular weight",
-      "value": "Molecular Weight"
-    }]
+      this.structureFormulaCheck = [
+        {
+          "name": "Chemical Structure",
+          "value": "chemical Structure"
+        },
+        {
+          "name": "Molecular Formula",
+          "value": "Molecular Formula"
+        },
+        {
+          "name": "Molecular weight",
+          "value": "Molecular Weight"
+        }]
 
-    this.flowDiagramCheck =[{
+    this.flowDiagramCheck = [{
       "name": "Manufacturing Flow Diagram",
       "value": "Manufacturing Flow Diagram"
     },
-     {"name": "Synthesis Diagram",
-      "value": "Synthesis Diagram"}
+    {
+      "name": "Synthesis Diagram",
+      "value": "Synthesis Diagram"
+    }
     ]
-      //GHS Labeling Table header
-      this.ghsLabelingDataHeader = [
-        { "field": "spec_Id", "header": "Specification Id-NAM Prod" },
-        { "field": "regulatory_Basis", "header": "Regulatory Basis" },
-        { "field": "usage", "header": "Usage" },
-        { "field": "symbols", "header": "Symbols" },
-        { "field": "signal_Word", "header": "Signal Word" },
-        { "field": "hazard_Statements", "header": "Hazard Statements" },
-        { "field": "prec_Statements", "header": "Precautionary Statement General" },
-        { "field": "prstd", "header": "Precautionary Statement Disposal" },
-        { "field": "prstp", "header": "Precautionary Statement Prevention" },
-        { "field": "prstr", "header": "Precautionary Statement Response" },
-        { "field": "prsts", "header": "Precautionary Statement Storage" },
-        { "field": "additional_Information_remarks", "header": "Additional Information / Remarks", "width": "20%" }
+    //GHS Labeling Table header
+    this.ghsLabelingDataHeader = [
+      { "field": "spec_Id", "header": "Specification Id-NAM Prod" },
+      { "field": "regulatory_Basis", "header": "Regulatory Basis" },
+      { "field": "usage", "header": "Usage" },
+      { "field": "symbols", "header": "Symbols" },
+      { "field": "signal_Word", "header": "Signal Word" },
+      { "field": "hazard_Statements", "header": "Hazard Statements" },
+      { "field": "prec_Statements", "header": "Precautionary Statement General" },
+      { "field": "prstd", "header": "Precautionary Statement Disposal" },
+      { "field": "prstp", "header": "Precautionary Statement Prevention" },
+      { "field": "prstr", "header": "Precautionary Statement Response" },
+      { "field": "prsts", "header": "Precautionary Statement Storage" },
+      { "field": "additional_Information_remarks", "header": "Additional Information / Remarks", "width": "20%" }
+    ],
+
+
+
+      this.chemicalStructurecasLevelHead = [
+
+        { "field": "spec_Id", "header": "Specification ID" },
+        { "field": "productName", "header": "Identifier" },
+        { "field": "product_Type", "header": "Identifier Category/Type" },
+        { "field": "standardComposition", "header": "Standard Composition" },
+        { "field": "legalComposition", "header": "Legal Composition" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "fileName", "header": "CAS Diagram" }
+      ],
+      this.molecularFormulaCasLevelHead = [
+        { "field": "spec_Id", "header": "Specification ID" },
+        { "field": "productName", "header": "Identifier" },
+        { "field": "product_Type", "header": "Identifier Category/Type" },
+        { "field": "standardComposition", "header": "Standard Composition" },
+        { "field": "legalComposition", "header": "Legal Composition" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "fileName", "header": "CAS Diagram" }
+      ],
+      this.molecularWeightCasLevelHead = [
+        { "field": "spec_Id", "header": "Specification ID" },
+        { "field": "productName", "header": "Identifier" },
+        { "field": "product_Type", "header": "Identifier Category/Type" },
+        { "field": "standardComposition", "header": "Standard Composition" },
+        { "field": "legalComposition", "header": "Legal Composition" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "fileName", "header": "File Name" }
+      ],
+      this.ManufractureDiagramCasLevelHead = [
+        { "field": "spec_Id", "header": "Specification ID" },
+        { "field": "productName", "header": "Identifier" },
+        { "field": "product_Type", "header": "Identifier Category/Type" },
+        { "field": "standardComposition", "header": "Standard Composition" },
+        { "field": "legalComposition", "header": "Legal Composition" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "fileName", "header": "File Name" }
+      ],
+      this.SynthesisDiagramCasLevelHead = [
+        { "field": "spec_Id", "header": "Specification ID" },
+        { "field": "productName", "header": "Identifier" },
+        { "field": "product_Type", "header": "Identifier Category/Type" },
+        { "field": "standardComposition", "header": "Standard Composition" },
+        { "field": "legalComposition", "header": "Legal Composition" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "fileName", "header": "File Name" }
       ]
     this.compositionDataLevel = true;
   }
@@ -448,9 +515,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
           this.usageBaseData = this.productdata[0].ghs_Labeling
           this.ghsLabelingData = this.usageBaseData.filter(element =>
             element.usage.includes('PUBLIC'));
-            console.log(this.ghsLabelingData);
-            this.copyghsLabelingData = JSON.parse(JSON.stringify(this.ghsLabelingData));
-            console.log(this.copyghsLabelingData)
+          console.log(this.ghsLabelingData);
+          this.copyghsLabelingData = JSON.parse(JSON.stringify(this.ghsLabelingData));
+          console.log(this.copyghsLabelingData)
         }
         else if (usageValue == 'All') {
           this.ghsLabelingHeader = this.ghsLabelingDataHeader;
@@ -484,7 +551,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     this.ProductAttributeLoader = true;
     this.pihAlertMessage = false;
     this.productAttributeAPIData = [];
-    
+
     this.CategoryDetails = { index: 3, Category: "Product Attributes", Subcategory: "Composition" }
     console.log(this.CategoryDetails);
     this.productAttributeAPIData.push({
@@ -509,21 +576,21 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.activeMaterial.forEach(element => {
         element.material_Number = parseInt(element.material_Number);
       });
-   
+
       this.addcomposition.get('selectedComposition').setValue('Standard, 100 % & INCI Composition');
       this.compDataCheck = this.addcomposition.get('selectedComposition').value;
-      if(this.compDataCheck == 'Standard, 100 % & INCI Composition') {
+      if (this.compDataCheck == 'Standard, 100 % & INCI Composition') {
 
         this.compositionSHI = true;
-        this.compositionLegalTypes= false;
+        this.compositionLegalTypes = false;
         this.svtCompositionLevel = false;
-        } else {
-          this.compositionSHI = false;
-          this.compositionLegalTypes= true;
-          this.svtCompositionLevel = true;
-        }
-        
-     
+      } else {
+        this.compositionSHI = false;
+        this.compositionLegalTypes = true;
+        this.svtCompositionLevel = true;
+      }
+
+
       this.compositionlocations = JSON.parse(JSON.stringify(this.productData[0].std_hund_usage));
       this.legalCompositionData = JSON.parse(JSON.stringify(this.productData[0].legal_values.legal_composition));
       this.SVT_table = JSON.parse(JSON.stringify(this.productData[0].legal_values.svt));
@@ -532,11 +599,11 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.copySVTCompositionData = JSON.parse(JSON.stringify(this.SVT_table));
       console.log(this.SVT_table);
       console.log(this.compositionlocations);
-  
+
       this.validityComposition.get('selectedRegionlocation').setValue(this.compositionlocations[0].name);
       this.compositionStandardData = JSON.parse(JSON.stringify(this.productData[0].std_values));
       this.copystandardCompositionData = JSON.parse(JSON.stringify(this.compositionStandardData));
-      
+
       console.log(this.compositionStandardData);
       // if(this.compositionStandardData.length > 0) {
       //   this.svtCompositionLevel = true;
@@ -581,9 +648,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
 
         this.chemicalStructureTable.forEach(element => {
-          this.chemicalStructurematerialLevel=[];
-          this.chemicalStructureproductLevel=[];
-          this.chemicalStructurecasLevel=[];
+          this.chemicalStructurematerialLevel = [];
+          this.chemicalStructureproductLevel = [];
+          this.chemicalStructurecasLevel = [];
           if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
             this.chemicalStructurematerialLevel.push(element);
             console.log(this.chemicalStructurematerialLevel);
@@ -600,15 +667,15 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
         this.molecularFormulaTable = this.productAttributemolecular_Formula;
         console.log(this.molecularFormulaTable);
-        this.molecularFormulaMaterialLevel=[];
-        this.molecularFormulaProductLevel=[];
-        this.molecularFormulaCasLevel=[];
+        this.molecularFormulaMaterialLevel = [];
+        this.molecularFormulaProductLevel = [];
+        this.molecularFormulaCasLevel = [];
         this.molecularFormulaTable.forEach(element => {
           if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
             this.molecularFormulaMaterialLevel.push(element);
             console.log(this.molecularFormulaMaterialLevel);
           }
-          
+
           else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
             this.molecularFormulaCasLevel.push(element);
           }
@@ -619,9 +686,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
         })
 
         this.molecularWeightTable = this.productAttributemolecular_Weight;
-        this.molecularWeightMaterialLevel=[];
-        this.molecularWeightProductLevel=[];
-        this.molecularWeightCasLevel=[];
+        this.molecularWeightMaterialLevel = [];
+        this.molecularWeightProductLevel = [];
+        this.molecularWeightCasLevel = [];
         this.molecularWeightTable.forEach(element => {
           if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
             this.molecularWeightMaterialLevel.push(element);
@@ -666,17 +733,17 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   }
 
   onChangeStructureFormula(item) {
-     if(item == 'Chemical Structure' ) {
+    if (item == 'Chemical Structure') {
       this.chemiaclSection = true;
       this.formulaSection = false;
       this.weightSection = false;
 
-    } else if(item == 'Molecular Formula') {
+    } else if (item == 'Molecular Formula') {
       this.chemiaclSection = false;
       this.formulaSection = true;
       this.weightSection = false;
 
-    } else if(item == 'Molecular weight') { 
+    } else if (item == 'Molecular weight') {
       this.chemiaclSection = false;
       this.formulaSection = false;
       this.weightSection = true;
@@ -686,14 +753,14 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
 
 
   onChangeFlowDiagram(item) {
-    if(item == 'Manufacturing Flow Diagram' ) {
+    if (item == 'Manufacturing Flow Diagram') {
       this.ManufractureSection = true;
       this.synthesisSection = false;
-  
-    } else if(item == 'Synthesis Diagram') {
+
+    } else if (item == 'Synthesis Diagram') {
       this.ManufractureSection = false;
       this.synthesisSection = true;
-    } 
+    }
   }
   //Flow Diagram Function Call
   productAttributeFlowdiagram() {
@@ -725,9 +792,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
         if (this.ManufractureDiagramCheck.length > 0) {
           this.ManufractureDiagramPart = true;
           this.ManufractureDiagram = this.ManufractureDiagramCheck;
-          this.ManufractureDiagramMaterialLevel=[];
-          this.ManufractureDiagramProductLevel=[];
-          this.ManufractureDiagramCasLevel=[];
+          this.ManufractureDiagramMaterialLevel = [];
+          this.ManufractureDiagramProductLevel = [];
+          this.ManufractureDiagramCasLevel = [];
           this.ManufractureDiagram.forEach(element => {
             if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
               this.ManufractureDiagramMaterialLevel.push(element);
@@ -747,9 +814,9 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
         if (this.SynthesisDiagramCheck.length > 0) {
           this.SynthesisDiagramPart = true;
           this.SynthesisDiagram = this.SynthesisDiagramCheck;
-          this.SynthesisDiagramMaterialLevel=[];
-          this.SynthesisDiagramProductLevel=[];
-          this.SynthesisDiagramCasLevel=[];
+          this.SynthesisDiagramMaterialLevel = [];
+          this.SynthesisDiagramProductLevel = [];
+          this.SynthesisDiagramCasLevel = [];
           this.SynthesisDiagram.forEach(element => {
             if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
               this.SynthesisDiagramMaterialLevel.push(element);
@@ -822,10 +889,10 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.structureAndFormulaTypes = false;
       this.compositionTypes = true;
       this.flowDiagrams = false;
-      this.compositionlocations=[];
-      this.legalCompositionData=[];
-      this.compositionStandardData=[];
-    
+      this.compositionlocations = [];
+      this.legalCompositionData = [];
+      this.compositionStandardData = [];
+
       this.getIntialSpecList();
       this.productAttributeComposition();
 
@@ -844,10 +911,10 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   //Composition API Call
   compositionProcess(value) {
     this.searchLegalComposition = "";
-    this.searchSVTComposition ="";
-    this.searchStandardCompositionText ="",
-    console.log(value);
-    this.compositionlocations =[];
+    this.searchSVTComposition = "";
+    this.searchStandardCompositionText = "",
+      console.log(value);
+    this.compositionlocations = [];
     this.compostionCheck = value;
     if (this.compostionCheck === 'Legal Composition') {
       this.compositionLegalTypes = true;
@@ -875,7 +942,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
           this.SVT_table = JSON.parse(JSON.stringify(this.productData[0].legal_values.svt));
           console.log(this.SVT_table);
           console.log(this.legalCompositionData);
-          if(this.SVT_table.length > 0 ) {
+          if (this.SVT_table.length > 0) {
             this.svtCompositionLevel = true;
           } else {
             this.svtCompositionLevel = false;
@@ -891,7 +958,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       this.svtCompositionLevel = false;
       this.compositionSHI = true;
       this.productAttributeAPIData = [];
-      this.compositionlocations =[];
+      this.compositionlocations = [];
       // this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
       this.CategoryDetails = { index: 0, Category: "Composition", Subcategory: "Standard, 100 % & INCI Composition" }
       this.productAttributeAPIData.push({
@@ -925,7 +992,7 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   //Legal Composition API call
   SubLevelComposition(value) {
     this.searchLegalComposition = "";
-    this.searchSVTComposition ="";
+    this.searchSVTComposition = "";
     this.productAttributeAPIData = [];
     this.legalCompositionData = [];
     this.compositionStandardData = [];
@@ -934,24 +1001,24 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
     console.log(value);
     this.subLevelData = value;
     this.compostionCheck = this.addcomposition.get('selectedComposition').value;
-    if(this.compostionCheck == 'Standard, 100 % & INCI Composition') {
+    if (this.compostionCheck == 'Standard, 100 % & INCI Composition') {
       this.CategoryDetails = { Subcategory: this.compostionCheck, validity: this.subLevelData }
-    this.productAttributeAPIData.push({
-      'Spec_id': this.specCompData,
-      'Category_details': this.CategoryDetails,
-      'product_Level': this.momentiveService.getProductLevelDetails(),
-      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level': this.momentiveService.getCasLevelDetails(),
-    });
-    console.log(this.productAttributeAPIData);
-    this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
-      console.log(data);
-      this.productdata = data;
-      this.compositionStandardData = this.productdata;
-      this.copystandardCompositionData = JSON.parse(JSON.stringify(this.compositionStandardData ));
-      console.log(this.compositionStandardData);
-    });
-  }
+      this.productAttributeAPIData.push({
+        'Spec_id': this.specCompData,
+        'Category_details': this.CategoryDetails,
+        'product_Level': this.momentiveService.getProductLevelDetails(),
+        'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level': this.momentiveService.getCasLevelDetails(),
+      });
+      console.log(this.productAttributeAPIData);
+      this.momentiveService.getProductAttributes(this.productAttributeAPIData).subscribe(data => {
+        console.log(data);
+        this.productdata = data;
+        this.compositionStandardData = this.productdata;
+        this.copystandardCompositionData = JSON.parse(JSON.stringify(this.compositionStandardData));
+        console.log(this.compositionStandardData);
+      });
+    }
     else {
       this.CategoryDetails = { Subcategory: this.compostionCheck, validity: this.subLevelData }
       this.productAttributeAPIData.push({
@@ -967,11 +1034,11 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
         this.productdata = data;
         this.compositionStandardData = this.productdata;
         this.legalCompositionData = this.productdata.legal_composition;
-        this.copyLegalCompositionData = JSON.parse(JSON.stringify(this.legalCompositionData )); 
-        if(this.compositionStandardData.svt.length > 0) {
+        this.copyLegalCompositionData = JSON.parse(JSON.stringify(this.legalCompositionData));
+        if (this.compositionStandardData.svt.length > 0) {
           this.svtCompositionLevel = true;
           this.SVT_table = this.productdata.svt;
-          this.copySVTCompositionData = JSON.parse(JSON.stringify(this.SVT_table ));
+          this.copySVTCompositionData = JSON.parse(JSON.stringify(this.SVT_table));
           console.log(this.SVT_table)
         } else {
           this.svtCompositionLevel = false;
@@ -979,19 +1046,19 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
       });
     }
 
-   
-   
+
+
     if (this.compostionCheck === "Legal Composition" && this.subLevelData === 'REACH: REG_REACH') {
-        if(this.SVT_table.length > 0) {
-          this.svtCompositionLevel = true;
-          this.SVT_table = this.productdata.svt
-        } else {
-          this.svtCompositionLevel = false;
-        }
+      if (this.SVT_table.length > 0) {
+        this.svtCompositionLevel = true;
+        this.SVT_table = this.productdata.svt
+      } else {
+        this.svtCompositionLevel = false;
+      }
     } else {
       this.svtCompositionLevel = false;
     }
-    
+
   }
 
   //Table Sort functionality
@@ -1080,111 +1147,111 @@ export class ProductAttributesComponent implements OnInit, OnDestroy {
   //     , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
   //     , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
   //   if (!table.nodeType) table = document.getElementById(table)
-  
+
   //   var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
   //   window.location.href = uri + base64(format(template, ctx))
   // }
   exportToCompostionExcel() {
-    this.copyExcelstandardCompositionData =[]
+    this.copyExcelstandardCompositionData = []
     console.log(this.StandardCompositiontable);
     this.copystandardCompositionData.forEach(element => {
       this.copyExcelstandardCompositionData.push({
-        'Pure Specification Id' : element.pure_spec_Id,
-        'Real Specificaion Id' : element.real_Spec_Id,
-        'Cas Number' : element.cas_Number,
-        'Ingredient Name' : element.ingredient_Name,
-        'Standard Composition Component Type' :element.std_Componant_Type,
-        'Standard Composition  Value' : element.std_value,
-        'Standard Composition  Unit' :element.std_unit,
-        '100 % Composition Component Type' :element.hundrd_Componant_Type,
-        '100 % Composition value' :element.hundrd_value,
-        '100 % Composition Unit' :element.hundrd_unit,
-        'INCI Composition Component Type' : element.inci_Componant_Type,
+        'Pure Specification Id': element.pure_spec_Id,
+        'Real Specificaion Id': element.real_Spec_Id,
+        'Cas Number': element.cas_Number,
+        'Ingredient Name': element.ingredient_Name,
+        'Standard Composition Component Type': element.std_Componant_Type,
+        'Standard Composition  Value': element.std_value,
+        'Standard Composition  Unit': element.std_unit,
+        '100 % Composition Component Type': element.hundrd_Componant_Type,
+        '100 % Composition value': element.hundrd_value,
+        '100 % Composition Unit': element.hundrd_unit,
+        'INCI Composition Component Type': element.inci_Componant_Type,
         'INCI Composition value & Unit': element.inci_value_unit,
       });
-      });
-    const ws: xlsx.WorkSheet =   
-    xlsx.utils.json_to_sheet(this.copyExcelstandardCompositionData);
+    });
+    const ws: xlsx.WorkSheet =
+      xlsx.utils.json_to_sheet(this.copyExcelstandardCompositionData);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Standard Composition Table.xlsx');
-   }
-   exportToLegalExcel() {
-     this.copyExcelLegalCompositionData =[];
+  }
+  exportToLegalExcel() {
+    this.copyExcelLegalCompositionData = [];
     this.copyLegalCompositionData.forEach(element => {
       this.copyExcelLegalCompositionData.push({
-        'Pure Specification Id' : element.pure_spec_Id,
-        'Real Specificaion Id' : element.real_Spec_Id,
-        'Cas Number' : element.cas_Number,
-        'Ingredient Name' : element.ingredient_Name,
-        'Legal Composition Component Type' :element.legal_Componant_Type,
-        'Legal Composition  Value' : element.legal_value,
-        'Legal Composition  unit' : element.legal_unit
+        'Pure Specification Id': element.pure_spec_Id,
+        'Real Specificaion Id': element.real_Spec_Id,
+        'Cas Number': element.cas_Number,
+        'Ingredient Name': element.ingredient_Name,
+        'Legal Composition Component Type': element.legal_Componant_Type,
+        'Legal Composition  Value': element.legal_value,
+        'Legal Composition  unit': element.legal_unit
       });
-      });
-    const ws: xlsx.WorkSheet =   
-    xlsx.utils.json_to_sheet(this.copyExcelLegalCompositionData);
+    });
+    const ws: xlsx.WorkSheet =
+      xlsx.utils.json_to_sheet(this.copyExcelLegalCompositionData);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'Legal Composition Table.xlsx');
-   }
-   exportToSVTExcel() {
-this.copyExcelSVTCompositionData =[];
+  }
+  exportToSVTExcel() {
+    this.copyExcelSVTCompositionData = [];
     this.copySVTCompositionData.forEach(element => {
       this.copyExcelSVTCompositionData.push({
-        'Pure Specification Id' : element.pure_spec_Id,
-        'Real Specificaion Id' : element.real_Spec_Id,
-        'SVT LV - 2018' : element.SVT_LV_eight,
-        'SVT LV - 2019' : element.SVT_LV_nine,
-        'SVT LV - 2020' :element.SVT_LV_twenty,
-        'SVT LV Amount Limit in tonnes' : element.amount_limit_SVT_LV,
-        'SVT TE-2018' :element.SVT_TE_eight,
-        'SVT TE-2019' :element.SVT_TE_nine,
-        'SVT TE-2020' :element.SVT_TE_Twenty,
-        'SVT TE Amount Limit in tonnes' :element.amount_limit_SVT_TE,
-        'SVT AN-2018' : element.SVT_AN_eight,
+        'Pure Specification Id': element.pure_spec_Id,
+        'Real Specificaion Id': element.real_Spec_Id,
+        'SVT LV - 2018': element.SVT_LV_eight,
+        'SVT LV - 2019': element.SVT_LV_nine,
+        'SVT LV - 2020': element.SVT_LV_twenty,
+        'SVT LV Amount Limit in tonnes': element.amount_limit_SVT_LV,
+        'SVT TE-2018': element.SVT_TE_eight,
+        'SVT TE-2019': element.SVT_TE_nine,
+        'SVT TE-2020': element.SVT_TE_Twenty,
+        'SVT TE Amount Limit in tonnes': element.amount_limit_SVT_TE,
+        'SVT AN-2018': element.SVT_AN_eight,
         'SVT AN-2019': element.SVT_AN_nine,
-        'SVT AN-2020' : element.SVT_AN_twenty,
+        'SVT AN-2020': element.SVT_AN_twenty,
         'SVT AN Amount Limit in tonnes': element.amount_limit_SVT_AN,
       });
-      });
-    const ws: xlsx.WorkSheet =   
-    xlsx.utils.json_to_sheet(this.copyExcelSVTCompositionData);
+    });
+    const ws: xlsx.WorkSheet =
+      xlsx.utils.json_to_sheet(this.copyExcelSVTCompositionData);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'SVT Table.xlsx');
-   }
-  
+  }
+
   exportToGhsLabelingExcel() {
     console.log(this.copyghsLabelingData);
-   this.copyghsLabelingData.forEach(element => {
-      if(element.symbols) {
-      delete element.symbols;
+    this.copyghsLabelingData.forEach(element => {
+      if (element.symbols) {
+        delete element.symbols;
       }
     })
-  this.copyghsLabelingData.forEach(element => {
-    this.copyExcelGhsLabelingData.push({
-      'Specification Id' : element.spec_Id,
-      'Regulatory Basis' : element.regulatory_Basis,
-      'Signal word' : element.signal_Word,
-      'Symbols Text' : element.symbols_Text,
-      'Hazard statement' :element.hazard_Statements,
-      'Precautionary Statement General' : element.prec_Statements,
-      'Precautionary Statement Disposal' :element.prstd,
-      'Precautionary Statement Prevention' :element.prstp,
-      'Precautionary Statement Response' :element.prstr,
-      'Precautionary Statement Storage' :element.prsts,
-      'Additional Information Remarks' : element.additional_Information_remarks,
-      'Usage': element.usage,
-    });
+    this.copyghsLabelingData.forEach(element => {
+      this.copyExcelGhsLabelingData.push({
+        'Specification Id': element.spec_Id,
+        'Regulatory Basis': element.regulatory_Basis,
+        'Signal word': element.signal_Word,
+        'Symbols Text': element.symbols_Text,
+        'Hazard statement': element.hazard_Statements,
+        'Precautionary Statement General': element.prec_Statements,
+        'Precautionary Statement Disposal': element.prstd,
+        'Precautionary Statement Prevention': element.prstp,
+        'Precautionary Statement Response': element.prstr,
+        'Precautionary Statement Storage': element.prsts,
+        'Additional Information Remarks': element.additional_Information_remarks,
+        'Usage': element.usage,
+      });
     });
     console.log(this.copyghsLabelingData)
-    const ws: xlsx.WorkSheet =   
-    xlsx.utils.json_to_sheet(this.copyExcelGhsLabelingData);
+    const ws: xlsx.WorkSheet =
+      xlsx.utils.json_to_sheet(this.copyExcelGhsLabelingData);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'GhsLabeling.xlsx');
-   }
+  }
   //SpecID Intial Droopdownlist
   getIntialSpecList() {
 
@@ -1247,19 +1314,23 @@ this.copyExcelSVTCompositionData =[];
       this.SpecListDetails.filter(speclist => speclist.name.toLowerCase().indexOf(search) > -1)
     );
   }
-  imagePreview(data,imageType) {
+  imagePreview(data, imageType) {
+
+    $('#lightbox').on('shown.bs.modal', function () {
+      $(this).find('.modal-dialog').addClass('modal-lg');
+    });
     console.log(data);
-    if(imageType == 'png') {
-       this.showImage = true;
-       this.showPdf = false;
-       this.imgaePreviewUrl = data;
-    } else if(imageType == 'pdf') {
-       this.showPdf = true;
-       this.showImage = false;
-       this.imgaePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(data);
+    if (imageType == 'png') {
+      this.showImage = true;
+      this.showPdf = false;
+      this.imgaePreviewUrl = data;
+    } else if (imageType == 'pdf') {
+      this.showPdf = true;
+      this.showImage = false;
+      this.imgaePreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(data);
       console.log(this.imgaePreviewUrl);
     }
-    
+
   }
   moreTableData() {
     this.tableHeight = !this.tableHeight;
@@ -1288,11 +1359,12 @@ this.copyExcelSVTCompositionData =[];
 
   }
 
-  DownloadProfilePic(data) { ;
-  console.log(data);
-    var url =  data;
-   window.open(url);
+  DownloadProfilePic(data) {
+    ;
+    console.log(data);
+    var url = data;
+    window.open(url);
   }
- 
+
 }
 

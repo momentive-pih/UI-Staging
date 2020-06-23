@@ -33,7 +33,7 @@
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true"
                                 aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                 </a>
                             </h6>
                         </div>
@@ -44,7 +44,7 @@
                                 <div *ngIf="productLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
-                                        <p-table #dt [columns]="toxicologyStudyHead" [value]="productLevelCategoy"
+                                        <p-table #dt [columns]="toxicologyProductStudyDataHead" [value]="productLevelCategoy"
                                             (sortFunction)="customSort($event)" [customSort]="true"
                                             [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
                                             columnResizeMode="expand" [responsive]="true">
@@ -122,7 +122,7 @@
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false"
                                 aria-controls="collapseTwo">
-                                    <h6>Material Level</h6>
+                                    <h6>Material Level (BDT matches)</h6>
                                 </a>
                             </h6>
                         </div>
@@ -132,7 +132,7 @@
                                 <span *ngIf="materialLevelCategoy.length == 0">No Data Found</span>
                                 <div *ngIf="materialLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
-                                        <p-table #dt [columns]="toxicologyStudyHead" [value]="materialLevelCategoy"
+                                        <p-table #dt [columns]="toxicologyMaterialStudyDataHead" [value]="materialLevelCategoy"
                                             (sortFunction)="customSort($event)" [customSort]="true"
                                             [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
                                             columnResizeMode="expand" [responsive]="true">
@@ -220,7 +220,7 @@
                                 <div *ngIf="casLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
-                                        <p-table #dt [columns]="toxicologyStudyHead" [value]="casLevelCategoy"
+                                        <p-table #dt [columns]="toxicologyCASStudyHead" [value]="casLevelCategoy"
                                             (sortFunction)="customSort($event)" [customSort]="true"
                                             [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
                                             columnResizeMode="expand" [responsive]="true">
@@ -273,6 +273,12 @@
                                                     <td class="ptable-size">
                                                         {{rowData.product_Type}}
                                                     </td>
+                                                    <td class="ptable-size">
+                                                            {{rowData.standardComposition}}
+                                                    </td>
+                                                    <td class="ptable-size">
+                                                            {{rowData.legalComposition}}
+                                                        </td>
                                                     <td class="ptable-size">
                                                         {{rowData.file_Source}}
                                                     </td>
@@ -435,7 +441,7 @@
                             <h6 class="panel-title">
                                 <a data-toggle="collapse" data-target="#productLevelCategoy" aria-expanded="true"
                                 aria-controls="collapseOne">
-                                    <h6>Product Level</h6>
+                                    <h6>Product Level (NAMPROD matches)</h6>
                                 </a>
                             </h6>
                         </div>
@@ -446,7 +452,7 @@
                                 <div *ngIf="productLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
-                                        <p-table #dt [columns]="SummaryHeader" [value]="productLevelCategoy"
+                                        <p-table #dt [columns]="registrationProductSummaryHeader" [value]="productLevelCategoy"
                                             (sortFunction)="customSort($event)" [customSort]="true"
                                             [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
                                             columnResizeMode="expand" [responsive]="true">
@@ -512,7 +518,7 @@
                             <h6 class="panel-title">
                                 <a  data-toggle="collapse" data-target="#materialLevelCategoy" aria-expanded="false"
                                 aria-controls="collapseTwo">
-                                   <h6>Material Level</h6> 
+                                   <h6>Material Level (BDT matches)</h6> 
                                 </a>
                             </h6>
                         </div>
@@ -523,7 +529,7 @@
                                 <div *ngIf="materialLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
-                                        <p-table #dt [columns]="SummaryHeader" [value]="materialLevelCategoy"
+                                        <p-table #dt [columns]="registrationMaterialSummaryHeader" [value]="materialLevelCategoy"
                                             (sortFunction)="customSort($event)" [customSort]="true"
                                             [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
                                             columnResizeMode="expand" [responsive]="true">
@@ -569,6 +575,7 @@
                                                     <td class="ptable-size">{{rowData.spec_Id}}</td>
                                                     <td class="ptable-size">{{rowData.product_Name}}</td>
                                                     <td class="ptable-size">{{rowData.product_Type}}</td>
+                                                    <td class="ptable-size">{{rowData.standardComposition}}</td>
                                                     <td class="ptable-size">{{rowData.file_Source}}</td>
                                                     <td class="ptable-file" (click)="documentSummaryDetail(rowData)"><a
                                                             href="javascript:void(0)">{{rowData.filename}}</a></td>
@@ -600,7 +607,7 @@
                                 <div *ngIf="casLevelCategoy.length > 0" class="row">
                                     <div class="col-md-12 table-responsive">
 
-                                        <p-table #dt [columns]="SummaryHeader" [value]="casLevelCategoy"
+                                        <p-table #dt [columns]="registrationCASSummaryHeader" [value]="casLevelCategoy"
                                             (sortFunction)="customSort($event)" [customSort]="true"
                                             [style]="{'overflow':'auto!important'}" [resizableColumns]="true"
                                             columnResizeMode="expand" [responsive]="true">
@@ -646,6 +653,8 @@
                                                     <td class="ptable-size">{{rowData.spec_Id}}</td>
                                                     <td class="ptable-size">{{rowData.product_Name}}</td>
                                                     <td class="ptable-size">{{rowData.product_Type}}</td>
+                                                    <td class="ptable-size">{{rowData.standardComposition}}</td>
+                                                    <td class="ptable-size">{{rowData.compositionValue}}</td>
                                                     <td class="ptable-size">{{rowData.file_Source}}</td>
                                                     <td class="ptable-file" (click)="documentSummaryDetail(rowData)"><a
                                                             href="javascript:void(0)">{{rowData.filename}}</a></td>

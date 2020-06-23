@@ -13,6 +13,7 @@ import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductAttributesComponent } from '../product-attributes/product-attributes.component';
 import { timingSafeEqual } from 'crypto';
+import { CategoriesPipe } from '../pipes/categories.pipe'
 declare var $: any;
 
 @Component({
@@ -54,6 +55,7 @@ export class HomeComponent implements OnInit {
   basicDetails = true;
   HomeDataDetails: any = [];
   intialDataDetails: any;
+  categoriesIntialData:any;
   modalAPICall: any = [];
   @Input() radioItem: any;
   radiovalue: any;
@@ -62,13 +64,19 @@ export class HomeComponent implements OnInit {
   selectedValue: string;
   openId: any;
   productdata: any = [];
+  cateogryType:any=[];
   intialSelctedData:any =[];
   UserSelectedProducts: any;
   highlightedDiv: number;
   buttonName ='Hide Categories';
+  selectedType: string = "All";
   globalSearchData:any=[];
+  valSelect:any =[];
+  sidebarNewCategoriesHomeData:any = []
+  NewHomeData:any=[];
   EmptyProductLevel:boolean=false;
   objectKeys = Object.keys;
+  searchCategories:any;
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private router: Router,
     private momentiveService: MomentiveService) {
@@ -86,6 +94,21 @@ export class HomeComponent implements OnInit {
       this.EmptyProductLevel = message;
     })
  
+    this.cateogryType = [{
+      "type": "All",
+      "value": "All"
+    }, {
+      "type": "Customer Inquiry",
+      "value": "Customer Inquiry"
+    },{
+      "type": "Registration",
+      "value": "Registration"
+    },
+    {
+      "type": "Risk Review",
+      "value": "Risk Review"
+    }],
+
   
     // Home Page API CALL
     this.intialSelctedData = localStorage.getItem('SearchBarData');
@@ -93,41 +116,15 @@ export class HomeComponent implements OnInit {
     this.globalSearchData = JSON.parse(this.intialSelctedData);
     console.log('**userData**')
     console.log(this.globalSearchData);
-    
-    this.basicProperties = this.momentiveService.basicLevelList;
-    console.log(this.basicProperties);
-    if(this.basicProperties.length > 0) {
-      this.UserSelectedProducts = [];
-      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
-      this.UserSelectedProducts =[{
-        'Spec_id': this.selectedSpecList,
-        'product_Level':this.momentiveService.getProductLevelDetails(),
-        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-        'CAS_Level':this.momentiveService.getCasLevelDetails(),
-      }]
-    } else {
-      this.UserSelectedProducts = [];
-      this.UserSelectedProducts = this.momentiveService.selectedProduct;
-    }
-    console.log(this.UserSelectedProducts);
-    this.intialDataDetails =[];
-    this.momentiveService.getHomePageData(this.UserSelectedProducts).subscribe(data => {
-      if (Object.keys(data).length > 0) {
-        this.Pihloader = false;
-        this.intialDataDetails = data;
-        console.log(this.intialDataDetails);
-        // const size = Object.keys(this.intialDataDetails).length;
-      } else {
-        this.Pihloader = true;
-      }
-    }, err => {
-      console.error(err);
-    });
+
+    this.homeAPICall();
+  
 
     // sidebarCategories Details MOmentive-JSON API CALL
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
-      this.sidebarCategoriesHomeData = this.productdata.sidebarCategoriesHomeData
+      this.sidebarNewCategoriesHomeData = this.productdata.sidebarCategoriesHomeData;
+      this.sidebarCategoriesHomeData = JSON.parse(JSON.stringify(this.sidebarNewCategoriesHomeData));
       console.log(this.sidebarCategoriesHomeData);
     }, err => {
       console.error(err);
@@ -157,10 +154,78 @@ export class HomeComponent implements OnInit {
       e.value.pop();
     }
   }
+
+  homeAPICall () {
+    this.basicProperties = this.momentiveService.basicLevelList;
+    console.log(this.basicProperties);
+    if(this.basicProperties.length > 0) {
+      this.UserSelectedProducts = [];
+      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+      this.UserSelectedProducts =[{
+        'Spec_id': this.selectedSpecList,
+        'product_Level':this.momentiveService.getProductLevelDetails(),
+        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      }]
+    } else {
+      this.UserSelectedProducts = [];
+      this.UserSelectedProducts = this.momentiveService.selectedProduct;
+    }
+    console.log(this.UserSelectedProducts);
+    this.intialDataDetails =[];
+    this.momentiveService.getHomePageData(this.UserSelectedProducts).subscribe(data => {
+      if (Object.keys(data).length > 0) {
+        this.Pihloader = false;
+        this.intialDataDetails = data;
+        this.categoriesIntialData = JSON.parse(JSON.stringify(this.intialDataDetails));
+        console.log(this.intialDataDetails);
+        // const size = Object.keys(this.intialDataDetails).length;
+      } else {
+        this.Pihloader = true;
+      }
+    }, err => {
+      console.error(err);
+    });
+  }
   selectEvent(item) {
     console.log(item);
   }
+  selectCategoryType(data) {
+    console.log(data);
+    this.NewHomeData =[];
+    this.sidebarNewCategoriesHomeData =[];
+    this.sidebarCategoriesHomeData.forEach(element => {
+      element.searchField.forEach(ele => {
+        if (ele == data) {
+          this.sidebarNewCategoriesHomeData.push(element);
+          console.log(this.sidebarNewCategoriesHomeData);
+        }
+      })
+  });
 
+  //Right side filter code
+  // this.sidebarNewCategoriesHomeData.forEach(element => {
+  //   this.NewHomeData.push(element.name);
+  //  });
+  //  console.log(this.NewHomeData);
+  //  console.log(this.categoriesIntialData);
+  //  const filtered = Object.keys(this.categoriesIntialData)
+  // .filter(key => this.NewHomeData.includes(key))
+  // .reduce((obj, key) => {
+  //   obj[key] = this.categoriesIntialData[key];
+  //   return obj;
+  // }, {});
+  //     this.intialDataDetails = filtered;
+  //     console.log(this.intialDataDetails);
+}
+
+//(keyup)="onSearchChange($event.target.value)"
+// onSearchChange(searchValue: string): void {  
+//   console.log(searchValue);
+//   if(searchValue.length > 2) {
+
+//   }
+// }
   //Sub Category Click Function
   selectItem(index, data, radiodata): void {
     this.modalAPICall = [];

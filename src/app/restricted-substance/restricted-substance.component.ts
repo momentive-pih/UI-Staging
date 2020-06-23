@@ -92,8 +92,8 @@ export class RestrictedSubstanceComponent implements OnInit {
       { "field": "class_action", "header": "Class Sl FIC Action" },
       { "field": "reason_Code", "header": "Reason Code" },
       { "field": "source", "header": "Source(Legal Requirement Regulations)" },
-      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)" },
-      { "field": "weight_Composition", "header": "% Weight in SAP std Composition" }
+      { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)" }
+      // { "field": "weight_Composition", "header": "% Weight in SAP std Composition" }
     ]
 
 //California Header Section

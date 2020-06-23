@@ -18,18 +18,33 @@
             <div class="card card-sidebar-mobile">
                 <ul class="nav nav-sidebar" data-nav-type="accordion">
                     <!-- Sidebar search -->
-                    <div class="">
+                    <!-- <div class="">
                         <div class="card-header bg-transparent header-elements-inline">
                             <span class="text-uppercase font-size-sm font-weight-semibold">Categories</span>
                         </div>
-                    </div>
+                    </div> -->
+                        <div class="card-header bg-transparent header-elements-inline">
+                                <mat-form-field class="usage-part">
+                                        <mat-label>Category Type</mat-label>
+                                        <mat-select name="category" [(value)]="selectedType" placeholder="Select category Type"
+                                           (selectionChange)="selectCategoryType($event.value)">
+                                           <mat-option *ngFor="let data of cateogryType" [value]="data.type">
+                                              {{data.type}}
+                                           </mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>
 
-                    <li class="nav-item sidebar-nav" *ngFor="let product of sidebarCategoriesHomeData ;let i = index">
+                      <div class="card-header bg-transparent header-elements-inline">
+                            <input class="form-control" type="text" name="search" [(ngModel)]="searchCategories"  placeholder="search categories">
+                        </div>
+
+                    <li class="nav-item sidebar-nav" *ngFor="let product of sidebarNewCategoriesHomeData | categoriesText:searchCategories;let i = index">
                         <a class="nav-link">
                             <img class="media-object img-circle profile-img img-side" src="{{product.image}}">
                             <span (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)"
                                 data-toggle="modal" data-title="Edit"
-                                [attr.data-target]="'#'+product.tab_modal">{{product.Name}}
+                                [attr.data-target]="'#'+product.tab_modal">{{product.name}}
                             </span>
                             <h6 data-toggle="collapse" [attr.href]="'#'+product.sales_tab" aria-expanded="true"
                                 aria-controls="collapseOne">
