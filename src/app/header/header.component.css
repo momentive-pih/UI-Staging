@@ -471,10 +471,27 @@ select option {
     display: block;
     width: 220px;
   }
+
+  .dropdown-cat-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+}
+.dropdown-cat-content a {
+    color: black;
+    padding: 8px 10px;
+    text-decoration: none;
+    display: block;
+    width: 250px;
+  }
   
   .dropdown a:hover {background-color: #ddd;}
   
-  .show {display: block;}
+  .show {display: block !important;}
 
   .panel {
     margin-bottom: 24px;
@@ -607,3 +624,35 @@ select option {
   .text.mauve { background: #edf }
   .text.mint  { background: #dfe }
   .text.peach { background: #fed }
+
+ 
+.sub-cat {
+    color:#fff;
+}
+.cat-r{
+    float: right;
+}
+.c-H {
+    background: #ddd;
+}
+.cat-btn{
+    padding: 0px;
+    float: right;
+    color: #fff;
+    background: #1a355e;
+}
+
+.cat-r .num {
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #00bcd4;
+    color: #fff;
+    line-height: 20px;
+    font-family: sans-serif;
+    text-align: center;
+    cursor: pointer;
+}

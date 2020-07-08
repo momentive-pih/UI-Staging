@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, ViewContainerRef, AfterViewInit, ViewChildren } from '@angular/core';
 import { Attribute } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material';
 import { TableModule } from 'primeng/table';
 import * as frLocale from 'date-fns/locale/fr';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { NgSelectModule, NgOption, NgSelectComponent } from '@ng-select/ng-select';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MomentiveService } from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 declare var $: any;
 
@@ -18,6 +18,8 @@ declare var $: any;
   styleUrls: ['./toxicology.component.css']
 })
 export class ToxicologyComponent implements OnInit {
+
+
 
   selecteditem: any;
   selectednav: 'active';
@@ -55,57 +57,103 @@ export class ToxicologyComponent implements OnInit {
   CategoryDetails: any = []
   monthlyType: any;
 
-  monthlyToxicologyHeader:any =[]
+  monthlyToxicologyHeader: any = []
   productdata: any = [];
   toxicologySummaryData: any = [];
   toxicologyRegistrationTracker: any = [];
   registartion_Tracker_Data: any = [];
   toxicologyStudyDataHead: any = [];
   toxicologyMonthlyDataCheck: any = [];
-  toxicologyMonthlySelantCheck:any =[];
-  toxicologyMonthlySilaneCheck:any =[];
-  registrationTrackerHeader:any=[];
-  registrationSummaryHeader:any=[];
-  registrationHeader:any =[];
-  SummaryHeader:any=[];
-  toxicologySummaryDataPage:boolean = false;
-  toxicologySummaryPage:any;
-  filename:any;
-  Extract_Result:any;
-  pdfUrl:any;
-  categorizeArrayData:any=[];
-  productLevelCategoy:any=[];
-  materialLevelCategoy:any =[];
-  casLevelCategoy:any=[];
-  Url:any;
-  toxicologyStudyDataPage:boolean = false;
-  contentHeight:boolean = false;
-  toxicologyStudyPage:any;
-  Extract_Result_one:any;
+  toxicologyMonthlySelantCheck: any = [];
+  toxicologyMonthlySilaneCheck: any = [];
+  registrationTrackerHeader: any = [];
+  registartionTrackerData: any = [];
+  registrationSummaryHeader: any = [];
+  registrationHeader: any = [];
+  SummaryHeader: any = [];
+  toxicologySummaryDataPage: boolean = false;
+  toxicologySummaryPage: any;
+  filename: any;
+  Extract_Result: any;
+  pdfUrl: any;
+  categorizeArrayData: any = [];
+  productLevelCategoy: any = [];
+  materialLevelCategoy: any = [];
+  casLevelCategoy: any = [];
+  countryBaseddata: any = [];
+  Url: any;
+  toxicologyStudyDataPage: boolean = false;
+  contentHeight: boolean = false;
+  toxicologyStudyPage: any;
+  Extract_Result_one: any;
   selectedMonthlyToxicologyType: string = "sealant";
-  topcheckedData:boolean = true;
-  toxicologyMonthlyStudyList:any = [];
-  toxicologyProductStudyDataHead:any =[];
-  toxicologyMaterialStudyDataHead:any =[];
-  toxicologyCASStudyHead:any =[];
-  registrationProductSummaryHeader:any=[];
-      registrationMaterialSummaryHeader:any=[];
-      registrationCASSummaryHeader:any=[];
+  topcheckedData: boolean = true;
+  toxicologyMonthlyStudyList: any = [];
+  toxicologyProductStudyDataHead: any = [];
+  toxicologyMaterialStudyDataHead: any = [];
+  toxicologyCASStudyHead: any = [];
+  registrationProductSummaryHeader: any = [];
+  registrationMaterialSummaryHeader: any = [];
+  registrationCASSummaryHeader: any = [];
+  toxiCountry: any = [];
+  toxiProduct: any = [];
+  toxiBand: any = [];
+  toxiRegisterBandLimit: any;
+  toxiRegisterBand_Limit: any;
+  toxiRegisterProductData: any;
+  selectedCountryRegister: any;
+  selectedToxiProduct: any = [];
+  toxicologyRegisterationDetails: any = [];
+  SelectedCountryDetails: any = [];
+  selectedCountryKey: any = [];
+  toxiRegitrationBtn: Boolean = false;
+  registerTableShow: boolean = false;
+  toxicolgyRegisterLoader: boolean = false;
+  pihAlertRegisterMessage: boolean = false;
+  registartionTrackerTotalCost: any
+  registartionTrackerEstimateTime: any
+  toxiRegisterForm: FormGroup;
   scrollHeight = '300px'
   selectedmonthlytoxicologyControl = new FormControl(this.selectedMonthlyToxicologyType);
-  constructor(private route: ActivatedRoute,private sanitizer: DomSanitizer,private router: Router,private momentiveService: MomentiveService) {
+
+  @ViewChild('code', { static: false }) countrySearch: ToxicologyComponent;
+
+
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private el: ElementRef, private sanitizer: DomSanitizer, private router: Router, private momentiveService: MomentiveService) {
+
+
+    this.toxiRegisterForm = fb.group({
+      selectedToxicountry: ['', Validators.required],
+      selectedToxiBand: [Validators.required],
+      selectedToxiProduct: []
+    });
 
   }
+
+
+
+  selectedValues(selectedValues: any) {
+    throw new Error("Method not implemented.");
+  }
+
   ngOnInit() {
 
-     //Collapse script
-  $('.collapse').on('show.bs.collapse', function () {
-    $('.collapse').each(function(){
+    //Collapse script
+    $('.collapse').on('show.bs.collapse', function () {
+      $('.collapse').each(function () {
         $(this).collapse('hide');
+      });
     });
-  });
 
-  // this.scrollHeight = '300px'
+
+
+
+    this.toxiRegisterForm.get('selectedToxicountry').setValue(['ALL']);
+    this.toxiRegisterForm.get('selectedToxiBand').setValue('ALL');
+
+
+
+    // this.scrollHeight = '300px'
     this.momentiveService.notifyObservable$.subscribe(value => {
       this.selecteditem = value;
       console.log(this.selecteditem);
@@ -117,16 +165,16 @@ export class ToxicologyComponent implements OnInit {
       }
     });
     this.contentHeight = false;
-    this.momentiveService.notifyCheckObservable$.subscribe(value =>{
+    this.momentiveService.notifyCheckObservable$.subscribe(value => {
       console.log(value);
       this.topcheckedData = value;
       this.contentHeight = !this.contentHeight;
-      if(value == true) {
+      if (value == true) {
         this.scrollHeight = '300px'
-      } else if(value == false) {
+      } else if (value == false) {
         this.scrollHeight = '400px'
       }
-  
+
     })
 
     // toxicology Radio tab API
@@ -148,92 +196,93 @@ export class ToxicologyComponent implements OnInit {
     });
 
 
-//Study Toxicology Header
+    //Study Toxicology Header
 
-this.toxicologyProductStudyDataHead = [
-  { "field": "spec_Id", "header": "Specification Id" },
-  { "field": "product_Name", "header": "Identifier" },
-  { "field": "product_Type", "header": "Identifier Category/Type" },
-  { "field": "file_Source", "header": "File Source" },
-  { "field": "test_Description", "header": "Test Description" },
-  { "field": "filename", "header": "File Name" },
-],
-    this.toxicologyMaterialStudyDataHead = [
+    this.toxicologyProductStudyDataHead = [
       { "field": "spec_Id", "header": "Specification Id" },
-      { "field": "product_Name", "header": "Name" },
-      { "field": "product_Type", "header": "Type" },
+      { "field": "product_Name", "header": "Identifier" },
+      { "field": "product_Type", "header": "Identifier Category/Type" },
       { "field": "file_Source", "header": "File Source" },
       { "field": "test_Description", "header": "Test Description" },
       { "field": "filename", "header": "File Name" },
     ],
-    this.toxicologyCASStudyHead = [
-      { "field": "spec_Id", "header": "Specification Id" },
-      { "field": "product_Name", "header": "Identifier" },
-      { "field": "product_Type", "header": "Identifier Category/Type" },
-      { "field": "standardComposition", "header": "Standard Composition" },
-      { "field": "legalComposition", "header": "Legal Composition" },
-      { "field": "file_Source", "header": "File Source" },
-      { "field": "test_Description", "header": "Test Description" },
-      { "field": "filename", "header": "File Name" },
-    ]
-//Monthly Toxicology  Header
-
-      this.toxicologyMonthlyStudyList = [
-        { "field": "spec_Id", "header": "Specification Id","width" :"130px" },
-        { "field": "product_Name", "header": "Identifier","width" :"120px" },
-        { "field": "product_Type", "header": "Identifier Category/Type" ,"width" :"120px"},
-        { "field": "segment", "header": "segment","width" :"120px" },
-        { "field": "file_Source", "header": "File Source","width" :"120px" },
-        { "field": "date", "header":"Date","width" :"150px"},
-        { "field": "studies", "header": "Studies","width" :"250px" },
-        { "field": "comments", "header": "Comments" ,"width" :"400px"},
-        { "field": "status", "header": "Status","width" :"250px"},
-        { "field": "actions", "header": "Actions","width" :"200px"},
-        { "field": "test", "header": "Test","width" :"200px" }
-      
+      this.toxicologyMaterialStudyDataHead = [
+        { "field": "spec_Id", "header": "Specification Id" },
+        { "field": "product_Name", "header": "Name" },
+        { "field": "product_Type", "header": "Type" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "test_Description", "header": "Test Description" },
+        { "field": "filename", "header": "File Name" },
       ],
+      this.toxicologyCASStudyHead = [
+        { "field": "spec_Id", "header": "Specification Id" },
+        { "field": "product_Name", "header": "Identifier" },
+        { "field": "product_Type", "header": "Identifier Category/Type" },
+        { "field": "standardComposition", "header": "Standard Composition" },
+        { "field": "legalComposition", "header": "Legal Composition" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "test_Description", "header": "Test Description" },
+        { "field": "filename", "header": "File Name" },
+      ]
+    //Monthly Toxicology  Header
 
-      
-        //RegistrationTracker
-   this.registrationProductSummaryHeader = [
-    { "field": "spec_Id", "header": "Specification Id" },
-    { "field": "product_Name", "header": "Identifier" },
-    { "field": "product_Type", "header": "Identifier Category/Type" },
-    { "field": "file_Source", "header": "File Source" },
-    { "field": "filename", "header": "File Name" },
-  ],
-  this.registrationMaterialSummaryHeader = [
-    { "field": "spec_Id", "header": "Specification Id" },
-    { "field": "product_Name", "header": "Name" },
-    { "field": "product_Type", "header": "Type" },
-    { "field": "file_Source", "header": "File Source" },
-    { "field": "filename", "header": "File Name" },
-  ],
-  this.registrationCASSummaryHeader = [
-    { "field": "spec_Id", "header": "Specification Id" },
-    { "field": "product_Name", "header": "Identifier" },
-    { "field": "product_Type", "header": "Identifier Category/Type" },
-    { "field": "StandardComposition", "header": "Standard Composition" },
-    { "field": "compositionValue", "header": "Composition Value" },
-    { "field": "file_Source", "header": "File Source" },
-    { "field": "filename", "header": "File Name" },
-  ]
-  //RegistrationTracker
-   this.registrationTrackerHeader = [
-    { "field": "product_Name", "header": "Product Name","width":"10%"},
-    { "field": "country_Name", "header": "Country","width" :"10%"},
-    { "field": "tonnage_Band", "header": "Tonnage Band","width" :"10%" },
-    { "field": "study_Type", "header": "Study Type","width" :"10%" },
-    { "field": "test_Method", "header": "Test Method","width" :"10%" },
-    { "field": "test_Name", "header": "Test Name","width" :"15%" },
-    { "field": "estimated_Timing", "header": "Estimated Timing","width" :"10%"},
-    { "field": "estimated_Cost", "header": "Estimated Cost","width" :"10%" },
-    { "field": "new_Estimates", "header": "New Estimates","width" :"10%" }
-  ]
+    this.toxicologyMonthlyStudyList = [
+      { "field": "spec_Id", "header": "Specification Id", "width": "130px" },
+      { "field": "product_Name", "header": "Identifier", "width": "120px" },
+      { "field": "product_Type", "header": "Identifier Category/Type", "width": "120px" },
+      { "field": "segment", "header": "segment", "width": "120px" },
+      { "field": "file_Source", "header": "File Source", "width": "120px" },
+      { "field": "date", "header": "Date", "width": "150px" },
+      { "field": "studies", "header": "Studies", "width": "250px" },
+      { "field": "comments", "header": "Comments", "width": "400px" },
+      { "field": "status", "header": "Status", "width": "250px" },
+      { "field": "actions", "header": "Actions", "width": "200px" },
+      { "field": "test", "header": "Test", "width": "200px" }
+
+    ],
+
+
+      //RegistrationTracker
+      this.registrationProductSummaryHeader = [
+        { "field": "spec_Id", "header": "Specification Id" },
+        { "field": "product_Name", "header": "Identifier" },
+        { "field": "product_Type", "header": "Identifier Category/Type" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "filename", "header": "File Name" },
+      ],
+      this.registrationMaterialSummaryHeader = [
+        { "field": "spec_Id", "header": "Specification Id" },
+        { "field": "product_Name", "header": "Name" },
+        { "field": "product_Type", "header": "Type" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "filename", "header": "File Name" },
+      ],
+      this.registrationCASSummaryHeader = [
+        { "field": "spec_Id", "header": "Specification Id" },
+        { "field": "product_Name", "header": "Identifier" },
+        { "field": "product_Type", "header": "Identifier Category/Type" },
+        { "field": "StandardComposition", "header": "Standard Composition" },
+        { "field": "compositionValue", "header": "Composition Value" },
+        { "field": "file_Source", "header": "File Source" },
+        { "field": "filename", "header": "File Name" },
+      ]
+    //RegistrationTracker
+    this.registrationTrackerHeader = [
+      { "field": "country_Name", "header": "Country", "width": "10%" },
+      { "field": "tonnage_Band", "header": "Tonnage Band", "width": "10%" },
+      { "field": "study_Type", "header": "Study Type", "width": "10%" },
+      { "field": "test_Method", "header": "Test Method", "width": "10%" },
+      { "field": "test_Name", "header": "Test Name", "width": "26%" },
+      { "field": "completed", "header": "Completed", "width": "10%" },
+      { "field": "estimated_Timing", "header": "Estimated Time(in hrs)", "width": "12%" },
+      { "field": "estimated_Cost", "header": "Estimated Cost(in USD)", "width": "12%" },
+
+    ]
   }
 
 
-// Study Toxicology API Call
+
+  // Study Toxicology API Call
   studyToxicology() {
     this.toxicolgyLoader = true;
     this.toxicologyDetails = [];
@@ -244,9 +293,9 @@ this.toxicologyProductStudyDataHead = [
     this.toxicologyDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails[0],
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.toxicologyDetails);
     this.momentiveService.getToxicology(this.toxicologyDetails).subscribe(data => {
@@ -327,10 +376,10 @@ this.toxicologyProductStudyDataHead = [
   // }
 
 
-//Toxicology Summary API Call
- 
+  //Toxicology Summary API Call
 
-toxicologyMonthlyStudy() {
+
+  toxicologyMonthlyStudy() {
     this.toxicolgyLoader = true;
     this.pihAlertMessage = false;
     this.toxicologyDetails = [];
@@ -340,35 +389,35 @@ toxicologyMonthlyStudy() {
     this.toxicologyDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.toxicologyDetails);
     this.momentiveService.getToxicology(this.toxicologyDetails).subscribe(data => {
       console.log(data);
       this.productdata = data;
-        this.toxicolgyLoader = true;
-        this.productdata = data;
-        this.toxicologyMonthlyDataCheck = this.productdata;
-        console.log(this.toxicologyMonthlyDataCheck);
-        if (this.toxicologyMonthlyDataCheck.length > 0) {
-          this.toxicolgyLoader = false;
-          this.pihAlertMessage = false;
-          this.monthlyToxicologyHeader = this.toxicologyMonthlyStudyList;
-          this.toxicologyMonthlyData = this.toxicologyMonthlyDataCheck;
-          console.log(this.toxicologyMonthlyData);
-        }
-        else {
-          this.pihAlertMessage = true;
-          this.toxicolgyLoader = false;
-        }
-      });
-}
+      this.toxicolgyLoader = true;
+      this.productdata = data;
+      this.toxicologyMonthlyDataCheck = this.productdata;
+      console.log(this.toxicologyMonthlyDataCheck);
+      if (this.toxicologyMonthlyDataCheck.length > 0) {
+        this.toxicolgyLoader = false;
+        this.pihAlertMessage = false;
+        this.monthlyToxicologyHeader = this.toxicologyMonthlyStudyList;
+        this.toxicologyMonthlyData = this.toxicologyMonthlyDataCheck;
+        console.log(this.toxicologyMonthlyData);
+      }
+      else {
+        this.pihAlertMessage = true;
+        this.toxicolgyLoader = false;
+      }
+    });
+  }
 
 
 
-summaryToxicology() {
+  summaryToxicology() {
     this.toxicolgyLoader = true;
     this.pihAlertMessage = false;
     this.toxicologyDetails = [];
@@ -379,9 +428,9 @@ summaryToxicology() {
     this.toxicologyDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.toxicologyDetails);
     this.momentiveService.getToxicology(this.toxicologyDetails).subscribe(data => {
@@ -392,8 +441,8 @@ summaryToxicology() {
         this.toxicolgyLoader = false;
         this.pihAlertMessage = false;
         this.toxicologySummaryData = this.productdata;
-      
-       this.categorizeProductType(this.toxicologySummaryData);
+
+        this.categorizeProductType(this.toxicologySummaryData);
         console.log(this.toxicologySummaryData);
       } else {
         this.pihAlertMessage = true;
@@ -406,8 +455,6 @@ summaryToxicology() {
 
   //Registration Tracker API Call
   registrationTrackerToxicology() {
-    this.toxicolgyLoader = true;
-    this.pihAlertMessage = false;
     this.toxicologyDetails = [];
     this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
     console.log(this.selectedSpecList);
@@ -416,31 +463,149 @@ summaryToxicology() {
     this.toxicologyDetails.push({
       'Spec_id': this.selectedSpecList,
       'Category_details': this.CategoryDetails,
-      'product_Level':this.momentiveService.getProductLevelDetails(),
-      'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-      'CAS_Level':this.momentiveService.getCasLevelDetails(),
+      'product_Level': this.momentiveService.getProductLevelDetails(),
+      'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+      'CAS_Level': this.momentiveService.getCasLevelDetails(),
     });
     console.log(this.toxicologyDetails);
     this.momentiveService.getToxicology(this.toxicologyDetails).subscribe(data => {
       console.log(data);
-      this.toxicolgyLoader = true;
       this.productdata = data;
       if (this.productdata.length > 0) {
-        this.toxicolgyLoader = false;
-        this.pihAlertMessage = false;
         this.registartion_Tracker_Data = this.productdata;
-        this.registrationHeader = this.registrationTrackerHeader;
-        this.categorizeProductType(this.registartion_Tracker_Data);
+        // this.categorizeProductType(this.registartion_Tracker_Data);
         console.log(this.registartion_Tracker_Data);
+        this.toxiCountry = this.registartion_Tracker_Data[0].country;
+        console.log(this.toxiCountry);
+        this.toxiBand = this.registartion_Tracker_Data[0].tonnage_band;
+        console.log(this.toxiBand);
+        this.toxiProduct = this.registartion_Tracker_Data[0].product;
+        console.log(this.toxiProduct);
+
+        console.log(this.countrySearch);
+        this.selectedCountryKey = []
+        console.log(this.countrySearch.selectedValues);
+        this.SelectedCountryDetails = this.countrySearch.selectedValues;
+        this.SelectedCountryDetails.forEach(element => {
+          this.selectedCountryKey.push({ 'name': element.name });
+        });
+        console.log(this.selectedCountryKey);
+        this.selectCountryData();
+      }
+    }, err => {
+      console.error(err);
+    });
+
+
+  }
+
+  selectCountryData() {
+    console.log(this.selectedCountryKey);
+    this.selectedCountryKey.forEach(ele => {
+      if (ele.name == 'ALL') {
+        this.countryBaseddata = [];
+        this.toxiCountry.forEach(element => {
+          if (element.name == 'ALL') {
+            element.disabled = false;
+          } else {
+            element.disabled = true;
+          }
+          this.countryBaseddata.push(element);
+          console.log(this.countryBaseddata);
+        });
+      }
+    });
+  }
+
+  onChangeCountry(data) {
+    console.log(data);
+
+
+    if (data.length > 0) {
+      if (data[0].name == 'ALL') {
+
+
+        this.countryBaseddata = [];
+        this.toxiCountry.forEach(element => {
+          element.name === 'ALL' ? (element.disabled = false) : (element.disabled = true)
+          this.countryBaseddata.push(element);
+        });
       } else {
-        this.pihAlertMessage = true;
-        this.toxicolgyLoader = false;
+        this.selectedCountryKey.forEach(ele => {
+
+          if (ele.name == 'ALL') {
+            this.countryBaseddata = [];
+            this.toxiCountry.forEach(element => {
+              element.name === 'ALL' ? (element.disabled = true) : (element.disabled = false)
+              this.countryBaseddata.push(element);
+            });
+          }
+        });
+      }
+    } else {
+      this.countryBaseddata = [];
+      this.toxiCountry.forEach(element => {
+        element.name === 'ALL' ? (element.disabled = false) : (element.disabled = false)
+        this.countryBaseddata.push(element);
+      });
+    }
+
+
+  }
+
+
+  onChangeBand(data) {
+    console.log(data.band_Limit);
+    this.toxiRegisterBandLimit = data.band_Limit;
+  }
+
+  onChangeProduct(data) {
+    console.log(data);
+    this.toxiRegisterProductData = data;
+    this.toxiRegitrationBtn = true
+  }
+
+  registrationDataTracker() {
+    this.registerTableShow = true;
+    this.toxicolgyRegisterLoader = true;
+    this.toxicologyRegisterationDetails = []
+    console.log(this.toxiRegisterForm.value.selectedToxicountry);
+    this.selectedCountryRegister = this.toxiRegisterForm.value.selectedToxicountry;
+    if (this.toxiRegisterBandLimit == undefined) {
+      this.toxiRegisterBand_Limit = 'ALL'
+    } else {
+      this.toxiRegisterBand_Limit = this.toxiRegisterBandLimit
+    }
+    this.toxicologyRegisterationDetails.push({
+      'Spec_id': this.selectedSpecList,
+      'Category_details': this.CategoryDetails,
+      'country': this.selectedCountryRegister,
+      'product': this.toxiRegisterProductData,
+      'tonnage_band': this.toxiRegisterBand_Limit
+    });
+    console.log(this.toxicologyRegisterationDetails);
+    this.momentiveService.getToxicology(this.toxicologyRegisterationDetails).subscribe(data => {
+      console.log(data);
+      this.toxicolgyRegisterLoader = true;
+      this.productdata = data;
+      if (this.productdata.length > 0) {
+        this.toxicolgyRegisterLoader = false;
+        this.pihAlertRegisterMessage = false;
+        this.registartionTrackerData = this.productdata[0].registartion_Data;
+        this.registartionTrackerTotalCost = this.productdata[0].total_Cost
+        this.registartionTrackerEstimateTime = this.productdata[0].total_Estimated_Time
+        this.registrationHeader = this.registrationTrackerHeader;
+        // this.categorizeProductType(this.registartion_Tracker_Data);
+
+      } else {
+
+        this.pihAlertRegisterMessage = true;
+        this.toxicolgyRegisterLoader = false;
       }
     }, err => {
       console.error(err);
     });
   }
-
   //Monthly Toxicology dropdown
   // toxicologyProcess(value) {
   //   console.log(value);
@@ -472,7 +637,7 @@ summaryToxicology() {
     console.log(this.pdfUrl);
     // let SAS_token = '?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-05-29T20:19:29Z&st=2020-04-02T12:19:29Z&spr=https&sig=aodIg0rDPVsNEJY7d8AerhD79%2FfBO9LZGJdx2j9tsCM%3D';
     // let urlPDF = this.pdfUrl + SAS_token;
-    console.log( this.pdfUrl);
+    console.log(this.pdfUrl);
     this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
     console.log(this.Url);
   }
@@ -494,7 +659,7 @@ summaryToxicology() {
     console.log(this.pdfUrl);
     // let SAS_token = '?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2020-05-29T20:19:29Z&st=2020-04-02T12:19:29Z&spr=https&sig=aodIg0rDPVsNEJY7d8AerhD79%2FfBO9LZGJdx2j9tsCM%3D';
     // let urlPDF = this.pdfUrl + SAS_token;
-    console.log( this.pdfUrl);
+    console.log(this.pdfUrl);
     this.Url = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfUrl);
     console.log(this.Url);
   }
@@ -502,7 +667,7 @@ summaryToxicology() {
     this.toxicologySummaryDataPage = false;
   }
 
-//Toxicology Tab change Functionality
+  //Toxicology Tab change Functionality
   onChangeToxicology(item) {
     this.toxicologyTab = item;
     if (this.toxicologyTab === 'Study Title and Date') {
@@ -574,26 +739,26 @@ summaryToxicology() {
     console.log(items);
   }
 
-  categorizeProductType(productData){
-    this.materialLevelCategoy =[];
-    this.productLevelCategoy =[];
-    this.casLevelCategoy =[];
+  categorizeProductType(productData) {
+    this.materialLevelCategoy = [];
+    this.productLevelCategoy = [];
+    this.casLevelCategoy = [];
 
     this.categorizeArrayData = productData;
     this.categorizeArrayData.forEach(element => {
-      if(element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
+      if (element.product_Type == 'BDT' || element.product_Type == 'MATNBR') {
         this.materialLevelCategoy.push(element);
       }
-      else if(element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
+      else if (element.product_Type == 'NAMPROD' || element.product_Type == 'NAMSYN' || element.product_Type == 'REALSPEC') {
         this.productLevelCategoy.push(element);
       }
-      else if(element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
+      else if (element.product_Type == 'NUMCAS' || element.product_Type == 'CHEMICAL' || element.product_Type == 'PURESPEC') {
         this.casLevelCategoy.push(element);
       }
     })
-  console.log(this.productLevelCategoy);
-  console.log(this.materialLevelCategoy);
-  console.log(this.casLevelCategoy);
+    console.log(this.productLevelCategoy);
+    console.log(this.materialLevelCategoy);
+    console.log(this.casLevelCategoy);
 
   }
 }

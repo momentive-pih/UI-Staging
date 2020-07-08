@@ -53,14 +53,15 @@ export class MomentiveService {
   private OntologyDetailMessageTab = new BehaviorSubject<string>('ontology');
   currentOntologyDetailMessage = this.OntologyDetailMessageTab.asObservable();
 
-  
-
+  private categoryBaseData = new BehaviorSubject<any>([]);
+  categoryDetailsData = this.categoryBaseData.asObservable();
 
   constructor(private http: HttpClient) {
 
 
 
   }
+  
 
   //sideBar category and Subcategory Method call
   callMethodOfSecondComponent(data) {
@@ -175,14 +176,14 @@ export class MomentiveService {
   }
 
   // UI-Staging
-  getAzureUserDetails() {
-    return this.http.get("https://appservice-win-pih.azurewebsites.net/.auth/me");
-  }
+  // getAzureUserDetails() {
+  //   return this.http.get("https://appservice-win-pih.azurewebsites.net/.auth/me");
+  // }
 
   //UI-production
-  // getAzureUserDetails() {
-  //   return this.http.get("https://app-win-pih.azurewebsites.net/.auth/me");
-  // }
+  getAzureUserDetails() {
+    return this.http.get("https://app-win-pih.azurewebsites.net/.auth/me");
+  }
 
 
   postOntologyProductSearch(data) {
@@ -232,7 +233,9 @@ export class MomentiveService {
     return this.intialAllSpecList;
   }
 
-
+  changeHeadercategory(data){
+    this.categoryBaseData.next(data)
+  }
 
   changeMessage(message: boolean) {
     this.messageSource.next(message)
@@ -280,6 +283,10 @@ export class MomentiveService {
 
   getSearchData() {
     return this.http.get('../../assets/momentive.json');
+  }
+
+  getCategoriesData() {
+    return this.http.get('../../assets/ontology.json');
   }
   setUserName(value: string) {
     this.loginUserName = value;

@@ -1,0 +1,195 @@
+{
+    "categoryType" : 
+[{
+  "id": "1",
+  "name": "All",
+  "searchField": ["Product Attributes", "Product compliance", "Customer Communication", "Toxicology", "Restricted Substance", "Sales Information", "Report Data"],
+  "SearchSubField": ["All"] 
+},
+{
+  "id": "2",
+  "name": "Customer Inquiry",
+  "searchField": ["Product Attributes", "Product compliance", "Customer Communication", "Toxicology", "Restricted Substance", "Report Data"],
+  "SearchSubField": [
+     "Product Identification",
+     "Product Application",
+     "GHS Labeling",
+     "Standard Composition",
+     "100% Composition",
+     "INCI Composition",
+     "Manufacturing Flow Diagram",
+     "Notification Status",
+     "US FDA",
+     "EU FDA",
+     "Heavy Metals",
+     "Communication History",
+     "Study Title and Date",
+     "Toxicology Summary",
+     "GADSL",
+     "California Prop 65",
+     "Historical Documents",
+     "Released Documents"
+  ]
+}, 
+{
+  "id": "3",
+  "name": "Risk Review",
+  "searchField": ["Product Attributes", "Product compliance", "Customer Communication", "Toxicology","Sales Information"],
+  "SearchSubField": ["Product Identification",
+     "Product Application",
+     "GHS Labeling",
+     "Chemical Structure",
+     "Standard Composition",
+     "Legal Composition",
+     "SVT Substance Details",
+     "Notification Status",
+     "AG Registration Status",
+     "Monthly Tox Study List",
+     "Tox Summary",
+     "US FDA",
+     "EU FDA",
+     "Sales Volume"
+  ]
+}, {
+  "id": "4",
+  "name": "Registration",
+  "searchField": ["Product Attributes", "Product compliance", "Toxicology"],
+  "SearchSubField": [
+     "Product Identification",
+     "Product Application",
+     "Chemical Structure",
+     "Molecular Formula",
+     "Molecular Weight",
+     "Synthesis Diagram",
+     "Standard Composition",
+     "Legal Composition",
+     "SVT Substance Details",
+     "Notification Status",
+     "AG Registration Status",
+     "Toxicology Registration Tracker"
+  ]
+}, {
+  "id": "5",
+  "name": "AG Registration Status",
+  "searchField": ["Product compliance"],
+  "SearchSubField": ["AG Registration Status"]
+}, {
+  "id": "6",
+  "name": "Basic Information",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Basic Information"]
+}, {
+  "id": "7",
+  "name": "California Prop 65",
+  "searchField": ["Restricted Substance"],
+  "SearchSubField": ["California Prop 65"]
+}, {
+  "id": "8",
+  "name": "Chemical structure",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Chemical structure"]
+}, {
+  "id":"9",
+  "name": "Composition",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Composition"]
+},
+
+{
+  "id": "10",
+  "name": "Communication History",
+  "searchField": ["Customer Communication"],
+  "SearchSubField": ["Communication History"]
+}, {
+  "id": "11",
+  "name": "EU Food Contact",
+  "searchField": ["Customer Communication"],
+  "SearchSubField": ["EU Food Contact"]
+}, {
+  "id": "12",
+  "name": "Flow Diagram",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Flow Diagram"]
+}, {
+  "id": "13",
+  "name": "GADSL",
+  "searchField": ["Restricted Substance"],
+  "SearchSubField": ["GADSL"]
+}, {
+  "id": "14",
+  "name": "GHS Labeling",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["GHS Labeling"]
+}, {
+  "id": "15",
+  "name": "Heavy Metals content",
+  "searchField": ["Customer Communication"],
+  "SearchSubField": ["Heavy Metals content"]
+}, {
+  "id": "16",
+  "name": "Manufacturing Diagram",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Manufacturing Diagram"]
+}, {
+  "id": "17",
+  "name": "Molecular Formula",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Molecular Formula"]
+}, {
+  "id": "18",
+  "name": "Molecular Weight",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Molecular Weight"]
+}, {
+  "id": "19",
+  "name": "Monthly Toxicology Study List",
+  "searchField": ["Toxicology"],
+  "SearchSubField": ["Monthly Toxicology Study List"]
+}, {
+  "id": "10",
+  "name": "Notification Status",
+  "searchField": ["Product compliance"],
+  "SearchSubField": ["Notification Status"]
+}, {
+  "id": "21",
+  "name": "Report Data",
+  "searchField": ["Report Data"],
+  "SearchSubField": ["Released Documents"]
+}, {
+  "id": "22",
+  "name": "Sales Information",
+  "searchField": ["Sales Information"],
+  "SearchSubField": ["Sales Volume"]
+}, {
+  "id": "23",
+  "name": "Structure and Formulas",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Structure and Formulas"]
+}, {
+  "id": "24",
+  "name": "Study Title and Date",
+  "searchField": ["Toxicology"],
+  "SearchSubField": ["Study Title and Date"]
+}, {
+  "id": "25",
+  "name": "Synthesis Diagram",
+  "searchField": ["Product Attributes"],
+  "SearchSubField": ["Synthesis Diagram"]
+}, {
+  "id": "26",
+  "name": "Toxicology Summary",
+  "searchField": ["Toxicology"],
+  "SearchSubField": ["Toxicology Summary"]
+}, {
+  "id": "27",
+  "name": "Toxicology Registration Tracker",
+  "searchField": ["Toxicology"],
+  "SearchSubField": ["Toxicology Registration Tracker"]
+}, {
+  "id": "28",
+  "name": "US FDA Letter",
+  "searchField": ["Customer Communication"],
+  "SearchSubField": ["US FDA Letter"]
+}
+]
+}

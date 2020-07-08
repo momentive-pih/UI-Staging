@@ -20,10 +20,13 @@ export class AppComponent implements OnInit {
   
   constructor(location: PlatformLocation,private router: Router,private momentiveService: MomentiveService) {
 
-    // console.log = function(){
+    console.log = function(){
       
-    // }
+    }
+
+ 
    }
+
 
   ngOnInit() {
     this.router.navigate(['']);
@@ -32,11 +35,7 @@ export class AppComponent implements OnInit {
         history.go(1);
         $(".modal .close").click()
     }
-
-
-
   }
- 
  
 
 }

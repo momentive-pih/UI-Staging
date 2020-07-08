@@ -233,3 +233,88 @@
   table-layout: fixed;
   transform: rotateX(180deg);
 }
+/* Toxicology Registration Tracker */
+
+.ng-select ::ng-deep.custom {
+  border: 0px;
+  min-height: 0px;
+  border-radius: 0;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container {
+  min-height: 0px;
+  border-radius: 0px;
+  min-height: 40px;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-placeholder {
+  top: 12px !important;
+  padding-bottom: 15px;
+}
+
+.ng-select.custom ::ng-deep .ng-dropdown-panel {
+  background-color: #fff;
+  border: 0px solid #ccc;
+  border-top: 1px solid #ccc;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  left: 0;
+}
+
+.ng-select.custom ::ng-deep .ng-arrow-wrapper {
+  width: 25px;
+  padding-right: 5px;
+  display: none;
+}
+
+.ng-select.custom ::ng-deep .ng-dropdown-panel.ng-select-bottom .ng-dropdown-panel-items .ng-option:last-child {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-value {
+  font-size: .9em;
+  margin-bottom: 5px;
+  background-color: #1a355e !important;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-value .ng-value-label {
+  display: inline-block;
+  padding: 1px 5px;
+  color: #fff;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-value .ng-value-icon.left {
+  border-right: 1px solid #1a355e;
+  color: #fff;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-value-container .ng-value .ng-value-icon:hover {
+  background-color: #1a355e;
+  color: #fff;
+}
+
+.ng-select.custom ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-optgroup {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 8px 10px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  font-weight: bolder;
+  font-size: 15px;
+  background: whitesmoke;
+}
+.btn-register{
+  background-color: #1a355e;
+  color:#fff;
+  padding: 5px;
+}
+.time-cost{
+    float: right;
+    font-size: 14px;
+    padding: 5px;
+}

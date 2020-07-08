@@ -181,12 +181,15 @@ SynonymsManagement() {
       console.log(this.synonymsData);
       this.synonymsCheckData = this.synonymsData.synonymsName;
       this.ExistDataCheck = false;
+     console.log(this.Ontologysynonyms.length);
+     if(this.Ontologysynonyms.length > 0) {
       this.Ontologysynonyms.forEach(element => {
         if(element.synonyms == this.synonymsCheckData) {
                this.ExistDataCheck = true;  
                return false;
          }
        });
+      }
       if(!this.ExistDataCheck) {
         console.log(this.synonymsData);
         let addSynonymsData = {
@@ -250,12 +253,14 @@ SynonymsManagement() {
       this.synonysProductKey_category = this.searchSynonymsName.type
     }
     this.ExistDataCheck = false;  
+    if(this.Ontologysynonyms.length > 0) {
     this.Ontologysynonyms.forEach(element => {
       if(element.synonyms == this.synonymsCheckData) {
              this.ExistDataCheck = true;  
              return false;
        }
      });
+    }
 
      if(!this.ExistDataCheck) {
       let addSynonymsData = {

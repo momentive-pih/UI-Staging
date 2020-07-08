@@ -5,94 +5,165 @@
             <img src="../../assets/images/momentive/momentivelogo.png" alt="">
         </a>
     </div>
+    
     <!--Header Search Section-->
     <div class="collapse navbar-collapse" id="navbar-mobile">
         <span class="navbar-text mr-md-auto mr-md-3 form-width">
-		  <div>
-			 <div class="forms">
-				<div class="reactive-form">
-				   <form autocomplete="off" novalidate [formGroup]="reactiveForm">
-					  <div class="row">
-						 <div class="col-md-9">
-							<div class="new-search">
-							   <ng-select #code class="custom" [items]="items$" placeholder="Enter the details"
-							   bindLabel="name" bindValue="name" formControlName="selectedSearchNew"
-                               [closeOnSelect]="true" [multiple]="true" [hideSelected]="false"
-                               [clearOnBackspace]="true"  [clearable]="true"
-							   [typeahead]="input$" [dropdownPosition]="'bottom'" [searchable]="true"
-							   [selectableGroupAsModel]="false" [compareWith]="compareAccounts"
-							   [selectableGroup]="false" groupBy="group" (change)="onChangeData($event)"
-							   (remove)="clearCheck()" [loading]="loading" 
-							   typeToSearchText="Enter 3 characters to begin your search.."
-							   notFoundText="Fetching data...">
-							   <ng-template ng-header-tmp style="color:#ddd" *ngIf="selectedProducts">
-								  <div class="selcted-crt">
-									 <b class="selected-sug">Criteria Selected -</b> &nbsp;<span
-										class="selected-sug"
-										*ngFor="let data of selectedSearchText;let i=index">
-									 <b>{{data.type}}</b>-{{data.name}}{{i== selectedSearchText.length-1 ? '': ','}}
-									 </span>
-    </div>
-    <div class="new-line" *ngIf="relatedProducts">
-        <b class="selected-sug">Remaining Categories - </b>
-        <span class="selected-sug" *ngFor="let data of ProductDrop;let i=index">
-									 {{data}}{{i== ProductDrop.length-1 ? '': ','}} </span>
-    </div>
-    </ng-template>
-    <ng-template ng-typetosearch-tmp>
-        <div class="ng-option disabled" *ngIf="relatedProducts"> Enter 3 characters to begin your search.. </div>
-    </ng-template>
-    <ng-template ng-notfound-tmp>
-        <div class="ng-option disabled"> No data found </div>
-    </ng-template>
-    </ng-select>
-</div>
-</div>
-<div class="col-md-2"> 
-    <h5>Search</h5>
-</div>
-<div class="col-md-1">
-        <div class="dropdown">
-              
-                <i class="fa fa-info-circle new-b" (click)="keySearch()" aria-hidden="true"></i> 
-                <div id="myDropdown" class="dropdown-content">
-                        <a class="category-list"><b>Search Key Fields</b></a>
-                        <a class="category-list"><b>NAM*</b> - Product Name</a>
-                        <a class="category-list"><b>BDT*</b> - Basic Data Text</a>
-                        <a class="category-list"><b>MAT*</b> - Material Number</a>
-                        <a class="category-list"><b>CAS*</b> - CAS Number</a>
-                        <a class="category-list"><b>SPEC*</b> - Specification ID</a>
-                        <a class="category-list"><b>RSPEC*</b> - Real Specification ID</a>
-                        <a class="category-list"><b>PSPEC*</b> - Pure Specification ID</a>
-                        <a class="category-list"><b>SYN*</b> - Product Synonyms</a>
-                        <a class="category-list"><b>CHEM*</b> - Chemical Name</a>
-                        <a class="category-list"><b>ONT*</b> - Ontology</a>
+            <div>
+                <div class="forms">
+                    <div class="reactive-form">
+                        <form autocomplete="off" novalidate [formGroup]="reactiveForm">
+                            <div class="row">
+                                    <div class="col-md-1">
+                                            <div class="dropdown  cat-r">
+                                                       <i class="fa fa-list-alt fa-2x" (click)="SearchCategory()" aria-hidden="true"></i> 
+                                                       <span class="num" *ngIf="categoryNotification" (click)="SearchCategory()">{{notificationCount}}</span>
+                                                        <div id="searchmyDropdown" class="dropdown-cat-content">
+                                                            <a class="category-list c-H"><b>Select Categories</b> <button class="btn cat-btn"(click)="deleteLocalProduct()">Delete</button></a>
+                                                            <ng-select #category [items]="categoryBaseddata" class="custom"
+                                                            bindLabel="name"
+                                                            bindValue="name"
+                                                            [multiple]="true"
+                                                            placeholder="Search Category"
+                                                            [dropdownPosition] ="'bottom'"
+                                                            formControlName="selectedCategoryIds"
+                                                            (change)="onChangeCategoryData($event)"
+                                                            (remove)="clearCategoriesData($event)"
+                                                           >
+                                                 </ng-select>
+                                                        </div>
+                                                    </div>   
+                                        </div>
+                                <div class="col-md-10">
+                                    <div class="new-search">
+                                        <ng-select #code class="custom" [items]="items$" placeholder="Enter the details"
+                                            bindLabel="name" bindValue="name" formControlName="selectedSearchNew"
+                                            [closeOnSelect]="true" [multiple]="true" [hideSelected]="false"
+                                            [clearOnBackspace]="true" [clearable]="true" [typeahead]="input$"
+                                            [dropdownPosition]="'bottom'" [searchable]="true"
+                                            [selectableGroupAsModel]="false" [compareWith]="compareAccounts"
+                                            [selectableGroup]="false" groupBy="group" (change)="onChangeData($event)"
+                                            (remove)="clearCheck()" [loading]="loading"
+                                            typeToSearchText="Enter 3 characters to begin your search.."
+                                            notFoundText="Fetching data...">
+                                            <ng-template ng-header-tmp style="color:#ddd" *ngIf="selectedProducts">
+                                                <div class="selcted-crt">
+                                                    <b class="selected-sug">Criteria Selected -</b> &nbsp;<span
+                                                        class="selected-sug"
+                                                        *ngFor="let data of selectedSearchText;let i=index">
+                                                        <b>{{data.type}}</b>-{{data.name}}{{i== selectedSearchText.length-1 ? '': ','}}
+                                                    </span>
+                                                </div>
+                                                <div class="new-line" *ngIf="relatedProducts">
+                                                    <b class="selected-sug">Remaining Categories - </b>
+                                                    <span class="selected-sug"
+                                                        *ngFor="let data of ProductDrop;let i=index">
+                                                        {{data}}{{i== ProductDrop.length-1 ? '': ','}} </span>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template ng-typetosearch-tmp>
+                                                <div class="ng-option disabled" *ngIf="relatedProducts"> Enter 3
+                                                    characters to begin your search.. </div>
+                                            </ng-template>
+                                            <ng-template ng-notfound-tmp>
+                                                <div class="ng-option disabled"> No data found </div>
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+
+
+
+                                <!-- <div class="col-md-3" *ngIf="secondaryNavBar">
+                                        <ng-select [items]="categoryBaseddata" class="custom"
+                                        bindLabel="name"
+                                        bindValue="id"
+                                        [multiple]="true"
+                                        placeholder="Select category"
+                                        [dropdownPosition] ="'bottom'"
+                                        formControlName="selectedCityIds"
+                                        (change)="onChangeCategoryData($event)"
+                                       >
+                                       <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                             
+                                            <div class="ng-value" *ngFor="let item of items | slice:0:1">
+                                                    <span class="ng-value-label">{{item.name}}</span>
+                                                    <span class="ng-value-icon right sub-cat" (click)="clear(item)" aria-hidden="true">×</span>
+                                                </div>
+                                                <div class="ng-value" *ngIf="items.length > 1">
+                                                    <span class="ng-value-label">{{items.length - 1}} more</span>
+                                                </div>
+                                            </ng-template>
+            
+                             </ng-select>
+                                   
+                            </div> -->
+                                       
+                                   
+
+                             <!-- <div class="col-md-1">
+                                
+                                   <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle btn-lg" type="button"
+                                            id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="true">
+                                            <i class="fa fa-search" aria-hidden="true"></i> Search
+                                          <i class="fa fa-caret-down" aria-hidden="true"></i> 
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            
+                                        </ul>
+                                    </div> 
+                            </div>-->
+
+                               
+
+                                <div class="col-md-1">
+                                    <div class="dropdown">
+
+                                        <i class="fa fa-info-circle new-b" (click)="keySearch()" aria-hidden="true"></i>
+                                       
+                                        <div id="myDropdown" class="dropdown-content">
+                                            <a class="category-list"><b>Search Key Fields</b></a>
+                                            <a class="category-list"><b>NAM*</b> - Product Name</a>
+                                            <a class="category-list"><b>BDT*</b> - Basic Data Text</a>
+                                            <a class="category-list"><b>MAT*</b> - Material Number</a>
+                                            <a class="category-list"><b>CAS*</b> - CAS Number</a>
+                                            <a class="category-list"><b>SPEC*</b> - Specification ID</a>
+                                            <a class="category-list"><b>RSPEC*</b> - Real Specification ID</a>
+                                            <a class="category-list"><b>PSPEC*</b> - Pure Specification ID</a>
+                                            <a class="category-list"><b>SYN*</b> - Product Synonyms</a>
+                                            <a class="category-list"><b>CHEM*</b> - Chemical Name</a>
+                                            <a class="category-list"><b>ONT*</b> - Ontology</a>
+                                        </div>
+                                    </div> 
+                                   
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-              </div>
-    
-</div>
-</div>
-</form>
-</div>
-</div>
-</div>
-</span>
-  <ul class="navbar-nav">
+            </div>
+        </span>
+
+        <ul class="navbar-nav">
             <li class="nav-item dropdown dropdown-user">
                 <span class="navbar-nav-link" data-toggle="dropdown">
                     <span>Welcome, {{loggedUserName}} &nbsp;</span>
                 </span>
-                
+
             </li>
         </ul>
-</div>
+    </div>
 </div>
 
 <!--Primary Nav Bar-->
 <div class="navbar navbar-expand-md navbar-light" *ngIf="!secondaryNavBar">
     <div class="text-center d-md-none w-100">
-        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-navigation">
-	   <i class="icon-unfold mr-2"></i> Navigation </button>
+        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
+            data-target="#navbar-navigation">
+            <i class="icon-unfold mr-2"></i> Navigation </button>
     </div>
     <div class="navbar-collapse collapse" id="navbar-navigation">
         <ul class="navbar-nav">
@@ -109,8 +180,8 @@
                     <i class="fa fa-random mr-2"></i> Ontology Management </a>
             </li>
 
-          
-            
+
+
         </ul>
     </div>
 </div>
@@ -125,8 +196,9 @@
         </li>
     </ul>
     <div class="text-center d-md-none w-100">
-        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-navigation">
-	   <i class="icon-unfold mr-2"></i> Navigation </button>
+        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
+            data-target="#navbar-navigation">
+            <i class="icon-unfold mr-2"></i> Navigation </button>
     </div>
     <div class="navbar-collapse collapse" id="navbar-navigation">
         <ul class="navbar-nav col-md-9">
@@ -154,26 +226,32 @@
                     <a (click)="OtherSAPTable()" class="navbar-nav-link">
                         <i class="fa fa-plus"></i> Additional Information </a>
             </li> -->
-           
+
         </ul>
 
         <!--SPEC LIST DROPDOWN-->
         <ul class="navbar-nav col-md-2">
             <mat-form-field>
-                <mat-select  [formControl]="specMultiCtrl" name="specMultiCtrl" placeholder="Select SPEC ID" disableOptionCentering panelClass="myPanelClass" [multiple]="true" #multiSelect>
-                    <mat-select-filter [formControl]="specMultiFilterCtrl" ngDefaultControl placeholderLabel="Search SPEC...">
+                <mat-select [formControl]="specMultiCtrl" name="specMultiCtrl" placeholder="Select SPEC ID"
+                    disableOptionCentering panelClass="myPanelClass" [multiple]="true" #multiSelect>
+                    <mat-select-filter [formControl]="specMultiFilterCtrl" ngDefaultControl
+                        placeholderLabel="Search SPEC...">
                     </mat-select-filter>
-                    <mat-checkbox [disabled]="!specDataListDetails" class="mat-option" [disableRipple]="true" (change)="toggleSelection($event)">
+                    <mat-checkbox [disabled]="!specDataListDetails" class="mat-option" [disableRipple]="true"
+                        (change)="toggleSelection($event)">
                         Select Only 20 SPEC Lists
                     </mat-checkbox>
-                    <mat-option  #allSelected *ngFor="let SpecList of filteredSpecMulti | async" [value]="SpecList" [disabled]="!specDataListDetails"  (click)="selectCheckBoxMethod(allSelected.selected, SpecList)">
+                    <mat-option #allSelected *ngFor="let SpecList of filteredSpecMulti | async" [value]="SpecList"
+                        [disabled]="!specDataListDetails"
+                        (click)="selectCheckBoxMethod(allSelected.selected, SpecList)">
                         {{SpecList.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
         </ul>
         <ul class="navbar-nav col-md-1">
-            <button class="btn spec-btn" [disabled]="!specDataListDetails" (click)="selectedTopSpecList()" type='submit'>Submit</button>
+            <button class="btn spec-btn" [disabled]="!specDataListDetails" (click)="selectedTopSpecList()"
+                type='submit'>Submit</button>
         </ul>
     </div>
 </div>
@@ -189,32 +267,32 @@
 
 
 <!--BASIC PROPERTIES DETAILS-->
-<div class="modal fade momodel modal-fluid" id="basicDetails" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade momodel modal-fluid" id="basicDetails" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog momodel modal-fluid" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title custom_align" id="Heading">Basic Properties</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
-				class="fa fa-times mom-close" aria-hidden="true"></span></button>
+                        class="fa fa-times mom-close" aria-hidden="true"></span></button>
             </div>
             <div class="basic-scrl">
                 <span *ngIf="basicPropertiesLoader">
-			 <i class="loader-class fa fa-spinner fa-spin"></i>
-			 <span class="loader-text">Loading Basic Properties data....</span>
+                    <i class="loader-class fa fa-spinner fa-spin"></i>
+                    <span class="loader-text">Loading Basic Properties data....</span>
                 </span>
-
-      
-
                 <div class="accordion" id="accordionBasicProperties" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse"  href="#productLevel" aria-expanded="true" aria-controls="collapseOne">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#productLevel"
+                                    aria-expanded="true" aria-controls="collapseOne">
                                     <h5><b>Product Level Details</b></h5>
                                 </a>
                             </h6>
                         </div>
-                        <div id="productLevel" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne"  data-parent="#accordionBasicProperties">
+                        <div id="productLevel" class="panel-collapse collapse show" role="tabpanel"
+                            aria-labelledby="headingOne" data-parent="#accordionBasicProperties">
                             <div class="panel-body">
                                 <div *ngIf="productLevel.length > 0">
                                     <h5><b>Product Level Details</b></h5>
@@ -222,7 +300,10 @@
                                         <div class="col-md-6">
                                             <form class="syn-search" action="#">
                                                 <div class="form-group-feedback form-group-feedback-right">
-                                                    <input type="search" class="form-control" name="product" [(ngModel)]="searchProductText" autocomplete="off" (focus)="searchProductText =''" placeholder="Search Product Name">
+                                                    <input type="search" class="form-control" name="product"
+                                                        [(ngModel)]="searchProductText" autocomplete="off"
+                                                        (focus)="searchProductText =''"
+                                                        placeholder="Search Product Name">
                                                     <div class="form-control-feedback">
                                                         <i class="fa fa-search font-size-base text-muted"></i>
                                                     </div>
@@ -230,8 +311,9 @@
                                             </form>
                                         </div>
                                         <div class="col-md-6">
-                                            <button (click)="exportToBasicProductTable()" class="btn spec-btn pull-right">Export
-                                      To Excel</button>
+                                            <button (click)="exportToBasicProductTable()"
+                                                class="btn spec-btn pull-right">Export
+                                                To Excel</button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -244,7 +326,8 @@
                                                     <th class="basic-head"><b>Synonyms</b></th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let data of productLevel | productLevel:searchProductText;let i = index">
+                                                    <tr
+                                                        *ngFor="let data of productLevel | productLevel:searchProductText;let i = index">
                                                         <td>{{i+1}}</td>
                                                         <td>{{data.real_Spec_Id}}</td>
                                                         <td>{{data.namprod}}</td>
@@ -258,120 +341,142 @@
                             </div>
                         </div>
                     </div>
-               
-             
-           
-               
+
+
+
+
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse"  href="#materialLevel" aria-expanded="true" aria-controls="collapseOne">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#materialLevel"
+                                    aria-expanded="true" aria-controls="collapseOne">
                                     <h5><b>Material Level Details</b></h5>
                                 </a>
                             </h6>
                         </div>
-                        <div id="materialLevel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"  data-parent="#accordionBasicProperties">
+                        <div id="materialLevel" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne" data-parent="#accordionBasicProperties">
                             <div class="panel-body">
-                <div *ngIf="MaterialLevel.length > 0">
-                   
-                    <div class="row filter-basic-part">
-                        <div class="col-md-6">
-                            <form class="syn-search" action="#">
-                                <div class="form-group-feedback form-group-feedback-right">
-                                    <input type="search" class="form-control" name="material" [(ngModel)]="searchMaterialText" autocomplete="off" (focus)="searchMaterialText =''" placeholder="Search Material Number">
-                                    <div class="form-control-feedback">
-                                        <i class="fa fa-search font-size-base text-muted"></i>
+                                <div *ngIf="MaterialLevel.length > 0">
+
+                                    <div class="row filter-basic-part">
+                                        <div class="col-md-6">
+                                            <form class="syn-search" action="#">
+                                                <div class="form-group-feedback form-group-feedback-right">
+                                                    <input type="search" class="form-control" name="material"
+                                                        [(ngModel)]="searchMaterialText" autocomplete="off"
+                                                        (focus)="searchMaterialText =''"
+                                                        placeholder="Search Material Number">
+                                                    <div class="form-control-feedback">
+                                                        <i class="fa fa-search font-size-base text-muted"></i>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button (click)="exportToBasicMaterialLevel()"
+                                                class="btn spec-btn pull-right">Export
+                                                To Excel</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-6">
-                            <button (click)="exportToBasicMaterialLevel()" class="btn spec-btn pull-right">Export
-					  To Excel</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <table class="table table-condensed" #basicMaterial style="border-collapse:collapse;">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 5%"><b>S.No</b></th>
-                                                <th class="basic-head"><b>Specification ID - NAM Prod</b></th>
-                                                <th class="basic-head"><b>Material Number</b></th>
-                                                <th class="basic-head"><b>Material Description</b></th>
-                                                <th class="basic-head"><b>BDT</b></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let data of MaterialLevel| pihFilter: searchMaterialText; let i = index">
-                                                <td>{{i+1}}</td>
-                                                <td>{{data.real_Spec_Id}}</td>
-                                                <td>{{data.material_Number}}<br></td>
-                                                <td>{{data.description}}</td>
-                                                <td>{{data.bdt}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <table class="table table-condensed" #basicMaterial
+                                                        style="border-collapse:collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 5%"><b>S.No</b></th>
+                                                                <th class="basic-head"><b>Specification ID - NAM
+                                                                        Prod</b></th>
+                                                                <th class="basic-head"><b>Material Number</b></th>
+                                                                <th class="basic-head"><b>Material Description</b></th>
+                                                                <th class="basic-head"><b>BDT</b></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let data of MaterialLevel| pihFilter: searchMaterialText; let i = index">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{data.real_Spec_Id}}</td>
+                                                                <td>{{data.material_Number}}<br></td>
+                                                                <td>{{data.description}}</td>
+                                                                <td>{{data.bdt}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                </div></div></div>
-              
-                
+
+
                     <div class="panel panel-primary">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h6 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse"  href="#casLevel" aria-expanded="true" aria-controls="collapseOne">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#casLevel"
+                                    aria-expanded="true" aria-controls="collapseOne">
                                     <h5><b> Component Level Details</b></h5>
                                 </a>
                             </h6>
                         </div>
-                        <div id="casLevel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"  data-parent="#accordionBasicProperties">
+                        <div id="casLevel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"
+                            data-parent="#accordionBasicProperties">
                             <div class="panel-body">
-                <div *ngIf="casLevel.length > 0">
-                  
-                    <div class="row filter-basic-part">
-                        <div class="col-md-6">
-                            <form class="syn-search" action="#">
-                                <div class="form-group-feedback form-group-feedback-right">
-                                    <input type="search" class="form-control" name="casNumber" [(ngModel)]="searchCASText" autocomplete="off" (focus)="searchCASText =''"  placeholder="Search CAS Number">
-                                    <div class="form-control-feedback">
-                                        <i class="fa fa-search font-size-base text-muted"></i>
+                                <div *ngIf="casLevel.length > 0">
+
+                                    <div class="row filter-basic-part">
+                                        <div class="col-md-6">
+                                            <form class="syn-search" action="#">
+                                                <div class="form-group-feedback form-group-feedback-right">
+                                                    <input type="search" class="form-control" name="casNumber"
+                                                        [(ngModel)]="searchCASText" autocomplete="off"
+                                                        (focus)="searchCASText =''" placeholder="Search CAS Number">
+                                                    <div class="form-control-feedback">
+                                                        <i class="fa fa-search font-size-base text-muted"></i>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button (click)="exportToBasicCasLevel()"
+                                                class="btn spec-btn pull-right">Export
+                                                To Excel</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-6">
-                            <button (click)="exportToBasicCasLevel()" class="btn spec-btn pull-right">Export
-					  To Excel</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <table class="table table-condensed" #basicCas style="border-collapse:collapse;">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 5%"><b>S.No</b></th>
-                                                <th class="basic-head"><b>Pure Specification</b></th>
-                                                <th class="basic-head"><b>Chemical Name</b></th>
-                                                <th class="basic-head"><b>CAS#</b></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let data of casLevel| casLevelFilter: searchCASText; let i = index">
-                                                <td>{{i+1}}</td>
-                                                <td>{{data.pure_Spec_Id}}</td>
-                                                <td>{{data.chemical_Name}}</td>
-                                                <td>{{data.cas_Number}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <table class="table table-condensed" #basicCas
+                                                        style="border-collapse:collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 5%"><b>S.No</b></th>
+                                                                <th class="basic-head"><b>Pure Specification</b></th>
+                                                                <th class="basic-head"><b>Chemical Name</b></th>
+                                                                <th class="basic-head"><b>CAS#</b></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let data of casLevel| casLevelFilter: searchCASText; let i = index">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{data.pure_Spec_Id}}</td>
+                                                                <td>{{data.chemical_Name}}</td>
+                                                                <td>{{data.cas_Number}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -381,5 +486,3 @@
         </div>
     </div>
 </div>
-
-</div></div></div></div>

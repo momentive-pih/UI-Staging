@@ -376,3 +376,7 @@ thead th {
     overflow-y: auto;
     max-height:400px;
 }
+.noReords{
+    text-align: center;
+    padding: 10px;
+}

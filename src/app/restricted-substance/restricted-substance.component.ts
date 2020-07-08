@@ -89,7 +89,7 @@ export class RestrictedSubstanceComponent implements OnInit {
       { "field": "substance", "header": "Substance" },
       { "field": "spec_Id", "header": "Specification ID" },
       { "field": "cas_NO", "header": "CAS RN" },
-      { "field": "class_action", "header": "Class Sl FIC Action" },
+      { "field": "class_action", "header": "Classification" },
       { "field": "reason_Code", "header": "Reason Code" },
       { "field": "source", "header": "Source(Legal Requirement Regulations)" },
       { "field": "reporting_threshold", "header": "Reporting threshold(0.1% unless otherwise State)" }
@@ -104,7 +104,8 @@ export class RestrictedSubstanceComponent implements OnInit {
       { "field": "cas_NO", "header": "CAS NO" },
       { "field": "date_Listed", "header": "Date Listed" },
       { "field": "NSRL_Data", "header": "NSRL or MADL(aeg/day)a" },
-      { "field": "weight_Composition", "header": "% Weight in SAP std Composition" }
+      { "field": "weight_Composition", "header": "% Weight in SAP std Composition" },
+      { "field":"componant_Type","header": "Component Type"}
     ]
 
   }

@@ -52,7 +52,7 @@ import { StdCompositionFilterPipe } from './pipes/std-composition-filter.pipe';
 import { MsAdalAngular6Module } from 'microsoft-adal-angular6';
 import { AuthenticationGuard } from 'microsoft-adal-angular6';
 import { polyfill } from 'es6-promise';
-import { CategoriesPipe } from './pipes/categories.pipe'; polyfill();
+import { CategoriesPipe } from './pipes/categories.pipe'; 
 
 
 
@@ -119,8 +119,7 @@ import { CategoriesPipe } from './pipes/categories.pipe'; polyfill();
     MatSelectModule, MatSelectFilterModule, MatIconModule, MatToolbarModule,
     NgMultiSelectDropDownModule.forRoot(),
     ToastrModule.forRoot(),
-    SharedModule.forRoot(),
-     
+    SharedModule.forRoot(),  
   ],
   exports: [
     MatFormFieldModule,

@@ -17,6 +17,8 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { PihFilterPipe } from '../pipes/pih-filter.pipe';
 import { CasLevelFilterPipe } from '../pipes/cas-level-filter.pipe';
 import { ProductLevelPipe } from '../pipes/product-level.pipe';
+import { deepClone } from 'fast-json-patch';
+
 
 import * as xlsx from 'xlsx';
 import { element } from 'protractor';
@@ -27,6 +29,17 @@ interface product {
 interface SPECListData {
   id: string;
   name: string;
+}
+
+export interface Item {
+  id: string,
+  name: string,
+  disable?: boolean
+}
+
+export interface DownLineItem {
+  item: Item,
+  parent: DownLineItem
 }
 @Component({
   selector: 'app-header',
@@ -109,6 +122,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   searchdropdownlist = false;
   selectedSearchText: any
   selectedSearchNew: any;
+  selectedCategoryIds: any;
   suggestionDrop = false;
   nextLibAvailable = true;
   categoriesTypeCount: any;
@@ -124,7 +138,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   searchTextTerms: any;
   searchTextONTTerms: any = [];
   searchTerm: any;
-  searchProductTerms:any;
+  searchProductTerms: any;
   objectKeys = Object.keys;
   public items$: Observable<product[]>;
   public input$ = new Subject<string | null>();
@@ -136,11 +150,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   SpecListsselectedSpecList: any = [];
   SpecLists: any = [];
   specDataListDetails: any;
-  specDataSelectListDetails:any;
+  specDataSelectListDetails: any;
   sideSpecList: any;
   userSelectedSPECDetails: any = [];
-  basicLevelExcelCompositionData:any=[];
-  copybasicLevelCompositionData:any=[];
+  basicLevelExcelCompositionData: any = [];
+  copybasicLevelCompositionData: any = [];
   basicPropertiesLoader: any;
   public loading;
   notifier: any;
@@ -155,7 +169,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   secondLevelSearch: any = [];
   basicProperitiesAPIDetails: any = [];
   limitedSPec: any = [];
-  newLimitedData:any = []
+  newLimitedData: any = []
 
 
   //Get Material and CAS Level Details:
@@ -177,14 +191,31 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   ProductLevelAPIData: any = [];
   ProductAPILevel: any = [];
   ProductFileterdData: any = [];
-  basicProductPropertiesDetails: any = []
+  basicProductPropertiesDetails: any = [];
 
-  searchProductText:any;
-  searchMaterialText:any;
-  searchCASText:any;
-  loggedUserName:string;
-  specDataListCheck:any=[];
-  emptyProductLevel:boolean;
+
+
+  searchProductText: any;
+  searchMaterialText: any;
+  searchCASText: any;
+  loggedUserName: string;
+  specDataListCheck: any = [];
+  emptyProductLevel: boolean;
+  selectedCategoryValue: any = [];
+  intialCategorySelected: any = [];
+  newCategoryBasedData: any = [];
+  selectedgetCategoryValue: any = [];
+  selectNewData: any = [];
+  IsCategoryFirst: boolean = true;
+  deleteselctedCategories = [];
+  categoryAPIBaseddata: any = [];
+  selectNewDropData = [];
+  selectedDropCategories = [];
+  clearCategoryDatas: any = [];
+  categoryNotification: boolean = false;
+  notificationCount: any;
+  notificationCheckData: any = [];
+  notifyCategories: any = []
 
 
   /** control for the selected SPEC_List for multi-selection */
@@ -194,41 +225,68 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   /** list of SPEC_Lists filtered by search keyword */
   public filteredSpecMulti: ReplaySubject<SPECListData[]> = new ReplaySubject<SPECListData[]>(1);
 
-  @ViewChild('multiSelect', { static: false }) multiSelect: MatSelect;
-  @ViewChild('allSelected', { static: false }) private allSelected: MatOption;
+  @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
+  @ViewChild('allSelected', { static: true }) private allSelected: MatOption;
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
 
-  @ViewChild('code', { static: false }) private codeRef?: ElementRef<HTMLElement>;
-  @ViewChild('code', { static: true }) myselect: ElementRef;
+  @ViewChild('code', { static: true }) public codeRef: ElementRef;
+  @ViewChild('code', { static: true }) productSearch: HeaderComponent;
+  @ViewChild('category', { static: true }) selectedCategory: HeaderComponent;
+  @ViewChild('code', { static: true }) myproductselect: ElementRef;
   @ViewChild('basicProduct', { static: false }) basicProduct: ElementRef;
   @ViewChild('basicMaterial', { static: false }) basicMaterial: ElementRef;
   @ViewChild('basicCas', { static: false }) basicCas: ElementRef;
 
-  constructor(private fb: FormBuilder, public toastr: ToastrManager, vcr: ViewContainerRef, private route: ActivatedRoute, private router: Router, private momentiveService: MomentiveService) {
-    this.momentiveService.homeEvent.subscribe(data => {
-      this.ngOnInit()
-    })
+
+
+  items = [];
+  categoryBaseddata = [];
+  public AllowParentSelection = true;
+  public RestructureWhenChildSameName = false;
+  public ShowFilter = true;
+  public Disabled = false;
+  public FilterPlaceholder = 'Type here to filter elements...';
+  public MaxDisplayed = 5;
+
+
+  public simpleSelected = {
+    id: 'all',
+    name: 'all',
+  }
+
+  constructor(public fb: FormBuilder, public toastr: ToastrManager, vcr: ViewContainerRef, private route: ActivatedRoute, private router: Router, private momentiveService: MomentiveService) {
+    // this.momentiveService.homeEvent.subscribe(data => {
+    //   this.ngOnInit()
+    // })
+
     // Search Bar Formgroup
     this.reactiveForm = fb.group({
       selectedSearchNew: ['', Validators.required],
+      selectedCategoryIds: ''
     });
 
     // SPEC List Reactive Form 
     this.SpecreactiveForm = fb.group({
       selectedSPECItems: ['', Validators.required],
     })
+
     this.input$.subscribe(
       (term) => this.searchProduct(term, this.product_Name, this.Isfirst));
   }
 
   ngOnInit() {
 
+
     this.url = window.location.href.includes('home');
     console.log(this.url);
     this.basicPropertiesEvent(event);
 
-  
+
+
+    //sidebarCategories Details MOmentive-JSON API CALL
+    this.intialDropDownValue(true);
+
     console.log("User Name")
     this.loggedUserName = localStorage.getItem('userName');
     console.log(this.loggedUserName);
@@ -249,8 +307,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     $('.select').click(function (event) {
       $(this).closest('.dropdown-select').find('.option-list, .search-box').toggle();
     });
-   
-    
+
+
 
 
     //Main Search Bar Placeholder & Other Details
@@ -268,6 +326,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       allowSearchFilter: true
     };
   }
+
 
   //GroupBY function In Search Bar
   groupByFn = (item) => item.product;
@@ -316,6 +375,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.searchProductTerms = term ? term : '';
     this.searchTerm = this.searchProductTerms.trimStart();
     console.log(this.searchTerm.trimStart());
+
+    //category length check Function
+    if (this.selectedCategory.selectedValues.length == 0) {
+      this.intialDropDownValue(true);
+    }
+
+
     this.SearchProducts = {
       'SearchData': this.searchTerm.trimStart()
     };
@@ -325,6 +391,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     // if (this.searchTerm.length < 1) {
     //   this.product_Name = [];
     // }
+
+
+
     if (this.searchDataLength > 2 && Isfirst) {
       this.loading = true
       this.momentiveService.getAllEvents(this.SearchProducts).subscribe(data => {
@@ -348,17 +417,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             this.searchTextTerms = this.searchTerm;
           }
 
-         
-         
+
+
           this.items$ = this.product_Name.filter((product_Name) => {
             return product_Name.name.toLowerCase().startsWith(parseInt(this.searchTerm.toLowerCase())) ||
               product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               product_Name.name.toLowerCase().includes(this.searchTextTerms.toLowerCase()) ||
               product_Name.name.toLowerCase().startsWith(parseInt(this.searchTextTerms.toLowerCase()))
-             
+
           });
-          if(this.searchTextONTTerms === 'ont') {
+          if (this.searchTextONTTerms === 'ont') {
             console.log(this.product_Name);
             this.items$ = this.product_Name;
           }
@@ -402,8 +471,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           product_Name.type.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
           product_Name.key.toLowerCase().startsWith(this.searchTerm.toLowerCase());
       });
-    } 
-    
+    }
+
+  }
+  selectedValues(selectedValues: any) {
+    throw new Error("Method not implemented.");
   }
   compareAccounts = (item, selected) => {
     if (selected.name && item.name) {
@@ -415,6 +487,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     return false;
   };
 
+  categoryLevelData() {
+    this.momentiveService.getSearchData().subscribe(data => {
+      this.productdata = data;
+      this.product_Name = this.productdata.category_type;
+      console.log(this.product_Name);
+      this.searchProduct('', this.product_Name, this.Isfirst);
+    }, err => {
+      console.error(err);
+    });
+  }
   //Second Level Search Functinality
   onChangeData(data) {
     console.log(data)
@@ -424,6 +506,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.momentiveService.setSelectedProductData(this.selectedSearchText);
     this.router.navigate(['/app-home']);
     localStorage.setItem('SearchBarData', JSON.stringify(data));
+
     if (data.length <= 0) {
       this.product_Name = [];
       this.basicDetails = true;
@@ -442,12 +525,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(res);
         const SearchArrayData = res;
         console.log(SearchArrayData);
-        if(SearchArrayData[0].search_List) {
-        this.secondLevelSearch = SearchArrayData[0].search_List;
-        this.momentiveService.changeMessage(false);
+        if (SearchArrayData[0].search_List) {
+          this.secondLevelSearch = SearchArrayData[0].search_List;
+          this.momentiveService.changeMessage(false);
         } else {
-           this.secondaryNavBar = false; 
-           this.momentiveService.changeMessage(true);
+          this.secondaryNavBar = false;
+          this.momentiveService.changeMessage(true);
         }
         console.log(this.secondLevelSearch);
         this.momentiveService.setBasicLevelDetails(SearchArrayData[0].basic_properties);
@@ -458,11 +541,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             this.ProductDrop.push(element.type);
           }
         });
+
         if (this.product_Name.length > 0) {
           this.searchProduct('', this.product_Name, this.Isfirst);
           this.relatedProducts = true;
         } else {
-          
+
           //alert('NO More Related Products Available');
           this.relatedProducts = false;
           this.product_Name = [];
@@ -472,6 +556,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(err);
       })
     }
+
   }
 
   //Clear Function for Search Data:
@@ -545,12 +630,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(data)
       this.specDataListCheck = data;
       console.log(this.specDataListCheck);
-      if(this.specDataListCheck[0].selected_spec_list) {
+      if (this.specDataListCheck[0].selected_spec_list) {
         this.momentiveService.changeMessage(false);
         this.SPECdropdownList = data;
         this.SpecLists = this.SPECdropdownList[0].selected_spec_list;
         this.momentiveService.setAllSpecList(this.SpecLists);
-  
+
         if (this.SpecLists.length === 1) {
           this.specDataListDetails = false;
         } else {
@@ -571,13 +656,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         });
         // set initial selection
-         this.toggleSelection('false')
+        this.toggleSelection('false')
         this.specMultiCtrl.setValue(this.NewSpecList);
         this.momentiveService.setCategorySpecList(this.NewSpecList);
         this.getAPICallCASDetails();
         this.getAPICallMATDetails();
         this.getAPICallProductDetails();
-        this.momentiveService.homeEvent.next();
+        // this.momentiveService.homeEvent.next();
+        this.momentiveService.changeHeadercategory(this.selectedCategory.selectedValues);
         // load the initial SPEC_List list
         this.filteredSpecMulti.next(this.SpecLists.slice());
         // listen for search field value changes
@@ -588,16 +674,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         console.log(this.SPECdropdownList);
       } else {
-        this.secondaryNavBar = false; 
+        this.secondaryNavBar = false;
         this.momentiveService.changeMessage(true)
         this.SpecLists = [];
         this.momentiveService.setAllSpecList(this.SpecLists);
-        
+
       }
-      }
-    , err => {
-      console.log(err);
-    })
+    }
+      , err => {
+        console.log(err);
+      })
   }
   selectCheckBoxMethod(selected: boolean, checkedValue) {
     console.log(this.specMultiCtrl.value.length);
@@ -607,36 +693,36 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(selected);
     let temp = [];
     this.filteredSpecMulti.pipe(takeUntil(this._onDestroy))
-    .subscribe((val) => {
-    const specNewData = checkedValue.name.split('|');
-    this.SpecSplitNewTerm = specNewData[0];
-    console.log(this.SpecSplitNewTerm);
-    console.log(this.SpecLists);
-    val.forEach(element => {
-      const NewDataSpec = element.name.split('|');
-      let SplitedSpecTerm = NewDataSpec[0];
-      if (SplitedSpecTerm === this.SpecSplitNewTerm) {
-        temp.push(element);
+      .subscribe((val) => {
+        const specNewData = checkedValue.name.split('|');
+        this.SpecSplitNewTerm = specNewData[0];
+        console.log(this.SpecSplitNewTerm);
+        console.log(this.SpecLists);
+        val.forEach(element => {
+          const NewDataSpec = element.name.split('|');
+          let SplitedSpecTerm = NewDataSpec[0];
+          if (SplitedSpecTerm === this.SpecSplitNewTerm) {
+            temp.push(element);
+            console.log(temp);
+          }
+        });
         console.log(temp);
-      }
-    });
-    console.log(temp);
-    temp.forEach(element => {
-      const index = this.NewSpecList.indexOf(element);
-      if (index > -1) {
-        this.NewSpecList.splice(index, 1);
-      }
-    });
-    console.log(this.NewSpecList);
-    console.log(temp);
-    if (selected == true) {
-      console.log(this.NewSpecList)
-      this.NewSpecList = this.NewSpecList.concat(temp);
-    } else if (selected == false) {
-      this.NewSpecList = this.NewSpecList.concat([]);
-    }
-  });
-  console.log(this.NewSpecList)
+        temp.forEach(element => {
+          const index = this.NewSpecList.indexOf(element);
+          if (index > -1) {
+            this.NewSpecList.splice(index, 1);
+          }
+        });
+        console.log(this.NewSpecList);
+        console.log(temp);
+        if (selected == true) {
+          console.log(this.NewSpecList)
+          this.NewSpecList = this.NewSpecList.concat(temp);
+        } else if (selected == false) {
+          this.NewSpecList = this.NewSpecList.concat([]);
+        }
+      });
+    console.log(this.NewSpecList)
     this.specMultiCtrl.patchValue(this.NewSpecList);
   }
 
@@ -652,7 +738,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getAPICallCASDetails();
     this.getAPICallMATDetails();
     this.getAPICallProductDetails();
-    this.momentiveService.homeEvent.next();
+    // this.momentiveService.homeEvent.next();
+    this.momentiveService.changeHeadercategory(this.selectedCategory.selectedValues);
     this.toastr.successToastr('Specification ID Selected.', 'Success!');
   }
   ngAfterViewInit() {
@@ -666,7 +753,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //Filter Option In SPEC ID
   toggleSelection(change): void {
-
     console.log(this.SpecLists);
     this.newLimitedData = [];
     this.filteredSpecMulti.pipe(takeUntil(this._onDestroy))
@@ -719,20 +805,20 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   exportToBasicCasLevel() {
-    this.basicLevelExcelCompositionData =[];
-   this.copybasicLevelCompositionData.forEach(element => {
-     this.basicLevelExcelCompositionData.push({
-       'Pure Specification Id' : element.pure_Spec_Id,
-       'Chemical Name' : element.chemical_Name,
-       'Cas Number' : element.cas_Number
-       
-     });
-     });
-   const ws: xlsx.WorkSheet =   
-   xlsx.utils.json_to_sheet(this.basicLevelExcelCompositionData);
-   const wb: xlsx.WorkBook = xlsx.utils.book_new();
-   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-   xlsx.writeFile(wb, 'Basic Level Composition Table.xlsx');
+    this.basicLevelExcelCompositionData = [];
+    this.copybasicLevelCompositionData.forEach(element => {
+      this.basicLevelExcelCompositionData.push({
+        'Pure Specification Id': element.pure_Spec_Id,
+        'Chemical Name': element.chemical_Name,
+        'Cas Number': element.cas_Number
+
+      });
+    });
+    const ws: xlsx.WorkSheet =
+      xlsx.utils.json_to_sheet(this.basicLevelExcelCompositionData);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'Basic Level Composition Table.xlsx');
   }
 
   //Export Excel in Product Level Details
@@ -767,7 +853,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tempMyCAS = [];
     this.casAPILevel = [];
     this.CASLevelAPIData = this.momentiveService.basicLevelList;
-    if (this.CASLevelAPIData[0].cas_Level.length === 0) { 
+    if (this.CASLevelAPIData[0].cas_Level.length === 0) {
       this.casAPILevel = [];
       this.momentiveService.setCasLevelDetails(this.casAPILevel);
     }
@@ -815,7 +901,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.casAPILevel.push(element);
         }
       });
-    } else  if (this.CASLevelAPIData[0].cas_Level.length === 1) {
+    } else if (this.CASLevelAPIData[0].cas_Level.length === 1) {
       let SingleCASDetails = [];
       let singleRealSpec = [];
       this.casAPILevel = [];
@@ -847,8 +933,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.MATAPILevel = [];
     this.MATLevelAPIData = this.momentiveService.basicLevelList;
     console.log(this.MATLevelAPIData);
-    if (this.MATLevelAPIData[0].material_Level.length === 0) { 
-      this.MATAPILevel =[];
+    if (this.MATLevelAPIData[0].material_Level.length === 0) {
+      this.MATAPILevel = [];
       this.momentiveService.setMaterialLevelDetails(this.MATAPILevel);
     }
     console.log(this.MATLevelAPIData[0].material_Level.length);
@@ -894,7 +980,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           this.MATAPILevel.push(element);
         }
       });
-    } else if(this.MATLevelAPIData[0].material_Level.length === 1 ) {
+    } else if (this.MATLevelAPIData[0].material_Level.length === 1) {
       let SingleMATDetails = [];
       let singleRealSpec = [];
       this.MATAPILevel = [];
@@ -943,8 +1029,319 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.ProductAPILevel);
     this.momentiveService.setProductLevelDetails(this.ProductAPILevel);
   }
-  keySearch(){
+  keySearch() {
     document.getElementById("myDropdown").classList.toggle("show");
+    document.getElementById("searchmyDropdown").classList.toggle("hide");
   }
 
+  SearchCategory() {
+    document.getElementById("myDropdown").classList.toggle("hide");
+    document.getElementById("searchmyDropdown").classList.toggle("show");
+  }
+
+  process(data): any {
+
+    let result = [];
+    result = data.map((item) => {
+      return this.toTreeNode(item);
+    });
+    return result;
+  }
+
+  toTreeNode(node, parent = null) {
+    console.log(node, parent);
+    if (node && node.children) {
+      node.children.map(item => {
+        return this.toTreeNode(item, node);
+      });
+    }
+    return node;
+  }
+
+  
+  intialDropDownValue(checkData) {
+    this.momentiveService.getCategoriesData().subscribe(data => {
+      console.log(data);
+      this.productdata = data;
+      this.categoryBaseddata = this.productdata.categoryType;
+      console.log(this.categoryBaseddata)
+      this.categoryAPIBaseddata = JSON.parse(JSON.stringify(this.categoryBaseddata));
+
+      this.categoryBaseddata.forEach(element => {
+        if (element.name == 'All') {
+          element.disabled = false;
+        } else {
+          element.disabled = true;
+        }
+      })
+      console.log(this.categoryBaseddata);
+      console.log(this.productSearch.selectedValues.length);
+      if (checkData == true) {
+        if (this.productSearch.selectedValues.length > 0) {
+          this.categoryFilterSeconndSection();
+        } else {
+          this.notificationCheckData = JSON.parse(localStorage.getItem('categorySetData'));
+          console.log(this.notificationCheckData);
+          if (this.notificationCheckData == null || this.notificationCheckData == 0) {
+            this.categoryFilterSection(true);
+          } else {
+            console.log(this.notificationCheckData);
+            this.notificationCheckData.forEach(elem => {
+              if (elem.name == 'All') {
+                this.categoryFilterSection(true);
+              } else {
+                this.categoryFilterSeconndSection();
+              }
+            });
+          }
+        }
+      } else {
+        this.categoryFilterSection(true);
+      }
+
+      // if(checkData == true) {
+      //   if (this.productSearch.selectedValues.length > 0) {
+      //     this.categoryFilterSeconndSection();
+      //   } else {
+      //     this.categoryFilterSection(true);
+      //   }
+      // } else {
+      //   this.categoryFilterSection(true);
+      // }
+    })
+  }
+
+  categoryFilterSection(IsCategoryFirst) {
+    if (IsCategoryFirst === true) {
+      this.selectedCategoryValue = [];
+      this.newCategoryBasedData = JSON.parse(JSON.stringify(this.categoryBaseddata));
+      console.log(this.categoryBaseddata[0]);
+      this.selectedCategoryValue.push(this.categoryBaseddata[0]);
+      console.log(this.selectedCategoryValue);
+      localStorage.setItem('categorySetData', JSON.stringify(this.selectedCategoryValue));
+      this.selectedgetCategoryValue = JSON.parse(localStorage.getItem('categorySetData'));
+      this.selectNewData = [];
+      console.log(this.selectedgetCategoryValue);
+      this.selectedgetCategoryValue.forEach(element => {
+        this.selectNewData.push(element.name);
+
+      })
+      console.log(this.selectNewData);
+      this.reactiveForm.get('selectedCategoryIds').setValue(this.selectNewData);
+      console.log(this.selectedCategory.selectedValues);
+      this.onChangeCategoryNewData(this.selectedCategory.selectedValues);
+
+      // this.intialCategorySelected.forEach(element => {
+      //   if (element.name === 'All') {
+      //     this.momentiveService.changeHeadercategory(this.selectedCategory.selectedValues);
+      //   } else {
+      //     this.onChangeCategoryData(this.selectedCategory.selectedValues);
+      //   }
+      // });
+    }
+  }
+
+  categoryFilterSeconndSection() {
+    // localStorage.setItem('categorySetData', JSON.stringify(this.selectedCategory.selectedValues));
+    this.selectedgetCategoryValue = JSON.parse(localStorage.getItem('categorySetData'));
+    this.selectNewData = [];
+    console.log(this.selectedgetCategoryValue);
+    this.selectedgetCategoryValue.forEach(element => {
+      this.selectNewData.push(element.name);
+    });
+    console.log(this.selectNewData);
+    this.reactiveForm.get('selectedCategoryIds').setValue(this.selectNewData);
+    this.onChangeCategoryNewData(this.selectedCategory.selectedValues);
+    // this.intialCategorySelected.forEach(element => {
+    //   if (element.name === 'All') {
+    //     this.momentiveService.changeHeadercategory(this.selectedCategory.selectedValues);
+    //   } else {
+    //     this.onChangeCategoryData(this.selectedCategory.selectedValues);
+    //   }
+    // });
+  }
+  onChangeCategoryNewData(data) {
+    console.log(data);
+    this.selectNewDropData = [];
+    let selectedDropCategories = data;
+    selectedDropCategories.forEach(element => {
+      this.selectNewDropData.push({ 'name': element.name });
+    });
+    console.log(this.selectNewDropData)
+    console.log(this.selectNewDropData.length)
+    this.selectNewDropData.forEach(ele => {
+      if (ele.name == 'All') {
+        this.categoryNotification = false;
+      } else {
+        this.categoryNotification = true;
+        this.notificationCount = this.selectNewDropData.length;
+      }
+    })
+    if (data.length > 0) {
+      console.log(this.categoryAPIBaseddata)
+      console.log(this.selectNewDropData);
+      this.selectNewDropData.forEach(ele => {
+        if (ele.name == 'All') {
+          this.categoryBaseddata = [];
+          this.categoryAPIBaseddata.forEach(element => {
+            element.name === 'All' ? (element.disabled = false) : (element.disabled = true)
+            this.categoryBaseddata.push(element);
+          });
+
+        } else if (ele.name == 'Customer Inquiry') {
+          this.categoryBaseddata = []
+          this.categoryAPIBaseddata.forEach(element => {
+            if (element.name == 'Customer Inquiry') {
+              element.disabled = false;
+            } else {
+              element.disabled = true;
+            }
+            this.categoryBaseddata.push(element);
+          });
+        }
+        else if (ele.name == 'Risk Review') {
+          this.categoryBaseddata = []
+          this.categoryAPIBaseddata.forEach(element => {
+            if (element.name == 'Risk Review') {
+              element.disabled = false;
+            } else {
+              element.disabled = true;
+            }
+            this.categoryBaseddata.push(element);
+          });
+        }
+        else if (ele.name == "Registration") {
+          this.categoryBaseddata = []
+          this.categoryAPIBaseddata.forEach(element => {
+            if (element.name == 'Registration') {
+              element.disabled = false;
+            } else {
+              element.disabled = true;
+            }
+            this.categoryBaseddata.push(element);
+          });
+        }
+        else {
+          this.categoryBaseddata = []
+          console.log(this.categoryAPIBaseddata);
+          this.categoryAPIBaseddata.forEach(element => {
+            if (element.name == 'All' || element.name == 'Customer Inquiry' || element.name == 'Risk Review' || element.name == 'Registration') {
+              element.disabled = true;
+            } else {
+              element.disabled = false;
+            }
+            this.categoryBaseddata.push(element);
+          });
+        }
+      });
+    } else {
+      this.categoryBaseddata = [];
+      this.categoryNotification = false
+      //  this.intialDropDownValue(true);
+      this.categoryAPIBaseddata.forEach(element => {
+        element.disabled = false;
+        this.categoryBaseddata.push(element);
+      });
+    }
+    console.log(this.selectedCategory.selectedValues);
+    localStorage.setItem('categorySetData', JSON.stringify(this.selectedCategory.selectedValues));
+  }
+
+  onChangeCategoryData(data) {
+    console.log(data);
+    this.selectNewDropData = [];
+    let selectedDropCategories = data;
+    selectedDropCategories.forEach(element => {
+      this.selectNewDropData.push({ 'name': element.name });
+    });
+    console.log(this.selectNewDropData)
+    console.log(this.selectNewDropData.length)
+    this.selectNewDropData.forEach(ele => {
+      if (ele.name == 'All') {
+        this.categoryNotification = false;
+      } else {
+        this.categoryNotification = true;
+        this.notificationCount = this.selectNewDropData.length;
+      }
+    })
+    if (data.length > 0) {
+      console.log(this.categoryAPIBaseddata)
+      console.log(this.selectNewDropData);
+      this.selectNewDropData.forEach(ele => {
+        if (ele.name == 'All') {
+          this.categoryBaseddata = [];
+          this.categoryAPIBaseddata.forEach(element => {
+            element.name === 'All' ? (element.disabled = false) : (element.disabled = true)
+            this.categoryBaseddata.push(element);
+          });
+
+        } else if (ele.name == 'Customer Inquiry') {
+          this.categoryBaseddata = []
+          this.categoryAPIBaseddata.forEach(element => {
+            if (element.name == 'Customer Inquiry') {
+              element.disabled = false;
+            } else {
+              element.disabled = true;
+            }
+            this.categoryBaseddata.push(element);
+          });
+        }
+        else if (ele.name == 'Risk Review') {
+          this.categoryBaseddata = []
+          this.categoryAPIBaseddata.forEach(element => {
+            if (element.name == 'Risk Review') {
+              element.disabled = false;
+            } else {
+              element.disabled = true;
+            }
+            this.categoryBaseddata.push(element);
+          });
+        }
+        else if (ele.name == "Registration") {
+          this.categoryBaseddata = []
+          this.categoryAPIBaseddata.forEach(element => {
+            if (element.name == 'Registration') {
+              element.disabled = false;
+            } else {
+              element.disabled = true;
+            }
+            this.categoryBaseddata.push(element);
+          });
+        }
+        else {
+          this.categoryBaseddata = []
+          console.log(this.categoryAPIBaseddata);
+          this.categoryAPIBaseddata.forEach(element => {
+            if (element.name == 'All' || element.name == 'Customer Inquiry' || element.name == 'Risk Review' || element.name == 'Registration') {
+              element.disabled = true;
+            } else {
+              element.disabled = false;
+            }
+            this.categoryBaseddata.push(element);
+          });
+        }
+      });
+    } else {
+      this.categoryBaseddata = [];
+      this.categoryNotification = false
+      //  this.intialDropDownValue(true);
+      this.categoryAPIBaseddata.forEach(element => {
+        element.disabled = false;
+        this.categoryBaseddata.push(element);
+      });
+    }
+    console.log(this.selectedCategory.selectedValues);
+    localStorage.setItem('categorySetData', JSON.stringify(this.selectedCategory.selectedValues));
+    this.momentiveService.changeHeadercategory(this.selectedCategory.selectedValues)
+    // this.momentiveService.homeEvent.next();
+  }
+
+  clearCategoriesData(data) {
+  }
+
+  deleteLocalProduct() {
+    this.categoryNotification = false;
+    localStorage.removeItem('categorySetData');
+    this.intialDropDownValue(false);
+  }
 }

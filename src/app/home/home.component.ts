@@ -14,7 +14,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductAttributesComponent } from '../product-attributes/product-attributes.component';
 import { timingSafeEqual } from 'crypto';
 import { CategoriesPipe } from '../pipes/categories.pipe'
+import { element } from 'protractor';
 declare var $: any;
+
+export interface Item {
+  id: string,
+  name: string
+}
+
+export interface DownLineItem {
+  item: Item,
+  parent: DownLineItem
+}
 
 @Component({
   selector: 'app-home',
@@ -47,15 +58,15 @@ export class HomeComponent implements OnInit {
   seventhModal = false;
   eightModal = false;
   cols: any[];
-  basicProperties:any =[];
+  basicProperties: any = [];
   sidebarData: any;
   sidebarCategoriesData: any = [];
-  sidebarCategoriesHomeData:any=[];
-  selectedSpecList:any = [];
+  sidebarCategoriesHomeData: any = [];
+  selectedSpecList: any = [];
   basicDetails = true;
   HomeDataDetails: any = [];
   intialDataDetails: any;
-  categoriesIntialData:any;
+  categoriesIntialData: any;
   modalAPICall: any = [];
   @Input() radioItem: any;
   radiovalue: any;
@@ -64,61 +75,82 @@ export class HomeComponent implements OnInit {
   selectedValue: string;
   openId: any;
   productdata: any = [];
-  cateogryType:any=[];
-  intialSelctedData:any =[];
+  cateogryType: any = [];
+  intialSelctedData: any = [];
   UserSelectedProducts: any;
   highlightedDiv: number;
-  buttonName ='Hide Categories';
+  buttonName = 'Hide Categories';
   selectedType: string = "All";
-  globalSearchData:any=[];
-  valSelect:any =[];
-  sidebarNewCategoriesHomeData:any = []
-  NewHomeData:any=[];
-  EmptyProductLevel:boolean=false;
+  globalSearchData: any = [];
+  valSelect: any = [];
+  sidebarNewCategoriesHomeData: any = []
+  HeaderNewCategoriesHomeData: any = [];
+  NewHomeData: any = [];
+  EmptyProductLevel: boolean = false;
   objectKeys = Object.keys;
-  searchCategories:any;
+  searchCategories: any;
+  filterCategoryItem: any;
+  filterHomeData: any = [];
+  subscriptionData:any;
+
+  categoryitems = [];
+  categoryBaseddata = [];
+  public AllowParentSelection = true;
+  public RestructureWhenChildSameName = false;
+  public ShowFilter = true;
+  public Disabled = false;
+  public FilterPlaceholder = 'Type here to filter elements...';
+  public MaxDisplayed = 5;
+
+  public simpleSelected = {
+    id: 'all',
+    name: 'all',
+  }
+
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private router: Router,
     private momentiveService: MomentiveService) {
 
-    this.momentiveService.homeEvent.subscribe(data => {
-      this.ngOnInit();
-    });
+    // this.subscriptionData = this.momentiveService.homeEvent.subscribe(data => {
+    //   this.ngOnInit();
+    // });
   }
 
   ngOnInit() {
-
 
     this.momentiveService.currentMessage.subscribe(message => {
       console.log(message);
       this.EmptyProductLevel = message;
     })
- 
-    this.cateogryType = [{
-      "type": "All",
-      "value": "All"
-    }, {
-      "type": "Customer Inquiry",
-      "value": "Customer Inquiry"
-    },{
-      "type": "Registration",
-      "value": "Registration"
-    },
-    {
-      "type": "Risk Review",
-      "value": "Risk Review"
-    }],
 
-  
-    // Home Page API CALL
+
+    // sidebarCategories Details MOmentive-JSON API CALL
+    //  this.filterCategoryItem = JSON.parse(localStorage.getItem('categorySetData'));
+    //  console.log(this.filterCategoryItem);
+    //  this.HeaderNewCategoriesHomeData = JSON.parse(JSON.stringify(this.filterCategoryItem ))
+
+    this.subscriptionData = this.momentiveService.categoryDetailsData.subscribe(res => {
+      console.log(res);
+      this.HeaderNewCategoriesHomeData = res;
+      this.HeaderNewCategoriesHomeData.forEach(element => {
+        if (element.name === 'All') {
+          this.homeAPICall();
+        } else {
+          this.homecategoryFilter();
+        }
+      })
+
+    })
+
+ 
+
+      // Home Page API CALL
     this.intialSelctedData = localStorage.getItem('SearchBarData');
     console.log(this.intialSelctedData);
     this.globalSearchData = JSON.parse(this.intialSelctedData);
     console.log('**userData**')
     console.log(this.globalSearchData);
 
-    this.homeAPICall();
-  
 
     // sidebarCategories Details MOmentive-JSON API CALL
     this.momentiveService.getSearchData().subscribe(data => {
@@ -155,30 +187,33 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  homeAPICall () {
-    this.basicProperties = this.momentiveService.basicLevelList;
+  homeAPICall() {
+    this.basicProperties =[];
+    this.basicProperties = this.momentiveService.getbasicLevelDetails();
     console.log(this.basicProperties);
-    if(this.basicProperties.length > 0) {
+    if (this.basicProperties.length > 0) {
       this.UserSelectedProducts = [];
       this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
-      this.UserSelectedProducts =[{
+      this.UserSelectedProducts = [{
         'Spec_id': this.selectedSpecList,
-        'product_Level':this.momentiveService.getProductLevelDetails(),
-        'Mat_Level':this.momentiveService.getMaterialLevelDetails(),
-        'CAS_Level':this.momentiveService.getCasLevelDetails(),
+        'product_Level': this.momentiveService.getProductLevelDetails(),
+        'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level': this.momentiveService.getCasLevelDetails(),
       }]
     } else {
       this.UserSelectedProducts = [];
       this.UserSelectedProducts = this.momentiveService.selectedProduct;
     }
     console.log(this.UserSelectedProducts);
-    this.intialDataDetails =[];
+    this.intialDataDetails = [];
+    this.categoriesIntialData =[];
     this.momentiveService.getHomePageData(this.UserSelectedProducts).subscribe(data => {
       if (Object.keys(data).length > 0) {
         this.Pihloader = false;
         this.intialDataDetails = data;
-        this.categoriesIntialData = JSON.parse(JSON.stringify(this.intialDataDetails));
-        console.log(this.intialDataDetails);
+        this.categoriesIntialData = JSON.parse(JSON.stringify(data));
+        console.log("**********************************88")
+        console.log(this.categoriesIntialData);
         // const size = Object.keys(this.intialDataDetails).length;
       } else {
         this.Pihloader = true;
@@ -186,14 +221,15 @@ export class HomeComponent implements OnInit {
     }, err => {
       console.error(err);
     });
+
   }
   selectEvent(item) {
     console.log(item);
   }
   selectCategoryType(data) {
     console.log(data);
-    this.NewHomeData =[];
-    this.sidebarNewCategoriesHomeData =[];
+    this.NewHomeData = [];
+    this.sidebarNewCategoriesHomeData = [];
     this.sidebarCategoriesHomeData.forEach(element => {
       element.searchField.forEach(ele => {
         if (ele == data) {
@@ -201,31 +237,31 @@ export class HomeComponent implements OnInit {
           console.log(this.sidebarNewCategoriesHomeData);
         }
       })
-  });
+    });
 
-  //Right side filter code
-  // this.sidebarNewCategoriesHomeData.forEach(element => {
-  //   this.NewHomeData.push(element.name);
-  //  });
-  //  console.log(this.NewHomeData);
-  //  console.log(this.categoriesIntialData);
-  //  const filtered = Object.keys(this.categoriesIntialData)
-  // .filter(key => this.NewHomeData.includes(key))
-  // .reduce((obj, key) => {
-  //   obj[key] = this.categoriesIntialData[key];
-  //   return obj;
-  // }, {});
-  //     this.intialDataDetails = filtered;
-  //     console.log(this.intialDataDetails);
-}
+    //Right side filter code
+    // this.sidebarNewCategoriesHomeData.forEach(element => {
+    //   this.NewHomeData.push(element.name);
+    //  });
+    //  console.log(this.NewHomeData);
+    //  console.log(this.categoriesIntialData);
+    //  const filtered = Object.keys(this.categoriesIntialData)
+    // .filter(key => this.NewHomeData.includes(key))
+    // .reduce((obj, key) => {
+    //   obj[key] = this.categoriesIntialData[key];
+    //   return obj;
+    // }, {});
+    //     this.intialDataDetails = filtered;
+    //     console.log(this.intialDataDetails);
+  }
 
-//(keyup)="onSearchChange($event.target.value)"
-// onSearchChange(searchValue: string): void {  
-//   console.log(searchValue);
-//   if(searchValue.length > 2) {
+  //(keyup)="onSearchChange($event.target.value)"
+  // onSearchChange(searchValue: string): void {  
+  //   console.log(searchValue);
+  //   if(searchValue.length > 2) {
 
-//   }
-// }
+  //   }
+  // }
   //Sub Category Click Function
   selectItem(index, data, radiodata): void {
     this.modalAPICall = [];
@@ -235,7 +271,7 @@ export class HomeComponent implements OnInit {
     this.productRadioBox(index, this.value, this.radiovalue);
   }
 
-//Seven Categories Details Page Click Function:
+  //Seven Categories Details Page Click Function:
   productRadioBox(index, value, Item) {
     this.selectedId = index;
     this.modalValue = value;
@@ -388,15 +424,65 @@ export class HomeComponent implements OnInit {
   toggleHighlight(newValue: number) {
     if (this.highlightedDiv === newValue) {
       this.highlightedDiv = 0;
-      this.buttonName ='Hide Categories'
+      this.buttonName = 'Hide Categories'
       this.momentiveService.callMethodOfRadioComponent(true);
     }
     else {
       this.highlightedDiv = newValue;
-      this.buttonName ='Show Categories'
+      this.buttonName = 'Show Categories'
       this.momentiveService.callMethodOfRadioComponent(false);
     }
   }
 
-
+  homecategoryFilter() {
+    this.basicProperties =[];
+    this.basicProperties = this.momentiveService.basicLevelList;
+    console.log(this.basicProperties);
+    if (this.basicProperties.length > 0) {
+      this.UserSelectedProducts = [];
+      this.selectedSpecList = this.momentiveService.categorySelectedSPECList;
+      this.UserSelectedProducts = [{
+        'Spec_id': this.selectedSpecList,
+        'product_Level': this.momentiveService.getProductLevelDetails(),
+        'Mat_Level': this.momentiveService.getMaterialLevelDetails(),
+        'CAS_Level': this.momentiveService.getCasLevelDetails(),
+      }]
+    } else {
+      this.UserSelectedProducts = [];
+      this.UserSelectedProducts = this.momentiveService.selectedProduct;
+    }
+    console.log(this.UserSelectedProducts);
+    this.intialDataDetails = [];
+    this.categoriesIntialData =[];
+    this.momentiveService.getHomePageData(this.UserSelectedProducts).subscribe(data => {
+      if (Object.keys(data).length > 0) {
+        this.Pihloader = false;
+        this.categoriesIntialData = data;
+        this.NewHomeData = [];
+        //Right side filter code
+        this.HeaderNewCategoriesHomeData.forEach(element => {
+          element.searchField.forEach(elem => {
+            this.NewHomeData.push(elem);
+          })
+        });
+        console.log(this.NewHomeData);
+        console.log(this.categoriesIntialData);
+        const filtered = Object.keys(this.categoriesIntialData)
+          .filter(key => this.NewHomeData.includes(key))
+          .reduce((obj, key) => {
+            obj[key] = this.categoriesIntialData[key];
+            return obj;
+          }, {});
+        this.intialDataDetails = filtered;
+        console.log(this.intialDataDetails);
+      } else {
+        this.Pihloader = true;
+      }
+    }, err => {
+      console.error(err);
+    });
+  }
+  ngOnDestroy() {
+    this.subscriptionData.unsubscribe();
+}
 }
